@@ -1,0 +1,491 @@
+/* Cosmic Design System - Beyond Infinite */
+
+:root {
+    /* Cosmic Typography System */
+    --font-cosmic: 'Inter Display', 'Inter', -apple-system, sans-serif;
+    --font-mono-cosmic: 'JetBrains Mono Variable', 'SF Mono', monospace;
+    
+    /* Cosmic Fluid Typography */
+    --text-cosmic-xs: clamp(0.25rem, 0.2vw, 0.375rem);
+    --text-cosmic-sm: clamp(0.375rem, 0.3vw, 0.5rem);
+    --text-cosmic-base: clamp(0.5rem, 0.4vw, 0.625rem);
+    --text-cosmic-lg: clamp(0.625rem, 0.5vw, 0.75rem);
+    --text-cosmic-xl: clamp(0.75rem, 0.6vw, 0.875rem);
+    --text-cosmic-2xl: clamp(0.875rem, 0.7vw, 1rem);
+    --text-cosmic-3xl: clamp(1rem, 0.8vw, 1.125rem);
+    --text-cosmic-4xl: clamp(1.125rem, 0.9vw, 1.25rem);
+    --text-cosmic-5xl: clamp(1.25rem, 1vw, 1.5rem);
+    --text-cosmic-6xl: clamp(1.5rem, 1.2vw, 1.75rem);
+    --text-cosmic-7xl: clamp(1.75rem, 1.4vw, 2rem);
+    --text-cosmic-8xl: clamp(2rem, 1.6vw, 2.25rem);
+    --text-cosmic-9xl: clamp(2.25rem, 1.8vw, 2.5rem);
+    --text-cosmic-10xl: clamp(2.5rem, 2vw, 2.75rem);
+    --text-cosmic-11xl: clamp(2.75rem, 2.2vw, 3rem);
+    --text-cosmic-12xl: clamp(3rem, 2.4vw, 3.25rem);
+    
+    /* Cosmic Font Weights */
+    --font-cosmic-thin: 100;
+    --font-cosmic-extralight: 200;
+    --font-cosmic-light: 300;
+    --font-cosmic-regular: 400;
+    --font-cosmic-medium: 500;
+    --font-cosmic-semibold: 600;
+    --font-cosmic-bold: 700;
+    --font-cosmic-extrabold: 800;
+    --font-cosmic-black: 900;
+    
+    /* Cosmic Color System */
+    --cosmic-white: #ffffff;
+    --cosmic-black: #000000;
+    
+    /* Cosmic Neutral Scale */
+    --cosmic-gray-50: #fafbfc;
+    --cosmic-gray-100: #f3f4f6;
+    --cosmic-gray-200: #e5e7eb;
+    --cosmic-gray-300: #d1d5db;
+    --cosmic-gray-400: #9ca3af;
+    --cosmic-gray-500: #6b7280;
+    --cosmic-gray-600: #4b5563;
+    --cosmic-gray-700: #374151;
+    --cosmic-gray-800: #1f2937;
+    --cosmic-gray-900: #111827;
+    
+    /* Cosmic Primary - Nebula Blue */
+    --cosmic-primary-50: #eff6ff;
+    --cosmic-primary-100: #dbeafe;
+    --cosmic-primary-200: #bfdbfe;
+    --cosmic-primary-300: #93c5fd;
+    --cosmic-primary-400: #60a5fa;
+    --cosmic-primary-500: #3b82f6;
+    --cosmic-primary-600: #2563eb;
+    --cosmic-primary-700: #1d4ed8;
+    --cosmic-primary-800: #1e40af;
+    --cosmic-primary-900: #1e3a8a;
+    
+    /* Cosmic Accent - Galaxy Purple */
+    --cosmic-accent-50: #faf5ff;
+    --cosmic-accent-100: #ede9fe;
+    --cosmic-accent-200: #ddd6fe;
+    --cosmic-accent-300: #c4b5fd;
+    --cosmic-accent-400: #a78bfa;
+    --cosmic-accent-500: #8b5cf6;
+    --cosmic-accent-600: #7c3aed;
+    --cosmic-accent-700: #6d28d9;
+    --cosmic-accent-800: #5b21b6;
+    --cosmic-accent-900: #4c1d95;
+    
+    /* Cosmic Success - Emerald */
+    --cosmic-success-50: #ecfdf5;
+    --cosmic-success-100: #d1fae5;
+    --cosmic-success-200: #a7f3d0;
+    --cosmic-success-300: #6ee7b7;
+    --cosmic-success-400: #34d399;
+    --cosmic-success-500: #10b981;
+    --cosmic-success-600: #059669;
+    --cosmic-success-700: #047857;
+    --cosmic-success-800: #065f46;
+    --cosmic-success-900: #064e3b;
+    
+    /* Cosmic Warning - Solar Orange */
+    --cosmic-warning-50: #fffbeb;
+    --cosmic-warning-100: #fef3c7;
+    --cosmic-warning-200: #fde68a;
+    --cosmic-warning-300: #fcd34d;
+    --cosmic-warning-400: #fbbf24;
+    --cosmic-warning-500: #f59e0b;
+    --cosmic-warning-600: #d97706;
+    --cosmic-warning-700: #b45309;
+    --cosmic-warning-800: #92400e;
+    --cosmic-warning-900: #78350f;
+    
+    /* Cosmic Error - Rose */
+    --cosmic-error-50: #fef2f2;
+    --cosmic-error-100: #fee2e2;
+    --cosmic-error-200: #fecaca;
+    --cosmic-error-300: #fca5a5;
+    --cosmic-error-400: #f87171;
+    --cosmic-error-500: #ef4444;
+    --cosmic-error-600: #dc2626;
+    --cosmic-error-700: #b91c1c;
+    --cosmic-error-800: #991b1b;
+    --cosmic-error-900: #7f1d1d;
+    
+    /* Cosmic Info - Sky */
+    --cosmic-info-50: #ecfeff;
+    --cosmic-info-100: #cffafe;
+    --cosmic-info-200: #a5f3fc;
+    --cosmic-info-300: #67e8f9;
+    --cosmic-info-400: #22d3ee;
+    --cosmic-info-500: #06b6d4;
+    --cosmic-info-600: #0891b2;
+    --cosmic-info-700: #0c4a6e;
+    --cosmic-info-800: #075985;
+    --cosmic-info-900: #0c4a6e;
+    
+    /* Cosmic Spacing System */
+    --cosmic-space-0: 0;
+    --cosmic-space-px: 1px;
+    --cosmic-space-0_5: 0.125rem;
+    --cosmic-space-1: 0.25rem;
+    --cosmic-space-1_5: 0.375rem;
+    --cosmic-space-2: 0.5rem;
+    --cosmic-space-2_5: 0.625rem;
+    --cosmic-space-3: 0.75rem;
+    --cosmic-space-3_5: 0.875rem;
+    --cosmic-space-4: 1rem;
+    --cosmic-space-5: 1.25rem;
+    --cosmic-space-6: 1.5rem;
+    --cosmic-space-8: 2rem;
+    --cosmic-space-10: 2.5rem;
+    --cosmic-space-12: 3rem;
+    --cosmic-space-16: 4rem;
+    --cosmic-space-20: 5rem;
+    --cosmic-space-24: 6rem;
+    --cosmic-space-32: 8rem;
+    --cosmic-space-40: 10rem;
+    --cosmic-space-48: 12rem;
+    --cosmic-space-64: 16rem;
+    --cosmic-space-80: 20rem;
+    --cosmic-space-96: 24rem;
+    --cosmic-space-128: 32rem;
+    --cosmic-space-160: 40rem;
+    --cosmic-space-192: 48rem;
+    --cosmic-space-256: 64rem;
+    
+    /* Cosmic Border Radius */
+    --cosmic-radius-none: 0;
+    --cosmic-radius-sm: 0.125rem;
+    --cosmic-radius-base: 0.25rem;
+    --cosmic-radius-md: 0.375rem;
+    --cosmic-radius-lg: 0.5rem;
+    --cosmic-radius-xl: 0.75rem;
+    --cosmic-radius-2xl: 1rem;
+    --cosmic-radius-3xl: 1.5rem;
+    --cosmic-radius-4xl: 2rem;
+    --cosmic-radius-5xl: 2.5rem;
+    --cosmic-radius-6xl: 3rem;
+    --cosmic-radius-full: 9999px;
+    
+    /* Cosmic Shadow System */
+    --cosmic-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --cosmic-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --cosmic-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --cosmic-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --cosmic-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --cosmic-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --cosmic-shadow-2xl: 0 50px 100px -20px rgba(0, 0, 0, 0.25);
+    --cosmic-shadow-3xl: 0 100px 200px -40px rgba(0, 0, 0, 0.3);
+    
+    /* Cosmic Colored Shadows */
+    --cosmic-shadow-primary: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+    --cosmic-shadow-accent: 0 10px 15px -3px rgba(139, 92, 246, 0.4);
+    --cosmic-shadow-success: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+    --cosmic-shadow-warning: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+    --cosmic-shadow-error: 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+    --cosmic-shadow-info: 0 10px 15px -3px rgba(6, 182, 212, 0.4);
+    
+    /* Cosmic Glow Effects */
+    --cosmic-glow-primary: 0 0 40px rgba(59, 130, 246, 1),
+                        0 0 80px rgba(59, 130, 246, 0.9),
+                        0 0 120px rgba(59, 130, 246, 0.8),
+                        0 0 160px rgba(59, 130, 246, 0.7),
+                        0 0 200px rgba(59, 130, 246, 0.6);
+    --cosmic-glow-accent: 0 0 40px rgba(139, 92, 246, 1),
+                        0 0 80px rgba(139, 92, 246, 0.9),
+                        0 0 120px rgba(139, 92, 246, 0.8),
+                        0 0 160px rgba(139, 92, 246, 0.7),
+                        0 0 200px rgba(139, 92, 246, 0.6);
+    --cosmic-glow-success: 0 0 40px rgba(16, 185, 129, 1),
+                        0 0 80px rgba(16, 185, 129, 0.9),
+                        0 0 120px rgba(16, 185, 129, 0.8),
+                        0 0 160px rgba(16, 185, 129, 0.7),
+                        0 0 200px rgba(16, 185, 129, 0.6);
+    
+    /* Cosmic Transition System */
+    --cosmic-transition-instant: 0ms;
+    --cosmic-transition-immediate: 50ms cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-transition-slower: 750ms cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-transition-epic: 3000ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Cosmic Animation Easing */
+    --cosmic-ease-linear: linear;
+    --cosmic-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --cosmic-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --cosmic-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --cosmic-ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --cosmic-ease-in-out-circ: cubic-bezier(0.87, 0, 0.13, 1);
+    --cosmic-ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --cosmic-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --cosmic-ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Cosmic Z-Index Scale */
+    --cosmic-z-negative: -1;
+    --cosmic-z-base: 0;
+    --cosmic-z-raised: 1;
+    --cosmic-z-dropdown: 1000;
+    --cosmic-z-sticky: 1020;
+    --cosmic-z-fixed: 1030;
+    --cosmic-z-modal-backdrop: 1040;
+    --cosmic-z-modal: 1050;
+    --cosmic-z-popover: 1060;
+    --cosmic-z-tooltip: 1070;
+    --cosmic-z-toast: 1080;
+    --cosmic-z-maximum: 2147483647;
+    
+    /* Cosmic Gradients */
+    --cosmic-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 20%, #f093fb 40%, #fbbf24 60%, #f59e0b 80%, #ef4444 100%);
+    --cosmic-gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 20%, #fbbf24 40%, #f59e0b 60%, #10b981 80%, #3b82f6 100%);
+    --cosmic-gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 20%, #fbbf24 40%, #f59e0b 60%, #f093fb 80%, #8b5cf6 100%);
+    
+    /* Cosmic Radial Gradients */
+    --cosmic-gradient-radial-primary: radial-gradient(circle at 50% 50%, #667eea 0%, #764ba2 20%, #f093fb 40%, #fbbf24 60%, #f59e0b 80%, #ef4444 100%);
+    
+    /* Cosmic Glass Morphism */
+    --cosmic-glass-bg: rgba(255, 255, 255, 0.005);
+    --cosmic-glass-border: rgba(255, 255, 255, 0.01);
+    --cosmic-glass-blur: blur(80px) saturate(200%);
+    
+    /* Cosmic Neon Effects */
+    --cosmic-neon-primary: 0 0 30px rgba(102, 126, 234, 1),
+                        0 0 60px rgba(102, 126, 234, 0.95),
+                        0 0 90px rgba(102, 126, 234, 0.9),
+                        0 0 120px rgba(102, 126, 234, 0.85),
+                        0 0 150px rgba(102, 126, 234, 0.8),
+                        0 0 180px rgba(102, 126, 234, 0.75);
+    
+    /* Cosmic Aurora Effects */
+    --cosmic-aurora-primary: radial-gradient(ellipse at top, #667eea 0%, transparent 50%),
+                              radial-gradient(ellipse at bottom, #764ba2 0%, transparent 50%),
+                              radial-gradient(ellipse at left, #f093fb 0%, transparent 50%),
+                              radial-gradient(ellipse at right, #fbbf24 0%, transparent 50%),
+                              radial-gradient(ellipse at center, #f59e0b 0%, transparent 50%);
+    
+    /* Cosmic Particle System */
+    --cosmic-particle-size: 0.25px;
+    --cosmic-particle-color-primary: rgba(102, 126, 234, 1);
+    --cosmic-particle-color-accent: rgba(245, 87, 234, 1);
+    --cosmic-particle-color-success: rgba(16, 185, 129, 1);
+    --cosmic-particle-color-warning: rgba(245, 158, 11, 1);
+    --cosmic-particle-color-error: rgba(239, 68, 68, 1);
+    --cosmic-particle-duration: 30s;
+    --cosmic-particle-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cosmic Keyframe Animations */
+@keyframes cosmic-float {
+    0%, 100% { transform: translateY(0px) translateZ(0) rotateX(0deg); }
+    25% { transform: translateY(-30px) translateZ(20px) rotateX(90deg); }
+    50% { transform: translateY(-60px) translateZ(40px) rotateX(180deg); }
+    75% { transform: translateY(-30px) translateZ(20px) rotateX(270deg); }
+}
+
+@keyframes cosmic-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.3);
+        opacity: 0.5;
+    }
+}
+
+@keyframes cosmic-rotate-3d {
+    0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(1440deg) rotateY(1440deg) rotateZ(1440deg); }
+}
+
+@keyframes cosmic-morph {
+    0%, 100% { 
+        border-radius: 50%;
+        transform: rotate(0deg) scale(1);
+    }
+    25% { 
+        border-radius: 10%;
+        transform: rotate(90deg) scale(1.2);
+    }
+    50% { 
+        border-radius: 0%;
+        transform: rotate(180deg) scale(1.4);
+    }
+    75% { 
+        border-radius: 10%;
+        transform: rotate(270deg) scale(1.2);
+    }
+}
+
+@keyframes cosmic-slide-in-blur {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(60px);
+        filter: blur(80px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+}
+
+@keyframes cosmic-glitch-text {
+    0%, 100% {
+        text-shadow: 
+            0.05em 0 0 rgba(102, 126, 234, 1),
+            -0.05em -0.025em 0 rgba(245, 87, 234, 1),
+            0.025em 0.05em 0 rgba(234, 234, 234, 1);
+    }
+    25% {
+        text-shadow: 
+            -0.05em -0.025em 0 rgba(245, 87, 234, 1),
+            0.025em 0.05em 0 rgba(234, 234, 234, 1),
+            0.05em 0 0 rgba(102, 126, 234, 1);
+    }
+}
+
+@keyframes cosmic-shimmer {
+    0% { background-position: -6000px 0; }
+    100% { background-position: 6000px 0; }
+}
+
+@keyframes cosmic-wave {
+    0% { transform: translateX(0) translateY(0) rotateZ(0deg); }
+    25% { transform: translateX(-60px) translateY(-30px) rotateZ(90deg); }
+    50% { transform: translateX(0) translateY(0) rotateZ(180deg); }
+    75% { transform: translateX(60px) translateY(-30px) rotateZ(270deg); }
+    100% { transform: translateX(0) translateY(0) rotateZ(360deg); }
+}
+
+@keyframes cosmic-aurora-move {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: rotate(72deg) scale(1.4);
+        opacity: 0.6;
+    }
+    40% {
+        transform: rotate(144deg) scale(0.7);
+        opacity: 0.6;
+    }
+    60% {
+        transform: rotate(216deg) scale(1.4);
+        opacity: 0.6;
+    }
+    80% {
+        transform: rotate(288deg) scale(0.7);
+        opacity: 0.6;
+    }
+}
+
+/* Cosmic Component Classes */
+.cosmic-card {
+    background: var(--cosmic-glass-bg);
+    border: 1px solid var(--cosmic-glass-border);
+    backdrop-filter: var(--cosmic-glass-blur);
+    border-radius: var(--cosmic-radius-4xl);
+    box-shadow: var(--cosmic-shadow-2xl);
+    transition: all var(--cosmic-transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmic-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.02) 0%, 
+        rgba(255, 255, 255, 0.01) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.cosmic-card:hover {
+    transform: translateY(-20px) scale(1.12);
+    box-shadow: var(--cosmic-shadow-3xl);
+}
+
+.cosmic-btn-neon {
+    background: transparent;
+    border: 5px solid var(--cosmic-primary-500);
+    color: var(--cosmic-primary-500);
+    border-radius: var(--cosmic-radius-3xl);
+    padding: var(--cosmic-space-4) var(--cosmic-space-12);
+    font-weight: var(--font-cosmic-bold);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--cosmic-transition-normal);
+    box-shadow: var(--cosmic-neon-primary);
+}
+
+.cosmic-btn-neon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, 
+        var(--cosmic-primary-500) 0%, 
+        var(--cosmic-accent-500) 50%, 
+        var(--cosmic-primary-500) 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--cosmic-transition-epic);
+}
+
+.cosmic-btn-neon:hover::before {
+    opacity: 1;
+}
+
+.cosmic-btn-neon:hover {
+    transform: translateY(-8px) scale(1.2);
+    box-shadow: var(--cosmic-glow-primary);
+    border-color: var(--cosmic-accent-400);
+}
+
+.cosmic-morph-element {
+    width: 300px;
+    height: 300px;
+    background: var(--cosmic-gradient-primary);
+    border-radius: var(--cosmic-radius-5xl);
+    animation: cosmic-morph 12s var(--cosmic-ease-in-out) infinite;
+    box-shadow: var(--cosmic-shadow-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cosmic-card {
+        border-radius: var(--cosmic-radius-3xl);
+    }
+    
+    .cosmic-morph-element {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .cosmic-btn-neon {
+        padding: var(--cosmic-space-3) var(--cosmic-space-10);
+        font-size: var(--text-cosmic-sm);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Performance Optimizations */
+.cosmic-gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}

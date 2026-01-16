@@ -1,0 +1,371 @@
+/* Enhanced Odoo-like design system improvements */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus states for accessibility */
+.btn:focus,
+input:focus,
+textarea:focus,
+select:focus,
+a:focus {
+  outline: 2px solid var(--o-color-primary);
+  outline-offset: 2px;
+}
+
+/* Subtle page transitions */
+.page-transition {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced card hover effects */
+.enhanced-card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+
+.enhanced-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border-color: var(--o-color-primary);
+}
+
+/* Gradient text for highlights */
+.gradient-text {
+  background: linear-gradient(135deg, var(--o-color-primary), var(--o-color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Enhanced buttons with ripple effect */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-enhanced:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Improved loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Enhanced form inputs */
+.form-enhanced {
+  transition: all 0.2s ease;
+  border: 2px solid #e9ecef;
+}
+
+.form-enhanced:focus {
+  border-color: var(--o-color-primary);
+  box-shadow: 0 0 0 4px rgba(113, 75, 103, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Subtle background patterns */
+.pattern-bg {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(113, 75, 103, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Enhanced badges */
+.badge-enhanced {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.badge-enhanced:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Improved navigation hover states */
+.nav-link-enhanced {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link-enhanced::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--o-color-primary);
+  transition: width 0.3s ease;
+}
+
+.nav-link-enhanced:hover::after {
+  width: 100%;
+}
+
+/* Enhanced section dividers */
+.divider-enhanced {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(113, 75, 103, 0.2), transparent);
+  margin: 3rem 0;
+}
+
+/* Improved tooltips */
+.tooltip-enhanced {
+  position: relative;
+}
+
+.tooltip-enhanced::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #212529;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+.tooltip-enhanced:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced progress bars */
+.progress-enhanced {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-enhanced {
+  height: 100%;
+  background: linear-gradient(90deg, var(--o-color-primary), var(--o-color-secondary));
+  border-radius: 4px;
+  transition: width 0.6s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Improved modal/dialog styles */
+.modal-enhanced {
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content-enhanced {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Enhanced table styles */
+.table-enhanced {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table-enhanced thead {
+  background: linear-gradient(135deg, var(--o-color-primary), var(--o-color-secondary));
+  color: white;
+}
+
+.table-enhanced tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.table-enhanced tbody tr:hover {
+  background-color: rgba(113, 75, 103, 0.05);
+}
+
+/* Improved alert/notification styles */
+.alert-enhanced {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.alert-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: currentColor;
+}
+
+.alert-success-enhanced {
+  background: linear-gradient(135deg, #d4edda, #c3e6cb);
+  color: #155724;
+}
+
+.alert-warning-enhanced {
+  background: linear-gradient(135deg, #fff3cd, #fdeaa7);
+  color: #856404;
+}
+
+.alert-danger-enhanced {
+  background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+  color: #721c24;
+}
+
+/* Enhanced search inputs */
+.search-enhanced {
+  position: relative;
+}
+
+.search-enhanced input {
+  padding-left: 2.5rem;
+  border-radius: 2rem;
+  border: 2px solid #e9ecef;
+  transition: all 0.2s ease;
+}
+
+.search-enhanced input:focus {
+  border-color: var(--o-color-primary);
+  box-shadow: 0 0 0 4px rgba(113, 75, 103, 0.1);
+}
+
+.search-enhanced::before {
+  content: '🔍';
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+/* Responsive typography improvements */
+@media (max-width: 768px) {
+  .responsive-text {
+    font-size: 0.9rem;
+  }
+  
+  .responsive-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-aware {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .dark-mode-aware .card {
+    background-color: #2d2d2d;
+    border-color: #404040;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-friendly {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}

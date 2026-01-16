@@ -1,0 +1,157 @@
+/* Odoo-like Docs page layout */
+
+.docs-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.docs-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.docs-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.docs-section {
+  display: grid;
+  gap: 1.25rem;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(249, 115, 22, 0.18);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 247, 236, 0.92) 100%);
+  box-shadow: 0 22px 45px rgba(249, 115, 22, 0.1);
+}
+
+.docs-section.config {
+  border-color: rgba(251, 191, 36, 0.35);
+  background: linear-gradient(135deg, rgba(255, 250, 235, 0.95) 0%, rgba(255, 243, 214, 0.92) 100%);
+}
+
+.docs-section.checklist {
+  border-color: rgba(59, 130, 246, 0.28);
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(219, 234, 254, 0.92) 100%);
+}
+
+.docs-section.resources {
+  border-color: rgba(251, 146, 60, 0.35);
+  background: linear-gradient(135deg, rgba(255, 247, 237, 0.95) 0%, rgba(255, 236, 220, 0.9) 100%);
+}
+
+.docs-section-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.docs-section-desc {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.docs-code-block {
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #111827;
+  border-radius: 1rem;
+  border: 1px solid rgba(17, 24, 39, 0.45);
+  padding: 1.25rem 1.5rem;
+  white-space: pre-wrap;
+  color: #f9fafb;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.25);
+  overflow-x: auto;
+}
+
+.docs-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+.docs-list li {
+  margin-bottom: 0.5rem;
+}
+
+.docs-list li:last-child {
+  margin-bottom: 0;
+}
+
+.docs-checklist {
+  display: grid;
+  gap: 1rem;
+}
+
+.docs-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 0.875rem 1.125rem;
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.12);
+  color: #1f2937;
+}
+
+.docs-checklist-icon {
+  font-size: 1.2rem;
+  color: #38a169;
+  flex-shrink: 0;
+}
+
+.docs-resources-grid {
+  display: grid;
+  gap: 1.125rem;
+}
+
+.docs-resource-card {
+  display: grid;
+  gap: 0.375rem;
+  background: #ffffff;
+  border-radius: 1.125rem;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  box-shadow: 0 15px 30px rgba(249, 115, 22, 0.12);
+}
+
+.docs-resource-title {
+  color: #1f2937;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.docs-resource-desc {
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .docs-container {
+    padding: 0 1rem;
+  }
+  .docs-section {
+    padding: 1.5rem;
+  }
+  .docs-section-title {
+    font-size: 1.5rem;
+  }
+  .docs-code-block {
+    font-size: 0.875rem;
+    padding: 1rem;
+  }
+  .docs-checklist-item {
+    padding: 0.75rem 1rem;
+  }
+  .docs-resource-card {
+    padding: 1rem;
+  }
+}

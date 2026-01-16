@@ -1,234 +1,170 @@
 import React from 'react';
 import { PageHero } from '../components/PageHero';
-import { ScribbleUnderline } from '../components/Scribbles';
-import { GothicH2 } from '../components/GothicHeading';
-import { DrippingText } from '../components/DrippingText';
-import { AnimatedBackground } from '../components/AnimatedBackground';
-import { CreativeCard, CardGrid } from '../components/CreativeCard';
-import { FloatingElement } from '../components/FloatingElements';
+import { Link } from 'react-router-dom';
 
 export const About: React.FC = () => {
   return (
-    <main>
-      <AnimatedBackground variant="gradient" intensity="medium">
+    <main className="bg-white min-h-screen text-dark font-sans">
       <PageHero
-        title="About Nexora"
-          subtitle="we build modern, modular business apps so teams can move faster and work as one."
-        imageUrl="https://assets-persist.lovart.ai/agent_images/b25bca6b-06e7-40a8-88a2-64c1d4826334.jpg"
-        emphasize="scribble"
-        textColor="#ffffff"
+        title="About Actyx"
+        subtitle="We build modern, modular business apps so teams can move faster and work as one."
+        emphasize="none"
       />
-      </AnimatedBackground>
-      
-      <AnimatedBackground variant="particles" intensity="low">
-        <section style={{ padding: '80px 24px' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <FloatingElement direction="up" intensity="low" delay={0.2}>
-              <CreativeCard
-                variant="glass"
-                hoverEffect="lift"
-                size="large"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  marginBottom: '60px'
-                }}
-              >
-                <p style={{ 
-                  color: '#475569', 
-                  lineHeight: 1.9, 
-                  fontSize: '1.1rem',
-                  margin: 0,
-                  textAlign: 'center'
-                }}>
-                  at nexora we believe the best software doesn't just help businesses run—it helps them thrive. in a world where companies are overloaded with tools, logins, and scattered data, we set out to create a unified platform that feels intuitive, scales with your needs, and makes collaboration effortless.
-                  <br/><br/>
-                  our mission is simple: give every business the power of enterprise-level systems without the complexity, cost, or rigidity.
-                </p>
-              </CreativeCard>
-            </FloatingElement>
 
-            <FloatingElement direction="up" intensity="low" delay={0.4}>
-              <GothicH2 text="Our Story" style={{ marginTop: 60, fontSize: '2.5rem', textAlign: 'center' }} />
-            </FloatingElement>
-            
-            <CardGrid columns={1} gap={32} style={{ marginTop: '40px' }}>
-              <FloatingElement direction="up" intensity="low" delay={0.6}>
-                <CreativeCard variant="minimal" hoverEffect="lift" size="large">
-          <DrippingText 
-                    text="Every company has an origin story, and ours began with a simple pain point. a small group of us—entrepreneurs and developers—were frustrated by how much time was wasted on repetitive tasks like invoicing. we wanted something better: a lightweight tool that automated invoices without needing a full it team to maintain it."
-                    style={{ color: '#475569', lineHeight: 1.9, fontSize: '1.1rem' }}
-          />
-                </CreativeCard>
-              </FloatingElement>
-              
-              <FloatingElement direction="up" intensity="low" delay={0.8}>
-                <CreativeCard variant="gradient" hoverEffect="glow" size="large">
-          <DrippingText 
-                    text="That first tool was small, but it made a big difference. customers began asking for more: could we add customer tracking? what about expense management? could we handle hr processes, too?"
-                    style={{ color: 'white', lineHeight: 1.9, fontSize: '1.1rem' }}
-          />
-                </CreativeCard>
-              </FloatingElement>
-
-              <FloatingElement direction="up" intensity="low" delay={1.0}>
-                <CreativeCard variant="neon" hoverEffect="scale" size="large">
-          <DrippingText 
-                    text="One by one, we answered those requests. but instead of bolting on clunky features, we reimagined what a business platform should be: modular, open, and coherent."
-                    style={{ color: 'white', lineHeight: 1.9, fontSize: '1.1rem' }}
-                  />
-                </CreativeCard>
-              </FloatingElement>
-            </CardGrid>
-
-            <FloatingElement direction="up" intensity="low" delay={1.2}>
-              <GothicH2 text="Our Principles" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
-            </FloatingElement>
-            
-            <CardGrid columns={2} gap={32} style={{ marginTop: '40px' }}>
-              {[
-                {
-                  title: "Modular first",
-                  subtitle: "Start small, expand when you need",
-                  content: "Business software shouldn't be 'all or nothing.' with Nexora, you can begin with one app—like CRM or finance—and expand as your company grows. this modularity ensures you always have what you need, without paying for what you don't.",
-                  variant: "glass" as const,
-                  icon: <i className="fa-solid fa-puzzle-piece" aria-hidden="true"></i>
-                },
-                {
-                  title: "Open by default",
-                  subtitle: "API-first with clean integrations",
-                  content: "We believe businesses should own their data, not lock it away in silos. Nexora is API-first and designed for seamless integrations with the tools you already use.",
-                  variant: "gradient" as const,
-                  icon: <i className="fa-solid fa-link" aria-hidden="true"></i>
-                },
-                {
-                  title: "Delightfully usable",
-                  subtitle: "Craft and polish matter",
-                  content: "We obsess over details—clean interfaces, simple workflows, and thoughtful design—because small touches have a big impact.",
-                  variant: "neon" as const,
-                  icon: <i className="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
-                },
-                {
-                  title: "One coherent system",
-                  subtitle: "Not a pile of tabs",
-                  content: "Nexora is designed to feel like one connected brain for your company. no jumping between tabs, no hunting for files—just one seamless experience.",
-                  variant: "cyber" as const,
-                  icon: <i className="fa-solid fa-brain" aria-hidden="true"></i>
-                }
-              ].map((principle, idx) => (
-                <FloatingElement key={idx} direction="up" intensity="low" delay={1.4 + idx * 0.2}>
-                  <CreativeCard
-                    variant={principle.variant}
-                    hoverEffect="lift"
-                    size="large"
-                    style={{ height: '100%' }}
-                  >
-                    <div style={{ textAlign: 'center', marginBottom: '20px', fontSize: '3rem' }}>
-                      {principle.icon}
-                    </div>
-                    <h3 style={{ 
-                      fontSize: '1.5rem', 
-                      fontWeight: 700, 
-                      margin: '0 0 8px',
-                      color: principle.variant === 'cyber' ? '#00ffff' : 'inherit'
-                    }}>
-                      {principle.title}
-                    </h3>
-                    <p style={{ 
-                      fontSize: '0.9rem', 
-                      opacity: 0.8, 
-                      margin: '0 0 16px',
-                      fontWeight: 600
-                    }}>
-                      {principle.subtitle}
-                    </p>
-                    <p style={{ 
-                      color: principle.variant === 'cyber' ? '#00ffff' : 'inherit',
-                      lineHeight: 1.7,
-                      fontSize: '1rem'
-                    }}>
-                      {principle.content}
-                    </p>
-                  </CreativeCard>
-                </FloatingElement>
-              ))}
-            </CardGrid>
-
-            <FloatingElement direction="up" intensity="low" delay={2.2}>
-              <GothicH2 text="Our Impact" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
-            </FloatingElement>
-            
-            <FloatingElement direction="up" intensity="low" delay={2.4}>
-              <CreativeCard
-                variant="glass"
-                hoverEffect="glow"
-                size="large"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  marginTop: '40px'
-                }}
-              >
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginBottom: '32px' }}>
-                  {[
-                    "save time by automating repetitive tasks",
-                    "cut costs by reducing tool sprawl", 
-                    "improve collaboration by unifying teams on one system",
-                    "scale faster by adapting tools as you grow"
-                  ].map((impact, idx) => (
-                    <div key={idx} style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}><i className="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></div>
-                      <p style={{ color: '#475569', margin: 0, fontSize: '1rem' }}>{impact}</p>
-                    </div>
-                  ))}
-                </div>
-                <p style={{ 
-                  color: '#475569', 
-                  lineHeight: 1.9, 
-                  fontSize: '1.1rem',
-                  textAlign: 'center',
-                  fontStyle: 'italic',
-                  margin: 0
-                }}>
-                  "we finally have visibility across departments." "our team feels more connected." "we've reduced manual work by half." that's impact we're proud of—and it pushes us to keep improving.
-                </p>
-              </CreativeCard>
-            </FloatingElement>
-
-            <FloatingElement direction="up" intensity="low" delay={2.6}>
-              <GothicH2 text="Closing Note" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
-            </FloatingElement>
-            
-            <FloatingElement direction="up" intensity="low" delay={2.8}>
-              <CreativeCard
-                variant="gradient"
-                hoverEffect="lift"
-                size="large"
-                style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  textAlign: 'center',
-                  marginTop: '40px'
-                }}
-              >
-                <p style={{ 
-                  lineHeight: 1.9, 
-                  fontSize: '1.2rem',
-                  margin: '0 0 24px'
-                }}>
-                  at nexora, we believe every business—no matter its size—deserves software that feels powerful, simple, and beautifully connected. we started small, we've grown with our customers, and we're just getting started.
-                </p>
-                <p style={{ margin: 0, fontSize: '1.1rem' }}>
-                  <i className="fa-solid fa-arrow-right" aria-hidden="true" style={{ marginRight: 8 }}></i>
-                  <a href="/apps" style={{ color: '#FDBA26', textDecoration: 'none', fontWeight: 700 }}>explore nexora today</a> — and build the system your business deserves.
-                </p>
-              </CreativeCard>
-            </FloatingElement>
+      {/* Mission Section */}
+      <section className="py-5">
+        <div className="container py-4">
+          <div className="row justify-content-center">
+            <div className="col-lg-8 text-center">
+              <p className="lead text-secondary mb-4" style={{ lineHeight: '1.8' }}>
+                At Actyx, we believe the best software doesn't just help businesses run—it helps them thrive. In a world where companies are overloaded with tools, logins, and scattered data, we set out to create a unified platform that feels intuitive, scales with your needs, and makes collaboration effortless.
+              </p>
+              <p className="fw-bold fs-5 text-dark">
+                Our mission is simple: Give every business the power of enterprise-level systems without the complexity, cost, or rigidity.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
-      </AnimatedBackground>
+
+      {/* Story Section */}
+      <section className="py-5 bg-light-subtle">
+        <div className="container py-4">
+          <h2 className="fw-bold text-center mb-5">Our Story</h2>
+          <div className="row g-5 align-items-center">
+            <div className="col-lg-6">
+              <div className="p-4 bg-white rounded-3 shadow-sm border">
+                <h4 className="fw-bold mb-3 text-primary">The Spark</h4>
+                <p className="text-secondary mb-0">
+                  Every company has an origin story, and ours began with a simple pain point. A small group of us—entrepreneurs and developers—were frustrated by how much time was wasted on repetitive tasks like invoicing. We wanted something better: a lightweight tool that automated invoices without needing a full IT team to maintain it.
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="p-4 bg-white rounded-3 shadow-sm border">
+                <h4 className="fw-bold mb-3 text-info">The Evolution</h4>
+                <p className="text-secondary mb-0">
+                  That first tool was small, but it made a big difference. Customers began asking for more: could we add customer tracking? What about expense management? Could we handle HR processes, too? One by one, we answered those requests. But instead of bolting on clunky features, we reimagined what a business platform should be.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Principles Section */}
+      <section className="py-5">
+        <div className="container py-4">
+          <h2 className="fw-bold text-center mb-5">Our Principles</h2>
+          <div className="row g-4">
+            {[
+              {
+                title: "Modular First",
+                subtitle: "Start small, expand when you need",
+                content: "Business software shouldn't be 'all or nothing.' With Nexora, you can begin with one app—like CRM or finance—and expand as your company grows.",
+                icon: "fa-puzzle-piece",
+                color: "var(--color-primary)"
+              },
+              {
+                title: "Open by Default",
+                subtitle: "API-first with clean integrations",
+                content: "We believe businesses should own their data. Nexora is API-first and designed for seamless integrations with the tools you already use.",
+                icon: "fa-link",
+                color: "var(--color-info)"
+              },
+              {
+                title: "Delightfully Usable",
+                subtitle: "Craft and polish matter",
+                content: "We obsess over details—clean interfaces, simple workflows, and thoughtful design—because small touches have a big impact.",
+                icon: "fa-wand-magic-sparkles",
+                color: "var(--color-warning)"
+              },
+              {
+                title: "One Coherent System",
+                subtitle: "Not a pile of tabs",
+                content: "Nexora is designed to feel like one connected brain for your company. No jumping between tabs, no hunting for files—just one seamless experience.",
+                icon: "fa-brain",
+                color: "var(--color-secondary)"
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="col-md-6">
+                <div className="h-100 p-4 border rounded-3 hover-shadow transition-all bg-white">
+                  <div className="d-flex align-items-start gap-4">
+                    <div className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                      style={{ width: 64, height: 64, backgroundColor: `${item.color}15`, color: item.color }}>
+                      <i className={`fa-solid ${item.icon} fs-3`}></i>
+                    </div>
+                    <div>
+                      <h4 className="fw-bold mb-1">{item.title}</h4>
+                      <p className="text-primary fw-medium small mb-2">{item.subtitle}</p>
+                      <p className="text-secondary small mb-0">{item.content}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Impact Section */}
+      <section className="py-5 bg-dark text-white text-center">
+        <div className="container py-4">
+          <h2 className="fw-bold mb-5">Our Impact</h2>
+          <div className="row justify-content-center mb-5">
+            <div className="col-lg-10">
+              <div className="row g-4">
+                {[
+                  "Save time by automating tasks",
+                  "Cut costs by reducing tool sprawl",
+                  "Improve collaboration",
+                  "Scale faster with modular apps"
+                ].map((text, i) => (
+                  <div key={i} className="col-md-3">
+                    <div className="p-3 border border-secondary rounded-3 bg-white bg-opacity-10 h-100 d-flex flex-column justify-content-center align-items-center">
+                      <i className="fa-solid fa-check-circle text-success mb-3 fs-4"></i>
+                      <span className="fw-medium">{text}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <figure className="text-center">
+                <blockquote className="blockquote">
+                  <p className="fs-5 fst-italic opacity-75">
+                    "We finally have visibility across departments. Our team feels more connected, and we've reduced manual work by half."
+                  </p>
+                </blockquote>
+                <figcaption className="blockquote-footer text-white-50 mt-3">
+                  Customer Feedback
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-5 bg-light">
+        <div className="container py-4 text-center">
+          <h2 className="fw-bold mb-3">Ready to transform your business?</h2>
+          <p className="lead text-secondary mb-4">
+            Join thousands of companies growing with Nexora.
+          </p>
+          <Link to="/apps" className="btn btn-primary btn-lg rounded-pill px-5 shadow-sm hover-translate">
+            Get Started for Free
+          </Link>
+        </div>
+      </section>
+
+      <style>{`
+        .hover-translate:hover { transform: translateY(-2px); }
+        .hover-shadow:hover { box-shadow: 0 1rem 3rem rgba(0,0,0,.1)!important; transform: translateY(-4px); }
+        .transition-all { transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      `}</style>
     </main>
   );
 };

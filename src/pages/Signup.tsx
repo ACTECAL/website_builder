@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import { ActyxLogo } from '../components/ActyxLogo';
+import { ArrowLeft, Upload, CheckCircle } from 'lucide-react';
 
 export const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +23,7 @@ export const Signup: React.FC = () => {
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = 'Invalid email address';
     }
     if (!formData.companyName) newErrors.companyName = 'Company name is required';
     setErrors(newErrors);
@@ -31,12 +33,12 @@ export const Signup: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (errors[name]) setErrors({ ...errors, [name]: null });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      // basic validation: <= 2MB and image type
       const maxBytes = 2 * 1024 * 1024;
       if (!/^image\//.test(file.type)) {
         setErrors((prev: any) => ({ ...prev, form: 'Logo must be an image file.' }));
@@ -71,14 +73,14 @@ export const Signup: React.FC = () => {
 
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
-          throw new Error(data.message || `Failed to create account (code ${res.status})`);
+          throw new Error(data.message || `Failed to create account(code ${res.status})`);
         }
 
         const data = await res.json();
         await login(data.token);
         setSubmitted(true);
       } catch (err: any) {
-        setErrors({ form: err.message || 'Something went wrong' });
+        setErrors({ form: err.message || 'Something went wrong. Please try again.' });
       } finally {
         setIsSubmitting(false);
       }
@@ -87,97 +89,165 @@ export const Signup: React.FC = () => {
 
   if (submitted) {
     return (
-      <section style={{ padding: '60px 24px' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <div style={{ marginBottom: 24 }}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#667eea' }}>← Back to Home</Link>
+      <div className="d-flex min-vh-100 bg-light align-items-center justify-content-center p-4">
+        <div className="bg-white p-5 rounded-4 shadow text-center w-100" style={{ maxWidth: '480px' }}>
+          <div className="d-inline-flex align-items-center justify-content-center mb-4 rounded-circle bg-success-subtle text-success"
+            style={{ width: '64px', height: '64px' }}>
+            <CheckCircle size={32} />
           </div>
-          <h1 style={{ margin: '0 0 12px' }}>Signup</h1>
-          <p style={{ color: '#4a5568', margin: '0 0 24px' }}>Registration Successful!</p>
-          <p style={{ color: '#4a5568', margin: '0 0 24px' }}>Thank you for signing up. You are now logged in.</p>
-          <Link to="/" className="btn btn-primary">Go to Home</Link>
+          <h2 className="display-6 fw-bold mb-3 text-dark">Welcome aboard!</h2>
+          <p className="text-muted mb-5">
+            Your account has been created successfully. You are now logged in and ready to start your journey.
+          </p>
+          <Link
+            to="/"
+            className="btn btn-primary btn-lg w-100 py-3 fw-bold"
+          >
+            Go to Dashboard
+          </Link>
         </div>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section style={{ padding: '60px 24px' }}>
-      <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        <div style={{ marginBottom: 24 }}>
-          <Link to="/" style={{ textDecoration: 'none', color: '#667eea' }}>← Back to Home</Link>
+    <div className="d-flex min-vh-100 bg-white">
+      {/* Left Side */}
+      <div className="d-none d-lg-flex flex-column justify-content-between col-lg-6 p-5 text-white position-relative overflow-hidden"
+        style={{ backgroundColor: '#714B67' }}>
+        <div className="position-relative z-1">
+          <ActyxLogo className="mb-4" style={{ height: '48px' }} />
+          <p className="lead opacity-90" style={{ maxWidth: '400px' }}>
+            Join 15 million users who grow their business with Actyx.
+          </p>
+          <ul className="list-unstyled mt-5 d-flex flex-column gap-3 opacity-75 lead fs-6">
+            <li className="d-flex align-items-center gap-3"><CheckCircle size={20} /> Integrated apps</li>
+            <li className="d-flex align-items-center gap-3"><CheckCircle size={20} /> Simple and user-friendly</li>
+            <li className="d-flex align-items-center gap-3"><CheckCircle size={20} /> Loved by users</li>
+          </ul>
         </div>
-        <h1 style={{ margin: '0 0 12px' }}>Signup</h1>
-        <p style={{ color: '#4a5568', margin: '0 0 24px' }}>Create your account.</p>
 
-        {errors.form && (
-          <div style={{ background: '#FED7D7', color: '#742A2A', padding: '10px 12px', borderRadius: 8, marginBottom: 12 }}>
-            {errors.form}
-          </div>
-        )}
+        {/* Abstract Shapes */}
+        <div className="position-absolute top-0 end-0 bg-secondary opacity-25 rounded-circle"
+          style={{ width: '600px', height: '600px', filter: 'blur(80px)', transform: 'translate(30%, -30%)', background: '#00A09D' }}></div>
+        <div className="position-absolute bottom-0 start-0 bg-dark opacity-10 rounded-circle"
+          style={{ width: '400px', height: '400px', filter: 'blur(60px)', transform: 'translate(-30%, 30%)', background: '#53354D' }}></div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
-          <input
-            type="text"
-            name="name"
-            required
-            placeholder="Full name"
-            value={formData.name}
-            onChange={handleChange}
-            autoFocus
-            style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-          />
-          {errors.name && <small style={{ color: '#E53E3E' }}>{errors.name}</small>}
+        <div className="position-relative z-1">
+          <p className="small opacity-75 mb-0">© 2024 Actyx Inc.</p>
+        </div>
+      </div>
 
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-          />
-          {errors.email && <small style={{ color: '#E53E3E' }}>{errors.email}</small>}
+      {/* Right Side */}
+      <div className="col-12 col-lg-6 d-flex flex-column justify-content-center px-4 px-md-5 bg-white">
+        <div className="w-100 mx-auto py-5" style={{ maxWidth: '440px' }}>
+          <Link to="/" className="d-inline-flex align-items-center text-muted text-decoration-none mb-5 hover-text-primary transition-colors small fw-medium">
+            <ArrowLeft size={16} className="me-2" />
+            Back to Home
+          </Link>
 
-          <input
-            type="text"
-            name="companyName"
-            required
-            placeholder="Company name"
-            value={formData.companyName}
-            onChange={handleChange}
-            style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-          />
-          {errors.companyName && <small style={{ color: '#E53E3E' }}>{errors.companyName}</small>}
+          <h2 className="display-6 fw-bold mb-3 ls-tight">Get started with Actyx</h2>
+          <p className="text-muted mb-5">Create your free account. No credit card required.</p>
 
-          <input
-            id="file-upload"
-            type="file"
-            name="logo"
-            onChange={handleFileChange}
-            style={{ padding: '10px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-            accept="image/*"
-          />
-          {formData.logo && <small style={{ color: '#4a5568' }}>{formData.logo.name}</small>}
-
-          {logoPreview && (
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 8 }}>
-              <img src={logoPreview} alt="Logo Preview" style={{ maxWidth: '100%', display: 'block' }} />
+          {errors.form && (
+            <div className="alert alert-danger small py-2 mb-4" role="alert">
+              {errors.form}
             </div>
           )}
 
-          <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Creating account...' : 'Create Account'}
-          </button>
-        </form>
-        <div style={{ marginTop: 12, color: '#4a5568' }}>
-          Already have an account? <Link to="/login" style={{ color: '#667eea' }}>Log in</Link>
+          <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
+            <div style={{display:"flex",flexDirection:"column"}}>
+              <label className="form-label small fw-bold text-secondary">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John Doe"
+                className={`form - control form - control - lg fs - 6 ${errors.name ? 'is-invalid' : ''} `}
+                style={{ padding: '0.75rem 1rem' }}
+              />
+              {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+            </div>
+
+            <div style={{display:"flex",flexDirection:"column"}}>
+              <label className="form-label small fw-bold text-secondary">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="name@company.com"
+                className={`form - control form - control - lg fs - 6 ${errors.email ? 'is-invalid' : ''} `}
+                style={{ padding: '0.75rem 1rem' }}
+              />
+              {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+            </div>
+
+            <div style={{display:"flex",flexDirection:"column"}}>
+              <label className="form-label small fw-bold text-secondary">Company Name</label>
+              <input
+                type="text"
+                name="companyName"
+                required
+                value={formData.companyName}
+                onChange={handleChange}
+                placeholder="Acme Inc."
+                className={`form - control form - control - lg fs - 6 ${errors.companyName ? 'is-invalid' : ''} `}
+                style={{ padding: '0.75rem 1rem' }}
+              />
+              {errors.companyName && <div className="invalid-feedback">{errors.companyName}</div>}
+            </div>
+
+            {/* File Upload */}
+            <div>
+              <label className="form-label small fw-bold text-secondary">Company Logo (Optional)</label>
+              <div className="d-flex align-items-center gap-3">
+                <label className="d-flex align-items-center justify-content-center w-100 p-3 border border-2 border-dashed rounded text-muted cursor-pointer hover-bg-light transition-colors"
+                  style={{ borderColor: '#dee2e6' }}>
+                  <input type="file" name="logo" onChange={handleFileChange} className="d-none" accept="image/*" />
+                  <div className="d-flex align-items-center gap-2 small fw-medium">
+                    <Upload size={18} />
+                    <span>{formData.logo ? 'Change file' : 'Upload logo'}</span>
+                  </div>
+                </label>
+                {logoPreview && (
+                  <div className="flex-shrink-0" style={{ width: '48px', height: '48px' }}>
+                    <img src={logoPreview} alt="Preview" className="w-100 h-100 rounded object-fit-cover border" />
+                  </div>
+                )}
+              </div>
+              {formData.logo && <div className="small text-muted mt-1 text-truncate">{formData.logo.name}</div>}
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary btn-lg w-100 fw-bold py-3 mt-3 shadow-sm"
+              style={{ fontSize: '1rem' }}
+            >
+              {isSubmitting ? 'Creating account...' : 'Start Free Trial'}
+            </button>
+          </form>
+
+          <p className="text-center mt-5 mb-0 text-muted small">
+            Already have an account? <Link to="/login" className="text-primary fw-bold text-decoration-none hover-underline">Log in to Actyx</Link>
+          </p>
+
+          <p className="mt-4 text-center text-muted" style={{ fontSize: '0.75rem' }}>
+            By signing up, you agree to our <Link to="/terms" className="text-muted text-decoration-underline">Terms</Link> and <Link to="/privacy" className="text-muted text-decoration-underline">Privacy Policy</Link>.
+          </p>
         </div>
-        <p style={{ marginTop: 12, color: '#718096' }}>
-          By signing up, you agree to our <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link>.
-        </p>
       </div>
-    </section>
+
+      <style>{`
+  .hover - bg - light:hover { background - color: #f8f9fa; border - color: var(--o - color - primary)!important; color: var(--o - color - primary); }
+        .hover - text - primary:hover { color: var(--o - color - primary)!important; }
+        .hover - underline:hover { text - decoration: underline!important; }
+        .form - control:focus { border - color: var(--o - color - primary); box - shadow: 0 0 0 0.25rem rgba(113, 75, 103, 0.15); }
+`}</style>
+    </div>
   );
 };

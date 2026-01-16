@@ -1,0 +1,99 @@
+/* Odoo-like Blog page layout */
+
+.blog-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.blog-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.blog-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.blog-card-body {
+  padding: 1.5rem;
+}
+
+.blog-card-category {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blog-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.blog-card-title a {
+  color: #212529;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+.blog-card-title a:hover {
+  color: var(--o-color-primary);
+}
+
+.blog-card-summary {
+  color: #6c757d;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  box-orient: vertical;
+}
+
+.blog-card-meta {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .blog-container {
+    padding: 0 1rem;
+  }
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .blog-card-body {
+    padding: 1.25rem;
+  }
+  .blog-card-title {
+    font-size: 1.125rem;
+  }
+}

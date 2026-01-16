@@ -1,904 +1,480 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { ChevronRight, ChevronLeft, Check, User, Grid3X3, FileText, Rocket } from 'lucide-react';
 import '../styles/GetStarted.css';
 
-// App selection data from ChooseApps page
-type AppTile = { key: string; label: string; icon: string; color: string };
-type AppCategory = { name: string; tiles: AppTile[] };
+type AppItem = {
+  key: string;
+  label: string;
+  icon: string;
+  color: string;
+  category: string;
+};
 
-const APP_CATEGORIES: AppCategory[] = [
+type Category = {
+  name: string;
+  tiles: AppItem[];
+};
+
+const CATEGORIES: Category[] = [
   {
     name: 'Website',
     tiles: [
-      { key: 'website', label: 'Website', icon: 'fa-solid fa-globe', color: '#06b6d4' },
-      { key: 'ecommerce', label: 'eCommerce', icon: 'fa-solid fa-cart-shopping', color: '#a855f7' },
-      { key: 'blog', label: 'Blog', icon: 'fa-solid fa-pen-nib', color: '#ef4444' },
-      { key: 'forum', label: 'Forum', icon: 'fa-solid fa-comments', color: '#10b981' },
-      { key: 'elearning', label: 'eLearning', icon: 'fa-solid fa-graduation-cap', color: '#22c55e' },
-      { key: 'events', label: 'Events', icon: 'fa-solid fa-calendar-days', color: '#f97316' },
+      { key: 'website', label: 'Website', icon: 'fa-solid fa-globe', color: '#00A09D', category: 'Website' },
+      { key: 'ecommerce', label: 'eCommerce', icon: 'fa-solid fa-cart-shopping', color: '#00A09D', category: 'Website' },
+      { key: 'blog', label: 'Blog', icon: 'fa-solid fa-pen-nib', color: '#00A09D', category: 'Website' },
+      { key: 'forum', label: 'Forum', icon: 'fa-solid fa-comments', color: '#00A09D', category: 'Website' },
+      { key: 'elearning', label: 'eLearning', icon: 'fa-solid fa-graduation-cap', color: '#00A09D', category: 'Website' },
+      { key: 'events', label: 'Events', icon: 'fa-solid fa-calendar-days', color: '#00A09D', category: 'Website' },
     ],
   },
   {
     name: 'Sales',
     tiles: [
-      { key: 'crm', label: 'CRM', icon: 'fa-solid fa-users', color: '#14b8a6' },
-      { key: 'sales', label: 'Sales', icon: 'fa-solid fa-chart-line', color: '#a855f7' },
-      { key: 'pos', label: 'Point of Sale', icon: 'fa-solid fa-store', color: '#f59e0b' },
-      { key: 'restaurant', label: 'Restaurant', icon: 'fa-solid fa-utensils', color: '#f97316' },
-      { key: 'subscriptions', label: 'Subscriptions', icon: 'fa-solid fa-arrows-rotate', color: '#06b6d4' },
-      { key: 'rental', label: 'Rental', icon: 'fa-solid fa-key', color: '#8b5cf6' },
+      { key: 'crm', label: 'CRM', icon: 'fa-solid fa-users', color: '#714B67', category: 'Sales' },
+      { key: 'sales', label: 'Sales', icon: 'fa-solid fa-chart-line', color: '#714B67', category: 'Sales' },
+      { key: 'pos', label: 'Point of Sale', icon: 'fa-solid fa-store', color: '#714B67', category: 'Sales' },
+      { key: 'restaurant', label: 'Restaurant', icon: 'fa-solid fa-utensils', color: '#714B67', category: 'Sales' },
+      { key: 'subscriptions', label: 'Subscriptions', icon: 'fa-solid fa-arrows-rotate', color: '#714B67', category: 'Sales' },
+      { key: 'rental', label: 'Rental', icon: 'fa-solid fa-key', color: '#714B67', category: 'Sales' },
     ],
   },
   {
     name: 'Finance',
     tiles: [
-      { key: 'invoicing', label: 'Invoicing', icon: 'fa-solid fa-file-invoice-dollar', color: '#3b82f6' },
-      { key: 'accounting', label: 'Accounting', icon: 'fa-solid fa-coins', color: '#10b981' },
-      { key: 'expenses', label: 'Expenses', icon: 'fa-solid fa-wallet', color: '#06b6d4' },
-      { key: 'sign', label: 'Sign', icon: 'fa-solid fa-signature', color: '#0ea5e9' },
-      { key: 'equity', label: 'Equity', icon: 'fa-solid fa-chart-pie', color: '#f59e0b' },
-      { key: 'esg', label: 'ESG', icon: 'fa-solid fa-leaf', color: '#22c55e' },
+      { key: 'invoicing', label: 'Invoicing', icon: 'fa-solid fa-file-invoice-dollar', color: '#F0AD4E', category: 'Finance' },
+      { key: 'accounting', label: 'Accounting', icon: 'fa-solid fa-coins', color: '#F0AD4E', category: 'Finance' },
+      { key: 'expenses', label: 'Expenses', icon: 'fa-solid fa-wallet', color: '#F0AD4E', category: 'Finance' },
+      { key: 'sign', label: 'Sign', icon: 'fa-solid fa-signature', color: '#F0AD4E', category: 'Finance' },
     ],
   },
   {
     name: 'Services',
     tiles: [
-      { key: 'project', label: 'Project', icon: 'fa-solid fa-diagram-project', color: '#10b981' },
-      { key: 'timesheets', label: 'Timesheets', icon: 'fa-solid fa-stopwatch', color: '#64748b' },
-      { key: 'field-service', label: 'Field Service', icon: 'fa-solid fa-bolt', color: '#f59e0b' },
-      { key: 'helpdesk', label: 'Helpdesk', icon: 'fa-solid fa-headphones', color: '#10b981' },
-      { key: 'appointments', label: 'Appointments', icon: 'fa-solid fa-calendar-check', color: '#a855f7' },
-      { key: 'planning', label: 'Planning', icon: 'fa-solid fa-calendar-days', color: '#22c55e' },
-    ],
-  },
-  {
-    name: 'Productivity',
-    tiles: [
-      { key: 'documents', label: 'Documents', icon: 'fa-regular fa-file-lines', color: '#f97316' },
-      { key: 'approvals', label: 'Approvals', icon: 'fa-solid fa-circle-check', color: '#22c55e' },
-      { key: 'knowledge', label: 'Knowledge', icon: 'fa-solid fa-book', color: '#0ea5e9' },
-    ],
-  },
-  {
-    name: 'Supply Chain',
-    tiles: [
-      { key: 'inventory', label: 'Inventory', icon: 'fa-solid fa-box', color: '#a855f7' },
-      { key: 'manufacturing', label: 'Manufacturing', icon: 'fa-solid fa-industry', color: '#10b981' },
-      { key: 'purchase', label: 'Purchase', icon: 'fa-solid fa-cart-shopping', color: '#22c55e' },
-      { key: 'maintenance', label: 'Maintenance', icon: 'fa-solid fa-screwdriver-wrench', color: '#0ea5e9' },
-      { key: 'quality', label: 'Quality', icon: 'fa-solid fa-circle-check', color: '#f59e0b' },
-      { key: 'repair', label: 'Repair', icon: 'fa-solid fa-wrench', color: '#ef4444' },
-    ],
-  },
-  {
-    name: 'Marketing',
-    tiles: [
-      { key: 'email-marketing', label: 'Email Marketing', icon: 'fa-solid fa-envelope', color: '#3b82f6' },
-      { key: 'sms-marketing', label: 'SMS Marketing', icon: 'fa-solid fa-comment-dots', color: '#06b6d4' },
-      { key: 'survey', label: 'Survey', icon: 'fa-solid fa-chart-simple', color: '#8b5cf6' },
-      { key: 'social-marketing', label: 'Social Marketing', icon: 'fa-solid fa-heart', color: '#f97316' },
-    ],
-  },
-  {
-    name: 'Human Resources',
-    tiles: [
-      { key: 'employees', label: 'Employees', icon: 'fa-solid fa-user-group', color: '#8b5cf6' },
-      { key: 'attendances', label: 'Attendances', icon: 'fa-solid fa-user-check', color: '#f59e0b' },
-      { key: 'recruitment', label: 'Recruitment', icon: 'fa-solid fa-user-plus', color: '#22c55e' },
-      { key: 'time-off', label: 'Time Off', icon: 'fa-solid fa-umbrella-beach', color: '#06b6d4' },
-      { key: 'appraisals', label: 'Appraisals', icon: 'fa-solid fa-star', color: '#f59e0b' },
-      { key: 'fleet', label: 'Fleet', icon: 'fa-solid fa-car-side', color: '#a855f7' },
-      { key: 'payroll', label: 'Payroll', icon: 'fa-solid fa-file-invoice', color: '#ef4444' },
-    ],
-  },
-  {
-    name: 'Customizations',
-    tiles: [
-      { key: 'studio', label: 'Studio', icon: 'fa-solid fa-screwdriver-wrench', color: '#06b6d4' },
+      { key: 'project', label: 'Project', icon: 'fa-solid fa-diagram-project', color: '#5BC0DE', category: 'Services' },
+      { key: 'timesheets', label: 'Timesheets', icon: 'fa-solid fa-stopwatch', color: '#5BC0DE', category: 'Services' },
+      { key: 'field-service', label: 'Field Service', icon: 'fa-solid fa-bolt', color: '#5BC0DE', category: 'Services' },
+      { key: 'helpdesk', label: 'Helpdesk', icon: 'fa-solid fa-headphones', color: '#5BC0DE', category: 'Services' },
     ],
   },
 ];
 
-const MAX_APP_SELECTION = 10;
-
 export const GetStarted: React.FC = () => {
-  const [formData, setFormData] = useState({
-    domain: '',
-    companyName: '',
-    industry: '',
-    contactEmail: '',
-    contactPhone: '',
-    projectDescription: '',
-    selectedApps: [] as string[], // Add selected apps to form data
-  });
-  const [mounted, setMounted] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [showTitle, setShowTitle] = useState(false);
-  const [showSubtitle, setShowSubtitle] = useState(false);
-  const [showFormTitle, setShowFormTitle] = useState(false);
-  const [showFormDesc, setShowFormDesc] = useState(false);
-  const [showFields, setShowFields] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-  const navigate = useNavigate();
   const [search] = useSearchParams();
+  const navigate = useNavigate();
+  const initialSelectedApps = (search.get('selected') || '').split(',').filter(Boolean);
 
-  // Form validation states
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 100);
-    const t2 = setTimeout(() => setShowTitle(true), 300);
-    const t3 = setTimeout(() => setShowSubtitle(true), 600);
-    const t4 = setTimeout(() => setShowForm(true), 900);
-    const t5 = setTimeout(() => setShowFormTitle(true), 1200);
-    const t6 = setTimeout(() => setShowFormDesc(true), 1400);
-    const t7 = setTimeout(() => setShowFields(true), 1600);
-    const t8 = setTimeout(() => setShowButtons(true), 2000);
-    return () => {
-      clearTimeout(t); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4);
-      clearTimeout(t5); clearTimeout(t6); clearTimeout(t7); clearTimeout(t8);
-    };
-  }, []);
-
-  const validateField = (name: string, value: string | string[]) => {
-    const newErrors = { ...errors };
-
-    switch (name) {
-      case 'domain':
-        if (!value || typeof value !== 'string') {
-          newErrors.domain = 'Domain is required';
-        } else if (!/^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[a-zA-Z]{2,}$/.test(value)) {
-          newErrors.domain = 'Please enter a valid domain (e.g., yourcompany.com)';
-        } else {
-          delete newErrors.domain;
-        }
-        break;
-      case 'companyName':
-        if (!value || typeof value !== 'string' || !value.trim()) {
-          newErrors.companyName = 'Company name is required';
-        } else {
-          delete newErrors.companyName;
-        }
-        break;
-      case 'contactEmail':
-        if (!value || typeof value !== 'string') {
-          newErrors.contactEmail = 'Email is required';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          newErrors.contactEmail = 'Please enter a valid email address';
-        } else {
-          delete newErrors.contactEmail;
-        }
-        break;
-      case 'contactPhone':
-        if (!value || typeof value !== 'string') {
-          newErrors.contactPhone = 'Phone number is required';
-        } else if (!/^\+?[\d\s\-\(\)]{10,}$/.test(value.replace(/\s/g, ''))) {
-          newErrors.contactPhone = 'Please enter a valid phone number';
-        } else {
-          delete newErrors.contactPhone;
-        }
-        break;
-      case 'projectDescription':
-        if (!value || typeof value !== 'string' || !value.trim()) {
-          newErrors.projectDescription = 'Project description is required';
-        } else if (value.trim().length < 50) {
-          newErrors.projectDescription = 'Please provide at least 50 characters';
-        } else {
-          delete newErrors.projectDescription;
-        }
-        break;
-      default:
-        delete newErrors[name];
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (touched[name]) {
-      validateField(name, value);
-    }
-  };
-
-  const handleBlur = (name: string) => {
-    setTouched(prev => ({ ...prev, [name]: true }));
-    validateField(name, formData[name as keyof typeof formData]);
-  };
-
-  const canContinue = Boolean(
-    formData.domain &&
-    formData.companyName.trim() &&
-    formData.contactEmail &&
-    formData.contactPhone &&
-    formData.projectDescription.trim().length >= 50 &&
-    formData.selectedApps.length > 0 &&
-    Object.keys(errors).length === 0
-  );
-
-  // App selection functionality
-  const toggleAppSelection = (appKey: string) => {
-    setFormData(prev => {
-      const isAlreadySelected = prev.selectedApps.includes(appKey);
-      if (!isAlreadySelected && prev.selectedApps.length >= MAX_APP_SELECTION) {
-        return prev;
-      }
-
-      return {
-        ...prev,
-        selectedApps: isAlreadySelected
-          ? prev.selectedApps.filter(key => key !== appKey)
-          : [...prev.selectedApps, appKey],
-      };
-    });
-  };
-
-  const getSelectedAppsCount = () => formData.selectedApps.length;
-  const isSelectionLimitReached = getSelectedAppsCount() >= MAX_APP_SELECTION;
-
-  const scrollToForm = () => {
-    formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const onContinue = () => {
-    if (!canContinue) return;
-    navigate('/launch-plan');
-    handleSuccessfulSubmit();
-  };
-
-  const getFieldError = (fieldName: string) => {
-    return touched[fieldName] && errors[fieldName] ? errors[fieldName] : '';
-  };
-
-  // Multi-step form functionality
   const [currentStep, setCurrentStep] = useState(1);
-  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set([]));
+  const [selectedApps, setSelectedApps] = useState<string[]>(initialSelectedApps);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    companyName: '',
+    phone: '',
+    interest: 'Use it in my company',
+    employees: 'Less than 5 employees',
+    appDescription: ''
+  });
 
   const steps = [
-    {
-      id: 1,
-      title: 'Company Details',
-      description: 'Basic information about your company',
-      fields: ['domain', 'companyName', 'industry'],
-      icon: 'fas fa-building',
-    },
-    {
-      id: 2,
-      title: 'App Selection',
-      description: 'Choose the apps you need',
-      fields: ['selectedApps'],
-      icon: 'fas fa-puzzle-piece',
-    },
-    {
-      id: 3,
-      title: 'Contact Information',
-      description: 'How we can reach you',
-      fields: ['contactEmail', 'contactPhone'],
-      icon: 'fas fa-user',
-    },
-    {
-      id: 4,
-      title: 'Project Description',
-      description: 'Tell us about your vision',
-      fields: ['projectDescription'],
-      icon: 'fas fa-lightbulb',
-    },
+    { id: 1, title: 'Personal Info', description: 'Tell us about yourself', icon: User },
+    { id: 2, title: 'Select Apps', description: 'Choose your business apps', icon: Grid3X3 },
+    { id: 3, title: 'Describe Your App', description: 'Tell us your business needs', icon: FileText },
+    { id: 4, title: 'Build Your App', description: 'Ready to launch', icon: Rocket }
   ];
 
-  const getStepFields = (stepId: number) => {
-    return steps.find(step => step.id === stepId)?.fields || [];
-  };
-
-  const isStepValid = (stepId: number) => {
-    const stepFields = getStepFields(stepId);
-    return stepFields.every(field => {
-      const value = formData[field as keyof typeof formData];
-      if (field === 'projectDescription') {
-        return typeof value === 'string' && value.trim().length >= 50;
-      }
-      if (field === 'selectedApps') {
-        return Array.isArray(value) && value.length > 0;
-      }
-      return field === 'domain' || field === 'companyName' || field === 'contactEmail' || field === 'contactPhone'
-        ? (typeof value === 'string' && Boolean(value))
-        : true; // Optional fields
-    });
-  };
-
-  const canGoToStep = (stepId: number) => {
-    // Can go to previous steps or next step if current step is valid
-    if (stepId < currentStep) return true;
-    if (stepId === currentStep + 1) return isStepValid(currentStep);
-    return false;
-  };
-
-  const goToStep = (stepId: number) => {
-    if (canGoToStep(stepId)) {
-      setCurrentStep(stepId);
-      if (isStepValid(currentStep) && !completedSteps.has(currentStep)) {
-        setCompletedSteps(prev => new Set([...Array.from(prev), currentStep]));
-      }
+  useEffect(() => {
+    // Auto-navigate to step 2 if apps are pre-selected
+    if (initialSelectedApps.length > 0 && currentStep === 1) {
+      setCurrentStep(2);
     }
+  }, [initialSelectedApps, currentStep]);
+
+  const toggleAppSelection = (appKey: string) => {
+    setSelectedApps(prev =>
+      prev.includes(appKey)
+        ? prev.filter(key => key !== appKey)
+        : [...prev, appKey]
+    );
   };
 
   const nextStep = () => {
-    if (currentStep < steps.length && isStepValid(currentStep)) {
-      setCompletedSteps(prev => new Set([...Array.from(prev), currentStep]));
-      setCurrentStep(prev => prev + 1);
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(prev => prev - 1);
+      setCurrentStep(currentStep - 1);
     }
   };
 
-  // Check if all steps are completed
-  const allStepsCompleted = () => {
-    return steps.every(step => isStepValid(step.id));
-  };
-
-  const getProgressPercentage = () => {
-    const requiredFields = ['domain', 'companyName', 'contactEmail', 'contactPhone', 'projectDescription'];
-    const filledRequired = requiredFields.filter(field => {
-      const value = formData[field as keyof typeof formData];
-      return field === 'projectDescription' ? (typeof value === 'string' && value.trim().length >= 50) : (typeof value === 'string' && Boolean(value));
-    }).length;
-    const optionalFields = ['industry'];
-    const filledOptional = optionalFields.filter(field => {
-      const value = formData[field as keyof typeof formData];
-      return typeof value === 'string' && Boolean(value);
-    }).length;
-    const filledApps = formData.selectedApps.length > 0 ? 1 : 0;
-
-    const requiredProgress = (filledRequired / requiredFields.length) * 60;
-    const optionalProgress = optionalFields.length ? (filledOptional / optionalFields.length) * 30 : 0;
-    const appsProgress = filledApps * 10;
-    return Math.round(requiredProgress + optionalProgress + appsProgress);
-  };
-
-  // Auto-save functionality
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
-  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const formSectionRef = useRef<HTMLDivElement | null>(null);
-
-  // Load draft on component mount
-  useEffect(() => {
-    const savedDraft = localStorage.getItem('getStartedDraft');
-    if (savedDraft) {
-      try {
-        const parsedData = JSON.parse(savedDraft);
-        const savedTime = new Date(parsedData.timestamp);
-        const hoursSinceSave = (Date.now() - savedTime.getTime()) / (1000 * 60 * 60);
-
-        // Only restore if saved within last 24 hours
-        if (hoursSinceSave < 24) {
-          setFormData({
-            domain: parsedData.domain || '',
-            companyName: parsedData.companyName || '',
-            industry: parsedData.industry || '',
-            contactEmail: parsedData.contactEmail || '',
-            contactPhone: parsedData.contactPhone || '',
-            projectDescription: parsedData.projectDescription || '',
-            selectedApps: parsedData.selectedApps || [],
-          });
-          setLastSaved(savedTime);
-        } else {
-          // Clear old draft
-          localStorage.removeItem('getStartedDraft');
-        }
-      } catch (error) {
-        console.error('Error loading draft:', error);
-        localStorage.removeItem('getStartedDraft');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Navigate to launch plan with all data
+    navigate('/launch-plan', {
+      state: {
+        formData,
+        selectedApps
       }
-    }
-  }, []);
-
-  // Clear draft when form is successfully submitted
-  const handleSuccessfulSubmit = () => {
-    localStorage.removeItem('getStartedDraft');
-    setLastSaved(null);
-  };
-
-  const clearForm = () => {
-    setFormData({
-      domain: '',
-      companyName: '',
-      industry: '',
-      contactEmail: '',
-      contactPhone: '',
-      projectDescription: '',
-      selectedApps: [],
     });
-    setErrors({});
-    setTouched({});
-    setCurrentStep(1);
-    setCompletedSteps(new Set([]));
   };
 
-  const autoSave = useCallback(() => {
-    if (Object.values(formData).some(value => {
-      if (Array.isArray(value)) return value.length > 0;
-      return typeof value === 'string' && value.trim() !== '';
-    })) {
-      setIsSaving(true);
-      const draftData = {
-        ...formData,
-        timestamp: new Date().toISOString(),
-      };
-
-      try {
-        localStorage.setItem('getStartedDraft', JSON.stringify(draftData));
-        setLastSaved(new Date());
-
-        // Simulate save delay for better UX
-        setTimeout(() => {
-          setIsSaving(false);
-        }, 500);
-      } catch (error) {
-        console.error('Error saving draft:', error);
-        setIsSaving(false);
-      }
+  const canProceedToNext = () => {
+    switch (currentStep) {
+      case 1:
+        return formData.name && formData.email && formData.companyName;
+      case 2:
+        return selectedApps.length > 0;
+      case 3:
+        return formData.appDescription.trim().length >= 10;
+      case 4:
+        return true;
+      default:
+        return false;
     }
-  }, [formData]);
+  };
 
-  // Trigger auto-save on form data changes
-  useEffect(() => {
-    if (saveTimeoutRef.current) {
-      clearTimeout(saveTimeoutRef.current);
-    }
-
-    saveTimeoutRef.current = setTimeout(() => {
-      autoSave();
-    }, 2000); // Auto-save after 2 seconds of inactivity
-
-    return () => {
-      if (saveTimeoutRef.current) {
-        clearTimeout(saveTimeoutRef.current);
-      }
-    };
-  }, [formData, autoSave]);
-
-  return (
-    <main className="getstarted-fullpage">
-      {/* Ambient Gradient and Floating Accents */}
-      <div className="background-particles" />
-      <div className="floating-elements">
-        <div className="floating-element floating-1">
-          <i className="fas fa-chart-line"></i>
-        </div>
-        <div className="floating-element floating-2">
-          <i className="fas fa-users"></i>
-        </div>
-        <div className="floating-element floating-3">
-          <i className="fas fa-cog"></i>
-        </div>
-        <div className="floating-element floating-4">
-          <i className="fas fa-lightbulb"></i>
-        </div>
-        <div className="floating-element floating-5">
-          <i className="fas fa-rocket"></i>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className={`hero-section-full ${mounted ? 'in' : ''}`}>
-        <div className="hero-content-full">
-          <h1 className="hero-title-full">
-            <span className={`text-animate ${showTitle ? 'animate-in' : ''}`}>Start Your</span>
-            <span className={`text-animate delay-1 ${showTitle ? 'animate-in' : ''}`}>Digital Journey</span>
-          </h1>
-          <p className={`hero-subtitle-full ${showSubtitle ? 'subtitle-animate' : ''}`}>
-            Transform your business with a professional website that drives results.
-            Tell us about your project and we'll create something exceptional together.
-          </p>
-
-          <div className="hero-meta">
-            <div className="hero-cta">
-              <button
-                type="button"
-                className="btn btn-primary hero-cta-btn"
-                onClick={scrollToForm}
-              >
-                Start your project
-                <i className="fas fa-arrow-right"></i>
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary hero-cta-btn"
-                onClick={() => navigate('/apps')}
-              >
-                Explore apps catalogue
-                <i className="fas fa-th-large"></i>
-              </button>
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="step-fields">
+            <div className="step-heading">
+              <User size={24} />
+              Personal Information
             </div>
 
-            <div className="hero-metrics">
-              <div className="hero-metric-card">
-                <span className="metric-value">250+</span>
-                <span className="metric-label">Projects delivered</span>
-              </div>
-              <div className="hero-metric-card">
-                <span className="metric-value">40%</span>
-                <span className="metric-label">Faster launch</span>
-              </div>
-              <div className="hero-metric-card">
-                <span className="metric-value">24/7</span>
-                <span className="metric-label">Expert support</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="hero-features">
-            <div className="feature-item">
-              <i className="fas fa-lightbulb"></i>
-              <span>Strategy workshop</span>
-            </div>
-            <div className="feature-item">
-              <i className="fas fa-layer-group"></i>
-              <span>Modular architecture</span>
-            </div>
-            <div className="feature-item">
-              <i className="fas fa-mobile-alt"></i>
-              <span>Responsive by default</span>
-            </div>
-            <div className="feature-item">
-              <i className="fas fa-headset"></i>
-              <span>Dedicated success team</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Form Section */}
-      <section className={`form-section-full ${showForm ? 'in' : ''}`}>
-        <div className="form-container-full" ref={formSectionRef}>
-          <div className="form-header-full">
-            <h2 className={`form-title-full ${showFormTitle ? 'title-animate' : ''}`}>
-              <span className="title-word">Get</span>{' '}
-              <span className="title-word">Started</span>
-            </h2>
-          </div>
-
-          <form className="multi-step-form" onSubmit={(e) => e.preventDefault()}>
-            {/* Progress Indicator */}
-            <div className="form-progress-container">
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${getProgressPercentage()}%` }}
-                />
-              </div>
-              <div className="progress-header">
-                <span className="progress-text">{getProgressPercentage()}% Complete</span>
-                <div className="auto-save-status">
-                  {isSaving ? (
-                    <>
-                      <i className="fas fa-spinner fa-spin"></i>
-                      <span>Saving...</span>
-                    </>
-                  ) : lastSaved ? (
-                    <>
-                      <i className="fas fa-check-circle"></i>
-                      <span>Saved {lastSaved.toLocaleTimeString()}</span>
-                    </>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-
-            {/* Step Content */}
-            <div className={`step-content ${showFields ? 'fields-animate' : ''}`}>
-            {currentStep === 1 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-building"></i>
-                  Company Details
-                </h3>
-                <div className="form-row">
-                  <div className="field-group-full">
-                    <label className="field-label-full">
-                      <i className="fas fa-globe"></i>
-                      <span className="label-word">Company Domain</span>
-                      <span className="required">*</span>
-                    </label>
-                    <input
-                      className={`field-input-full ${getFieldError('domain') ? 'error' : ''}`}
-                      placeholder="yourcompany.com"
-                      value={formData.domain}
-                      onChange={(e) => handleInputChange('domain', e.target.value)}
-                      onBlur={() => handleBlur('domain')}
-                      autoFocus
-                      aria-required="true"
-                      aria-invalid={Boolean(getFieldError('domain'))}
-                      aria-describedby={getFieldError('domain') ? 'domain-error' : undefined}
-                    />
-                    {getFieldError('domain') && (
-                      <div className="field-error" id="domain-error" role="alert">
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError('domain')}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="field-group-full">
-                    <label className="field-label-full">
-                      <i className="fas fa-building"></i>
-                      <span className="label-word">Company Name</span>
-                      <span className="required">*</span>
-                    </label>
-                    <input
-                      className={`field-input-full ${getFieldError('companyName') ? 'error' : ''}`}
-                      placeholder="Your Company Name"
-                      value={formData.companyName}
-                      onChange={(e) => handleInputChange('companyName', e.target.value)}
-                      onBlur={() => handleBlur('companyName')}
-                      aria-required="true"
-                      aria-invalid={Boolean(getFieldError('companyName'))}
-                      aria-describedby={getFieldError('companyName') ? 'company-error' : undefined}
-                    />
-                    {getFieldError('companyName') && (
-                      <div className="field-error" id="company-error" role="alert">
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError('companyName')}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
+            <div className="form-fields-full fields-animate">
+              <div className="form-row">
                 <div className="field-group-full">
                   <label className="field-label-full">
-                    <i className="fas fa-industry"></i>
-                    <span className="label-word">Industry</span>
+                    <i className="fa-solid fa-user"></i>
+                    Name <span className="required">*</span>
+                  </label>
+                  <input
+                    required
+                    className="field-input-full"
+                    placeholder="John Doe"
+                    value={formData.name}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                  />
+                </div>
+                <div className="field-group-full">
+                  <label className="field-label-full">
+                    <i className="fa-solid fa-envelope"></i>
+                    Email <span className="required">*</span>
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    className="field-input-full"
+                    placeholder="name@company.com"
+                    value={formData.email}
+                    onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="field-group-full">
+                <label className="field-label-full">
+                  <i className="fa-solid fa-building"></i>
+                  Company Name <span className="required">*</span>
+                </label>
+                <input
+                  required
+                  className="field-input-full"
+                  placeholder="Acme Inc."
+                  value={formData.companyName}
+                  onChange={e => setFormData({ ...formData, companyName: e.target.value })}
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="field-group-full">
+                  <label className="field-label-full">
+                    <i className="fa-solid fa-phone"></i>
+                    Phone Number
+                  </label>
+                  <input
+                    className="field-input-full"
+                    placeholder="+1 (555) 000-0000"
+                    value={formData.phone}
+                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                  />
+                </div>
+                <div className="field-group-full">
+                  <label className="field-label-full">
+                    <i className="fa-solid fa-users"></i>
+                    Company Size
                   </label>
                   <select
                     className="field-input-full field-select"
-                    value={formData.industry}
-                    onChange={(e) => handleInputChange('industry', e.target.value)}
+                    value={formData.employees}
+                    onChange={e => setFormData({ ...formData, employees: e.target.value })}
                   >
-                    <option value="">Select your industry</option>
-                    <option value="technology">Technology</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="finance">Finance</option>
-                    <option value="retail">Retail</option>
-                    <option value="education">Education</option>
-                    <option value="manufacturing">Manufacturing</option>
-                    <option value="real-estate">Real Estate</option>
-                    <option value="hospitality">Hospitality</option>
-                    <option value="consulting">Consulting</option>
-                    <option value="other">Other</option>
+                    <option>Less than 5 employees</option>
+                    <option>5 - 20 employees</option>
+                    <option>20 - 50 employees</option>
+                    <option>50 - 250 employees</option>
+                    <option>250+ employees</option>
                   </select>
                 </div>
               </div>
-            )}
 
-            {currentStep === 2 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-puzzle-piece"></i>
-                  App Selection
-                </h3>
-                <div className="app-selection-container">
-                  <div className="selected-apps-summary">
-                    <div className="apps-count">
-                      <i className="fas fa-check-circle"></i>
-                      <span>
-                        {getSelectedAppsCount() === 0
-                          ? 'No apps selected'
-                          : `${getSelectedAppsCount()} ${getSelectedAppsCount() === 1 ? 'app' : 'apps'} selected`}
-                      </span>
-                    </div>
-                    {isSelectionLimitReached && (
-                      <div className="selection-limit" role="status">
-                        Maximum of {MAX_APP_SELECTION} apps can be selected.
-                      </div>
-                    )}
-                    {getSelectedAppsCount() >= 3 && (
-                      <div className="selection-reward" role="status">
-                        You qualify for a 15-day free trial with 3+ apps selected.
-                      </div>
-                    )}
-                    {getSelectedAppsCount() === 0 && (
-                      <div className="selection-hint">
-                        <i className="fas fa-info-circle"></i>
-                        Please select at least one app to continue
-                      </div>
-                    )}
+              <div className="field-group-full">
+                <label className="field-label-full">
+                  <i className="fa-solid fa-bullseye"></i>
+                  Primary Interest
+                </label>
+                <select
+                  className="field-input-full field-select"
+                  value={formData.interest}
+                  onChange={e => setFormData({ ...formData, interest: e.target.value })}
+                >
+                  <option>Use it in my company</option>
+                  <option>Offer it to my customers</option>
+                  <option>Student / Education</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="step-fields">
+            <div className="step-heading">
+              <Grid3X3 size={24} />
+              Select Your Apps
+            </div>
+
+            <div className="app-selection-container">
+              <div className="selected-apps-summary">
+                <div className="apps-count">
+                  <i className="fa-solid fa-check-circle"></i>
+                  {selectedApps.length} app{selectedApps.length !== 1 ? 's' : ''} selected
+                </div>
+                {selectedApps.length === 0 && (
+                  <div className="selection-hint">
+                    <i className="fa-solid fa-exclamation-triangle"></i>
+                    Please select at least one app
                   </div>
+                )}
+              </div>
 
-                  <div className="apps-categories">
-                    {APP_CATEGORIES.map((category) => (
-                      <div key={category.name} className="apps-category">
-                        <h4 className="category-title">{category.name}</h4>
-                        <div className="apps-grid">
-                          {category.tiles.map((app) => {
-                            const isSelected = formData.selectedApps.includes(app.key);
-                            return (
-                              <div
-                                key={app.key}
-                                className={`app-tile ${isSelected ? 'selected' : ''}`}
-                                onClick={() => toggleAppSelection(app.key)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                  if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    toggleAppSelection(app.key);
-                                  }
-                                }}
-                                aria-pressed={isSelected}
-                                aria-disabled={isSelectionLimitReached && !isSelected}
-                              >
-                                <div className="app-icon" style={{ backgroundColor: app.color }}>
-                                  <i className={app.icon}></i>
-                                </div>
-                                <div className="app-label">{app.label}</div>
-                                {isSelected && (
-                                  <div className="selection-indicator">
-                                    <i className="fas fa-check"></i>
-                                  </div>
-                                )}
+              <div className="apps-categories">
+                {CATEGORIES.map((category) => (
+                  <div key={category.name} className="apps-category">
+                    <h3 className="category-title">{category.name}</h3>
+                    <div className="apps-grid">
+                      {category.tiles.map((app) => {
+                        const isSelected = selectedApps.includes(app.key);
+                        return (
+                          <div
+                            key={app.key}
+                            className={`app-tile ${isSelected ? 'selected' : ''}`}
+                            onClick={() => toggleAppSelection(app.key)}
+                          >
+                            {isSelected && (
+                              <div className="selection-indicator">
+                                <Check size={14} />
                               </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {currentStep === 3 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-user"></i>
-                  Contact Information
-                </h3>
-                <div className="form-row">
-                  <div className="field-group-full">
-                    <label className="field-label-full">
-                      <i className="fas fa-envelope"></i>
-                      <span className="label-word">Contact Email</span>
-                      <span className="required">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      className={`field-input-full ${getFieldError('contactEmail') ? 'error' : ''}`}
-                      placeholder="your@email.com"
-                      value={formData.contactEmail}
-                      onChange={(e) => handleInputChange('contactEmail', e.target.value)}
-                      onBlur={() => handleBlur('contactEmail')}
-                      aria-required="true"
-                      aria-invalid={Boolean(getFieldError('contactEmail'))}
-                      aria-describedby={getFieldError('contactEmail') ? 'email-error' : undefined}
-                    />
-                    {getFieldError('contactEmail') && (
-                      <div className="field-error" id="email-error" role="alert">
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError('contactEmail')}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="field-group-full">
-                    <label className="field-label-full">
-                      <i className="fas fa-phone"></i>
-                      <span className="label-word">Contact Phone</span>
-                      <span className="required">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      className={`field-input-full ${getFieldError('contactPhone') ? 'error' : ''}`}
-                      placeholder="+1 (555) 123-4567"
-                      value={formData.contactPhone}
-                      onChange={(e) => handleInputChange('contactPhone', e.target.value)}
-                      onBlur={() => handleBlur('contactPhone')}
-                      aria-required="true"
-                      aria-invalid={Boolean(getFieldError('contactPhone'))}
-                      aria-describedby={getFieldError('contactPhone') ? 'phone-error' : undefined}
-                    />
-                    {getFieldError('contactPhone') && (
-                      <div className="field-error" id="phone-error" role="alert">
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError('contactPhone')}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {currentStep === 4 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-lightbulb"></i>
-                  Project Description
-                </h3>
-                <div className="field-group-full">
-                  <label className="field-label-full">
-                    <i className="fas fa-edit"></i>
-                    <span className="label-word">Project Description</span>
-                    <span className="required">*</span>
-                    <span className="character-count">
-                      {formData.projectDescription.length}/500
-                    </span>
-                  </label>
-                  <textarea
-                    className={`field-textarea-full ${getFieldError('projectDescription') ? 'error' : ''}`}
-                    placeholder="Describe your business goals, target audience, key features needed, design preferences, and any specific requirements. Please be as detailed as possible to help us create the perfect solution for you..."
-                    rows={6}
-                    maxLength={500}
-                    value={formData.projectDescription}
-                    onChange={(e) => handleInputChange('projectDescription', e.target.value)}
-                    onBlur={() => handleBlur('projectDescription')}
-                    required
-                    aria-required="true"
-                    aria-invalid={Boolean(getFieldError('projectDescription'))}
-                    aria-describedby={getFieldError('projectDescription') ? 'description-error' : 'description-help'}
-                  />
-                  <div className="field-help" id="description-help">
-                    <i className="fas fa-info-circle"></i>
-                    Minimum 50 characters required
-                  </div>
-                  {getFieldError('projectDescription') && (
-                    <div className="field-error" id="description-error" role="alert">
-                      <i className="fas fa-exclamation-circle"></i>
-                      {getFieldError('projectDescription')}
+                            )}
+                            <div
+                              className="app-icon"
+                              style={{ backgroundColor: app.color }}
+                            >
+                              <i className={app.icon}></i>
+                            </div>
+                            <span className="app-label">{app.label}</span>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="step-fields">
+            <div className="step-heading">
+              <FileText size={24} />
+              Describe Your App
+            </div>
+
+            <div className="field-group-full">
+              <label className="field-label-full">
+                <i className="fa-solid fa-file-alt"></i>
+                Business Description <span className="required">*</span>
+              </label>
+              <textarea
+                required
+                className="field-textarea-full"
+                placeholder="Describe your business needs, what you want to achieve with your app, and any specific requirements..."
+                value={formData.appDescription}
+                onChange={e => setFormData({ ...formData, appDescription: e.target.value })}
+                rows={8}
+              />
+              <div className="character-count">
+                {formData.appDescription.length} characters (minimum 10)
+              </div>
+            </div>
+          </div>
+        );
+
+      case 4:
+        return (
+          <div className="step-fields">
+            <div className="step-heading">
+              <Rocket size={24} />
+              Ready to Build Your App
+            </div>
+
+            <div className="text-center">
+              <div className="mb-4">
+                <h4 className="text-success mb-3">
+                  <Check size={32} className="me-2" />
+                  All set! Your app will be built based on your selections.
+                </h4>
+                <p className="text-muted">
+                  We'll use your personal information, selected apps, and business description to create a customized solution.
+                </p>
+              </div>
+
+              <div className="bg-light p-4 rounded mb-4">
+                <h5 className="mb-3">Summary:</h5>
+                <div className="text-start">
+                  <p><strong>Name:</strong> {formData.name}</p>
+                  <p><strong>Company:</strong> {formData.companyName}</p>
+                  <p><strong>Selected Apps:</strong> {selectedApps.join(', ')}</p>
+                  <p><strong>Description:</strong> {formData.appDescription.substring(0, 100)}...</p>
                 </div>
               </div>
-            )}
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="getstarted-fullpage">
+      {/* Background Elements */}
+
+      <div className="hero-section-full in">
+        <div className="hero-content-full">
+          <div className="hero-title-full">
+            <span>Build Your App</span>
+            <span>in Minutes</span>
+          </div>
+          <p className="hero-subtitle-full">
+            Tell us about your business, select the apps you need, and describe your requirements. We'll build a customized solution just for you.
+          </p>
+        </div>
+      </div>
+
+      <div className="form-section-full in">
+        <div className="form-container-full">
+          {/* Progress Indicator */}
+          <div className="form-progress-container">
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${(currentStep / steps.length) * 100}%` }}
+              ></div>
+            </div>
+            <div className="progress-header">
+              <div className="progress-text">
+                Step {currentStep} of {steps.length}: {steps[currentStep - 1].title}
+              </div>
+            </div>
           </div>
 
-          {/* Step Navigation Buttons */}
-          <div className={`form-actions-full ${showButtons ? 'buttons-animate' : ''}`}>
+          {/* Step Navigation */}
+          <div className="step-navigation">
+            {steps.map((step, index) => {
+              const IconComponent = step.icon;
+              const isCompleted = currentStep > step.id;
+              const isActive = currentStep === step.id;
+              const isAccessible = step.id <= currentStep || (step.id === currentStep + 1 && canProceedToNext());
+
+              return (
+                <button
+                  key={step.id}
+                  className={`step-nav-item ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''} ${isAccessible ? 'accessible' : ''}`}
+                  onClick={() => isAccessible && setCurrentStep(step.id)}
+                  disabled={!isAccessible}
+                >
+                  <div className="step-info">
+                    <div className="step-icon">
+                      {isCompleted ? <Check size={16} /> : <IconComponent size={16} />}
+                    </div>
+                    <div className="step-title">{step.title}</div>
+                    <div className="step-description">{step.description}</div>
+                  </div>
+                  {isCompleted && <Check size={16} className="step-check" />}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Step Content */}
+          <div className="step-content">
+            {renderStepContent()}
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="form-actions-full">
             <div className="step-buttons">
               {currentStep > 1 && (
-                <button type="button" className="btn btn-secondary-full" onClick={prevStep}>
-                  <i className="fas fa-arrow-left"></i>
-                  <span className="button-text">Previous</span>
+                <button
+                  type="button"
+                  className="btn-secondary-full"
+                  onClick={prevStep}
+                >
+                  <ChevronLeft size={18} />
+                  Previous
                 </button>
               )}
 
               {currentStep < steps.length ? (
                 <button
                   type="button"
-                  className="btn btn-primary-full"
+                  className="btn-primary-full"
                   onClick={nextStep}
-                  disabled={!isStepValid(currentStep)}
+                  disabled={!canProceedToNext()}
                 >
-                  <span className="button-text">Next Step</span>
-                  <i className="fas fa-arrow-right"></i>
+                  Next
+                  <ChevronRight size={18} />
                 </button>
               ) : (
                 <button
-                  type="submit"
-                  className="btn btn-primary-full brief-continue"
-                  disabled={!allStepsCompleted()}
-                  onClick={onContinue}
+                  type="button"
+                  className="btn-primary-full"
+                  onClick={handleSubmit}
+                  disabled={!canProceedToNext()}
                 >
-                  <i className="fas fa-paper-plane"></i>
-                  <span className="button-text">Start Project</span>
+                  <Rocket size={18} />
+                  Build My App
                 </button>
               )}
             </div>
-
-            <button type="button" className="btn btn-secondary-full clear-btn" onClick={clearForm}>
-              <i className="fas fa-trash"></i>
-              <span className="button-text">Clear Form</span>
-            </button>
           </div>
-        </form>
-      </div>
-    </section>
-  </main>
-);
-};
 
-export default GetStarted;
+          {/* Footer */}
+          <div className="text-center mt-4 small text-muted">
+            By proceeding, you agree to our <Link to="/terms" className="text-muted text-decoration-underline">Terms of Service</Link> and <Link to="/privacy" className="text-muted text-decoration-underline">Privacy Policy</Link>.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

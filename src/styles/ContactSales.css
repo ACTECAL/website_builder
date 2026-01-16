@@ -1,0 +1,469 @@
+/* Odoo.com style contact sales form - Clean and minimal */
+.contact-sales-fullpage {
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #212529;
+  line-height: 1.5;
+}
+
+.contact-sales-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+}
+
+.contact-sales-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .contact-sales-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.contact-sales-aside {
+  position: sticky;
+  top: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .contact-sales-aside {
+    position: static;
+  }
+}
+
+.contact-sales-title {
+  font-size: 2.25rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+  color: #212529;
+}
+
+.contact-sales-lead {
+  margin: 0 0 1.75rem;
+  color: #6c757d;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.contact-sales-aside-card {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 1.25rem 1.25rem;
+}
+
+.contact-sales-aside-kicker {
+  font-size: 0.85rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6c757d;
+  margin-bottom: 0.75rem;
+}
+
+.contact-sales-aside-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #212529;
+}
+
+.contact-sales-aside-list li {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  color: #495057;
+}
+
+/* Clean Hero Section */
+.contact-sales-fullpage .hero-section-full {
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-sales-fullpage .hero-title-full {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.contact-sales-fullpage .hero-subtitle-full {
+  font-size: 1.125rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Clean Form Container */
+.contact-sales-fullpage .form-container-full {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  background: #ffffff;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+}
+
+/* Simple Form Header */
+.contact-sales-fullpage .form-header-full {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contact-sales-fullpage .form-title-full {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.contact-sales-fullpage .form-description-full {
+  color: #6c757d;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Professional Form Fields */
+.contact-sales-fullpage .form-fields-full {
+  margin-bottom: 3rem;
+}
+
+.contact-sales-fullpage .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .contact-sales-fullpage .form-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.contact-sales-fullpage .field-group-full {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-sales-fullpage .field-label-full {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.025em;
+}
+
+.contact-sales-fullpage .field-label-full i {
+  color: #6366f1;
+  font-size: 1rem;
+}
+
+.contact-sales-fullpage .required {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.contact-sales-fullpage .field-input-full,
+.contact-sales-fullpage .field-textarea-full,
+.contact-sales-fullpage .field-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #495057;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.contact-sales-fullpage .field-input-full:focus,
+.contact-sales-fullpage .field-textarea-full:focus,
+.contact-sales-fullpage .field-select:focus {
+  outline: none;
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.25);
+}
+
+.contact-sales-fullpage .field-textarea-full {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.contact-sales-fullpage .field-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  padding-right: 3rem;
+  cursor: pointer;
+}
+
+.contact-sales-fullpage .character-count {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: #6b7280;
+  background: #f9fafb;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  font-weight: 500;
+}
+
+/* Enhanced Action Buttons */
+.contact-sales-fullpage .form-actions-full {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.contact-sales-fullpage .btn-primary-full {
+  background: #6c5ce7;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-sales-fullpage .btn-primary-full:hover:not(:disabled) {
+  background: #5a4fc7;
+}
+
+.contact-sales-fullpage .btn-primary-full:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.contact-sales-fullpage .btn-secondary-full {
+  background: #ffffff;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-sales-fullpage .btn-secondary-full:hover {
+  background: #f8f9fa;
+}
+
+/* Simple Form Footer */
+.contact-sales-fullpage .form-footer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.contact-sales-fullpage .security-badge,
+.contact-sales-fullpage .response-time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  background: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+  font-weight: 500;
+}
+
+.contact-sales-fullpage .security-badge i,
+.contact-sales-fullpage .response-time i {
+  color: #6c5ce7;
+  font-size: 1rem;
+}
+
+/* Clean Success Section */
+.success-section-full {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: #ffffff;
+}
+
+.success-container-full {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background: #ffffff;
+  text-align: center;
+}
+
+.success-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.success-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.success-subtitle {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .contact-sales-fullpage .form-container-full {
+    padding: 3rem 2.5rem;
+  }
+
+  .success-container-full {
+    padding: 3rem 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-sales-fullpage .hero-section-full {
+    padding: 3rem 1rem;
+  }
+
+  .contact-sales-fullpage .hero-title-full {
+    font-size: 2.5rem;
+  }
+
+  .contact-sales-fullpage .form-container-full,
+  .contact-sales-fullpage .success-container-full {
+    padding: 2.5rem 2rem;
+    margin: 1rem;
+    border-radius: 12px;
+  }
+
+  .contact-sales-fullpage .form-row {
+    gap: 2rem;
+  }
+
+  .contact-sales-fullpage .form-footer {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .success-title {
+    font-size: 2.25rem;
+  }
+
+  .contact-sales-fullpage .success-actions {
+    flex-direction: column;
+  }
+
+  .contact-sales-fullpage .btn-primary-full,
+  .contact-sales-fullpage .btn-secondary-full {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-sales-fullpage .form-actions-full {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .success-content {
+    gap: 2rem;
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-sales-fullpage .hero-title-full {
+    font-size: 2rem;
+  }
+
+  .contact-sales-fullpage .form-title-full {
+    font-size: 1.875rem;
+  }
+
+  .success-title {
+    font-size: 1.75rem;
+  }
+
+  .contact-sales-fullpage .form-container-full,
+  .contact-sales-fullpage .success-container-full {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-sales-fullpage .security-badge,
+  .contact-sales-fullpage .response-time {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}

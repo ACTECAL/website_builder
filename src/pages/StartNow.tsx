@@ -59,7 +59,7 @@ export const StartNow: React.FC = () => {
     } catch (err) {
       // Fallback: persist locally so data is not lost
       try {
-        const key = 'nexora_start_now_submissions';
+        const key = 'actyx_start_now_submissions';
         const prev = JSON.parse(localStorage.getItem(key) || '[]');
         prev.push(payload);
         localStorage.setItem(key, JSON.stringify(prev));
@@ -168,24 +168,24 @@ export const StartNow: React.FC = () => {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               <select name="country" value={form.country} onChange={onChange} style={fieldStyle}>
-                {['India','United States','United Kingdom','Germany','France','Spain','Australia','Canada'].map(c => (
+                {['India', 'United States', 'United Kingdom', 'Germany', 'France', 'Spain', 'Australia', 'Canada'].map(c => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
               <select name="language" value={form.language} onChange={onChange} style={fieldStyle}>
-                {['English','Hindi','Spanish','French','German'].map(l => (
+                {['English', 'Hindi', 'Spanish', 'French', 'German'].map(l => (
                   <option key={l} value={l}>{l}</option>
                 ))}
               </select>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               <select name="size" value={form.size} onChange={onChange} style={fieldStyle}>
-                {['1 - 5 employees','6 - 25 employees','26 - 100 employees','100+ employees'].map(s => (
+                {['1 - 5 employees', '6 - 25 employees', '26 - 100 employees', '100+ employees'].map(s => (
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>
               <select name="interest" value={form.interest} onChange={onChange} style={fieldStyle}>
-                {['Use it in my company','Evaluate for a client','Academic use','Other'].map(i => (
+                {['Use it in my company', 'Evaluate for a client', 'Academic use', 'Other'].map(i => (
                   <option key={i} value={i}>{i}</option>
                 ))}
               </select>

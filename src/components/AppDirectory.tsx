@@ -42,8 +42,10 @@ export const AppDirectory: React.FC<AppDirectoryProps> = ({ items = DEFAULT_APPS
   return (
     <section style={{ background: '#f8fafc', padding: '28px 24px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto 10px', textAlign: 'center' }}>
-        <h3 style={{ margin: 0, fontSize: '1.4rem', color: '#0f172a' }}>{title}</h3>
-        <p style={{ margin: '6px 0 16px', color: '#64748b' }}>{subtitle}</p>
+        <div className="text-center mb-5">
+          <h2 className="fw-bold mb-3">Powered by Actyx</h2>
+          <p className="text-muted">Extensible, scalable, and fully integrated.</p>
+        </div>
       </div>
       <div style={{
         display: 'grid',

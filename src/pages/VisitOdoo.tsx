@@ -6,7 +6,7 @@ export const VisitOdoo: React.FC = () => {
   return (
     <main>
       <PageHero
-        title="Visit Odoo"
+        title="Visit Actyx"
         subtitle="Plan a visit to our campus. Meet the team, attend workshops, and explore BizSuite in action."
         emphasize="none"
       />

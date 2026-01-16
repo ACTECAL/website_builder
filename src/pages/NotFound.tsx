@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GothicH1 } from '../components/GothicHeading';
 
 export const NotFound: React.FC = () => {
   return (
-    <main style={{ padding: '32px 24px', textAlign: 'center' }}>
-      <GothicH1 text="404 - Page not found" style={{ fontSize: '2.5rem', marginBottom: '1rem' }} />
-      <p>The page you’re looking for doesn’t exist.</p>
-      <Link to="/" style={{ color: '#6e56cf' }}>Go home</Link>
+    <main className="d-flex flex-column align-items-center justify-content-center min-vh-100 text-center bg-light">
+      <h1 className="display-1 fw-bold text-dark mb-4">404</h1>
+      <p className="lead text-secondary mb-4">The page you’re looking for doesn’t exist.</p>
+      <Link to="/" className="btn btn-primary rounded-pill px-5 shadow-sm">Go Home</Link>
     </main>
   );
 };

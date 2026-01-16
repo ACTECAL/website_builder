@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { ScribbleUnderline, HighlightMarker, ArrowNote } from './Scribbles';
-import { GothicH2, GothicH3, GothicH4 } from './GothicHeading';
-import { DrippingText } from './DrippingText';
+import React, { useState, useEffect } from 'react';
+import { Check } from 'lucide-react';
+import '../styles/Pricing.css';
 
 type PricingTier = {
   name: string;
+  subtitle?: string;
   price: string;
   period: string;
   description: string;
   features: string[];
-  popular?: boolean;
   cta: string;
   href: string;
+  popular?: boolean;
+  highlight?: string;
+  isFree?: boolean;
 };
 
 type Props = {
@@ -19,291 +21,107 @@ type Props = {
 };
 
 export const PricingSection: React.FC<Props> = ({ tiers }) => {
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(true);
 
-  const toNumber = (priceWithCurrency: string) => parseFloat(priceWithCurrency.replace(/[^0-9.]/g, '')) || 0;
+  useEffect(() => {
+    // Create floating particles
+    const createParticles = () => {
+      const container = document.querySelector('.pricing-particles');
+      if (!container) return;
 
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+      // Clear existing particles
+      container.innerHTML = '';
 
-  const getMonthlyDisplay = (baseMonthly: number, annual: boolean) => {
-    const monthly = annual ? baseMonthly * 0.8 : baseMonthly;
-    return `${formatCurrency(monthly)}`;
-  };
+      // Create new particles
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'pricing-particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 15}s`;
+        particle.style.animationDuration = `${15 + Math.random() * 10}s`;
+        container.appendChild(particle);
+      }
+    };
 
-  const getYearlyTotal = (baseMonthly: number) => {
-    const yearly = baseMonthly * 0.8 * 12;
-    return `${formatCurrency(yearly)}`;
-  };
+    createParticles();
+  }, []);
 
   return (
-    <section style={{ 
-      padding: '72px 24px', 
-      background: 'var(--surface)'
-    }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 60 }}>
-          <GothicH2 
-            text="Simple Transparent Pricing"
-            style={{ 
-              fontSize: 'clamp(2rem, 4vw, 3rem)', 
-              margin: '0 0 20px'
-            }}
-          />
-          <DrippingText 
-            text="Choose the perfect plan for your team. All plans include a 14-day free trial."
-            style={{ 
-              fontSize: '1.2rem', 
-              maxWidth: 600,
-              margin: '0 auto 40px',
-              lineHeight: 1.6,
-              color: '#4a5568'
-            }}
-          />
-
-          {/* Billing toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
-            <div style={{
-              display: 'inline-flex',
-              background: 'white',
-              borderRadius: 999,
-              padding: 4,
-              boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
-              border: '1px solid rgba(0,0,0,0.06)'
-            }}>
-              <button onClick={() => setIsAnnual(false)} style={{
-                padding: '8px 16px',
-                border: 'none',
-                borderRadius: 999,
-                background: !isAnnual ? '#111827' : 'transparent',
-                color: !isAnnual ? '#fff' : '#111827',
-                cursor: 'pointer',
-                fontWeight: 700
-              }}>Monthly</button>
-              <button onClick={() => setIsAnnual(true)} style={{
-                padding: '8px 16px',
-                border: 'none',
-                borderRadius: 999,
-                background: isAnnual ? '#111827' : 'transparent',
-                color: isAnnual ? '#fff' : '#111827',
-                cursor: 'pointer',
-                fontWeight: 700
-              }}>Annual</button>
-            </div>
-            <span style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              padding: '6px 10px',
-              background: 'rgba(255,107,0,0.12)',
-              color: 'var(--color-primary)',
-              borderRadius: 999,
-              fontWeight: 800,
-              fontSize: '0.8rem'
-            }}>Save 20%</span>
+    <section className="pricing-page">
+      <div className="pricing-particles"></div>
+      
+      <div className="pricing-header">
+        <div className="pricing-header-inner">
+          <h1 className="pricing-title">Pricing</h1>
+          <p className="pricing-subtitle">Open Source. No credit card required. Instant access.</p>
+          <div className="pricing-toggle">
+            <button
+              className={`pricing-toggle-btn ${!isAnnual ? 'active' : ''}`}
+              onClick={() => setIsAnnual(false)}
+            >
+              Monthly
+            </button>
+            <button
+              className={`pricing-toggle-btn ${isAnnual ? 'active' : ''}`}
+              onClick={() => setIsAnnual(true)}
+            >
+              Yearly <span className="pricing-toggle-discount">-20%</span>
+            </button>
           </div>
         </div>
+      </div>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-          gap: 30,
-          alignItems: 'start'
-        }}>
-          {tiers.map((tier, idx) => {
-            const baseMonthly = toNumber(tier.price);
-            const monthlyDisplay = getMonthlyDisplay(baseMonthly, isAnnual);
-            const yearlyDisplay = getYearlyTotal(baseMonthly);
-
-            return (
-              <div key={idx} style={{ 
-                background: 'white',
-                borderRadius: 20,
-                padding: 40,
-                boxShadow: '0 16px 50px rgba(0,0,0,0.08)',
-                border: tier.popular ? '2px solid var(--color-primary)' : '1px solid rgba(0,0,0,0.06)',
-                position: 'relative',
-                transition: 'all 0.3s ease'
-              }} onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 22px 70px rgba(0,0,0,0.14)';
-              }} onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 16px 50px rgba(0,0,0,0.08)';
-              }}>
-                
-                {tier.popular && (
-                  <div style={{
-                    position: 'absolute',
-                    top: -12,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'var(--color-primary)',
-                    color: 'white',
-                    padding: '8px 24px',
-                    borderRadius: 20,
-                    fontSize: '0.9rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>
-                    Most Popular
-                  </div>
+      <div className="pricing-grid">
+        {tiers.map((tier, idx) => (
+          <div key={idx} className={`pricing-card ${tier.popular ? 'popular' : ''}`}>
+            {tier.highlight && (
+              <div className="pricing-badge">{tier.highlight}</div>
+            )}
+            <div className="pricing-card-body">
+              <div>
+                <h3 className="pricing-name">{tier.name}</h3>
+                {tier.subtitle && (
+                  <p className="pricing-subtitle">{tier.subtitle}</p>
                 )}
-
-                <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                  <GothicH3 
-                    text={tier.name}
-                    style={{ 
-                      fontSize: '1.5rem',
-                      margin: '0 0 12px'
-                    }}
-                  />
-                  
-                  <div style={{ marginBottom: 8 }}>
-                    <span style={{
-                      fontSize: '3rem',
-                      fontWeight: 800,
-                      color: 'var(--color-primary)'
-                    }}>
-                      <span className="wiggle">{monthlyDisplay}</span>
-                    </span>
-                    <span style={{
-                      fontSize: '1.1rem',
-                      color: '#4a5568',
-                      marginLeft: 8
-                    }}>
-                      /month
-                    </span>
-                  </div>
-
-                  {isAnnual && (
-                    <div style={{ position: 'relative', display: 'inline-block' }}>
-                      <ArrowNote text={`Save 20% → ${yearlyDisplay}/yr`} style={{ position: 'absolute', right: -20, top: -20 }} />
-                    </div>
+                <div className="pricing-price-row">
+                  <span className="pricing-price">
+                    {isAnnual && !tier.isFree && tier.price !== 'Free' ? (parseFloat(tier.price.replace(/[^\d.]/g, '')) * 0.8).toFixed(0) : tier.price}
+                  </span>
+                  {tier.price !== 'Free' && (
+                    <span className="pricing-period">/{tier.period}</span>
                   )}
-                  
-                  <p style={{
-                    color: '#4a5568',
-                    lineHeight: 1.6,
-                    margin: 12
-                  }}>
-                    {tier.description}
-                  </p>
                 </div>
-
-                <ul style={{ 
-                  margin: '0 0 32px', 
-                  paddingLeft: 0,
-                  listStyle: 'none'
-                }}>
-                  {tier.features.map((feature, featureIdx) => (
-                    <li key={featureIdx} style={{ 
-                      marginBottom: 16,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 12,
-                      color: '#4a5568'
-                    }}>
-                      <div style={{
-                        width: 20,
-                        height: 20,
-                        borderRadius: '50%',
-                        background: 'var(--color-primary)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0
-                      }}>
-                        <span style={{ color: 'white', fontSize: '0.8rem' }}>✓</span>
-                      </div>
-                      <span style={{ fontSize: '0.95rem' }}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a href={tier.href} style={{
-                  display: 'block',
-                  width: '100%',
-                  padding: '16px 24px',
-                  background: tier.popular ? 'var(--color-primary)' : 'transparent',
-                  color: tier.popular ? 'white' : 'var(--color-primary)',
-                  textDecoration: 'none',
-                  borderRadius: 12,
-                  textAlign: 'center',
-                  fontWeight: 700,
-                  fontSize: '1rem',
-                  border: '2px solid var(--color-primary)',
-                  transition: 'all 0.3s ease'
-                }} onMouseEnter={(e) => {
-                  if (!tier.popular) { e.currentTarget.style.background = 'var(--color-primary)'; e.currentTarget.style.color = 'white'; }
-                }} onMouseLeave={(e) => {
-                  if (!tier.popular) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-primary)'; }
-                }}>
-                  {tier.cta}
-                </a>
+                {isAnnual && !tier.isFree && tier.price !== 'Free' && (
+                  <p className="pricing-billed">billed annually</p>
+                )}
               </div>
-            );
-          })}
-        </div>
 
-        {/* FAQ section */}
-        <div style={{
-          marginTop: 80,
-          textAlign: 'center'
-        }}>
-          <GothicH3 
-            text="Frequently Asked Questions"
-            style={{
-              fontSize: '1.5rem',
-              margin: '0 0 16px'
-            }}
-          />
-          <DrippingText 
-            text="Can't find what you're looking for? Contact our sales team"
-            style={{
-              margin: '0 0 32px',
-              color: '#4a5568'
-            }}
-          />
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: 24,
-            maxWidth: 800,
-            margin: '0 auto'
-          }}>
-            {[
-              { q: 'Can I change plans anytime?', a: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.' },
-              { q: 'Is there a free trial?', a: 'All plans include a 14-day free trial with full access to all features.' },
-              { q: 'What payment methods do you accept?', a: 'We accept all major credit cards, PayPal, and bank transfers for annual plans.' }
-            ].map((faq, idx) => (
-              <div key={idx} style={{
-                background: 'white',
-                padding: 24,
-                borderRadius: 12,
-                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-                textAlign: 'left'
-              }}>
-                <GothicH4 
-                  text={faq.q}
-                  style={{
-                    fontSize: '1rem',
-                    margin: '0 0 8px'
-                  }}
-                />
-                <p style={{
-                  fontSize: '0.9rem',
-                  color: '#4a5568',
-                  margin: 0,
-                  lineHeight: 1.5
-                }}>
-                  {faq.a}
-                </p>
-              </div>
-            ))}
+              <ul className="pricing-features">
+                {tier.features.map((feat, fIdx) => (
+                  <li key={fIdx} className="pricing-feature">
+                    <Check size={20} className="pricing-feature-icon" />
+                    <span className="pricing-feature-text">{feat}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={tier.href}
+                className="pricing-cta"
+              >
+                {tier.cta}
+              </a>
+            </div>
           </div>
+        ))}
+      </div>
+
+      <div className="pricing-trust">
+        <p className="pricing-trust-text">Trusted by <strong>7 million</strong> users worldwide</p>
+        <div className="pricing-logos">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="pricing-logo-placeholder"></div>
+          ))}
         </div>
       </div>
     </section>

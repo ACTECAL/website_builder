@@ -1,0 +1,669 @@
+/* Infinite Design System - Beyond Dimensional */
+
+:root {
+    /* Infinite Typography System */
+    --font-infinite: 'Inter Display', 'Inter', -apple-system, sans-serif;
+    --font-mono-infinite: 'JetBrains Mono Variable', 'SF Mono', monospace;
+    
+    /* Infinite Fluid Typography */
+    --text-infinite-xs: clamp(0.375rem, 0.3vw, 0.5rem);
+    --text-infinite-sm: clamp(0.5rem, 0.4vw, 0.625rem);
+    --text-infinite-base: clamp(0.625rem, 0.5vw, 0.75rem);
+    --text-infinite-lg: clamp(0.75rem, 0.6vw, 0.875rem);
+    --text-infinite-xl: clamp(0.875rem, 0.7vw, 1rem);
+    --text-infinite-2xl: clamp(1rem, 0.8vw, 1.125rem);
+    --text-infinite-3xl: clamp(1.125rem, 0.9vw, 1.25rem);
+    --text-infinite-4xl: clamp(1.25rem, 1vw, 1.5rem);
+    --text-infinite-5xl: clamp(1.5rem, 1.2vw, 1.75rem);
+    --text-infinite-6xl: clamp(1.75rem, 1.4vw, 2rem);
+    --text-infinite-7xl: clamp(2rem, 1.6vw, 2.25rem);
+    --text-infinite-8xl: clamp(2.25rem, 1.8vw, 2.5rem);
+    --text-infinite-9xl: clamp(2.5rem, 2vw, 2.75rem);
+    --text-infinite-10xl: clamp(2.75rem, 2.2vw, 3rem);
+    
+    /* Infinite Font Weights */
+    --font-infinite-thin: 100;
+    --font-infinite-extralight: 200;
+    --font-infinite-light: 300;
+    --font-infinite-regular: 400;
+    --font-infinite-medium: 500;
+    --font-infinite-semibold: 600;
+    --font-infinite-bold: 700;
+    --font-infinite-extrabold: 800;
+    --font-infinite-black: 900;
+    
+    /* Infinite Color System */
+    --infinite-white: #ffffff;
+    --infinite-black: #000000;
+    
+    /* Infinite Neutral Scale */
+    --infinite-gray-50: #fafbfc;
+    --infinite-gray-100: #f3f4f6;
+    --infinite-gray-200: #e5e7eb;
+    --infinite-gray-300: #d1d5db;
+    --infinite-gray-400: #9ca3af;
+    --infinite-gray-500: #6b7280;
+    --infinite-gray-600: #4b5563;
+    --infinite-gray-700: #374151;
+    --infinite-gray-800: #1f2937;
+    --infinite-gray-900: #111827;
+    
+    /* Infinite Primary - Stellar Blue */
+    --infinite-primary-50: #eff6ff;
+    --infinite-primary-100: #dbeafe;
+    --infinite-primary-200: #bfdbfe;
+    --infinite-primary-300: #93c5fd;
+    --infinite-primary-400: #60a5fa;
+    --infinite-primary-500: #3b82f6;
+    --infinite-primary-600: #2563eb;
+    --infinite-primary-700: #1d4ed8;
+    --infinite-primary-800: #1e40af;
+    --infinite-primary-900: #1e3a8a;
+    
+    /* Infinite Accent - Cosmic Purple */
+    --infinite-accent-50: #faf5ff;
+    --infinite-accent-100: #ede9fe;
+    --infinite-accent-200: #ddd6fe;
+    --infinite-accent-300: #c4b5fd;
+    --infinite-accent-400: #a78bfa;
+    --infinite-accent-500: #8b5cf6;
+    --infinite-accent-600: #7c3aed;
+    --infinite-accent-700: #6d28d9;
+    --infinite-accent-800: #5b21b6;
+    --infinite-accent-900: #4c1d95;
+    
+    /* Infinite Success - Emerald */
+    --infinite-success-50: #ecfdf5;
+    --infinite-success-100: #d1fae5;
+    --infinite-success-200: #a7f3d0;
+    --infinite-success-300: #6ee7b7;
+    --infinite-success-400: #34d399;
+    --infinite-success-500: #10b981;
+    --infinite-success-600: #059669;
+    --infinite-success-700: #047857;
+    --infinite-success-800: #065f46;
+    --infinite-success-900: #064e3b;
+    
+    /* Infinite Warning - Solar Orange */
+    --infinite-warning-50: #fffbeb;
+    --infinite-warning-100: #fef3c7;
+    --infinite-warning-200: #fde68a;
+    --infinite-warning-300: #fcd34d;
+    --infinite-warning-400: #fbbf24;
+    --infinite-warning-500: #f59e0b;
+    --infinite-warning-600: #d97706;
+    --infinite-warning-700: #b45309;
+    --infinite-warning-800: #92400e;
+    --infinite-warning-900: #78350f;
+    
+    /* Infinite Error - Rose */
+    --infinite-error-50: #fef2f2;
+    --infinite-error-100: #fee2e2;
+    --infinite-error-200: #fecaca;
+    --infinite-error-300: #fca5a5;
+    --infinite-error-400: #f87171;
+    --infinite-error-500: #ef4444;
+    --infinite-error-600: #dc2626;
+    --infinite-error-700: #b91c1c;
+    --infinite-error-800: #991b1b;
+    --infinite-error-900: #7f1d1d;
+    
+    /* Infinite Info - Sky */
+    --infinite-info-50: #ecfeff;
+    --infinite-info-100: #cffafe;
+    --infinite-info-200: #a5f3fc;
+    --infinite-info-300: #67e8f9;
+    --infinite-info-400: #22d3ee;
+    --infinite-info-500: #06b6d4;
+    --infinite-info-600: #0891b2;
+    --infinite-info-700: #0c4a6e;
+    --infinite-info-800: #075985;
+    --infinite-info-900: #0c4a6e;
+    
+    /* Infinite Spacing System */
+    --infinite-space-0: 0;
+    --infinite-space-px: 1px;
+    --infinite-space-0_5: 0.125rem;
+    --infinite-space-1: 0.25rem;
+    --infinite-space-1_5: 0.375rem;
+    --infinite-space-2: 0.5rem;
+    --infinite-space-2_5: 0.625rem;
+    --infinite-space-3: 0.75rem;
+    --infinite-space-3_5: 0.875rem;
+    --infinite-space-4: 1rem;
+    --infinite-space-5: 1.25rem;
+    --infinite-space-6: 1.5rem;
+    --infinite-space-8: 2rem;
+    --infinite-space-10: 2.5rem;
+    --infinite-space-12: 3rem;
+    --infinite-space-16: 4rem;
+    --infinite-space-20: 5rem;
+    --infinite-space-24: 6rem;
+    --infinite-space-32: 8rem;
+    --infinite-space-40: 10rem;
+    --infinite-space-48: 12rem;
+    --infinite-space-64: 16rem;
+    --infinite-space-80: 20rem;
+    --infinite-space-96: 24rem;
+    --infinite-space-128: 32rem;
+    
+    /* Infinite Border Radius */
+    --infinite-radius-none: 0;
+    --infinite-radius-sm: 0.125rem;
+    --infinite-radius-base: 0.25rem;
+    --infinite-radius-md: 0.375rem;
+    --infinite-radius-lg: 0.5rem;
+    --infinite-radius-xl: 0.75rem;
+    --infinite-radius-2xl: 1rem;
+    --infinite-radius-3xl: 1.5rem;
+    --infinite-radius-4xl: 2rem;
+    --infinite-radius-full: 9999px;
+    
+    /* Infinite Shadow System */
+    --infinite-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --infinite-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --infinite-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --infinite-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --infinite-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --infinite-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --infinite-shadow-2xl: 0 50px 100px -20px rgba(0, 0, 0, 0.25);
+    
+    /* Infinite Colored Shadows */
+    --infinite-shadow-primary: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+    --infinite-shadow-accent: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
+    --infinite-shadow-success: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+    --infinite-shadow-warning: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
+    --infinite-shadow-error: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
+    --infinite-shadow-info: 0 10px 15px -3px rgba(6, 182, 212, 0.3);
+    
+    /* Infinite Glow Effects */
+    --infinite-glow-primary: 0 0 30px rgba(59, 130, 246, 1),
+                        0 0 60px rgba(59, 130, 246, 0.8),
+                        0 0 90px rgba(59, 130, 246, 0.6),
+                        0 0 120px rgba(59, 130, 246, 0.4);
+    --infinite-glow-accent: 0 0 30px rgba(139, 92, 246, 1),
+                        0 0 60px rgba(139, 92, 246, 0.8),
+                        0 0 90px rgba(139, 92, 246, 0.6),
+                        0 0 120px rgba(139, 92, 246, 0.4);
+    --infinite-glow-success: 0 0 30px rgba(16, 185, 129, 1),
+                        0 0 60px rgba(16, 185, 129, 0.8),
+                        0 0 90px rgba(16, 185, 129, 0.6),
+                        0 0 120px rgba(16, 185, 129, 0.4);
+    --infinite-glow-warning: 0 0 30px rgba(245, 158, 11, 1),
+                        0 0 60px rgba(245, 158, 11, 0.8),
+                        0 0 90px rgba(245, 158, 11, 0.6),
+                        0 0 120px rgba(245, 158, 11, 0.4);
+    --infinite-glow-error: 0 0 30px rgba(239, 68, 68, 1),
+                        0 0 60px rgba(239, 68, 68, 0.8),
+                        0 0 90px rgba(239, 68, 68, 0.6),
+                        0 0 120px rgba(239, 68, 68, 0.4);
+    
+    /* Infinite Transition System */
+    --infinite-transition-instant: 0ms;
+    --infinite-transition-immediate: 50ms cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-transition-slower: 750ms cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-transition-epic: 2000ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Infinite Animation Easing */
+    --infinite-ease-linear: linear;
+    --infinite-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --infinite-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --infinite-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --infinite-ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --infinite-ease-in-out-circ: cubic-bezier(0.87, 0, 0.13, 1);
+    --infinite-ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --infinite-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --infinite-ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Infinite Z-Index Scale */
+    --infinite-z-negative: -1;
+    --infinite-z-base: 0;
+    --infinite-z-raised: 1;
+    --infinite-z-dropdown: 1000;
+    --infinite-z-sticky: 1020;
+    --infinite-z-fixed: 1030;
+    --infinite-z-modal-backdrop: 1040;
+    --infinite-z-modal: 1050;
+    --infinite-z-popover: 1060;
+    --infinite-z-tooltip: 1070;
+    --infinite-z-toast: 1080;
+    --infinite-z-maximum: 2147483647;
+    
+    /* Infinite Gradients */
+    --infinite-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #fbbf24 75%, #f59e0b 100%);
+    --infinite-gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #fbbf24 50%, #f59e0b 100%);
+    --infinite-gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 25%, #fbbf24 50%, #f59e0b 100%);
+    --infinite-gradient-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 25%, #fbbf24 50%, #f59e0b 100%);
+    --infinite-gradient-error: linear-gradient(135deg, #ef4444 0%, #f87171 25%, #fbbf24 50%, #f59e0b 100%);
+    --infinite-gradient-info: linear-gradient(135deg, #06b6d4 0%, #22d3ee 25%, #fbbf24 50%, #f59e0b 100%);
+    
+    /* Infinite Radial Gradients */
+    --infinite-gradient-radial-primary: radial-gradient(circle at 50% 50%, #667eea 0%, #764ba2 25%, #f093fb 50%, #fbbf24 75%, #f59e0b 100%);
+    --infinite-gradient-radial-accent: radial-gradient(circle at 50% 50%, #f093fb 0%, #f5576c 25%, #fbbf24 50%, #f59e0b 100%);
+    
+    /* Infinite Glass Morphism */
+    --infinite-glass-bg: rgba(255, 255, 255, 0.01);
+    --infinite-glass-border: rgba(255, 255, 255, 0.02);
+    --infinite-glass-blur: blur(50px) saturate(180%);
+    
+    /* Infinite Neon Effects */
+    --infinite-neon-primary: 0 0 20px rgba(102, 126, 234, 1),
+                        0 0 40px rgba(102, 126, 234, 0.9),
+                        0 0 60px rgba(102, 126, 234, 0.8),
+                        0 0 80px rgba(102, 126, 234, 0.7),
+                        0 0 100px rgba(102, 126, 234, 0.6);
+    --infinite-neon-accent: 0 0 20px rgba(245, 87, 234, 1),
+                        0 0 40px rgba(245, 87, 234, 0.9),
+                        0 0 60px rgba(245, 87, 234, 0.8),
+                        0 0 80px rgba(245, 87, 234, 0.7),
+                        0 0 100px rgba(245, 87, 234, 0.6);
+    
+    /* Infinite Aurora Effects */
+    --infinite-aurora-primary: radial-gradient(ellipse at top, #667eea 0%, transparent 50%),
+                              radial-gradient(ellipse at bottom, #764ba2 0%, transparent 50%),
+                              radial-gradient(ellipse at left, #f093fb 0%, transparent 50%),
+                              radial-gradient(ellipse at right, #fbbf24 0%, transparent 50%);
+    --infinite-aurora-accent: radial-gradient(ellipse at top, #f093fb 0%, transparent 50%),
+                              radial-gradient(ellipse at bottom, #f5576c 0%, transparent 50%),
+                              radial-gradient(ellipse at left, #fbbf24 0%, transparent 50%),
+                              radial-gradient(ellipse at right, #f59e0b 0%, transparent 50%);
+    
+    /* Infinite Particle System */
+    --infinite-particle-size: 0.5px;
+    --infinite-particle-color-primary: rgba(102, 126, 234, 1);
+    --infinite-particle-color-accent: rgba(245, 87, 234, 1);
+    --infinite-particle-color-success: rgba(16, 185, 129, 1);
+    --infinite-particle-color-warning: rgba(245, 158, 11, 1);
+    --infinite-particle-color-error: rgba(239, 68, 68, 1);
+    --infinite-particle-duration: 20s;
+    --infinite-particle-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Infinite Keyframe Animations */
+@keyframes infinite-float {
+    0%, 100% { transform: translateY(0px) translateZ(0); }
+    25% { transform: translateY(-20px) translateZ(15px); }
+    50% { transform: translateY(-40px) translateZ(30px); }
+    75% { transform: translateY(-20px) translateZ(15px); }
+}
+
+@keyframes infinite-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 0.6;
+    }
+}
+
+@keyframes infinite-rotate-3d {
+    0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg); }
+}
+
+@keyframes infinite-morph {
+    0%, 100% { 
+        border-radius: 50%;
+        transform: rotate(0deg) scale(1);
+    }
+    25% { 
+        border-radius: 15%;
+        transform: rotate(90deg) scale(1.15);
+    }
+    50% { 
+        border-radius: 0%;
+        transform: rotate(180deg) scale(1.3);
+    }
+    75% { 
+        border-radius: 15%;
+        transform: rotate(270deg) scale(1.15);
+    }
+}
+
+@keyframes infinite-slide-in-blur {
+    0% {
+        opacity: 0;
+        transform: scale(0.6) translateY(50px);
+        filter: blur(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+}
+
+@keyframes infinite-glitch-text {
+    0%, 100% {
+        text-shadow: 
+            0.05em 0 0 rgba(102, 126, 234, 1),
+            -0.05em -0.025em 0 rgba(245, 87, 234, 1),
+            0.025em 0.05em 0 rgba(234, 234, 234, 1);
+    }
+    25% {
+        text-shadow: 
+            -0.05em -0.025em 0 rgba(245, 87, 234, 1),
+            0.025em 0.05em 0 rgba(234, 234, 234, 1),
+            0.05em 0 0 rgba(102, 126, 234, 1);
+    }
+}
+
+@keyframes infinite-shimmer {
+    0% { background-position: -4000px 0; }
+    100% { background-position: 4000px 0; }
+}
+
+@keyframes infinite-wave {
+    0% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(-40px) translateY(-20px); }
+    50% { transform: translateX(0) translateY(0); }
+    75% { transform: translateX(40px) translateY(-20px); }
+    100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes infinite-aurora-move {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: rotate(90deg) scale(1.3);
+        opacity: 0.7;
+    }
+    50% {
+        transform: rotate(180deg) scale(0.8);
+        opacity: 0.7;
+    }
+    75% {
+        transform: rotate(270deg) scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+@keyframes infinite-particle-float {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(0deg) scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) rotate(90deg) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(90vh) rotate(180deg) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) rotate(270deg) scale(0);
+    }
+}
+
+/* Infinite Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: var(--font-infinite);
+    font-size: var(--text-infinite-base);
+    line-height: 1.7;
+    color: var(--infinite-gray-800);
+    background: var(--infinite-gray-50);
+    margin: 0;
+    padding: 0;
+    transition: color var(--infinite-transition-normal), background-color var(--infinite-transition-normal);
+}
+
+/* Infinite Component Classes */
+.infinite-card {
+    background: var(--infinite-glass-bg);
+    border: 1px solid var(--infinite-glass-border);
+    backdrop-filter: var(--infinite-glass-blur);
+    border-radius: var(--infinite-radius-3xl);
+    box-shadow: var(--infinite-shadow-xl);
+    transition: all var(--infinite-transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.infinite-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.02) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.infinite-card:hover {
+    transform: translateY(-12px) scale(1.08);
+    box-shadow: var(--infinite-shadow-2xl);
+}
+
+.infinite-btn-neon {
+    background: transparent;
+    border: 4px solid var(--infinite-primary-500);
+    color: var(--infinite-primary-500);
+    border-radius: var(--infinite-radius-2xl);
+    padding: var(--infinite-space-4) var(--infinite-space-10);
+    font-weight: var(--font-infinite-bold);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--infinite-transition-normal);
+    box-shadow: var(--infinite-neon-primary);
+}
+
+.infinite-btn-neon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, 
+        var(--infinite-primary-500) 0%, 
+        var(--infinite-accent-500) 50%, 
+        var(--infinite-primary-500) 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--infinite-transition-epic);
+}
+
+.infinite-btn-neon:hover::before {
+    opacity: 1;
+}
+
+.infinite-btn-neon:hover {
+    transform: translateY(-6px) scale(1.15);
+    box-shadow: var(--infinite-glow-primary);
+    border-color: var(--infinite-accent-400);
+}
+
+.infinite-input-glass {
+    background: var(--infinite-glass-bg);
+    border: 1px solid var(--infinite-glass-border);
+    backdrop-filter: var(--infinite-glass-blur);
+    border-radius: var(--infinite-radius-2xl);
+    color: var(--infinite-gray-800);
+    padding: var(--infinite-space-4) var(--infinite-space-8);
+    font-size: var(--text-infinite-base);
+    transition: all var(--infinite-transition-normal);
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.infinite-input-glass:focus {
+    outline: none;
+    border-color: var(--infinite-primary-400);
+    box-shadow: 
+        inset 0 0 4px rgba(255, 255, 255, 0.2),
+        0 0 0 8px var(--infinite-primary-200);
+}
+
+.infinite-container-aurora {
+    position: relative;
+    background: var(--infinite-aurora-primary);
+    border-radius: var(--infinite-radius-4xl);
+    overflow: hidden;
+}
+
+.infinite-container-aurora::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 75%
+    );
+    animation: infinite-shimmer 5s infinite;
+}
+
+.infinite-morph-element {
+    width: 200px;
+    height: 200px;
+    background: var(--infinite-gradient-primary);
+    border-radius: var(--infinite-radius-4xl);
+    animation: infinite-morph 8s var(--infinite-ease-in-out) infinite;
+    box-shadow: var(--infinite-shadow-primary);
+}
+
+.infinite-text-glow {
+    color: var(--infinite-primary-600);
+    font-weight: var(--font-infinite-bold);
+    text-shadow: var(--infinite-glow-primary);
+    animation: infinite-pulse 4s var(--infinite-ease-in-out) infinite;
+}
+
+.infinite-particle-field {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--infinite-gray-900) 0%, var(--infinite-gray-800) 100%);
+}
+
+.infinite-particle {
+    position: absolute;
+    width: var(--infinite-particle-size);
+    height: var(--infinite-particle-size);
+    background: var(--infinite-particle-color-primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: infinite-particle-float var(--infinite-particle-duration) var(--infinite-particle-timing) infinite;
+}
+
+.infinite-particle:nth-child(2n) {
+    background: var(--infinite-particle-color-accent);
+    animation-delay: 500ms;
+    animation-duration: calc(var(--infinite-particle-duration) * 1.5);
+}
+
+.infinite-particle:nth-child(3n) {
+    background: var(--infinite-particle-color-success);
+    animation-delay: 1000ms;
+}
+
+.infinite-particle:nth-child(4n) {
+    background: var(--infinite-particle-color-warning);
+    animation-delay: 1500ms;
+}
+
+.infinite-particle:nth-child(5n) {
+    background: var(--infinite-particle-color-error);
+    animation-delay: 2000ms;
+}
+
+.infinite-loading-shimmer {
+    background: linear-gradient(90deg,
+        var(--infinite-gray-100) 0px,
+        var(--infinite-gray-50) 60px,
+        var(--infinite-gray-100) 120px,
+        var(--infinite-gray-50) 180px
+    );
+    background-size: 400% 100%;
+    animation: infinite-shimmer 3s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .infinite-card {
+        border-radius: var(--infinite-radius-2xl);
+    }
+    
+    .infinite-morph-element {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .infinite-btn-neon {
+        padding: var(--infinite-space-3) var(--infinite-space-8);
+        font-size: var(--text-infinite-sm);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus Management */
+.infinite-focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 8px var(--infinite-primary-500);
+    outline-offset: 4px;
+}
+
+/* Selection Styles */
+::selection {
+    background: var(--infinite-primary-600);
+    color: var(--infinite-white);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--infinite-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--infinite-gray-400);
+    border-radius: var(--infinite-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--infinite-gray-500);
+}
+
+/* Performance Optimizations */
+.infinite-gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+.infinite-smooth-scroll {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}

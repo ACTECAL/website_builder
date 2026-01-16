@@ -314,20 +314,20 @@ else:
 
   const wrapperStyle: React.CSSProperties = isWide
     ? {
-        display: 'grid',
-        gridTemplateColumns: 'minmax(240px, 280px) 1fr',
-        gap: 28
-      }
+      display: 'grid',
+      gridTemplateColumns: 'minmax(240px, 280px) 1fr',
+      gap: 28
+    }
     : {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 24
-      };
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 24
+    };
 
   return (
     <SupportLayout
       title="API Reference"
-      intro="Complete coverage of endpoints, authentication flows, and integration recipes for Nexora."
+      intro="Complete coverage of endpoints, authentication flows, and integration recipes for Actyx."
     >
       <div style={wrapperStyle}>
         <aside

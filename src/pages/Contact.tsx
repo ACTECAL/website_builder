@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import SupportLayout from '../components/SupportLayout';
 import { Link } from 'react-router-dom';
+import SupportLayout from '../components/SupportLayout';
+
 export const Contact: React.FC = () => {
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
 
   const validateEmail = (email: string) => {
     const trimmed = email.trim().toLowerCase();
-    const pattern = /^[^\s@]+@gmail\.com$/;
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(trimmed);
   };
 
@@ -16,197 +17,123 @@ export const Contact: React.FC = () => {
     const emailValue = emailInput?.value ?? '';
     if (!validateEmail(emailValue)) {
       setIsError(true);
-      setStatusMessage('Invalid email.');
+      setStatusMessage('Please enter a valid email address.');
       return;
     }
 
     setIsError(false);
-    setStatusMessage('Thank you for your feedback.');
-    window.location.href = `mailto:aarunim.nn.pant@gmail.com?subject=BizSuite%20Contact%20Request&body=${encodeURIComponent(`From: ${emailValue}`)}`;
-  };
-
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    padding: '14px 16px',
-    borderRadius: 14,
-    border: '1px solid rgba(249, 115, 22, 0.35)',
-    background: '#ffffff',
-    color: '#1f2937',
-    fontSize: '0.95rem',
-    outline: 'none',
-    boxShadow: '0 12px 24px rgba(249, 115, 22, 0.08)'
-  };
-
-  const cardStyle: React.CSSProperties = {
-    borderRadius: 26,
-    border: '1px solid rgba(251, 146, 60, 0.3)',
-    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 247, 237, 0.92) 100%)',
-    padding: '30px 32px',
-    display: 'grid',
-    gap: 18,
-    boxShadow: '0 28px 60px rgba(249, 115, 22, 0.14)'
+    setStatusMessage('Thank you for your feedback. We will contact you soon.');
   };
 
   return (
     <SupportLayout
-      title="Contact"
+      title="Contact Us"
       intro="Reach our customer success team, solution architects, or billing specialists. We respond to every request within one business day."
     >
-      <div
-        style={{
-          display: 'grid',
-          gap: 28,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))'
-        }}
-      >
-        <form
-          style={{
-            display: 'grid',
-            gap: 20,
-            borderRadius: 30,
-            border: '1px solid rgba(251, 146, 60, 0.4)',
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 244, 229, 0.92) 100%)',
-            padding: '34px 36px',
-            boxShadow: '0 40px 85px rgba(249, 115, 22, 0.18)'
-          }}
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <div style={{ display: 'grid', gap: 10 }}>
-            <label style={{ fontWeight: 600, color: '#f97316', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Full name</label>
-            <input placeholder="Your name" required style={inputStyle} />
-          </div>
-          <div style={{ display: 'grid', gap: 10 }}>
-            <label style={{ fontWeight: 600, color: '#f97316', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Work email</label>
-            <input id="contact-email-input" placeholder="you@example.com" type="email" required style={inputStyle} />
-          </div>
-          <div style={{ display: 'grid', gap: 10 }}>
-            <label style={{ fontWeight: 600, color: '#f97316', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>How can we help?</label>
-            <textarea
-              placeholder="Share a bit about your question or project"
-              rows={6}
-              style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.6 }}
-            />
-          </div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-            <button
-              type="button"
-              onClick={handleSendMessage}
-              style={{
-                border: 'none',
-                borderRadius: 999,
-                padding: '12px 28px',
-                background: '#f97316',
-                color: '#fff',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 18px 36px rgba(249, 115, 22, 0.28)'
-              }}
-            >
-              Send message
-            </button>
-            <span style={{ fontSize: '0.85rem', color: '#6b7280' }}>
-              We’ll follow up within 24 hours.
-            </span>
-          </div>
-          {statusMessage && (
-            <p
-              style={{
-                margin: '8px 0 0',
-                fontSize: '0.85rem',
-                color: isError ? '#dc2626' : '#16a34a'
-              }}
-            >
-              {statusMessage}
-            </p>
-          )}
-        </form>
+      <div className="row g-5">
+        {/* Contact Form */}
+        <div className="col-lg-7">
+          <form className="p-5 bg-white rounded-4 shadow-sm border" onSubmit={(e) => e.preventDefault()}>
+            <h1 className="fw-bold display-5 mb-4">Contact Actyx Support</h1>
+            <p className="lead text-muted mb-5">We'd love to hear from you. Please fill out this form or shoot us an email.</p>
 
-        <div style={{ display: 'grid', gap: 20 }}>
-          <div style={cardStyle}>
-            <div>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: '#f97316', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
-                Contact channels
-              </p>
-              <h3 style={{ margin: '6px 0 0', fontSize: '1.25rem', color: '#1f2937' }}>We’d love to connect</h3>
+            <div className="floating-label mb-3">
+              <input
+                id="contact-name"
+                placeholder=" "
+                required
+                className="form-control form-control-lg bg-light border-0"
+              />
+              <label htmlFor="contact-name" className="form-label fw-bold small text-secondary text-uppercase">Full name</label>
             </div>
-            <div style={{ display: 'grid', gap: 12 }}>
-              {[
-                {
-                  label: 'Email',
-                  value: 'hello@bizsuite.app'
-                },
-                {
-                  label: 'Phone',
-                  value: '+1 (415) 555-2789'
-                },
-                {
-                  label: 'HQ',
-                  value: '123 Market Street, San Francisco, CA'
-                }
-              ].map((item) => (
-                <div key={item.label} style={{ display: 'grid', gap: 4 }}>
-                  <span style={{ fontSize: '0.8rem', color: '#f97316', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
-                    {item.label}
-                  </span>
-                  <strong style={{ color: '#1f2937', fontSize: '1.05rem' }}>{item.value}</strong>
-                </div>
-              ))}
-            </div>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <Link
-                to="/status"
-                style={{
-                  borderRadius: 999,
-                  padding: '10px 20px',
-                  border: '1px solid rgba(249, 115, 22, 0.45)',
-                  color: '#f97316',
-                  textDecoration: 'none',
-                  fontWeight: 600
-                }}
-              >
-                View system status
-              </Link>
-              <a
-                href="https://cal.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  borderRadius: 999,
-                  padding: '10px 20px',
-                  border: '1px solid rgba(34, 197, 94, 0.35)',
-                  color: '#16a34a',
-                  textDecoration: 'none',
-                  fontWeight: 600
-                }}
-              >
-                Book a demo
-              </a>
-            </div>
-          </div>
 
-          <div
-            style={{
-              borderRadius: 26,
-              overflow: 'hidden',
-              border: '1px solid rgba(251, 146, 60, 0.25)',
-              background: '#fff',
-              boxShadow: '0 24px 50px rgba(249, 115, 22, 0.12)'
-            }}
-          >
-            <iframe
-              title="map"
-              src="https://maps.google.com/maps?q=29.5892407,79.646666&t=k&z=13&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="320"
-              style={{ border: 0, display: 'block' }}
-              loading="lazy"
-            />
+            <div className="floating-label mb-3">
+              <input
+                id="contact-email-input"
+                placeholder=" "
+                type="email"
+                required
+                className="form-control form-control-lg bg-light border-0"
+              />
+              <label htmlFor="contact-email-input" className="form-label fw-bold small text-secondary text-uppercase">Work email</label>
+            </div>
+
+            <div className="floating-label mb-4">
+              <textarea
+                id="contact-message"
+                placeholder=" "
+                rows={5}
+                className="form-control form-control-lg bg-light border-0"
+              />
+              <label htmlFor="contact-message" className="form-label fw-bold small text-secondary text-uppercase">How can we help?</label>
+            </div>
+
+            <div className="d-flex align-items-center gap-3">
+              <button
+                type="button"
+                onClick={handleSendMessage}
+                className="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"
+              >
+                Send Message
+              </button>
+              <span className="text-muted small">
+                Response within 24 hours.
+              </span>
+            </div>
+
+            {statusMessage && (
+              <div className={`mt-3 alert ${isError ? 'alert-danger' : 'alert-success'} py-2 small rounded-3`}>
+                <i className={`fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-check-circle'} me-2`}></i>
+                {statusMessage}
+              </div>
+            )}
+          </form>
+        </div>
+
+        {/* Info & Map */}
+        <div className="col-lg-5">
+          <div className="d-flex flex-column gap-4">
+            <div className="p-4 bg-light rounded-4 shadow-sm border">
+              <h4 className="fw-bold mb-4 text-dark">Get in touch</h4>
+
+              <div className="mb-4">
+                <span className="d-block small text-muted fw-bold text-uppercase mb-1">Email</span>
+                <span className="fs-5 fw-bold text-dark">hello@actyx.com</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="d-block small text-muted fw-bold text-uppercase mb-1">Phone</span>
+                <span className="fs-5 fw-bold text-dark">+1 (555) 000-0000</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="d-block small text-muted fw-bold text-uppercase mb-1">HQ</span>
+                <span className="fs-5 fw-bold text-dark">San Francisco, CA</span>
+              </div>
+
+              <div className="d-flex gap-2">
+                <Link to="/status" className="btn btn-outline-secondary btn-sm rounded-pill fw-bold bg-white">System Status</Link>
+                <Link to="/contact-sales" className="btn btn-outline-success btn-sm rounded-pill fw-bold bg-white">Book a Demo</Link>
+              </div>
+            </div>
+
+            <div className="rounded-4 overflow-hidden shadow-sm border h-100 min-vh-25">
+              <iframe
+                title="map"
+                src="https://maps.google.com/maps?q=San+Francisco&t=m&z=13&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="300"
+                style={{ border: 0, display: 'block' }}
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>
+      <style>{`
+        .shadow-sm-hover:focus { box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); background-color: #fff; }
+        .form-control:focus { border: 1px solid var(--o-color-primary) !important; box-shadow: 0 0 0 4px rgba(113, 75, 103, 0.1); }
+      `}</style>
     </SupportLayout>
   );
 };

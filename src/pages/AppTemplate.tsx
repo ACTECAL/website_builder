@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import type { AppModuleMeta } from '../data/appModules';
+import '../styles/Apps.css';
 
 interface AppTemplateProps {
   module: AppModuleMeta;
@@ -12,125 +13,109 @@ export const AppTemplate: React.FC<AppTemplateProps> = ({ module }) => {
   const backUrl = category ? `/apps?category=${category}` : '/apps';
 
   return (
-    <main style={{ background: '#f3f4f6', minHeight: '100vh', padding: '72px 0 120px' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-        <nav style={{ marginBottom: 24 }}>
-          <Link to={backUrl} style={{ color: '#6366f1', textDecoration: 'none', fontWeight: 600 }}>
-            ← Back to apps catalog
+    <div className="apps-catalog">
+      <div className="max-w-[1200px] mx-auto px-4 py-8">
+
+        <nav className="mb-12">
+          <Link to={backUrl} className="text-gray-500 hover:text-[#714B67] font-medium flex items-center gap-2 transition-colors no-underline">
+            <i className="fa-solid fa-arrow-left"></i> Back to apps
           </Link>
         </nav>
 
-        <header style={{ background: '#fff', borderRadius: 28, padding: '48px 52px', display: 'grid', gap: 20, boxShadow: '0 24px 60px rgba(15, 23, 42, 0.1)' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
-            <div>
-              <span style={{ textTransform: 'uppercase', letterSpacing: '0.12em', color: '#6366f1', fontSize: '0.75rem', fontWeight: 600 }}>{module.category}</span>
-              <h1 style={{ margin: '12px 0 0', fontSize: 'clamp(2.4rem, 5vw, 3.2rem)', fontWeight: 800, color: '#1f2937' }}>{module.name}</h1>
-            </div>
-            <div>
+        {/* Hero */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
+          <div>
+            <span className="uppercase tracking-widest text-[#00A09D] font-bold text-sm mb-4 block">
+              {module.category}
+            </span>
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-[#212529] tracking-tight">
+              {module.name}
+            </h1>
+            <p className="text-xl text-gray-500 mb-8 leading-relaxed">
+              {module.longDescription}
+            </p>
+            <div className="flex gap-4">
               <a
-                href={`mailto:aarunim.nn.pant@gmail.com?subject=${encodeURIComponent(`${module.name} demo request`)}`}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '12px 24px',
-                  borderRadius: 999,
-                  background: '#6366f1',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  boxShadow: '0 16px 32px rgba(99, 102, 241, 0.25)'
-                }}
+                href={`mailto:sales@actyx.com?subject=Demo ${module.name}`}
+                className="bg-[#714B67] hover:bg-[#5d3d54] text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all inline-block no-underline"
               >
-                {module.ctaLabel ?? 'Book a demo'} ↗
+                {module.ctaLabel ?? 'Start Free Trial'}
               </a>
+              <button className="px-8 py-3 rounded-lg font-bold text-[#212529] bg-gray-100 hover:bg-gray-200 transition-all">
+                Watch Video
+              </button>
             </div>
-          </div>
-          <p style={{ margin: 0, color: '#4b5563', fontSize: '1.05rem', lineHeight: 1.7 }}>{module.longDescription}</p>
-          <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-            {module.metrics.map((metric) => (
-              <div key={metric.label} style={{ background: 'rgba(99, 102, 241, 0.08)', borderRadius: 18, padding: '18px 20px' }}>
-                <p style={{ margin: 0, color: '#4338ca', fontSize: '0.8rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>{metric.label}</p>
-                <p style={{ margin: '8px 0 0', fontSize: '1.4rem', fontWeight: 700, color: '#1f2937' }}>{metric.value}</p>
-              </div>
-            ))}
-          </div>
-        </header>
 
-        <section style={{ marginTop: 48, display: 'grid', gap: 36 }}>
-          <div style={{ background: '#fff', borderRadius: 24, padding: '36px 40px', boxShadow: '0 18px 40px rgba(15, 23, 42, 0.08)' }}>
-            <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 700, color: '#1f2937' }}>Why teams choose {module.name}</h2>
-            <div style={{ display: 'grid', gap: 18, marginTop: 18 }}>
-              {module.highlights.map((highlight) => (
-                <div key={highlight} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                  <span style={{ fontSize: '1.4rem' }}>✨</span>
-                  <p style={{ margin: 0, color: '#4b5563', fontSize: '1rem', lineHeight: 1.7 }}>{highlight}</p>
+            {/* Metrics */}
+            <div className="grid grid-cols-3 gap-6 mt-12 border-t border-gray-100 pt-8">
+              {module.metrics.map((m, i) => (
+                <div key={i}>
+                  <div className="text-2xl font-bold text-[#212529]">{m.value}</div>
+                  <div className="text-sm text-gray-500 uppercase font-semibold">{m.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div style={{ background: '#fff', borderRadius: 24, padding: '36px 40px', boxShadow: '0 18px 40px rgba(15, 23, 42, 0.08)' }}>
-            <h2 style={{ margin: '0 0 16px', fontSize: '1.5rem', fontWeight: 700, color: '#1f2937' }}>Works seamlessly with</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+          {/* Visual/Screenshot Placeholder */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#714B67]/10 to-[#00A09D]/10 rounded-3xl transform rotate-3 scale-105"></div>
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-2 relative z-10 overflow-hidden aspect-[4/3] flex items-center justify-center group">
+              {/* Placeholder for App Interface */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gray-100 rounded-2xl mx-auto mb-4 flex items-center justify-center text-4xl text-[#714B67]">
+                  <i className="fa-solid fa-layer-group"></i>
+                </div>
+                <p className="text-gray-400 font-medium">App Interface Preview</p>
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute inset-0 bg-black/5 flex items-center justify-center">
+                  <i className="fa-solid fa-magnifying-glass-plus text-3xl text-gray-700"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Benefits Section */}
+        <div className="mb-24">
+          <h2 className="text-3xl font-bold text-center mb-16">Why everyone loves {module.name}</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {module.highlights.map((highlight, idx) => (
+              <div key={idx} className="bg-gray-50 rounded-xl p-8 hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-gray-100">
+                <div className="w-12 h-12 bg-[#00A09D]/10 text-[#00A09D] rounded-full flex items-center justify-center text-xl mb-6">
+                  <i className="fa-solid fa-check"></i>
+                </div>
+                <p className="text-lg text-gray-700 font-medium leading-relaxed">
+                  "{highlight}"
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Integrations */}
+        <div className="bg-[#212529] text-white rounded-3xl p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-8">Works perfectly with</h2>
+            <div className="flex flex-wrap justify-center gap-4">
               {module.integrations.map((tool) => (
-                <span
-                  key={tool}
-                  style={{
-                    padding: '10px 16px',
-                    borderRadius: 12,
-                    background: 'rgba(148, 163, 184, 0.18)',
-                    color: '#334155',
-                    fontWeight: 600,
-                    letterSpacing: '0.02em'
-                  }}
-                >
+                <span key={tool} className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-full font-medium transition-colors cursor-default border border-white/10">
                   {tool}
                 </span>
               ))}
             </div>
+            <div className="mt-12">
+              <Link to="/get-started" className="inline-block bg-[#00A09D] hover:bg-[#008f8c] text-white px-10 py-4 rounded-full font-bold shadow-lg hover:shadow-[#00A09D]/50 transition-all transform hover:-translate-y-1 no-underline">
+                Get Started with {module.name}
+              </Link>
+            </div>
           </div>
 
-          <div style={{ background: '#fff', borderRadius: 24, padding: '36px 40px', boxShadow: '0 18px 40px rgba(15, 23, 42, 0.08)' }}>
-            <h2 style={{ margin: '0 0 24px', fontSize: '1.5rem', fontWeight: 700, color: '#1f2937' }}>Implementation roadmap</h2>
-            <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 16 }}>
-              {[
-                'Kickoff discovery to map workflows and integrations.',
-                'Configure modules, import historical data, and QA automations.',
-                'Train administrators and power users; launch with guided checklists.',
-                'Review adoption metrics and optimize with quarterly business reviews.'
-              ].map((step, index) => (
-                <li key={index} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                  <span style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: '50%',
-                    background: '#6366f1',
-                    color: '#fff',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 700
-                  }}>
-                    {index + 1}
-                  </span>
-                  <p style={{ margin: 0, color: '#4b5563', lineHeight: 1.7 }}>{step}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+          {/* Background blobs */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#714B67] opacity-20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#00A09D] opacity-20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
+        </div>
 
-        <footer style={{ marginTop: 56, textAlign: 'center' }}>
-          <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>
-            Looking for a custom workflow?{' '}
-            <a href="mailto:aarunim.nn.pant@gmail.com?subject=Custom%20BizSuite%20apps" style={{ color: '#6366f1', textDecoration: 'none', fontWeight: 600 }}>
-              Talk to our product architects
-            </a>
-            .
-          </p>
-        </footer>
       </div>
-    </main>
+    </div>
   );
 };

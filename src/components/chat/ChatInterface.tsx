@@ -51,7 +51,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       {/* Chat header */}
       <div className="bg-indigo-600 text-white p-4 rounded-t-lg flex justify-between items-center">
         <h3 className="font-medium">
-          {selectedOption ? selectedOption.label : 'Chat with Nexora'}
+          {selectedOption ? selectedOption.label : 'Chat with Actyx'}
         </h3>
         <button
           onClick={onClose}
@@ -100,11 +100,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                   className={`flex ${message.author === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      message.author === 'user'
+                    className={`max-w-[80%] rounded-lg p-3 ${message.author === 'user'
                         ? 'bg-indigo-600 text-white rounded-br-none'
                         : 'bg-gray-100 text-gray-800 rounded-bl-none'
-                    }`}
+                      }`}
                   >
                     <p className="text-sm">{message.text}</p>
                     {message.timestamp && (

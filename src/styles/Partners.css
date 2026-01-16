@@ -1,0 +1,174 @@
+/* Odoo-like Partners page layout */
+
+.partners-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.partners-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.partners-types-section {
+  padding: 2rem 0;
+  background: #f8f9fa;
+}
+
+.partners-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.partners-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 16px 36px rgba(26,26,26,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.partners-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(26,26,26,0.12);
+}
+
+.partners-card-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.partners-card-desc {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.partners-benefits-section {
+  padding: 3rem 0;
+}
+
+.partners-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.partners-benefits-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 16px 36px rgba(26,26,26,0.08);
+  height: 100%;
+}
+
+.partners-benefits-title {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.partners-benefits-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.partners-benefits-list li {
+  margin-bottom: 0.5rem;
+}
+
+.partners-benefits-list li:last-child {
+  margin-bottom: 0;
+}
+
+.partners-impact-text {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.partners-spotlight-text {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.partners-cta-section {
+  padding: 3rem 0;
+  background: #ffffff;
+}
+
+.partners-cta-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.partners-cta-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 1rem;
+}
+
+.partners-cta-desc {
+  color: #6c757d;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.partners-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--o-color-primary);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 2rem;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(113, 75, 103, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.partners-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(113, 75, 103, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .partners-container {
+    padding: 0 1rem;
+  }
+  .partners-types-section {
+    padding: 1.5rem 0;
+  }
+  .partners-benefits-section {
+    padding: 2rem 0;
+  }
+  .partners-cta-section {
+    padding: 2rem 0;
+  }
+  .partners-types-grid,
+  .partners-benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .partners-card,
+  .partners-benefits-card {
+    padding: 1.25rem;
+  }
+  .partners-cta-title {
+    font-size: 1.5rem;
+  }
+}

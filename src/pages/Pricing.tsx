@@ -1,68 +1,67 @@
 import React from 'react';
 import { PricingSection } from '../components/PricingSection';
+import '../styles/Pricing.css';
 
 export const Pricing: React.FC = () => {
   const tiers = [
     {
-      name: 'Starter',
-      price: '₹2,499',
-      period: 'month',
-      description: 'Perfect for small teams getting started',
+      name: 'One App',
+      subtitle: 'Free Forever',
+      price: 'Free',
+      period: 'forever',
+      description: 'The perfect plan to get started.',
       features: [
-        'Up to 5 team members',
-        'Basic analytics',
-        '10 workflow automations',
-        'Email support',
-        'Mobile apps',
-        'Basic integrations'
+        '1 App included',
+        'Unlimited users',
+        'Cloud hosting included',
+        'Support included',
+        'No credit card required'
       ],
-      cta: 'Start Free Trial',
-      href: '/signup?plan=starter'
+      cta: 'Start Now',
+      href: '/signup?plan=free',
+      isFree: true
     },
     {
-      name: 'Professional',
-      price: '₹6,499',
-      period: 'month',
-      description: 'Ideal for growing businesses',
+      name: 'Standard',
+      subtitle: 'All Apps',
+      price: '585',
+      period: 'user/month',
+      description: 'Best for growing businesses needing all apps.',
       features: [
-        'Up to 25 team members',
-        'Advanced analytics',
-        'Unlimited automations',
-        'Priority support',
-        'Advanced integrations',
-        'Custom branding',
-        'API access',
-        'Advanced security'
+        'All Applications',
+        'Online Hosting',
+        'Unlimited Support',
+        'Mobile App Access',
+        'Multi-company denied',
+        'External API denied'
       ],
+      cta: 'Start Free Trial',
+      href: '/signup?plan=standard',
       popular: true,
-      cta: 'Start Free Trial',
-      href: '/signup?plan=professional'
+      highlight: 'Best Value'
     },
     {
-      name: 'Enterprise',
-      price: '₹16,499',
-      period: 'month',
-      description: 'For large organizations',
+      name: 'Custom',
+      subtitle: 'For Advanced Needs',
+      price: '895',
+      period: 'user/month',
+      description: 'For companies with custom requirements.',
       features: [
-        'Unlimited team members',
-        'Custom analytics',
-        'White-label solution',
-        'Dedicated support',
-        'Custom integrations',
-        'Advanced compliance',
-        'SLA guarantee',
-        'On-premise option'
+        'All Applications',
+        'Odoo Studio included',
+        'Multi-Company',
+        'External API',
+        'On-premise / Odoo.sh',
+        'Custom Development'
       ],
       cta: 'Contact Sales',
-      href: '/contact-sales?plan=enterprise'
+      href: '/contact-sales?plan=custom'
     }
   ];
 
   return (
-    <div>
+    <div className="bg-light-subtle min-h-screen">
       <PricingSection tiers={tiers} />
     </div>
   );
 };
-
-

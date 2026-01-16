@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BizSuiteLogoExact } from './BizSuiteLogo';
-import { FloatingElement, FloatingElements } from './FloatingElements';
-import { CreativeCard } from './CreativeCard';
+import { ActyxLogo } from './ActyxLogo';
 
 type HeroData = {
   heading: string;
@@ -17,253 +15,103 @@ type Props = {
 
 export const Hero: React.FC<Props> = ({ data }) => {
   const [isVisible, setIsVisible] = useState(false);
-  
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
   if (!data) return null;
-  
+
   return (
-    <FloatingElements>
-      <section style={{
-        padding: '120px 24px 80px',
-        textAlign: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center'
-      }}>
-        
-        {/* Animated background elements */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-          opacity: 0.3,
-          zIndex: 0
-        }} />
-        
-        <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
-          {/* Animated badges */}
-          {data.badges && (
-            <div style={{ 
-              marginBottom: 32,
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.8s ease-out'
-            }}>
-              {data.badges.map((badge, idx) => (
-                <FloatingElement
-                  key={idx}
-                  delay={idx * 0.2}
-                  direction="up"
-                  intensity="low"
-                >
-                  <span style={{
-                    display: 'inline-block',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    color: 'white',
-                    padding: '8px 16px',
-                    borderRadius: 25,
-                    fontSize: 14,
-                    margin: '0 8px 8px',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    backdropFilter: 'blur(10px)',
-                    fontWeight: 600
-                  }}>
-                    {badge}
-                  </span>
-                </FloatingElement>
-              ))}
-            </div>
-          )}
+    <section className="d-flex align-items-center position-relative overflow-hidden text-white" style={{
+      padding: '120px 0 80px',
+      background: 'linear-gradient(135deg, #714B67 0%, #017E84 100%)', // Odoo-like gradient
+      minHeight: '100vh',
+    }}>
 
-          {/* Animated logo */}
-          <div style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.9)',
-            transition: 'all 1s ease-out 0.3s'
-          }}>
-            <FloatingElement direction="up" intensity="low" duration={4}>
-              <BizSuiteLogoExact 
-                style={{
-                  fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                  margin: '0 0 24px',
-                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
-                }}
-              />
-            </FloatingElement>
+      {/* Background decoration */}
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.1)' }}></div>
+
+      <div className="container position-relative z-1 text-center">
+
+        {/* Animated badges */}
+        {data.badges && (
+          <div className={`mb - 4 transition - all duration - 1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `}>
+            {data.badges.map((badge, idx) => (
+              <span key={idx} className="badge rounded-pill bg-white bg-opacity-25 border border-white border-opacity-25 px-3 py-2 me-2 mb-2 backdrop-blur-sm">
+                {badge}
+              </span>
+            ))}
           </div>
-          
-          {/* Animated heading */}
-          <h1 style={{
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            fontWeight: 800,
-            margin: '0 0 24px',
-            textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 1s ease-out 0.6s'
-          }}>
-            {data.heading}
-          </h1>
-          
-          {/* Animated subheading */}
-          <p style={{
-            fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
-            color: 'rgba(255, 255, 255, 0.9)',
-            margin: '0 0 32px',
-            maxWidth: 800,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            lineHeight: 1.6,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 1s ease-out 0.9s'
-          }}>
-            {data.subheading}
-          </p>
+        )}
 
-          {/* Animated divider */}
-          <div style={{
-            height: 4,
-            width: 120,
-            background: 'linear-gradient(90deg, transparent, #FDBA26, transparent)',
-            borderRadius: 2,
-            margin: '24px auto 40px',
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'scaleX(1)' : 'scaleX(0)',
-            transition: 'all 1s ease-out 1.2s'
-          }} />
-          
-          {/* Animated CTA buttons */}
-          <div style={{ 
-            marginBottom: 80,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 1s ease-out 1.5s'
-          }}>
-            <CreativeCard
-              variant="glass"
-              hoverEffect="glow"
-              size="small"
-              style={{
-                display: 'inline-block',
-                margin: '0 12px 12px',
-                background: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.3)'
-              }}
-            >
-              <a href={data.cta.href} style={{
-                display: 'inline-block',
-                padding: '16px 32px',
-                background: 'linear-gradient(135deg, #FDBA26 0%, #f59e0b 100%)',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: 12,
-                fontWeight: 700,
-                fontSize: '1.1rem',
-                boxShadow: '0 8px 25px rgba(253, 186, 38, 0.4)',
-                transition: 'all 0.3s ease'
-              }}>
-                {data.cta.label}
-              </a>
-            </CreativeCard>
-            
-            <CreativeCard
-              variant="glass"
-              hoverEffect="lift"
-              size="small"
-              style={{
-                display: 'inline-block',
-                margin: '0 12px 12px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
-              }}
-            >
-              <a href="#advisor" style={{
-                display: 'inline-block',
-                padding: '16px 32px',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: 12,
-                fontWeight: 600,
-                fontSize: '1.1rem',
-                border: '2px solid rgba(255, 255, 255, 0.3)',
-                transition: 'all 0.3s ease'
-              }}>
-                Meet an advisor
-              </a>
-            </CreativeCard>
+        {/* Animated logo */}
+        <div className={`mb - 4 transition - all duration - 1000 delay - 200 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `} style={{ transitionDelay: '0.2s' }}>
+          <div className="d-inline-block p-4 rounded-circle bg-white shadow-lg logo-wrapper">
+            <ActyxLogo className="mb-4" />
           </div>
-
-          {/* Animated statistics */}
-          {data.stats && (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-              gap: 40,
-              maxWidth: 800,
-              margin: '0 auto',
-              padding: '40px 0',
-              borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'all 1s ease-out 1.8s'
-            }}>
-              {data.stats.map((stat, idx) => (
-                <FloatingElement
-                  key={idx}
-                  delay={idx * 0.2}
-                  direction="up"
-                  intensity="low"
-                >
-                  <CreativeCard
-                    variant="glass"
-                    hoverEffect="lift"
-                    size="small"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <div style={{
-                      fontSize: '2.5rem',
-                      fontWeight: 800,
-                      marginBottom: 8,
-                      color: 'white',
-                      textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
-                    }}>
-                      {stat.value}
-                    </div>
-                    <div style={{
-                      fontSize: '0.9rem',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px',
-                      fontWeight: 600
-                    }}>
-                      {stat.label}
-                    </div>
-                  </CreativeCard>
-                </FloatingElement>
-              ))}
-            </div>
-          )}
         </div>
-      </section>
-    </FloatingElements>
+
+        {/* Animated heading */}
+        <h1 className={`display - 3 fw - bold mb - 4 transition - all duration - 1000 delay - 400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `} style={{ transitionDelay: '0.4s', textShadow: '0 4px 10px rgba(0,0,0,0.2)' }}>
+          {data.heading}
+        </h1>
+
+        {/* Animated subheading */}
+        <p className={`lead mb - 5 mx - auto transition - all duration - 1000 delay - 600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `} style={{ maxWidth: '800px', lineHeight: '1.6', transitionDelay: '0.6s', color: 'rgba(255,255,255,0.9)' }}>
+          {data.subheading}
+        </p>
+
+        {/* Animated divider */}
+        <div className={`mx - auto mb - 5 transition - all duration - 1000 delay - 800 ${isVisible ? 'w-24 opacity-100' : 'w-0 opacity-0'} `} style={{ height: '4px', background: '#FDBA26', borderRadius: '2px', width: '100px', transitionDelay: '0.8s' }}></div>
+
+        {/* Animated CTA buttons */}
+        <div className={`d - flex flex - wrap justify - content - center gap - 3 mb - 5 transition - all duration - 1000 delay - 1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `} style={{ transitionDelay: '1s' }}>
+          <a href={data.cta.href} className="btn btn-warning btn-lg rounded-pill px-5 shadow-lg fw-bold text-dark hover-scale">
+            {data.cta.label}
+          </a>
+          <a href="#advisor" className="btn btn-outline-light btn-lg rounded-pill px-5 shadow-lg fw-bold hover-scale">
+            Meet an advisor
+          </a>
+        </div>
+
+        {/* Animated statistics */}
+        {data.stats && (
+          <div className={`row justify - content - center g - 4 mt - 4 border - top border - white border - opacity - 25 pt - 5 transition - all duration - 1000 delay - 1200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `} style={{ maxWidth: '900px', margin: '0 auto', transitionDelay: '1.2s' }}>
+            {data.stats.map((stat, idx) => (
+              <div key={idx} className="col-md-3 col-sm-6">
+                <div className="text-center p-3 rounded-3 bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-10 h-100">
+                  <div className="display-6 fw-bold mb-1">{stat.value}</div>
+                  <div className="small text-uppercase tracking-wider opacity-75">The only platform you will ever need. Actyx manages your entire business.</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <style>{`
+  .backdrop - blur - sm { backdrop - filter: blur(8px); }
+        .hover - scale { transition: transform 0.2s; }
+        .hover - scale:hover { transform: scale(1.05); }
+        .transition - all { transition - property: all; transition - timing - function: cubic- bezier(0.4, 0, 0.2, 1); }
+        .duration - 1000 { transition - duration: 1000ms; }
+        .translate - y - 0 { transform: translateY(0); }
+        .translate - y - 4 { transform: translateY(1rem); }
+        .opacity - 100 { opacity: 1; }
+        .opacity - 0 { opacity: 0; }
+        .scale - 100 { transform: scale(1); }
+        .scale - 95 { transform: scale(0.95); }
+        .w - 24 { width: 6rem; }
+        .w - 0 { width: 0; }
+        .logo - wrapper { animation: float 6s ease -in -out infinite; }
+@keyframes float {
+  0 % { transform: translateY(0px); }
+  50 % { transform: translateY(-10px); }
+  100 % { transform: translateY(0px); }
+}
+`}</style>
+    </section>
   );
 };
 

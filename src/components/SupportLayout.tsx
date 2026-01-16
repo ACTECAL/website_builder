@@ -8,7 +8,7 @@ interface SupportLayoutProps {
   children: React.ReactNode;
 }
 
-const baseTextColor = '#1f2937';
+const baseTextColor = '#212529'; // Odoo body color
 
 export const SupportLayout: React.FC<SupportLayoutProps> = ({
   title,
@@ -38,79 +38,51 @@ export const SupportLayout: React.FC<SupportLayoutProps> = ({
   ];
 
   return (
-    <main style={{ background: '#fff5eb', minHeight: '100vh', color: baseTextColor }}>
-      <div style={{ maxWidth: 1040, margin: '0 auto', padding: isMobile ? '64px 20px 96px' : '88px 24px 120px' }}>
-        <header
-          style={{
-            display: 'grid',
-            gap: isMobile ? 28 : 40,
-            gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(280px, 360px)',
-            alignItems: 'center',
-            marginBottom: isMobile ? 48 : 64
-          }}
-        >
-          <h1
-            style={{
-              margin: 0,
-              fontSize: isMobile ? '2.1rem' : '2.8rem',
-              fontWeight: 800,
-              lineHeight: 1.2,
-              letterSpacing: '-0.02em'
-            }}
-          >
-            {title}
-          </h1>
-          <div
-            style={{
-              width: '100%',
-              height: isMobile ? 180 : 220,
-              borderRadius: 18,
-              backgroundImage: `url(${heroImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              boxShadow: '0 22px 40px rgba(30, 41, 59, 0.18)'
-            }}
-          />
+    <main className="bg-white min-vh-100 text-dark">
+      <div className="container py-5 mt-5">
+        <header className="mb-5">
+          <div className="row align-items-center g-5">
+            <div className="col-lg-6">
+              <h1 className="display-4 fw-bold mb-4 ls-tight">{title}</h1>
+              {intro && (
+                <p className="lead text-muted mb-4">
+                  {intro}
+                </p>
+              )}
+            </div>
+            <div className="col-lg-6">
+              <div
+                className="rounded-3 shadow w-100 bg-light"
+                style={{
+                  height: '300px',
+                  backgroundImage: `url(${heroImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </div>
+          </div>
         </header>
-        {intro && (
-          <p
-            style={{
-              margin: '0 0 36px',
-              maxWidth: 720,
-              color: '#4b5563',
-              fontSize: '1.05rem',
-              lineHeight: 1.7
-            }}
-          >
-            {intro}
-          </p>
-        )}
 
-        <div
-          style={{
-            display: 'grid',
-            gap: 12,
-            gridTemplateColumns: `repeat(${isMobile ? 2 : 4}, minmax(0, 1fr))`,
-            marginBottom: 48
-          }}
-        >
+        <div className="row g-3 mb-5">
           {galleryImages.map((image, index) => (
-            <div
-              key={`${image}-${index}`}
-              style={{
-                width: '100%',
-                paddingBottom: '70%',
-                borderRadius: 16,
-                backgroundImage: `url(${image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                boxShadow: '0 14px 28px rgba(15, 23, 42, 0.18)'
-              }}
-            />
+            <div key={index} className="col-6 col-md-3">
+              <div
+                className="rounded-3 shadow-sm"
+                style={{
+                  paddingBottom: '60%',
+                  backgroundImage: `url(${image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </div>
           ))}
         </div>
 
-        <div style={{ color: '#374151', lineHeight: 1.8 }}>{children}</div>
+        <div className="text-dark">
+          {children}
+        </div>
       </div>
     </main>
   );

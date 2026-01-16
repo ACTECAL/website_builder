@@ -1,0 +1,293 @@
+/* src/components/builder/DummySite.css */
+
+.dummy-site {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    color: #1a202c;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+}
+
+/* Scrollbar */
+.dummy-site::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dummy-site::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.dummy-site::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Header */
+.dummy-header {
+    padding: 24px 48px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.dummy-header h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.dummy-nav {
+    display: flex;
+    gap: 32px;
+}
+
+.dummy-nav a {
+    text-decoration: none;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.dummy-nav a:hover {
+    color: #0f172a;
+}
+
+.dummy-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #0f172a;
+    transition: width 0.3s ease;
+}
+
+.dummy-nav a:hover::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.dummy-hero {
+    padding: 140px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.blobs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.blob {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: var(--gradient-aurora);
+    filter: blur(100px);
+    opacity: 0.2;
+    border-radius: 50%;
+    animation: blob-float 20s infinite alternate;
+}
+
+.blob-1 {
+    top: -100px;
+    left: -100px;
+    background: var(--gradient-primary);
+}
+
+.blob-2 {
+    top: 40%;
+    right: -100px;
+    background: var(--gradient-aurora);
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    bottom: -100px;
+    left: 20%;
+    background: var(--gradient-cyber);
+    animation-delay: -10s;
+}
+
+@keyframes blob-float {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) rotate(120deg) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+    }
+}
+
+.dummy-hero h2 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    margin: 0 0 24px;
+    line-height: 1.1;
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+    animation: fadeUp 1s ease-out;
+}
+
+.dummy-hero p {
+    font-size: 1.35rem;
+    color: #475569;
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    animation: fadeUp 1s ease-out 0.2s backwards;
+}
+
+.dummy-cta {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 18px 48px;
+    font-size: 1.1rem;
+    border-radius: 99px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: var(--shadow-colored);
+    animation: fadeUp 1s ease-out 0.4s backwards;
+    letter-spacing: 0.02em;
+}
+
+.dummy-cta:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: var(--shadow-glow);
+}
+
+/* Content Section - Cards */
+.dummy-content {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.dummy-card {
+    padding: 56px 40px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 32px;
+    text-align: center;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.02),
+        0 0 0 1px rgba(0, 0, 0, 0.02);
+    font-weight: 600;
+    color: #334155;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.8s ease-out backwards;
+}
+
+.dummy-card h3 {
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+}
+
+.dummy-card p {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.dummy-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.dummy-card:hover {
+    transform: translateY(-12px);
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(99, 102, 241, 0.1);
+    border-color: transparent;
+}
+
+.dummy-card:hover::before {
+    opacity: 1;
+}
+
+/* Delays for cards */
+.dummy-card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.dummy-card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.dummy-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Footer */
+.dummy-footer {
+    padding: 80px 24px;
+    text-align: center;
+    background: #020617;
+    color: #94a3b8;
+    margin-top: auto;
+    font-size: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}

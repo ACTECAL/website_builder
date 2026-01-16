@@ -44,7 +44,7 @@ const DummyWebsite = () => {
         <div className="container">
           <div className="logo" onClick={() => navigate('/')}>
             <span className="logo-icon">✨</span>
-            <span>Nexora</span>
+            <span>Actyx</span>
           </div>
           <div className="nav-links">
             <a href="#features">Features</a>

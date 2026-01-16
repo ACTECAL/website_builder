@@ -1,202 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Actyx Brand Colors */
+  --o-color-primary: #714B67;
+  /* The Deep Purple */
+  --o-color-primary-dark: #583a50;
+  --o-color-secondary: #00A09D;
+  /* The Teal */
+  --o-color-secondary-dark: #008582;
+  --o-color-accent: #017E84;
+
+  /* Neutrals */
+  --o-gray-100: #F9F9F9;
+  --o-gray-200: #E9ECEF;
+  --o-gray-300: #DEE2E6;
+  --o-gray-400: #CED4DA;
+  --o-gray-600: #6C757D;
+  --o-gray-800: #343A40;
+  --o-gray-900: #212529;
+
+  /* Functional */
+  --body-bg: #FFFFFF;
+  --body-color: var(--o-gray-900);
+  --link-color: var(--o-color-primary);
+  --link-hover-color: #4D3347;
+
+  /* Typography */
+  --font-family-sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Spacing & Radius */
+  --border-radius-sm: 0.2rem;
+  --border-radius: 0.25rem;
+  /* Bootstrap-ish default */
+  --border-radius-lg: 0.3rem;
+  --border-radius-xl: 1rem;
+}
+
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  color: var(--color-text);
-  background: var(--surface);
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--body-color);
+  background-color: var(--body-bg);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Simple design system tokens */
-:root {
-  /* Orange + Peach + Yellow + Cream palette */
-  --color-text: #1a1a1a;
-  --color-muted: #666666;
-  /* Orange */
-  --color-primary: #6c5ce7;       /* primary brand (links, highlights) */
-  --color-primary-600: #ff5722;   /* darker orange */
-  --color-primary-700: #e64a19;   /* darker */
-  --color-primary-800: #d84315;   /* darkest */
-  --color-primary-light: #ffab91; /* peachy orange */
-  --color-primary-lighter: #ffe0d6; /* soft peach */
-  /* Peach */
-  --peach-100: #fff3f0;
-  --peach-200: #ffe0d6;
-  --peach-300: #ffc6a8;
-  /* Yellow */
-  --yellow-300: #ffe08a;
-  --yellow-400: #ffd166;
-  --yellow-500: #ffcc47;
-  /* Cream surfaces */
-  --color-bg: #f7f8fb;      /* neutral light */
-  --surface: #f7f8fb;       /* neutral surface */
-  --surface-alt: #ffffff;   /* pure white cards */
-  --surface-accent: #ffffff;/* light wash */
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
-  --shadow-orange: 0 4px 20px rgba(234, 88, 12, 0.25);
-  --container: 1200px;
-}
-
-* { box-sizing: border-box; }
-
-@media (max-width: 768px) {
-  h1 { font-size: 36px !important; }
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
-
-/* Default link styles */
-a { color: var(--color-primary); text-decoration-color: rgba(0,0,0,0.08); }
-a:hover { color: var(--color-primary-700); }
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-800) 100%);
-  color: #ffffff;
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 12px 20px;
-  font-weight: 700;
-  box-shadow: var(--shadow-orange);
-  transition: transform .15s ease, box-shadow .2s ease;
-}
-
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
-
-.muted { color: var(--color-muted); }
-
-/* Headings use Poppins */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-/* Global button styles */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 28px;
-  border-radius: 28px;
-  font-weight: 800;
-  font-size: 16px;
+/* Links */
+a {
+  color: var(--link-color);
   text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1320px;
+  /* Actyx uses a wide container */
+}
+
+/* Buttons - Actyx Style */
+.btn {
+  display: inline-block;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
   cursor: pointer;
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.5rem 1.25rem;
+  /* Slightly wider */
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-800) 100%);
-  color: #ffffff;
-  border: none;
-  box-shadow: var(--shadow-orange);
+  color: #fff;
+  background-color: var(--o-color-primary);
+  border-color: var(--o-color-primary);
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: var(--o-color-primary-dark);
+  border-color: var(--o-color-primary-dark);
+}
 
 .btn-secondary {
-  background: #ffffff;
-  color: var(--color-text);
-  border: 2px solid var(--color-primary-light);
+  color: #fff;
+  background-color: var(--o-color-secondary);
+  border-color: var(--o-color-secondary);
 }
-.btn-secondary:hover { box-shadow: var(--shadow-sm); }
 
-/* Apply palette to headings and common surfaces */
-h1, h2, h3, h4, h5, h6 { color: var(--color-text); }
-section { background: transparent; }
-.text-muted { color: var(--color-muted); }
-.accent { color: var(--color-primary); }
-
-/* Reusable UI primitives */
-.section { padding: 60px 24px; }
-.card {
-  background: var(--surface-alt);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  padding: 20px;
-  transition: transform .15s ease, box-shadow .2s ease;
+.btn-secondary:hover {
+  color: #fff;
+  background-color: var(--o-color-secondary-dark);
+  border-color: var(--o-color-secondary-dark);
 }
-.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-/* Outline primary button (used across pages) */
-.btn-outline-primary {
-  background: transparent;
-  color: var(--color-text);
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius-md);
-  padding: 12px 20px;
+.btn-light {
+  color: var(--o-gray-900);
+  background-color: var(--o-gray-100);
+  border-color: var(--o-gray-100);
+}
+
+.btn-light:hover {
+  background-color: var(--o-gray-200);
+  border-color: var(--o-gray-200);
+}
+
+.btn-outline-secondary {
+  color: var(--o-gray-600);
+  border-color: var(--o-gray-600);
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: var(--o-gray-600);
+}
+
+
+/* Text Utilities */
+.text-primary {
+  color: var(--o-color-primary) !important;
+}
+
+.text-secondary {
+  color: var(--o-color-secondary) !important;
+}
+
+.text-muted {
+  color: var(--o-gray-600) !important;
+}
+
+.fw-bold {
+  font-weight: 700 !important;
+}
+
+.fw-normal {
+  font-weight: 400 !important;
+}
+
+.h1,
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
   font-weight: 700;
 }
-.btn-outline-primary:hover { background: rgba(108, 92, 231, 0.08); }
 
-/* Fallback overrides for common inline hex colors used in components */
-  /* Map old slate text to new muted */
-  [style*="#4a5568"] { color: var(--color-muted) !important; border-color: var(--color-muted) !important; }
-  [style*="#475467"],
-  [style*="#667085"],
-  [style*="#94a3b8"] { color: var(--color-muted) !important; border-color: var(--color-muted) !important; }
-  /* Map common dark text to our base text color */
-  [style*="#111827"],
-  [style*="#101828"],
-  [style*="#0f172a"],
-  [style*="#1f2937"] { color: var(--color-text) !important; border-color: var(--color-text) !important; }
-/* Map old indigo/purple primary to new orange accent */
-[style*="#667eea"] { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
-[style*="#6a38f0"],
-[style*="#5b2ee6"],
-[style*="#7c3aed"],
-[style*="#764ba2"] { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
-/* Additional Tailwind-esque blues and React blue */
-[style*="#6366f1"], /* indigo-500 */
-[style*="#4f46e5"], /* indigo-600 */
-[style*="#3b82f6"], /* blue-500 */
-[style*="#2563eb"], /* blue-600 */
-[style*="#1d4ed8"], /* blue-700 */
-[style*="#61dafb"]  /* react blue */ { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
-/* Map more accent colors used in pages to orange */
-[style*="#0ea5e9"], /* sky-500 */
-[style*="#0284c7"], /* sky-600 */
-[style*="#14b8a6"], /* teal-500 */
-[style*="#8b5cf6"], /* violet-500 */
-[style*="#ef4444"], /* red-500 */
-[style*="#e11d48"], /* rose-600 */
-[style*="#00ffff"]  /* cyan */ { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
-/* Background remaps for common inline patterns */
-[style*="background"][style*="#667eea"],
-[style*="background"][style*="#6a38f0"],
-[style*="background"][style*="#5b2ee6"],
-[style*="background"][style*="#7c3aed"],
-[style*="background"][style*="#764ba2"],
-[style*="background"][style*="#6366f1"],
-[style*="background"][style*="#4f46e5"],
-[style*="background"][style*="#3b82f6"],
-[style*="background"][style*="#2563eb"],
-[style*="background"][style*="#1d4ed8"],
-[style*="background"][style*="#61dafb"],
-[style*="background"][style*="#0ea5e9"],
-[style*="background"][style*="#0284c7"],
-[style*="background"][style*="#14b8a6"],
-[style*="background"][style*="#8b5cf6"],
-[style*="background"][style*="#ef4444"],
-[style*="background"][style*="#e11d48"],
-[style*="background"][style*="#00ffff"] { background: var(--color-primary) !important; }
-/* Transparent button hovers that switch to old primary */
-[style*="background: #667eea"],
-[style*="background:#667eea"] { background: var(--color-primary) !important; }
-/* Light gray borders remapped to peach */
-[style*="#eee"],
-[style*="#e5e7eb"] { border-color: var(--peach-200) !important; }
+.h2,
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
 
-/* Focus visible outlines for accessibility */
-:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.h3,
+h3 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.h4,
+h4 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* Navbar Overrides to ensure top navigation looks like Actyx */
+.navbar {
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid var(--o-gray-200);
+}
+
+/* Card */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Utilities */
+.shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}

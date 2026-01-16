@@ -1,62 +1,12 @@
+@import './styles/odoo-theme.css';
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #ffffff;
+  font-family: var(--o-font-family);
+  background-color: var(--o-bg-light);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #1a1a1a;
 }
 
-.App-link {
-  color: #ff6b35;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Hand-drawn creative accents */
-:root {
-  --scribble-orange: #ff6b35;
-  --marker-orange: #ffab91;
-  --marker-orange-light: #ffe0d6;
-}
-
-.wiggle {
-  animation: wiggle 2.2s ease-in-out infinite;
-}
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-0.6deg); }
-  50% { transform: rotate(0.6deg); }
-}
-
-.hover-bounce {
-  transition: transform 180ms ease, filter 180ms ease;
-}
-.hover-bounce:hover {
-  transform: translateY(-2px) scale(1.01);
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.12));
-}
+/* Remove legacy App-header and logo styles as we use Odoo theme now */

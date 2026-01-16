@@ -16,6 +16,10 @@ interface BuilderContextType {
     zoom: number;
     setZoom: (z: number) => void;
     insertTemplate: (templateName: string) => void;
+    siteTheme: any;
+    updateTheme: (theme: any) => void;
+    apiKey: string;
+    setApiKey: (key: string) => void;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -79,6 +83,24 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
         });
     }, []);
 
+    const [siteTheme, setSiteTheme] = useState(() => ({
+        colors: { primary: '#667eea', secondary: '#764ba2', accent: '#ed64a6', background: '#ffffff', text: '#2d3748' },
+        font: 'Inter, sans-serif',
+        borderRadius: '8px'
+    }));
+
+    const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+
+    // Sync API key to localStorage
+    useEffect(() => {
+        if (apiKey) localStorage.setItem('gemini_api_key', apiKey);
+    }, [apiKey]);
+
+    const updateTheme = useCallback((updates: any) => {
+        setSiteTheme(prev => ({ ...prev, ...updates }));
+    }, []);
+
+    // ... existing insertTemplate ...
     const insertTemplate = useCallback((templateName: string) => {
         // Demo templates
         if (templateName === 'landing') {
@@ -106,7 +128,11 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
             setDevice,
             zoom,
             setZoom,
-            insertTemplate
+            insertTemplate,
+            siteTheme,
+            updateTheme,
+            apiKey,
+            setApiKey
         }}>
             {children}
         </BuilderContext.Provider>

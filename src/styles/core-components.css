@@ -1,0 +1,255 @@
+/* Core Component Replica - Odoo V16/17 Style */
+
+/* Buttons - Sharp, bordered, minimal radius */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 16px;
+    /* 34px height standard */
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.01em;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    box-shadow: 0 2px 4px rgba(113, 75, 103, 0.25);
+}
+
+.btn-primary:active {
+    background-color: #52364B;
+    /* Darker purple */
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background-color: #fff;
+    color: var(--color-primary);
+    border: 1px solid #D1D5DB;
+    /* Slightly darker than neutral-200 for contrast */
+}
+
+.btn-secondary:hover {
+    background-color: #F3F4F6;
+    border-color: #9CA3AF;
+    color: var(--color-primary-hover);
+}
+
+/* Inputs - flat, consistent */
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 6px 12px;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    border: 1px solid #CED4DA;
+    /* Bootstrap-ish gray */
+    border-radius: var(--radius-md);
+    background-color: #fff;
+    color: var(--odoo-text-dark);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(113, 75, 103, 0.15);
+    /* Purple Focus Ring */
+}
+
+input::placeholder {
+    color: #ADB5BD;
+}
+
+/* Cards - The "Sheet" Look */
+.odoo-card {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    /* Very subtle shadow */
+    position: relative;
+    overflow: hidden;
+}
+
+.odoo-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: #D1D5DB;
+}
+
+/* Badges */
+.odoo-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.odoo-badge.success {
+    background-color: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #bbf7d0;
+}
+
+.odoo-badge.warning {
+    background-color: #FEF9C3;
+    color: #A16207;
+    border: 1px solid #fde047;
+}
+
+.odoo-badge.error {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+    border: 1px solid #fecaca;
+}
+
+.odoo-badge.info {
+    background-color: #DBEAFE;
+    color: #1D4ED8;
+    border: 1px solid #bfdbfe;
+}
+
+/* Tables */
+.odoo-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    /* Dense data */
+}
+
+.odoo-table th {
+    background-color: #F8F9FA;
+    color: #495057;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 2px solid #DEE2E6;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.odoo-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #E9ECEF;
+    color: #212529;
+    vertical-align: middle;
+}
+
+.odoo-table tr:last-child td {
+    border-bottom: none;
+}
+
+.odoo-table tr:hover td {
+    background-color: #F1F3F5;
+}
+
+/* STATUS PIPELINE (Arrow Steps) 
+   Used in SmartForm headers for "Draft -> Sent -> Done"
+*/
+.odoo-status-bar {
+    display: flex;
+    border: 1px solid #DEE2E6;
+    border-radius: 3px;
+    overflow: hidden;
+    background: white;
+}
+
+.odoo-status-step {
+    position: relative;
+    padding: 6px 12px 6px 24px;
+    background: #F8F9FA;
+    color: #6C757D;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-right: 1px solid white;
+    /* divider hack */
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%);
+    margin-left: -12px;
+    /* overlap */
+    transition: all 0.2s;
+}
+
+.odoo-status-step:first-child {
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+    margin-left: 0;
+    padding-left: 16px;
+}
+
+.odoo-status-step:hover {
+    background: #E9ECEF;
+    color: #495057;
+}
+
+.odoo-status-step.active {
+    background: var(--odoo-purple);
+    color: white;
+}
+
+.odoo-status-step.completed {
+    background: var(--odoo-teal);
+    color: white;
+}
+
+/* FORM VIEW "Sheet" Utilities */
+.odoo-sheet {
+    background: white;
+    border: 1px solid #DEE2E6;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+/* RIBBON WIDGET (Top Right Corner) */
+.odoo-ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.odoo-ribbon-text {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    width: 140px;
+    transform: rotate(45deg);
+    background-color: var(--color-success);
+    color: white;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.odoo-ribbon-text.archived {
+    background-color: #6C757D;
+}

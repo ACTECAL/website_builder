@@ -3,6 +3,8 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { SortableContext, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useBuilder } from './BuilderContext';
 import { BuilderBlockItem } from './BuilderBlockItem';
+import { Palette, Sparkles } from 'lucide-react';
+import './BuilderCanvas.css';
 
 export const BuilderCanvas: React.FC = () => {
     const { blocks, moveBlock, selectBlock, device, zoom } = useBuilder();
@@ -29,52 +31,59 @@ export const BuilderCanvas: React.FC = () => {
         }
     };
 
+    const getDeviceLabel = () => {
+        switch (device) {
+            case 'mobile': return 'Mobile';
+            case 'tablet': return 'Tablet';
+            default: return 'Desktop';
+        }
+    };
+
     return (
-        <div style={{
-            flex: 1,
-            background: '#eee',
-            padding: 40,
-            overflow: 'auto',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start'
-        }} onClick={() => selectBlock(null)}>
-            <div style={{
-                width: getWidth(),
-                maxWidth: '1200px',
-                minHeight: '80vh',
-                background: 'white',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                transform: `scale(${zoom})`,
-                transformOrigin: 'top center',
-                transition: 'width 0.3s ease, transform 0.3s ease',
-                paddingBottom: 40
-            }}>
-                <DndContext
-                    sensors={sensors}
-                    collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}
-                >
-                    <SortableContext
-                        items={blocks.map(b => b.id)}
-                        strategy={verticalListSortingStrategy}
+        <div className="builder-canvas-container" onClick={() => selectBlock(null)}>
+            <div className="canvas-viewport">
+                <div className={`canvas-device-frame ${device}`}>
+                    <div className="device-label">
+                        <Palette size={14} />
+                        {getDeviceLabel()} Preview
+                    </div>
+                    <div
+                        className="canvas-content"
+                        style={{
+                            width: getWidth(),
+                            transform: `scale(${zoom})`,
+                        }}
                     >
-                        {blocks.map((block) => (
-                            <BuilderBlockItem key={block.id} block={block} />
-                        ))}
-                        {blocks.length === 0 && (
-                            <div style={{
-                                padding: 40,
-                                textAlign: 'center',
-                                color: 'var(--color-muted)',
-                                border: '2px dashed var(--color-muted)',
-                                margin: 20
-                            }}>
-                                Drag blocks here or select a template to start
-                            </div>
-                        )}
-                    </SortableContext>
-                </DndContext>
+                        <DndContext
+                            sensors={sensors}
+                            collisionDetection={closestCenter}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <SortableContext
+                                items={blocks.map(b => b.id)}
+                                strategy={verticalListSortingStrategy}
+                            >
+                                {blocks.map((block) => (
+                                    <BuilderBlockItem key={block.id} block={block} />
+                                ))}
+                                {blocks.length === 0 && (
+                                    <div className="canvas-empty-state">
+                                        <div className="empty-state-icon">
+                                            <Sparkles size={48} />
+                                        </div>
+                                        <h3 className="empty-state-title">Start Building Your Website</h3>
+                                        <p className="empty-state-description">
+                                            Use the AI chat to add components or drag blocks from the left panel
+                                        </p>
+                                        <div className="empty-state-hint">
+                                            Try asking: "Add a hero section" or "Create a features list"
+                                        </div>
+                                    </div>
+                                )}
+                            </SortableContext>
+                        </DndContext>
+                    </div>
+                </div>
             </div>
         </div>
     );

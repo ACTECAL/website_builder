@@ -51,147 +51,68 @@ export const HelpCenter: React.FC = () => {
       title="Help Center"
       intro="Browse guides, troubleshoot issues, or reach out to our support squad whenever you need a hand."
     >
-      <div style={{ display: 'grid', gap: 36 }}>
-        <section
+      <div className="d-flex flex-column gap-5">
+
+        {/* Search Section */}
+        <section className="position-relative p-5 rounded-4 border shadow-sm"
           style={{
-            display: 'grid',
-            gap: 18,
-            padding: '26px 30px',
-            borderRadius: 24,
-            border: '1px solid rgba(251, 146, 60, 0.35)',
-            background: 'linear-gradient(135deg, rgba(255, 247, 237, 0.95) 0%, rgba(255, 239, 224, 0.85) 100%)',
-            boxShadow: '0 25px 50px rgba(249, 115, 22, 0.12)'
-          }}
-        >
-          <div style={{ position: 'relative' }}>
-            <input
-              type="text"
-              placeholder="Search the knowledge base"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '16px 22px 16px 56px',
-                borderRadius: 16,
-                border: '1px solid rgba(251, 146, 60, 0.45)',
-                background: '#ffffff',
-                color: '#1f2937',
-                fontSize: '1rem',
-                outline: 'none',
-                transition: 'box-shadow 0.25s ease',
-                boxShadow: '0 10px 20px rgba(249, 115, 22, 0.06)'
-              }}
-              onFocus={(e) => (e.target.style.boxShadow = '0 12px 28px rgba(249, 115, 22, 0.15)')}
-              onBlur={(e) => (e.target.style.boxShadow = '0 10px 20px rgba(249, 115, 22, 0.06)')}
-            />
-            <span
-              style={{
-                position: 'absolute',
-                left: 22,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                fontSize: '1.1rem',
-                color: '#f97316'
-              }}
-            >
-              <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-            </span>
+            background: 'linear-gradient(135deg, #714B67 0%, #017E84 100%)', // Odoo Gradient
+            color: 'white'
+          }}>
+          <div className="position-relative z-1 container" style={{ maxWidth: '600px' }}>
+            <div className="position-relative">
+              <input
+                type="text"
+                placeholder="Search the knowledge base..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="form-control form-control-lg rounded-pill ps-5 border-0 shadow-lg"
+                style={{ padding: '1rem 3.5rem', fontSize: '1rem' }}
+              />
+              <i className="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-4 text-muted fs-5"></i>
+            </div>
+            <p className="text-center mt-3 mb-0 opacity-75 small fw-bold">
+              Search across {faqs.length} FAQs and troubleshooting guides.
+            </p>
           </div>
-          <p style={{ margin: 0, color: '#6b7280', fontSize: '0.95rem' }}>
-            Search across {faqs.length} FAQs and troubleshooting guides.
-          </p>
+          {/* Decorative overlay */}
+          <div className="position-absolute top-0 start-0 w-100 h-100 rounded-4 overflow-hidden z-0">
+            <div className="position-absolute top-0 end-0 bg-white opacity-10 rounded-circle" style={{ width: '300px', height: '300px', transform: 'translate(30%, -30%)' }}></div>
+            <div className="position-absolute bottom-0 start-0 bg-secondary opacity-25 rounded-circle" style={{ width: '200px', height: '200px', transform: 'translate(-30%, 30%)' }}></div>
+          </div>
         </section>
 
-        <section style={{ display: 'grid', gap: 20 }}>
-          <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-            <h2
-              style={{
-                margin: 0,
-                fontSize: '1.9rem',
-                fontWeight: 700,
-                color: '#1f2937'
-              }}
-            >
-              Frequently Asked Questions
-            </h2>
-            <span style={{ fontSize: '0.95rem', color: '#f97316', fontWeight: 600 }}>
-              Updated weekly
-            </span>
-          </header>
+        {/* FAQ List */}
+        <section className="container px-0">
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h2 className="h2 fw-bold text-dark mb-0">Frequently Asked Questions</h2>
+            <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2">Updated weekly</span>
+          </div>
 
           {filteredFAQs.length === 0 ? (
-            <div
-              style={{
-                padding: '26px 28px',
-                borderRadius: 20,
-                border: '1px solid rgba(251, 146, 60, 0.25)',
-                background: 'rgba(255, 240, 230, 0.85)',
-                textAlign: 'center',
-                color: '#f97316',
-                fontWeight: 600
-              }}
-            >
-              No results for "{searchTerm}". Try a broader keyword.
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gap: 16 }}>
+            <div className="text-center mb-5">
+              <h1 className="display-4 fw-bold mb-3 ls-tight">Actyx Help Center</h1>
+              <p className="lead text-muted mx-auto" style={{ maxWidth: 600 }}>
+                Find answers, tutorials, and support for all your Actyx apps.
+              </p>
+            </div>) : (
+            <div className="accordion d-flex flex-column gap-3" id="faqAccordion">
               {filteredFAQs.map((faq, index) => {
                 const isOpen = expandedFAQ === index;
                 return (
-                  <div
-                    key={faq.question}
-                    style={{
-                      borderRadius: 22,
-                      border: '1px solid rgba(251, 146, 60, 0.3)',
-                      background: '#fff',
-                      boxShadow: '0 18px 40px rgba(249, 115, 22, 0.12)',
-                      overflow: 'hidden'
-                    }}
-                  >
+                  <div key={faq.question} className="accordion-item border rounded-4 shadow-sm overflow-hidden">
                     <button
                       onClick={() => setExpandedFAQ(isOpen ? null : index)}
-                      style={{
-                        width: '100%',
-                        padding: '20px 24px',
-                        background: 'transparent',
-                        border: 'none',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        cursor: 'pointer'
-                      }}
+                      className="accordion-button collapsed w-100 d-flex justify-content-between align-items-center p-4 bg-white border-0 text-start shadow-none"
+                      type="button"
                     >
-                      <span
-                        style={{
-                          fontWeight: 650,
-                          fontSize: '1.05rem',
-                          color: '#1f2937',
-                          textAlign: 'left'
-                        }}
-                      >
-                        {faq.question}
-                      </span>
-                      <span
-                        style={{
-                          color: '#f97316',
-                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                          transition: 'transform 0.2s ease',
-                          fontSize: '1.1rem'
-                        }}
-                      >
-                        ▼
-                      </span>
+                      <span className={`fw-bold fs-5 ${isOpen ? 'text-primary' : 'text-dark'}`}>{faq.question}</span>
+                      <i className={`fa-solid fa-chevron-down transition-transform text-muted ${isOpen ? 'rotate-180' : ''}`}></i>
                     </button>
                     {isOpen && (
-                      <div
-                        style={{
-                          padding: '0 24px 22px',
-                          borderTop: '1px solid rgba(251, 146, 60, 0.2)',
-                          color: '#4b5563',
-                          lineHeight: 1.7
-                        }}
-                      >
-                        {faq.answer}
+                      <div className="px-4 pb-4 animate-slide-down">
+                        <hr className="my-2 border-secondary opacity-10" />
+                        <p className="text-muted mb-0 lh-lg">{faq.answer}</p>
                       </div>
                     )}
                   </div>
@@ -201,56 +122,30 @@ export const HelpCenter: React.FC = () => {
           )}
         </section>
 
-        <section
-          style={{
-            display: 'grid',
-            gap: 18,
-            padding: '32px 34px',
-            borderRadius: 26,
-            border: '1px solid rgba(249, 115, 22, 0.35)',
-            background: 'linear-gradient(135deg, #ffe7d1 0%, #ffe0c2 100%)',
-            textAlign: 'center',
-            boxShadow: '0 30px 60px rgba(249, 115, 22, 0.12)'
-          }}
-        >
-          <h3 style={{ margin: 0, fontSize: '1.6rem', color: '#1f2937', fontWeight: 700 }}>
-            Still need help?
-          </h3>
-          <p style={{ margin: 0, color: '#4b5563', fontSize: '1rem' }}>
-            Connect with our support engineers for tailored assistance.
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-            <Link
-              to="/contact"
-              style={{
-                padding: '12px 26px',
-                borderRadius: 999,
-                background: '#f97316',
-                color: '#fff',
-                textDecoration: 'none',
-                fontWeight: 700,
-                letterSpacing: '0.01em',
-                boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)'
-              }}
-            >
+        {/* Support Callout */}
+        <section className="text-center bg-light p-5 rounded-4 border">
+          <h3 className="h3 fw-bold text-dark mb-2">Still need help?</h3>
+          <p className="text-muted mb-4">Connect with our support engineers for tailored assistance.</p>
+          <div className="d-flex justify-content-center gap-3">
+            <Link to="/contact" className="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm">
               Contact Support
             </Link>
-            <a
-              href="mailto:support@bizsuite.com"
-              style={{
-                padding: '12px 26px',
-                borderRadius: 999,
-                border: '1px solid rgba(249, 115, 22, 0.45)',
-                color: '#f97316',
-                textDecoration: 'none',
-                fontWeight: 600
-              }}
-            >
+            <a href="mailto:support@bizsuite.com" className="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold bg-white">
               Email Us
             </a>
           </div>
         </section>
+
       </div>
+      <style>{`
+        .transition-transform { transition: transform 0.2s ease; }
+        .rotate-180 { transform: rotate(180deg); }
+        .animate-slide-down { animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </SupportLayout>
   );
 };

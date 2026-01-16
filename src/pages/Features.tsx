@@ -1,168 +1,132 @@
 import React from 'react';
-import { PageHero } from '../components/PageHero';
-import { HandBullets } from '../components/CreativeBits';
+import '../styles/odoo-theme.css';
 
 export const Features: React.FC = () => {
   return (
-    <main>
-      <PageHero
-        title="Nexora Features"
-        subtitle="At Nexora, we don’t just give you tools—we give you a connected system that grows with your business. Every feature helps your team move faster and work as one."
-        imageUrl="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
-      />
-      <section style={{ padding: '0 24px 40px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: 12,
-            marginBottom: 20
-          }}>
-            {[
-              'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop',
-              'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
-              'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
-              'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=800&auto=format&fit=crop'
-            ].map((src, i) => (
-              <img key={i} src={src} alt="" style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 12 }} />
-            ))}
+    <div className="bg-white min-h-screen font-sans text-dark">
+      {/* Hero Section */}
+      <div className="position-relative py-5 overflow-hidden bg-light-subtle">
+        <div className="container py-5 text-center position-relative z-10">
+          <h1 className="display-3 fw-bold mb-4 tracking-tight text-dark">
+            Unleash your
+            <span className="text-primary d-block mt-2">Growth Potential</span>
+          </h1>
+          <p className="lead text-muted max-w-2xl mx-auto mb-5 leading-relaxed">
+            No more painful integrations. One app for every need.
+            <br />
+            They all work together. Perfectly.
+          </p>
+          <div className="d-flex justify-content-center gap-3">
+            <a href="/get-started" className="btn btn-primary btn-lg px-5 py-3 fw-bold shadow-lg hvr-grow">
+              Start Now - It's Free
+            </a>
+            <a href="/pricing" className="btn btn-outline-secondary btn-lg px-5 py-3 fw-bold">
+              View Pricing
+            </a>
           </div>
-          <p style={{ color: '#475569', lineHeight: 1.9 }}>
-            Here’s what makes Nexora powerful:
-          </p>
-
-          <h3>1. Modular Apps – Start Small, Scale Confidently</h3>
-          <HandBullets
-            items={[
-              'Start with one app and expand when you’re ready',
-              'Choose from CRM, Finance, HR, or Operations',
-              'Add modules without messy migrations'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> Flexibility without the overwhelm. Pay for what you need today—stay future‑ready.
-          </p>
-
-          <h3>2. Unified CRM – Build Stronger Relationships</h3>
-          <HandBullets
-            items={[
-              'Centralized customer database',
-              'Automated reminders and follow‑ups',
-              'Integrated sales pipeline tracking'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> No lost emails, no missed opportunities—stronger, smarter relationships.
-          </p>
-
-          <h3>3. Finance & Accounting – Simplified Money Management</h3>
-          <HandBullets
-            items={[
-              'Smart invoicing and recurring billing',
-              'Expense tracking and approvals',
-              'Real‑time financial dashboards'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> Spend less time crunching numbers and more time growing your bottom line.
-          </p>
-
-          <h3>4. Operations Hub – Streamline How Work Gets Done</h3>
-          <HandBullets
-            items={[
-              'Task and project management',
-              'Workflow automation',
-              'Cross‑team visibility'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> Everyone knows what’s happening, who’s responsible, and when things are due—no chaos.
-          </p>
-
-          <h3>5. Human Resources – Put People First</h3>
-          <HandBullets
-            items={[
-              'Employee onboarding and digital records',
-              'Leave management and payroll integration',
-              'Performance tracking'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> A workplace where people feel supported and processes feel effortless.
-          </p>
-
-          <h3>6. Open Integrations – Connect Everything You Already Use</h3>
-          <HandBullets
-            items={[
-              'API‑first and ecosystem‑friendly',
-              'Sync data across your existing stack',
-              'Extend functionality with custom integrations'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> No data silos. Everything works together—your way.
-          </p>
-
-          <h3>7. Delightful Design – Tools Your Team Actually Loves</h3>
-          <HandBullets
-            items={[
-              'Clean, modern interface',
-              'Mobile‑friendly for work on the go',
-              'Designed for speed and simplicity'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> When software feels good to use, adoption soars.
-          </p>
-
-          <h3>8. Enterprise‑Grade Security – Built on Trust</h3>
-          <HandBullets
-            items={[
-              'Bank‑level encryption',
-              'Role‑based access control',
-              'Regular security audits'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> Peace of mind knowing your business is safe.
-          </p>
-
-          <h3>9. AI‑Powered Insights – Smarter Decisions, Faster</h3>
-          <HandBullets
-            items={[
-              'Predictive analytics for sales and finance',
-              'Automated workflow suggestions',
-              'Smart recommendations for efficiency'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> Make better decisions backed by real‑time intelligence.
-          </p>
-
-          <h3>10. One System, Endless Possibilities</h3>
-          <HandBullets
-            items={[
-              'One login, one platform, one experience',
-              'No jumping between tabs',
-              'A coherent system for the entire company'
-            ]}
-          />
-          <p style={{ color: '#475569' }}>
-            <strong>Benefit:</strong> Finally—business software that feels like it’s on your side.
-          </p>
-
-          <p style={{ color: '#0f172a', marginTop: 24 }}>
-            <i className="fa-solid fa-wand-magic-sparkles" aria-hidden="true" style={{ marginRight: 8 }}></i>
-            In short: Nexora isn’t just a set of apps. It’s the operating system for your business—modular, open, secure, and delightfully easy to use.
-          </p>
-          <p style={{ marginTop: 12 }}>
-            <i className="fa-solid fa-arrow-right" aria-hidden="true" style={{ marginRight: 8 }}></i>
-            <a href="/apps" style={{ color: '#667eea', textDecoration: 'none' }}>Ready to simplify your workflows?</a>
-          </p>
         </div>
-      </section>
-    </main>
+
+        {/* Abstract bg elements */}
+        <div className="position-absolute top-0 start-0 w-64 h-64 bg-primary opacity-10 rounded-circle blur-3xl translate-middle"></div>
+        <div className="position-absolute bottom-0 end-0 w-96 h-96 bg-success opacity-10 rounded-circle blur-3xl translate-middle-x"></div>
+      </div>
+
+      {/* Bento Grid Features */}
+      <div className="container py-5 my-5">
+        <div className="row g-4">
+
+          {/* Large Card 1 - Finance */}
+          <div className="col-md-8">
+            <div className="h-100 bg-primary text-white rounded-4 p-5 position-relative overflow-hidden group hover-scale transition">
+              <div className="position-relative z-10" style={{ maxWidth: '450px' }}>
+                <h3 className="h2 fw-bold mb-3">Finance Done Right</h3>
+                <p className="lead opacity-75 mb-4">Automate invoicing, expense tracking, and accounting. Get real-time financial reports without the headache.</p>
+                <span className="badge bg-white bg-opacity-25 backdrop-blur rounded-pill fs-6 px-3 py-2 fw-normal">Accounting • Invoicing • Expenses</span>
+              </div>
+              <div className="position-absolute end-0 bottom-0 w-50 h-100 opacity-25 bg-gradient-to-l from-black-50 to-transparent"></div>
+              <i className="fa-solid fa-coins position-absolute bottom-0 end-0 text-white opacity-10" style={{ fontSize: '150px', transform: 'translate(20%, 20%) rotate(12deg)' }}></i>
+            </div>
+          </div>
+
+          {/* Tall Card - CRM */}
+          <div className="col-md-4">
+            <div className="h-100 bg-white border shadow-sm rounded-4 p-4 d-flex flex-column justify-content-between hover-shadow transition">
+              <div>
+                <div className="icon-box bg-success bg-opacity-10 text-success rounded-3 d-flex align-items-center justify-content-center mb-4" style={{ width: 48, height: 48 }}>
+                  <i className="fa-solid fa-users fs-4"></i>
+                </div>
+                <h3 className="h4 fw-bold mb-2">CRM & Sales</h3>
+                <p className="text-muted small">Track leads, close opportunities, and get accurate forecasts.</p>
+              </div>
+              <div className="mt-4 position-relative bg-light rounded-3 overflow-hidden border border-light" style={{ height: 120 }}>
+                <div className="position-absolute bottom-0 w-100 d-flex align-items-end justify-content-around px-2 pb-1 h-100">
+                  <div className="bg-success rounded-top" style={{ width: '15%', height: '30%' }}></div>
+                  <div className="bg-success rounded-top" style={{ width: '15%', height: '50%' }}></div>
+                  <div className="bg-success rounded-top" style={{ width: '15%', height: '70%' }}></div>
+                  <div className="bg-success rounded-top" style={{ width: '15%', height: '100%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card - Website */}
+          <div className="col-md-4">
+            <div className="h-100 bg-white border shadow-sm rounded-4 p-4 hover-shadow transition">
+              <div className="icon-box bg-primary bg-opacity-10 text-primary rounded-3 d-flex align-items-center justify-content-center mb-4" style={{ width: 48, height: 48 }}>
+                <i className="fa-solid fa-globe fs-4"></i>
+              </div>
+              <h3 className="h4 fw-bold mb-2">Website Builder</h3>
+              <p className="text-muted small mb-3">Drag & drop your way to a stunning website.</p>
+              <ul className="list-unstyled small text-muted d-flex flex-column gap-2 mb-0">
+                <li><i className="fa-solid fa-check text-success me-2"></i> eCommerce included</li>
+                <li><i className="fa-solid fa-check text-success me-2"></i> SEO optimized</li>
+                <li><i className="fa-solid fa-check text-success me-2"></i> Mobile responsive</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Wide Card - Operations */}
+          <div className="col-md-8">
+            <div className="h-100 bg-dark text-white rounded-4 p-5 position-relative overflow-hidden group hover-scale transition">
+              <div className="position-relative z-10 d-flex flex-column flex-md-row align-items-center gap-4">
+                <div className="flex-grow-1">
+                  <h3 className="h2 fw-bold mb-3">Operations Hub</h3>
+                  <p className="lead opacity-75 mb-4">Inventory, Manufacturing, Purchase, and more. All integrated in real-time.</p>
+                  <a href="/apps" className="btn btn-outline-light rounded-pill px-4 fw-bold">Explore Apps</a>
+                </div>
+                <div className="flex-shrink-0 bg-white bg-opacity-10 rounded-4 p-4 d-flex align-items-center justify-content-center" style={{ width: 120, height: 120 }}>
+                  <i className="fa-solid fa-gears fs-1 opacity-75 fa-spin-pulse" style={{ '--fa-animation-duration': '3s' } as React.CSSProperties}></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Testimonial Strip */}
+      <div className="bg-secondary text-white py-5">
+        <div className="container text-center py-4">
+          <i className="fa-solid fa-quote-left display-4 opacity-25 mb-4"></i>
+          <h2 className="display-6 fw-bold mb-4">
+            "It completely transformed how we work. We replaced 7 different apps with just Actyx."
+          </h2>
+          <div className="d-flex align-items-center justify-content-center gap-3">
+            <div className="rounded-circle bg-white" style={{ width: 48, height: 48 }}></div>
+            <div className="text-start">
+              <div className="fw-bold">Sarah Jenkins</div>
+              <div className="small opacity-75">CEO, TechFlow Inc.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        .blur-3xl { filter: blur(64px); }
+        .hover-scale:hover { transform: scale(1.01); }
+        .hover-shadow:hover { box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
+        .transition { transition: all 0.3s ease; }
+      `}</style>
+    </div>
   );
 };
-
-

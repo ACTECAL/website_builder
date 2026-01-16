@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GothicH2, GothicH3 } from './GothicHeading';
-import { DrippingText } from './DrippingText';
 
 type Stat = {
   value: number;
@@ -9,6 +7,7 @@ type Stat = {
   prefix?: string;
   icon?: string;
   color?: string;
+  gradient?: string;
 };
 
 type Props = {
@@ -18,11 +17,11 @@ type Props = {
   background?: string;
 };
 
-export const StatsSection: React.FC<Props> = ({ 
-  stats, 
+export const StatsSection: React.FC<Props> = ({
+  stats,
   title = "our impact in numbers",
   subtitle = "see how we're helping teams around the world succeed",
-  background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+  background = "linear-gradient(135deg, #714B67 0%, #017E84 100%)"
 }) => {
   const [animatedStats, setAnimatedStats] = useState<Stat[]>(stats.map(s => ({ ...s, value: 0 })));
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -71,159 +70,79 @@ export const StatsSection: React.FC<Props> = ({
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      style={{ 
-        padding: '80px 24px', 
+      className="py-5 text-white position-relative overflow-hidden"
+      style={{
         background,
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden'
+        minHeight: '80vh',
+        display: 'flex',
+        alignItems: 'center'
       }}
     >
       {/* Background decoration */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'url("data:image/svg+xml,%3Csvg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M60 60c0-33.137 26.863-60 60-60v120c-33.137 0-60-26.863-60-60z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-        opacity: 0.3
-      }} />
-      
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 80 }}>
-          <GothicH2 
-            text={title}
-            style={{ 
-              fontSize: 'clamp(2rem, 4vw, 3rem)', 
-              margin: '0 0 20px',
-              textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              color: '#FFFFFF'
-            }}
-          />
-          <DrippingText 
-            text={subtitle}
-            style={{ 
-              fontSize: '1.2rem', 
-              maxWidth: 600,
-              margin: '0 auto',
-              lineHeight: 1.6,
-              color: 'rgba(255,255,255,0.9)'
-            }}
-          />
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.1)' }}></div>
+
+      <div className="container position-relative z-1">
+        <div className="text-center mb-5">
+          <h2 className="display-4 fw-bold mb-3">{title}</h2>
+          <p className="lead text-white-50 mx-auto" style={{ maxWidth: 600 }}>
+            {subtitle}
+          </p>
         </div>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: 40 
-        }}>
+        <div className="row g-4 justify-content-center">
           {animatedStats.map((stat, idx) => (
-            <div key={idx} style={{ 
-              textAlign: 'center',
-              padding: '32px 24px',
-              background: 'rgba(255,255,255,0.1)',
-              borderRadius: 20,
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              transition: 'all 0.3s ease'
-            }} onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
-            }} onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-            }}>
-              
-              {stat.icon && (
-                <div style={{
-                  fontSize: '3rem',
-                  marginBottom: 20,
-                  display: 'flex',
-                  justifyContent: 'center'
-                }}>
-                  {stat.icon}
-                </div>
-              )}
+            <div key={idx} className="col-md-6 col-lg-3">
+              <div className="text-center p-4 rounded-4 h-100 position-relative group hover-lift" style={{
+                background: 'rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.2)'
+              }}>
+                <div className="position-absolute top-0 start-0 w-100 h-100 rounded-4" style={{
+                  background: stat.gradient || 'transparent',
+                  opacity: 0.1,
+                  zIndex: -1
+                }}></div>
 
-              <div style={{
-                fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-                fontWeight: 800,
-                marginBottom: 12,
-                textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                color: stat.color || 'white'
-              }}>
-                {stat.prefix || ''}{stat.value.toLocaleString()}{stat.suffix || ''}
-              </div>
-              
-              <div style={{
-                fontSize: '1.1rem',
-                color: 'rgba(255,255,255,0.9)',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
-              }}>
-                {stat.label}
+                {stat.icon && (
+                  <div className="mb-3 display-4 text-white">
+                    {stat.icon}
+                  </div>
+                )}
+
+                <div className="display-5 fw-bold mb-2 text-white">
+                  {stat.prefix || ''}{stat.value.toLocaleString()}{stat.suffix || ''}
+                </div>
+
+                <div className="text-uppercase small fw-bold tracking-wider opacity-75">
+                  {stat.label}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Additional info section */}
-        <div style={{
-          marginTop: 80,
-          textAlign: 'center',
-          padding: '40px',
-          background: 'rgba(255,255,255,0.1)',
-          borderRadius: 20,
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
-          <GothicH3 
-            text="trusted by industry leaders"
-            style={{
-              fontSize: '1.5rem',
-              margin: '0 0 16px',
-              color: '#FFFFFF'
-            }}
-          />
-          <DrippingText 
-            text="join thousands of companies that have transformed their business with our platform"
-            style={{
-              fontSize: '1rem',
-              margin: '0 0 32px',
-              maxWidth: 600,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              color: 'rgba(255,255,255,0.8)'
-            }}
-          />
-          
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 40,
-            flexWrap: 'wrap',
-            opacity: 0.8
-          }}>
-            {['fortune 500', 'startups', 'enterprise', 'smbs', 'remote teams', 'global'].map((type, idx) => (
-              <div key={idx} style={{
-                background: 'rgba(255,255,255,0.2)',
-                padding: '8px 16px',
-                borderRadius: 20,
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                border: '1px solid rgba(255,255,255,0.3)'
-              }}>
+        <div className="mt-5 p-5 rounded-4 text-center bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-10 mx-auto" style={{ maxWidth: 900 }}>
+          <h3 className="h3 mb-3 fw-bold">Transforming Industries</h3>
+          <p className="mb-4 mx-auto text-white-50" style={{ maxWidth: 600 }}>
+            Join thousands of companies that have transformed their business with our platform.
+          </p>
+
+          <div className="d-flex justify-content-center flex-wrap gap-3 opacity-75">
+            {['Fortune 500', 'Startups', 'Enterprise', 'SMBs', 'Remote Teams', 'Global'].map((type, idx) => (
+              <span key={idx} className="badge rounded-pill bg-white bg-opacity-25 border border-white border-opacity-25 px-3 py-2">
                 {type}
-              </div>
+              </span>
             ))}
           </div>
         </div>
       </div>
+      <style>{`
+        .hover-lift { transition: transform 0.3s ease, background 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15) !important; }
+      `}</style>
     </section>
   );
 };

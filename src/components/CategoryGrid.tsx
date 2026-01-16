@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { ScribbleUnderline } from './Scribbles';
 
 export type Category = {
   title: string;
@@ -23,70 +22,66 @@ export const CategoryGrid: React.FC<Props> = ({ categories, collapsible = false,
   const toggleOne = (idx: number) => setOpen(prev => prev.map((v, i) => (i === idx ? !v : v)));
 
   return (
-    <section style={{ padding: '40px 24px' }}>
-      {collapsible && (
-        <div style={{ maxWidth: 1160, margin: '0 auto 14px', display: 'flex', justifyContent: 'flex-end' }}>
-          <button onClick={toggleAll} style={{
-            background: 'transparent',
-            border: '1px solid rgba(0,0,0,0.15)',
-            padding: '8px 12px',
-            borderRadius: 10,
-            cursor: 'pointer'
-          }}>
-            {toggleImageUrl && (
-              <img src={toggleImageUrl} alt="toggle" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: 'middle' }} />
-            )}
-            {allOpen ? 'Collapse all' : 'Expand all'}
-          </button>
-        </div>
-      )}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: 28,
-        maxWidth: 1160,
-        margin: '0 auto'
-      }}>
-        {categories.map((cat, idx) => (
-          <div key={idx} style={{
-            borderTop: `3px solid ${cat.color}`,
-            paddingTop: 12
-          }}>
-            <h3 onClick={() => collapsible && toggleOne(idx)} style={{
-              margin: '0 0 10px',
-              fontSize: '0.95rem',
-              letterSpacing: '0.02em',
-              color: cat.color,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              cursor: collapsible ? 'pointer' : 'default'
-            }}>
-              {cat.iconUrl && (
-                <img src={cat.iconUrl} alt="" style={{ width: 18, height: 18 }} />
+    <section className="py-5">
+      <div className="container" style={{ maxWidth: 1160 }}>
+        {collapsible && (
+          <div className="d-flex justify-content-end mb-3">
+            <button onClick={toggleAll} className="btn btn-outline-secondary btn-sm rounded-pill px-3">
+              {toggleImageUrl && (
+                <img src={toggleImageUrl} alt="toggle" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: 'middle' }} />
               )}
-              <ScribbleUnderline color={cat.color}>{cat.title.toUpperCase()}</ScribbleUnderline>
-              {collapsible && (
-                <span style={{ color: '#64748b', fontSize: '0.9rem' }}>{open[idx] ? '▾' : '▸'}</span>
-              )}
-            </h3>
-            {(!collapsible || open[idx]) && (
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {cat.links.map((link, i) => (
-                  <li key={i} style={{ marginBottom: 10 }}>
-                    <a className="hover-bounce" href={link.href} style={{
-                      color: '#334155',
-                      textDecoration: 'none'
-                    }}>
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
+              {allOpen ? 'Collapse all' : 'Expand all'}
+            </button>
           </div>
-        ))}
+        )}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: 28,
+        }}>
+          {categories.map((cat, idx) => (
+            <div key={idx} style={{
+              borderTop: `3px solid ${cat.color}`,
+              paddingTop: 12
+            }}>
+              <h3 onClick={() => collapsible && toggleOne(idx)} style={{
+                margin: '0 0 10px',
+                fontSize: '0.95rem',
+                letterSpacing: '0.02em',
+                color: cat.color,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                cursor: collapsible ? 'pointer' : 'default',
+                fontWeight: 700
+              }}>
+                {cat.iconUrl && (
+                  <img src={cat.iconUrl} alt="" style={{ width: 18, height: 18 }} />
+                )}
+                <span style={{ borderBottom: `2px solid ${cat.color}` }}>{cat.title.toUpperCase()}</span>
+                {collapsible && (
+                  <span className="text-muted small ms-auto">{open[idx] ? '▾' : '▸'}</span>
+                )}
+              </h3>
+              {(!collapsible || open[idx]) && (
+                <ul className="list-unstyled mb-0">
+                  {cat.links.map((link, i) => (
+                    <li key={i} className="mb-2">
+                      <a href={link.href} className="text-decoration-none text-secondary hover-text-dark transition-colors">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
+      <style>{`
+        .hover-text-dark:hover { color: #1a1a1a !important; }
+        .transition-colors { transition: color 0.15s ease-in-out; }
+      `}</style>
     </section>
   );
 };

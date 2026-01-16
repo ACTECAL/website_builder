@@ -1,0 +1,358 @@
+/* Enhanced White Theme - Clean & Modern */
+
+:root {
+  /* Enhanced color palette using odoo tokens */
+  --white-theme-bg-primary: #ffffff;
+  --white-theme-bg-secondary: #f8f9fa;
+  --white-theme-bg-tertiary: #e9ecef;
+  --white-theme-bg-accent: linear-gradient(135deg, var(--color-primary) 0%, #5d3e55 100%);
+
+  --white-theme-text-primary: #000000;
+  --white-theme-text-secondary: #343a40;
+  --white-theme-text-tertiary: #6c757d;
+  --white-theme-text-muted: #adb5bd;
+
+  --white-theme-border-light: #dee2e6;
+  --white-theme-border-medium: #ced4da;
+  --white-theme-border-accent: var(--color-primary);
+
+  /* Sophisticated accent colors */
+  --white-theme-accent-primary: var(--color-primary);
+  --white-theme-accent-secondary: var(--color-primary-hover);
+  --white-theme-accent-light: rgba(113, 75, 103, 0.1);
+  --white-theme-accent-lighter: rgba(113, 75, 103, 0.05);
+
+  /* Enhanced shadows */
+  --white-theme-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --white-theme-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --white-theme-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --white-theme-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --white-theme-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Subtle gradients for depth */
+  --white-theme-gradient-subtle: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  --white-theme-gradient-card: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+/* Enhanced White Theme - Applied when NOT in dark mode */
+:root {
+  /* Set white theme variables as defaults */
+  --bg-primary: var(--white-theme-bg-primary);
+  --bg-secondary: var(--white-theme-bg-secondary);
+  --text-primary: var(--white-theme-text-primary);
+  --text-secondary: var(--white-theme-text-secondary);
+  --border-light: var(--white-theme-border-light);
+  --accent-color: var(--white-theme-accent-primary);
+}
+
+/* Apply white theme when NOT in dark mode */
+body:not(.dark-mode) {
+  background: var(--white-theme-bg-primary);
+  color: var(--white-theme-text-primary);
+  font-family: var(--font-sans);
+  line-height: var(--leading-relaxed);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body:not(.dark-mode) main {
+  background: var(--white-theme-bg-primary);
+  min-height: 100vh;
+}
+
+/* Typography improvements */
+body:not(.dark-mode) h1,
+body:not(.dark-mode) h2,
+body:not(.dark-mode) h3,
+body:not(.dark-mode) h4,
+body:not(.dark-mode) h5,
+body:not(.dark-mode) h6 {
+  color: var(--white-theme-text-primary);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+body:not(.dark-mode) h1 {
+  font-size: var(--text-4xl);
+}
+
+body:not(.dark-mode) h2 {
+  font-size: var(--text-3xl);
+}
+
+body:not(.dark-mode) h3 {
+  font-size: var(--text-2xl);
+}
+
+body:not(.dark-mode) h4 {
+  font-size: var(--text-xl);
+}
+
+body:not(.dark-mode) h5 {
+  font-size: var(--text-lg);
+}
+
+body:not(.dark-mode) h6 {
+  font-size: var(--text-base);
+}
+
+body:not(.dark-mode) p,
+body:not(.dark-mode) span,
+body:not(.dark-mode) div {
+  color: var(--white-theme-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* Enhanced card styling */
+body:not(.dark-mode) .card,
+body:not(.dark-mode) .feature-card,
+body:not(.dark-mode) .pricing-card,
+body:not(.dark-mode) .testimonial-card {
+  background: var(--white-theme-gradient-card);
+  border: 1px solid var(--white-theme-border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--white-theme-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+
+body:not(.dark-mode) .card:hover,
+body:not(.dark-mode) .feature-card:hover {
+  box-shadow: var(--white-theme-shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--white-theme-border-accent);
+}
+
+/* Button enhancements */
+body:not(.dark-mode) .btn,
+body:not(.dark-mode) button {
+  background: var(--white-theme-bg-secondary);
+  color: var(--white-theme-text-primary);
+  border: 1px solid var(--white-theme-border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  transition: all 0.2s ease;
+  box-shadow: var(--white-theme-shadow-sm);
+}
+
+body:not(.dark-mode) .btn:hover {
+  background: var(--white-theme-bg-tertiary);
+  border-color: var(--white-theme-border-light);
+  box-shadow: var(--white-theme-shadow);
+  transform: translateY(-1px);
+}
+
+body:not(.dark-mode) .btn-primary,
+body:not(.dark-mode) .bg-plum,
+body:not(.dark-mode) button.bg-plum,
+body:not(.dark-mode) button[type="submit"] {
+  background: var(--white-theme-accent-primary);
+  color: var(--color-white);
+  border-color: var(--white-theme-accent-primary);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+body:not(.dark-mode) .btn-primary:hover,
+body:not(.dark-mode) .bg-plum:hover,
+body:not(.dark-mode) button.bg-plum:hover,
+body:not(.dark-mode) button[type="submit"]:hover {
+  background: var(--white-theme-accent-secondary);
+  border-color: var(--white-theme-accent-secondary);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+body:not(.dark-mode) .btn-secondary {
+  background: var(--white-theme-bg-primary);
+  color: var(--white-theme-text-primary);
+  border-color: var(--white-theme-border-medium);
+}
+
+body:not(.dark-mode) .btn-secondary:hover {
+  background: var(--white-theme-accent-lighter);
+  border-color: var(--white-theme-accent-primary);
+  color: var(--white-theme-accent-primary);
+}
+
+/* Input styling */
+body:not(.dark-mode) input,
+body:not(.dark-mode) textarea,
+body:not(.dark-mode) select {
+  background: var(--white-theme-bg-primary);
+  color: var(--white-theme-text-primary);
+  border: 1px solid var(--white-theme-border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  transition: all 0.2s ease;
+  box-shadow: var(--white-theme-shadow-sm);
+}
+
+body:not(.dark-mode) input:focus,
+body:not(.dark-mode) textarea:focus,
+body:not(.dark-mode) select:focus {
+  outline: none;
+  border-color: var(--white-theme-accent-primary);
+  box-shadow: 0 0 0 3px var(--white-theme-accent-light);
+  background: var(--white-theme-bg-primary);
+}
+
+/* Link styling */
+body:not(.dark-mode) a {
+  color: var(--white-theme-accent-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: var(--font-medium);
+}
+
+body:not(.dark-mode) a:hover {
+  color: var(--white-theme-accent-secondary);
+  text-decoration: underline;
+}
+
+/* Navigation enhancements */
+body:not(.dark-mode) .nav-enhanced {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--white-theme-border-light);
+  box-shadow: var(--white-theme-shadow-sm);
+}
+
+body:not(.dark-mode) .nav-item-simple {
+  color: var(--white-theme-text-secondary);
+  font-weight: var(--font-medium);
+  transition: all 0.2s ease;
+}
+
+body:not(.dark-mode) .nav-item-simple:hover {
+  color: var(--white-theme-accent-primary);
+  background: var(--white-theme-accent-lighter);
+  border-radius: var(--radius-md);
+}
+
+body:not(.dark-mode) .nav-item-simple.active {
+  color: var(--white-theme-accent-primary);
+  background: var(--white-theme-accent-light);
+  border-radius: var(--radius-md);
+}
+
+/* Hero sections */
+body:not(.dark-mode) .hero,
+body:not(.dark-mode) .hero-section {
+  background: var(--white-theme-gradient-subtle);
+  color: var(--white-theme-text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+body:not(.dark-mode) .hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(147, 197, 253, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Footer styling */
+body:not(.dark-mode) footer,
+body:not(.dark-mode) .footer {
+  background: var(--white-theme-bg-secondary);
+  color: var(--white-theme-text-secondary);
+  border-top: 1px solid var(--white-theme-border-light);
+  margin-top: var(--space-16);
+}
+
+/* Modal and overlay */
+body:not(.dark-mode) .modal,
+body:not(.dark-mode) .overlay,
+body:not(.dark-mode) .popup {
+  background: var(--white-theme-bg-primary);
+  color: var(--white-theme-text-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--white-theme-shadow-xl);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--white-theme-border-light);
+}
+
+/* Section spacing */
+body:not(.dark-mode) section {
+  padding: var(--space-16) 0;
+}
+
+body:not(.dark-mode) .container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* Icon colors */
+body:not(.dark-mode) .lucide,
+body:not(.dark-mode) svg,
+body:not(.dark-mode) .fa,
+body:not(.dark-mode) .fas,
+body:not(.dark-mode) .far,
+body:not(.dark-mode) .fab {
+  color: var(--white-theme-text-secondary);
+  transition: color 0.2s ease;
+}
+
+body:not(.dark-mode) .lucide:hover,
+body:not(.dark-mode) svg:hover {
+  color: var(--white-theme-accent-primary);
+}
+
+/* Subtle animations */
+body:not(.dark-mode) * {
+  transition: all 0.2s ease;
+}
+
+/* Focus states for accessibility */
+body:not(.dark-mode) *:focus-visible {
+  outline: 2px solid var(--white-theme-accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body:not(.dark-mode) section {
+    padding: var(--space-12) 0;
+  }
+
+  body:not(.dark-mode) .container {
+    padding: 0 var(--space-4);
+  }
+
+  body:not(.dark-mode) h1 {
+    font-size: var(--text-3xl);
+  }
+
+  body:not(.dark-mode) h2 {
+    font-size: var(--text-2xl);
+  }
+
+  body:not(.dark-mode) h3 {
+    font-size: var(--text-xl);
+  }
+}
+
+/* Print styles */
+@media print {
+  body:not(.dark-mode) {
+    background: white !important;
+    color: black !important;
+  }
+
+  body:not(.dark-mode) .card,
+  body:not(.dark-mode) .feature-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}
