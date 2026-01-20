@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import '../styles/Apps.css';
 
@@ -82,6 +82,10 @@ export const Apps: React.FC = () => {
     description: ''
   });
 
+  useEffect(() => {
+    setFilter(currentCategory);
+  }, [currentCategory]);
+
   const filteredApps = allApps.filter(app => {
     const matchesCategory = filter === 'All' || app.category === filter;
     const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -128,51 +132,14 @@ export const Apps: React.FC = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <div className="apps-category-pills">
-            <button
-              className={`apps-category-pill ${filter === 'All' ? 'active' : ''}`}
-              onClick={() => { setFilter('All'); setSearchParams({}); }}
-            >
-              All
-            </button>
-            {categories.map(cat => (
-              <button
-                key={cat}
-                className={`apps-category-pill ${filter === cat ? 'active' : ''}`}
-                onClick={() => { setFilter(cat); setSearchParams({ category: cat }); }}
-              >
-                {cat.charAt(0) + cat.slice(1).toLowerCase()}
-              </button>
-            ))}
-          </div>
+
         </div>
       </header>
 
       {/* Main Layout: Sidebar + Grid */}
       <main className="apps-main">
         {/* Sidebar */}
-        <aside className="apps-sidebar">
-          <div className="apps-sidebar-section">
-            <div className="apps-sidebar-title">Categories</div>
-            <div className="apps-sidebar-list">
-              <button
-                className={`apps-sidebar-item ${filter === 'All' ? 'active' : ''}`}
-                onClick={() => { setFilter('All'); setSearchParams({}); }}
-              >
-                All Apps
-              </button>
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  className={`apps-sidebar-item ${filter === cat ? 'active' : ''}`}
-                  onClick={() => { setFilter(cat); setSearchParams({ category: cat }); }}
-                >
-                  {cat.charAt(0) + cat.slice(1).toLowerCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-        </aside>
+
 
         {/* Grid */}
         <section className="apps-grid-section">

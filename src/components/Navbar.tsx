@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { ActyxLogo } from './ActyxLogo';
+import '../styles/navbar-enhanced.css';
 
 const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -46,22 +47,21 @@ const Navbar: React.FC = () => {
       [
         {
           key: 'products',
-          label: 'Products',
+          label: 'Apps',
+          to: '/apps',
           sections: [
+
             {
-              title: 'Business Apps',
+              title: 'Categories',
               links: [
-                { label: 'Apps', to: '/apps' },
-                { label: 'Pricing', to: '/pricing' },
-                { label: 'Get Started', to: '/get-started' }
-              ]
-            },
-            {
-              title: 'Popular',
-              links: [
-                { label: 'CRM', to: '/apps/crm' },
-                { label: 'Accounting', to: '/apps/accounting' },
-                { label: 'Website', to: '/apps/website' }
+                { label: 'Finance', to: '/apps?category=FINANCE' },
+                { label: 'Sales', to: '/apps?category=SALES' },
+                { label: 'Websites', to: '/apps?category=WEBSITES' },
+                { label: 'Supply Chain', to: '/apps?category=SUPPLY CHAIN' },
+                { label: 'Human Resources', to: '/apps?category=HUMAN RESOURCES' },
+                { label: 'Marketing', to: '/apps?category=MARKETING' },
+                { label: 'Services', to: '/apps?category=SERVICES' },
+                { label: 'Productivity', to: '/apps?category=PRODUCTIVITY' }
               ]
             }
           ]
@@ -151,16 +151,28 @@ const Navbar: React.FC = () => {
                 }}
                 onMouseLeave={scheduleClose}
               >
-                <button
-                  type="button"
-                  className={`odoo-nav-link odoo-mega-trigger ${openMenu === m.key ? 'open' : ''}`}
-                  aria-haspopup="true"
-                  aria-expanded={openMenu === m.key}
-                  onClick={() => setOpenMenu((prev) => (prev === m.key ? null : m.key))}
-                >
-                  {m.label}
-                  <ChevronDown size={16} className="odoo-chev" />
-                </button>
+                {/* If the menu item acts as a link, we render Link, else a button */
+                  (m as any).to ? (
+                    <Link
+                      to={(m as any).to}
+                      className={`odoo-nav-link odoo-mega-trigger ${openMenu === m.key ? 'open' : ''}`}
+                      onClick={() => setOpenMenu(null)} // Close menu when clicking the top-level link itself
+                    >
+                      {m.label}
+                      <ChevronDown size={16} className="odoo-chev" />
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      className={`odoo-nav-link odoo-mega-trigger ${openMenu === m.key ? 'open' : ''}`}
+                      aria-haspopup="true"
+                      aria-expanded={openMenu === m.key}
+                      onClick={() => setOpenMenu((prev) => (prev === m.key ? null : m.key))}
+                    >
+                      {m.label}
+                      <ChevronDown size={16} className="odoo-chev" />
+                    </button>
+                  )}
 
                 {openMenu === m.key && (
                   <div

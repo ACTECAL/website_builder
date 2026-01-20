@@ -157,7 +157,7 @@
   :root {
     --header-height: 64px;
   }
-  
+
   .nav-enhanced {
     padding: 0 1rem;
   }
@@ -169,7 +169,7 @@
     background-color: rgba(17, 24, 39, 0.95);
     border-color: rgba(55, 65, 81, 0.3);
   }
-  
+
   .nav-enhanced.scrolled {
     background-color: rgba(17, 24, 39, 0.98);
   }
@@ -193,6 +193,7 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
   .nav-enhanced,
   .nav-item-enhanced,
   .logo-icon,
@@ -200,7 +201,7 @@
   .submenu-item::before {
     transition: none;
   }
-  
+
   .group:hover .group-hover\:rotate-180 {
     transform: none;
   }
@@ -211,11 +212,11 @@
   .nav-enhanced {
     border-color: currentColor;
   }
-  
+
   .nav-item-enhanced {
     border: 1px solid transparent;
   }
-  
+
   .nav-item-enhanced:focus-visible {
     border-color: currentColor;
   }
@@ -268,7 +269,7 @@
   position: absolute;
   top: calc(100% + 14px);
   left: -16px;
-  min-width: 640px;
+  min-width: 600px;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
@@ -278,9 +279,7 @@
 }
 
 .odoo-mega-inner {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  display: block;
 }
 
 .odoo-mega-title {
@@ -288,18 +287,22 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6c757d;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-weight: 700;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
 }
 
 .odoo-mega-links {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .odoo-mega-link {
   display: block;
+  flex: 0 0 calc(50% - 8px);
   padding: 10px 12px;
   border-radius: 10px;
   color: #212529;
