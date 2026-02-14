@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActyxLogo } from './ActyxLogo';
+import { ActyxLogoComponent } from './ActyxLogoComponent';
 
 type HeroData = {
   heading: string;
@@ -48,7 +48,7 @@ export const Hero: React.FC<Props> = ({ data }) => {
         {/* Animated logo */}
         <div className={`mb - 4 transition - all duration - 1000 delay - 200 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `} style={{ transitionDelay: '0.2s' }}>
           <div className="d-inline-block p-4 rounded-circle bg-white shadow-lg logo-wrapper">
-            <ActyxLogo className="mb-4" />
+            <ActyxLogoComponent className="mb-4" />
           </div>
         </div>
 

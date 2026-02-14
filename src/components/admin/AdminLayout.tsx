@@ -14,7 +14,7 @@ import {
     Sparkles
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ActyxLogo } from '../ActyxLogo';
+import { ActyxLogoComponent } from '../ActyxLogoComponent';
 import { AIAssistant } from '../AIAssistant';
 import '../../styles/AdminTheme.css';
 
@@ -44,7 +44,7 @@ export const AdminLayout: React.FC = () => {
                 {/* Brand Header - Odoo Style */}
                 <div style={{ padding: '0', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)' }}>
                     <div style={{ fontSize: '1.5rem' }}>
-                        <ActyxLogo showBadge />
+                        <ActyxLogoComponent />
                     </div>
                 </div>
 

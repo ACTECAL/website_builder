@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
-import { ActyxLogo } from '../components/ActyxLogo';
+import { ActyxLogoComponent } from '../components/ActyxLogoComponent';
 import { ArrowLeft } from 'lucide-react';
 
 export const Login: React.FC = () => {
@@ -18,18 +18,7 @@ export const Login: React.FC = () => {
 		setError(null);
 		setIsSubmitting(true);
 		try {
-			const res = await fetch('/api/auth/login', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email, password })
-			});
-			if (!res.ok) {
-				const data = await res.json().catch(() => ({}));
-				if (res.status === 401) throw new Error(data.message || 'Invalid credentials');
-				throw new Error(data.message || `Login failed(code ${res.status})`);
-			}
-			const data = await res.json();
-			await login(data.token);
+			await login(email, password);
 			navigate('/');
 		} catch (err: any) {
 			setError(err.message || 'Something went wrong');
@@ -44,7 +33,7 @@ export const Login: React.FC = () => {
 			<div className="d-none d-lg-flex flex-column justify-content-between col-lg-6 p-5 text-white position-relative overflow-hidden"
 				style={{ backgroundColor: '#714B67' }}>
 				<div className="position-relative z-1">
-					<ActyxLogo />
+					<ActyxLogoComponent />
 					<p className="lead opacity-75 mt-4" style={{ maxWidth: '400px' }}>
 						The all-in-one suite of business apps.
 						<br />

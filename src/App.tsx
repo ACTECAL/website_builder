@@ -22,6 +22,9 @@ import { Docs } from './pages/Docs';
 import { Community } from './pages/Community';
 import { RegisterYourAccountingFirm } from './pages/RegisterYourAccountingFirm';
 import { BecomeAPartner } from './pages/BecomeAPartner';
+import LaunchPlan from './pages/LaunchPlan';
+import { AllIndustries } from './pages/AllIndustries';
+import { IndustryDetail } from './pages/IndustryDetail';
 import './App.css';
 import './styles/navbar-enhanced.css';
 import './styles/Footer.css';
@@ -42,7 +45,8 @@ function App() {
   const hideChrome =
     location.pathname.startsWith('/get-started') ||
     location.pathname.startsWith('/choose-apps') ||
-    location.pathname.startsWith('/contact-sales');
+    location.pathname.startsWith('/contact-sales') ||
+    location.pathname.startsWith('/launch-plan');
   return (
     <SiteLayout>
       <Routes>
@@ -55,7 +59,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact-sales" element={<ContactSales />} />
+        <Route path="/launch-plan" element={<LaunchPlan />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/industries" element={<AllIndustries />} />
+        <Route path="/industries/:slug" element={<IndustryDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/careers" element={<Careers />} />

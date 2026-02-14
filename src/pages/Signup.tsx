@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
-import { ActyxLogo } from '../components/ActyxLogo';
+import { ActyxLogoComponent } from '../components/ActyxLogoComponent';
 import { ArrowLeft, Upload, CheckCircle } from 'lucide-react';
 
 export const Signup: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,8 +14,7 @@ export const Signup: React.FC = () => {
   });
   const [errors, setErrors] = useState<any>({});
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const { login } = useAuth();
-  const [submitted, setSubmitted] = useState(false);
+  const { signup } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = () => {
@@ -57,28 +57,13 @@ export const Signup: React.FC = () => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      const payload = new FormData();
-      payload.append('name', formData.name);
-      payload.append('email', formData.email);
-      payload.append('companyName', formData.companyName);
-      if (formData.logo) {
-        payload.append('logo', formData.logo);
-      }
-
       try {
-        const res = await fetch('/api/auth/signup', {
-          method: 'POST',
-          body: payload,
+        await signup({
+          name: formData.name,
+          email: formData.email,
+          companyName: formData.companyName
         });
-
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.message || `Failed to create account(code ${res.status})`);
-        }
-
-        const data = await res.json();
-        await login(data.token);
-        setSubmitted(true);
+        navigate('/');
       } catch (err: any) {
         setErrors({ form: err.message || 'Something went wrong. Please try again.' });
       } finally {
@@ -87,28 +72,6 @@ export const Signup: React.FC = () => {
     }
   };
 
-  if (submitted) {
-    return (
-      <div className="d-flex min-vh-100 bg-light align-items-center justify-content-center p-4">
-        <div className="bg-white p-5 rounded-4 shadow text-center w-100" style={{ maxWidth: '480px' }}>
-          <div className="d-inline-flex align-items-center justify-content-center mb-4 rounded-circle bg-success-subtle text-success"
-            style={{ width: '64px', height: '64px' }}>
-            <CheckCircle size={32} />
-          </div>
-          <h2 className="display-6 fw-bold mb-3 text-dark">Welcome aboard!</h2>
-          <p className="text-muted mb-5">
-            Your account has been created successfully. You are now logged in and ready to start your journey.
-          </p>
-          <Link
-            to="/"
-            className="btn btn-primary btn-lg w-100 py-3 fw-bold"
-          >
-            Go to Dashboard
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="d-flex min-vh-100 bg-white">
@@ -116,7 +79,7 @@ export const Signup: React.FC = () => {
       <div className="d-none d-lg-flex flex-column justify-content-between col-lg-6 p-5 text-white position-relative overflow-hidden"
         style={{ backgroundColor: '#714B67' }}>
         <div className="position-relative z-1">
-          <ActyxLogo className="mb-4" style={{ height: '48px' }} />
+          <ActyxLogoComponent className="mb-4" style={{ height: '48px' }} />
           <p className="lead opacity-90" style={{ maxWidth: '400px' }}>
             Join 15 million users who grow their business with Actyx.
           </p>
@@ -156,7 +119,7 @@ export const Signup: React.FC = () => {
           )}
 
           <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
-            <div style={{display:"flex",flexDirection:"column"}}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <label className="form-label small fw-bold text-secondary">Full Name</label>
               <input
                 type="text"
@@ -171,7 +134,7 @@ export const Signup: React.FC = () => {
               {errors.name && <div className="invalid-feedback">{errors.name}</div>}
             </div>
 
-            <div style={{display:"flex",flexDirection:"column"}}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <label className="form-label small fw-bold text-secondary">Email Address</label>
               <input
                 type="email"
@@ -186,7 +149,7 @@ export const Signup: React.FC = () => {
               {errors.email && <div className="invalid-feedback">{errors.email}</div>}
             </div>
 
-            <div style={{display:"flex",flexDirection:"column"}}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <label className="form-label small fw-bold text-secondary">Company Name</label>
               <input
                 type="text"

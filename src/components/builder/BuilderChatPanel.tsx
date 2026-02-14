@@ -41,25 +41,52 @@ export const BuilderChatPanel: React.FC = () => {
 
         try {
             const service = new GeminiService(apiKey);
-            const prompt = `You are an AI Web Builder Assistant. 
-      The user wants to: ${userMsg}
-      
-      Available Tools:
-      - Create Hero Section
-      - Add Features
-      - Insert Text
-      
-      Provide a concise, helpful response. If you identify a clear intent to add a component, confirm it.`;
+            const systemPrompt = `You are a pro-grade AI Web Builder Assistant. 
+Your goal is to help the user build a website by generating component data in JSON format.
 
-            const response = await service.generateContent(prompt);
-            setMessages(prev => [...prev, { role: 'model', text: response }]);
+When asked to add a component, ALWAYS respond with a JSON block followed by a brief confirmation.
 
-            // Basic heuristic to add blocks
-            const lowerMsg = userMsg.toLowerCase();
-            if (lowerMsg.includes('hero')) addBlock('hero');
-            else if (lowerMsg.includes('header')) addBlock('header');
-            else if (lowerMsg.includes('feature')) addBlock('features');
-            else if (lowerMsg.includes('footer')) addBlock('footer');
+JSON Schema for block:
+{
+  "action": "addBlock",
+  "type": "hero" | "features" | "text" | "button" | "header" | "footer",
+  "content": { ... matching the type's content schema ... }
+}
+
+Types & Content Schemas:
+- hero: { "title": "string", "subtitle": "string", "cta": "string" }
+- features: { "items": [{ "title": "string", "desc": "string" }] }
+- text: { "text": "string" }
+- header: { "title": "string", "nav": ["string"] }
+- footer: { "text": "string" }
+
+Example for "Add a hero":
+{ "action": "addBlock", "type": "hero", "content": { "title": "Future of ERP", "subtitle": "Intelligent site generation.", "cta": "Get Started" } }
+
+User request: "${userMsg}"
+
+Respond ONLY with the JSON block if an action is required, or a helpful response if just chatting. If adding a block, put the JSON first then your text.`;
+
+            const response = await service.generateContent(systemPrompt);
+
+            // Extract JSON if present
+            let cleanResponse = response;
+            const jsonMatch = response.match(/\{[\s\S]*\}/);
+
+            if (jsonMatch) {
+                try {
+                    const blockData = JSON.parse(jsonMatch[0]);
+                    if (blockData.action === 'addBlock' && blockData.type) {
+                        addBlock(blockData.type, blockData.content);
+                        cleanResponse = response.replace(jsonMatch[0], '').trim();
+                        if (!cleanResponse) cleanResponse = `Added a ${blockData.type} section for you!`;
+                    }
+                } catch (e) {
+                    console.error("Failed to parse AI JSON", e);
+                }
+            }
+
+            setMessages(prev => [...prev, { role: 'model', text: cleanResponse }]);
 
         } catch (err: any) {
             setMessages(prev => [...prev, { role: 'model', text: `Error: ${err.message}` }]);
@@ -74,13 +101,18 @@ export const BuilderChatPanel: React.FC = () => {
         setShowKeyInput(false);
     };
 
-    const suggestions = ['Add a Hero section', 'Create a Features list', 'Add a Footer', 'Explain how to use this'];
+    const suggestions = [
+        'Add a high-conversion hero section',
+        'Create a features list with icons',
+        'Insert a modern newsletter footer',
+        'Optimize typography for mobile devices'
+    ];
 
     return (
         <div className="builder-chat-panel">
 
             {/* Header */}
-            <div className="chat-header">
+            <div className={`chat-header ${loading ? 'model-generating' : ''}`}>
                 <div className="chat-logo-icon">
                     <Sparkles size={18} />
                 </div>
@@ -104,8 +136,8 @@ export const BuilderChatPanel: React.FC = () => {
 
                 {messages.length === 0 && !showKeyInput && (
                     <div className="chat-empty-state">
-                        <h3 className="chat-empty-title">What are we building?</h3>
-                        <p className="chat-empty-desc">Describe your vision or pick a suggestion.</p>
+                        <h3 className="chat-empty-title">What can I build for you?</h3>
+                        <p className="chat-empty-desc">Describe a section, a page, or a full workflow.</p>
                         <div className="suggestion-chips">
                             {suggestions.map(s => (
                                 <button key={s} className="suggestion-chip" onClick={() => setQ(s)}>

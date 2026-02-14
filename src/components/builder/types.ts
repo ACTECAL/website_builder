@@ -18,8 +18,8 @@ export interface BuilderBlock {
     type: BlockType;
     content: any; // Flexible content structure
     styles?: {
-        padding?: number;
-        margin?: number;
+        padding?: number | string;
+        margin?: number | string;
         background?: string;
         color?: string;
         fontSize?: number;

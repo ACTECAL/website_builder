@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type User = { id: string; email: string; company?: string; role?: string } | null;
+type User = { id: string; email: string; name?: string; company?: string; role?: string } | null;
 
 type AuthContextValue = {
   user: User;
   token: string | null;
-  login: (token: string) => Promise<void>;
+  login: (email: string, password?: string) => Promise<void>;
+  signup: (userData: { name: string; email: string; companyName: string }) => Promise<void>;
   logout: () => void;
 };
 
@@ -15,11 +16,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [token, setToken] = useState<string | null>(() => localStorage.getItem('auth_token'));
   const [user, setUser] = useState<User>(null);
 
-  async function fetchMe(tok: string) {
-    const res = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${tok}` } });
-    if (res.ok) {
-      const data = await res.json();
-      setUser(data.user);
+  // Mock Database in LocalStorage
+  const getMockUsers = () => JSON.parse(localStorage.getItem('mock_users') || '[]');
+  const saveMockUser = (newUser: any) => {
+    const users = getMockUsers();
+    localStorage.setItem('mock_users', JSON.stringify([...users, newUser]));
+  };
+
+  async function mockFetchMe(tok: string) {
+    // In a real app, this would verify the token with the server
+    const savedUser = localStorage.getItem('current_user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
     } else {
       setUser(null);
       setToken(null);
@@ -28,23 +36,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   useEffect(() => {
-    if (token) fetchMe(token);
+    if (token) mockFetchMe(token);
   }, [token]);
 
-  const login = async (tok: string) => {
-    localStorage.setItem('auth_token', tok);
-    setToken(tok);
-    await fetchMe(tok);
+  const login = async (email: string, password?: string) => {
+    // Simple mock login: find user by email
+    const users = getMockUsers();
+    const foundUser = users.find((u: any) => u.email === email);
+
+    if (foundUser) {
+      const mockToken = `mock-jwt-${Date.now()}`;
+      localStorage.setItem('auth_token', mockToken);
+      localStorage.setItem('current_user', JSON.stringify(foundUser));
+      setToken(mockToken);
+      setUser(foundUser);
+    } else {
+      throw new Error('User not found. Please sign up.');
+    }
+  };
+
+  const signup = async (userData: { name: string; email: string; companyName: string }) => {
+    const newUser = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...userData,
+      company: userData.companyName,
+      role: 'admin'
+    };
+
+    saveMockUser(newUser);
+    const mockToken = `mock-jwt-${Date.now()}`;
+    localStorage.setItem('auth_token', mockToken);
+    localStorage.setItem('current_user', JSON.stringify(newUser));
+    setToken(mockToken);
+    setUser(newUser);
   };
 
   const logout = () => {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('current_user');
     setToken(null);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

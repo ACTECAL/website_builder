@@ -18,6 +18,14 @@ interface BuilderContextType {
     insertTemplate: (templateName: string) => void;
     siteTheme: any;
     updateTheme: (theme: any) => void;
+    pages: any[];
+    setPages: React.Dispatch<React.SetStateAction<any[]>>;
+    assets: any[];
+    setAssets: React.Dispatch<React.SetStateAction<any[]>>;
+    collections: any[];
+    setCollections: React.Dispatch<React.SetStateAction<any[]>>;
+    editorSettings: any;
+    updateEditorSettings: (settings: any) => void;
     apiKey: string;
     setApiKey: (key: string) => void;
 }
@@ -84,12 +92,41 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }, []);
 
     const [siteTheme, setSiteTheme] = useState(() => ({
-        colors: { primary: '#667eea', secondary: '#764ba2', accent: '#ed64a6', background: '#ffffff', text: '#2d3748' },
+        colors: { primary: '#7c3aed', secondary: '#db2777', accent: '#ed64a6', background: '#ffffff', text: '#0f172a' },
         font: 'Inter, sans-serif',
-        borderRadius: '8px'
+        borderRadius: '12px'
     }));
 
-    const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+    const [pages, setPages] = useState<any[]>([
+        { id: '1', name: 'Home', path: '/', isHome: true },
+        { id: '2', name: 'About', path: '/about' },
+        { id: '3', name: 'Pricing', path: '/pricing' }
+    ]);
+
+    const [assets, setAssets] = useState<any[]>([
+        { id: 'a1', name: 'hero-bg.png', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c', type: 'image' },
+        { id: 'a2', name: 'logo.svg', url: 'https://cdn.worldvectorlogo.com/logos/lightning-2.svg', type: 'image' },
+        { id: 'a3', name: 'avatar.jpg', url: 'https://i.pravatar.cc/150?u=jd', type: 'image' }
+    ]);
+
+    const [collections, setCollections] = useState<any[]>([
+        { id: 'c1', name: 'Blog Posts', count: 5 },
+        { id: 'c2', name: 'Authors', count: 2 },
+        { id: 'c3', name: 'Categories', count: 3 }
+    ]);
+
+    const [editorSettings, setEditorSettings] = useState({
+        showGrid: true,
+        autoSave: true,
+        snapToGrid: true,
+        darkMode: false
+    });
+
+    const updateEditorSettings = useCallback((updates: any) => {
+        setEditorSettings(prev => ({ ...prev, ...updates }));
+    }, []);
+
+    const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || 'AIzaSyDo4AHPCS6XNrtH1cqnRdvCk7p7FDTBxas');
 
     // Sync API key to localStorage
     useEffect(() => {
@@ -105,10 +142,62 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
         // Demo templates
         if (templateName === 'landing') {
             const newBlocks: BuilderBlock[] = [
-                { id: uuidv4(), type: 'header', content: { title: 'Brand', nav: ['Home', 'Features', 'Pricing'] }, styles: { background: '#ffffff', padding: 20 } },
-                { id: uuidv4(), type: 'hero', content: { title: 'Build Faster', subtitle: 'The ultimate builder for modern web apps.', cta: 'Get Started' }, styles: { background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', padding: 80, textAlign: 'center' } },
-                { id: uuidv4(), type: 'features', content: { items: [{ title: 'Fast', desc: 'Blazing fast performance' }, { title: 'Secure', desc: 'Enterprise grade security' }, { title: 'Easy', desc: 'Drag and drop interface' }] }, styles: { padding: 60, background: '#f8fafc' } },
-                { id: uuidv4(), type: 'footer', content: { text: '© 2024 Brand Inc.' }, styles: { background: '#1a202c', color: '#cbd5e0', padding: 40, textAlign: 'center' } }
+                {
+                    id: uuidv4(),
+                    type: 'header',
+                    content: { title: 'Actyx', nav: ['Solutions', 'Resources', 'Pricing', 'Login'] },
+                    styles: { background: '#ffffff', padding: '0 40px' }
+                },
+                {
+                    id: uuidv4(),
+                    type: 'hero',
+                    content: {
+                        title: 'Scale Beyond Limits',
+                        subtitle: 'The intelligent operating system for modern enterprises. Built with AI at the core to automate everything.',
+                        cta: 'Start Free Trial'
+                    },
+                    styles: {
+                        background: 'radial-gradient(circle at center, #5f5af0 0%, #4b47d1 100%)',
+                        color: 'white',
+                        padding: '120px 40px',
+                        textAlign: 'center'
+                    }
+                },
+                {
+                    id: uuidv4(),
+                    type: 'stats',
+                    content: {
+                        items: [
+                            { value: '500M+', label: 'Processes Automated' },
+                            { value: '99.9%', label: 'Uptime SLA' },
+                            { value: '140+', label: 'Countries Supported' }
+                        ]
+                    },
+                    styles: { padding: '60px 40px', background: '#ffffff' }
+                },
+                {
+                    id: uuidv4(),
+                    type: 'features',
+                    content: {
+                        items: [
+                            { title: 'AI-Native Workflow', desc: 'Predictive automation that learns from your business processes and optimizes in real-time.' },
+                            { title: 'Global Infrastructure', desc: 'Deploy anywhere with enterprise-grade security and 99.99% uptime guaranteed by SLAs.' },
+                            { title: 'Unified Data Core', desc: 'Break down silos with a single source of truth for all your operational and financial data.' }
+                        ]
+                    },
+                    styles: { padding: '80px 40px', background: '#f8fafc' }
+                },
+                {
+                    id: uuidv4(),
+                    type: 'pricing',
+                    content: {
+                        plans: [
+                            { name: 'Starter', price: '$0', features: ['Core ERP', '1,000 requests', 'Community Support'], cta: 'Get Started' },
+                            { name: 'Enterprise', price: 'Custom', features: ['Unlimited scale', 'Dedicated AI Support', 'Full Compliance'], cta: 'Contact Sales', popular: true }
+                        ]
+                    },
+                    styles: { padding: '80px 40px', background: '#ffffff' }
+                }
             ];
             setBlocks(prev => [...prev, ...newBlocks]);
         }
@@ -131,6 +220,14 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
             insertTemplate,
             siteTheme,
             updateTheme,
+            pages,
+            setPages,
+            assets,
+            setAssets,
+            collections,
+            setCollections,
+            editorSettings,
+            updateEditorSettings,
             apiKey,
             setApiKey
         }}>
@@ -148,14 +245,17 @@ function getDefaultContent(type: BlockType): any {
         case 'image': return { src: 'https://via.placeholder.com/800x400', alt: 'Placeholder' };
         case 'header': return { title: 'Logo', nav: ['Link 1', 'Link 2', 'Link 3'] };
         case 'footer': return { text: '© 2024 Company Name. All rights reserved.' };
+        case 'pricing': return { plans: [{ name: 'Basic', price: '$29', features: ['Feature A', 'Feature B'] }, { name: 'Pro', price: '$99', features: ['All Basic', 'Priority Support'], popular: true }] };
+        case 'stats': return { items: [{ value: '10K+', label: 'Users' }, { value: '99%', label: 'Success' }, { value: '24/7', label: 'Support' }] };
+        case 'testimonials': return { items: [{ quote: 'Life changing experience!', author: 'Jane Doe', role: 'CEO, TechInc' }] };
         default: return {};
     }
 }
 
 function getDefaultStyles(type: BlockType): any {
-    const base = { padding: 20, margin: 0, background: 'transparent' };
-    if (type === 'hero') return { ...base, padding: 60, textAlign: 'center', background: '#f3f4f6' };
-    if (type === 'header') return { ...base, display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', borderBottom: '1px solid #e5e7eb' };
-    if (type === 'footer') return { ...base, background: '#1f2937', color: '#f3f4f6', textAlign: 'center' };
+    const base = { padding: '40px', margin: '0', background: 'transparent' };
+    if (type === 'hero') return { ...base, padding: '100px 40px', textAlign: 'center', background: 'var(--builder-bg)' };
+    if (type === 'header') return { ...base, display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', borderBottom: '1px solid var(--glass-border)', padding: '0 40px' };
+    if (type === 'footer') return { ...base, background: 'var(--text-primary)', color: 'white', textAlign: 'center', padding: '60px 40px' };
     return base;
 }

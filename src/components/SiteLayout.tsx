@@ -13,7 +13,8 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
   const hideChrome =
     location.pathname.startsWith('/get-started') ||
     location.pathname.startsWith('/choose-apps') ||
-    location.pathname.startsWith('/contact-sales');
+    location.pathname.startsWith('/contact-sales') ||
+    location.pathname.startsWith('/launch-plan');
   return (
     <div style={{ background: 'var(--surface)', minHeight: '100vh' }}>
       {!hideChrome && <Navbar />}

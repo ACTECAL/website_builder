@@ -69,7 +69,7 @@ export const BuilderCanvas: React.FC = () => {
                                 {blocks.length === 0 && (
                                     <div className="canvas-empty-state">
                                         <div className="empty-state-icon">
-                                            <Sparkles size={48} />
+                                            <Sparkles size={40} />
                                         </div>
                                         <h3 className="empty-state-title">Start Building Your Website</h3>
                                         <p className="empty-state-description">

@@ -1,0 +1,5 @@
+﻿src/components/admin/AdminLayout.tsx(17,27): error TS2307: Cannot find module '../ActyxLogo' or its corresponding type declarations.
+src/components/Hero.tsx(2,27): error TS2307: Cannot find module './ActyxLogo' or its corresponding type declarations.
+src/components/Navbar.tsx(4,27): error TS2307: Cannot find module './ActyxLogo' or its corresponding type declarations.
+src/pages/Login.tsx(4,27): error TS2307: Cannot find module '../components/ActyxLogo' or its corresponding type declarations.
+src/pages/Signup.tsx(4,27): error TS2307: Cannot find module '../components/ActyxLogo' or its corresponding type declarations.

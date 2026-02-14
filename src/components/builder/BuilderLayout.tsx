@@ -1,116 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BuilderCanvas } from './BuilderCanvas';
 import { BuilderChatPanel } from './BuilderChatPanel';
 import { useBuilder } from './BuilderContext';
-import { 
-  Monitor, Smartphone, Tablet, Download, ZoomIn, ZoomOut, Upload, Sparkles, Settings, 
-  Palette, Eye, Undo, Redo, Save, FolderOpen, FileText, Code, Share, Layout, 
-  Grid, Box, Type, Image, Database, Cpu, Globe, Shield, Zap, ArrowUpRight, 
-  ChevronDown, Plus, Trash2, Copy, Edit3, Layers, AlignLeft, AlignCenter, 
-  AlignRight, Bold, Italic, Underline, List, ListOrdered, Minus, Maximize2, 
-  Minimize2, RefreshCw, RotateCcw, RotateCw, Scissors, Save as SaveIcon,
-  FolderOpen as FolderOpenIcon, FileText as FileTextIcon, Code as CodeIcon,
-  Share as ShareIcon, Download as DownloadIcon, Upload as UploadIcon,
-  Eye as EyeIcon, EyeOff, Play, StopCircle, Pause, Square, Circle, Triangle,
-  Hexagon, Octagon, Star, Heart, MessageSquare, MessageCircle, Send, Send as SendIcon,
-  Mail, Phone, MapPin, Calendar, Clock, Users, User, UserPlus, UserCheck, UserX,
-  Users as UsersIcon, UserPlus as UsersPlusIcon, Users as UsersRoundIcon, Building, Building2, Factory, Store,
-  ShoppingBag, ShoppingCart, CreditCard, DollarSign, Euro, PoundSterling, Bitcoin,
-  Globe as GlobeIcon, Wifi, WifiOff, Wifi as WifiIcon, WifiOff as WifiOffIcon
+import { useAuth } from '../../auth/AuthContext';
+import {
+    Monitor, Smartphone, Tablet, Sparkles, Settings,
+    Palette, Eye, Save, FileText, Image, Database, Zap,
+    ChevronDown, Plus, Trash2, Edit3, Layers,
+    EyeOff, Search, Type,
+    Terminal, Activity, Box,
+    Layout, Globe, Building, ShoppingBag, Cpu, ArrowUpRight,
+    Grid, MessageSquare, DollarSign, Mail, Users, Shield, Download
 } from 'lucide-react';
 import './BuilderLayout.css';
 
-const DeviceToggle: React.FC<{ device: any, setDevice: any }> = ({ device, setDevice }) => (
-    <div className="device-toggle-container">
-        <button
-            className={`device-toggle-btn ${device === 'desktop' ? 'active' : ''}`}
-            onClick={() => setDevice('desktop')}
-            title="Desktop View"
-        >
-            <Monitor size={16} />
-        </button>
-        <button
-            className={`device-toggle-btn ${device === 'tablet' ? 'active' : ''}`}
-            onClick={() => setDevice('tablet')}
-            title="Tablet View"
-        >
-            <Tablet size={16} />
-        </button>
-        <button
-            className={`device-toggle-btn ${device === 'mobile' ? 'active' : ''}`}
-            onClick={() => setDevice('mobile')}
-            title="Mobile View"
-        >
-            <Smartphone size={16} />
-        </button>
-    </div>
-);
 
-const QuickActions: React.FC<{ onAction: (action: string) => void }> = ({ onAction }) => (
-    <div className="quick-actions">
-        <button className="quick-action-btn" onClick={() => onAction('undo')} title="Undo">
-            <Undo size={16} />
-        </button>
-        <button className="quick-action-btn" onClick={() => onAction('redo')} title="Redo">
-            <Redo size={16} />
-        </button>
-        <button className="quick-action-btn" onClick={() => onAction('duplicate')} title="Duplicate">
-            <Copy size={16} />
-        </button>
-        <button className="quick-action-btn" onClick={() => onAction('delete')} title="Delete">
-            <Trash2 size={16} />
-        </button>
-        <button className="quick-action-btn" onClick={() => onAction('group')} title="Group">
-            <Layers size={16} />
-        </button>
-        <button className="quick-action-btn" onClick={() => onAction('ungroup')} title="Ungroup">
-            <Layers size={16} style={{ transform: 'rotate(45deg)' }} />
-        </button>
-    </div>
-);
+/* DeviceToggle removed */
 
-const AlignmentTools: React.FC<{ onAlign: (alignment: string) => void }> = ({ onAlign }) => (
-    <div className="alignment-tools">
-        <button className="align-btn" onClick={() => onAlign('left')} title="Align Left">
-            <AlignLeft size={16} />
-        </button>
-        <button className="align-btn" onClick={() => onAlign('center')} title="Align Center">
-            <AlignCenter size={16} />
-        </button>
-        <button className="align-btn" onClick={() => onAlign('right')} title="Align Right">
-            <AlignRight size={16} />
-        </button>
-    </div>
-);
-
-const TextFormatting: React.FC<{ onFormat: (format: string) => void }> = ({ onFormat }) => (
-    <div className="text-formatting">
-        <button className="format-btn" onClick={() => onFormat('bold')} title="Bold">
-            <Bold size={16} />
-        </button>
-        <button className="format-btn" onClick={() => onFormat('italic')} title="Italic">
-            <Italic size={16} />
-        </button>
-        <button className="format-btn" onClick={() => onFormat('underline')} title="Underline">
-            <Underline size={16} />
-        </button>
-        <button className="format-btn" onClick={() => onFormat('list')} title="Bullet List">
-            <List size={16} />
-        </button>
-        <button className="format-btn" onClick={() => onFormat('numbered')} title="Numbered List">
-            <ListOrdered size={16} />
-        </button>
-    </div>
-);
 
 export const BuilderLayout: React.FC = () => {
-    const { device, setDevice, zoom, setZoom, blocks } = useBuilder();
-    const [showTemplates, setShowTemplates] = useState(false);
-    const [showSettings, setShowSettings] = useState(false);
-    const [showComponents, setShowComponents] = useState(false);
-    const [showExport, setShowExport] = useState(false);
+    const {
+        device, setDevice, zoom, blocks,
+        pages, setPages, assets, collections,
+        siteTheme, updateTheme, editorSettings, updateEditorSettings
+    } = useBuilder();
+    const [showCommandPalette, setShowCommandPalette] = useState(false);
     const [previewMode, setPreviewMode] = useState(false);
-    const [showQuickActions, setShowQuickActions] = useState(false);
+    const [activeSection, setActiveSection] = useState<'layers' | 'pages' | 'assets' | 'theme' | 'database' | 'settings'>('layers');
+    // Keep sidebar tab for sub-navigation within sections if needed, or simplify.
+    // For now, let's keep the existing internal "AI vs Structure" as a sub-feature of 'layers'.
+    const [activeSidebarTab, setActiveSidebarTab] = useState<'ai' | 'layers'>('ai');
+    const { user } = useAuth();
+
+    const getInitials = (user: any) => {
+        if (!user) return 'JD';
+        if (user.name) {
+            const parts = user.name.split(' ');
+            if (parts.length > 1) return (parts[0][0] + parts[1][0]).toUpperCase();
+            return parts[0][0].toUpperCase();
+        }
+        return user.email.slice(0, 2).toUpperCase();
+    };
+
+    const initials = getInitials(user);
+
+    // Command Palette Listeners
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                setShowCommandPalette(prev => !prev);
+            }
+            if (e.key === 'Escape') {
+                setShowCommandPalette(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const handleExport = () => {
         const data = JSON.stringify(blocks, null, 2);
@@ -133,372 +80,397 @@ export const BuilderLayout: React.FC = () => {
         alert('Design saved successfully!');
     };
 
-    const handleLoad = () => {
-        const saved = localStorage.getItem('launch-plan-design');
-        if (saved) {
-            const design = JSON.parse(saved);
-            alert('Load functionality coming soon!');
-        } else {
-            alert('No saved design found!');
-        }
-    };
-
-    const templates = [
-        { id: 'blank', name: 'Blank Canvas', description: 'Start from scratch', icon: Layout },
-        { id: 'landing', name: 'Landing Page', description: 'Hero + Features + CTA', icon: Globe },
-        { id: 'business', name: 'Business Site', description: 'Professional layout', icon: Building },
-        { id: 'portfolio', name: 'Portfolio', description: 'Showcase your work', icon: Image },
-        { id: 'blog', name: 'Blog Layout', description: 'Content-focused design', icon: FileText },
-        { id: 'ecommerce', name: 'E-commerce', description: 'Product catalog + cart', icon: ShoppingBag },
-        { id: 'dashboard', name: 'Dashboard', description: 'Data visualization', icon: Database },
-        { id: 'app', name: 'Web App', description: 'Interactive application', icon: Cpu }
-    ];
-
-    const components = [
-        { id: 'hero', name: 'Hero Section', icon: ArrowUpRight },
-        { id: 'features', name: 'Features Grid', icon: Grid },
-        { id: 'testimonials', name: 'Testimonials', icon: MessageSquare },
-        { id: 'pricing', name: 'Pricing Tables', icon: DollarSign },
-        { id: 'contact', name: 'Contact Form', icon: Mail },
-        { id: 'team', name: 'Team Members', icon: Users },
-        { id: 'gallery', name: 'Image Gallery', icon: Image },
-        { id: 'stats', name: 'Statistics', icon: Database },
-        { id: 'cta', name: 'Call to Action', icon: Zap },
-        { id: 'footer', name: 'Footer', icon: Shield }
-    ];
-
-    const handleTemplateSelect = (templateId: string) => {
-        alert(`Template "${templateId}" selected! Implementation coming soon.`);
-        setShowTemplates(false);
-    };
-
-    const handleComponentSelect = (componentId: string) => {
-        alert(`Component "${componentId}" added! Implementation coming soon.`);
-        setShowComponents(false);
-    };
-
-    const handleExportAction = (format: string) => {
-        alert(`Exporting to ${format}... Coming soon!`);
-        setShowExport(false);
-    };
+    // We will render content based on activeSection.
 
     return (
-        <div className="builder-root">
-            {/* Professional Header */}
-            <header className="builder-header">
-                <div className="header-left">
-                    <div className="brand-section">
-                        <div className="brand-logo">
-                            <Sparkles size={24} />
-                        </div>
-                        <div className="brand-info">
-                            <div className="brand-name">Actyx</div>
-                            <div className="brand-subtitle">AI-Powered ERP Solutions</div>
-                        </div>
-                    </div>
-                    
-                    <div className="project-info">
-                        <div className="project-name">Launch Plan Designer</div>
-                        <div className="project-status">Active Project</div>
+        <div className="builder-root animate-in fade-in">
+            {/* Slim Primary Sidebar (Lovable Style) */}
+            <aside className="primary-sidebar animate-in slide-right">
+                <div className="sidebar-top">
+                    <div className="brand-dot">
+                        <Sparkles size={18} />
                     </div>
                 </div>
-
-                <div className="header-center">
-                    <DeviceToggle device={device} setDevice={setDevice} />
-                    
-                    <div className="canvas-controls">
-                        <div className="zoom-controls">
-                            <button
-                                className="zoom-btn"
-                                onClick={() => setZoom(Math.max(0.25, zoom - 0.1))}
-                                title="Zoom Out"
-                            >
-                                <ZoomOut size={16} />
-                            </button>
-                            <span className="zoom-value">{Math.round(zoom * 100)}%</span>
-                            <button
-                                className="zoom-btn"
-                                onClick={() => setZoom(Math.min(4, zoom + 0.1))}
-                                title="Zoom In"
-                            >
-                                <ZoomIn size={16} />
-                            </button>
-                            <button
-                                className="zoom-btn"
-                                onClick={() => setZoom(1)}
-                                title="Reset Zoom"
-                            >
-                                <RefreshCw size={16} />
-                            </button>
-                        </div>
-                        
-                        <div className="view-controls">
-                            <button
-                                className={`view-btn ${previewMode ? 'active' : ''}`}
-                                onClick={() => setPreviewMode(!previewMode)}
-                                title={previewMode ? "Exit Preview" : "Preview Mode"}
-                            >
-                                <EyeIcon size={16} />
-                            </button>
-                            <button
-                                className="view-btn"
-                                onClick={() => alert('Fullscreen mode coming soon!')}
-                                title="Fullscreen"
-                            >
-                                <Maximize2 size={16} />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="header-right">
-                    {/* File Operations */}
-                    <div className="toolbar-group">
-                        <div className="dropdown-container">
-                            <button
-                                className="toolbar-btn"
-                                onClick={() => setShowTemplates(!showTemplates)}
-                                title="Templates"
-                            >
-                                <FileTextIcon size={16} />
-                                Templates
-                                <ChevronDown size={12} />
-                            </button>
-                            {showTemplates && (
-                                <div className="dropdown-menu">
-                                    <div className="dropdown-header">Templates</div>
-                                    {templates.map(template => (
-                                        <button
-                                            key={template.id}
-                                            className="dropdown-item"
-                                            onClick={() => handleTemplateSelect(template.id)}
-                                        >
-                                            <template.icon size={16} />
-                                            <div className="template-info">
-                                                <div className="template-name">{template.name}</div>
-                                                <div className="template-desc">{template.description}</div>
-                                            </div>
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="dropdown-container">
-                            <button
-                                className="toolbar-btn"
-                                onClick={() => setShowComponents(!showComponents)}
-                                title="Components"
-                            >
-                                <Box size={16} />
-                                Components
-                                <ChevronDown size={12} />
-                            </button>
-                            {showComponents && (
-                                <div className="dropdown-menu">
-                                    <div className="dropdown-header">Components</div>
-                                    {components.map(component => (
-                                        <button
-                                            key={component.id}
-                                            className="dropdown-item"
-                                            onClick={() => handleComponentSelect(component.id)}
-                                        >
-                                            <component.icon size={16} />
-                                            <div className="component-name">{component.name}</div>
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={handleSave}
-                            title="Save Project"
-                        >
-                            <SaveIcon size={16} />
-                            Save
-                        </button>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={handleLoad}
-                            title="Load Project"
-                        >
-                            <FolderOpenIcon size={16} />
-                            Load
-                        </button>
-                    </div>
-
-                    {/* Edit Operations */}
-                    <div className="toolbar-group">
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Undo functionality coming soon!')}
-                            title="Undo"
-                        >
-                            <RotateCcw size={16} />
-                            Undo
-                        </button>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Redo functionality coming soon!')}
-                            title="Redo"
-                        >
-                            <RotateCw size={16} />
-                            Redo
-                        </button>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Cut functionality coming soon!')}
-                            title="Cut"
-                        >
-                            <Scissors size={16} />
-                            Cut
-                        </button>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Copy functionality coming soon!')}
-                            title="Copy"
-                        >
-                            <Copy size={16} />
-                            Copy
-                        </button>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Paste functionality coming soon!')}
-                            title="Paste"
-                        >
-                            <Copy size={16} style={{ opacity: 0.5 }} />
-                            Paste
-                        </button>
-                    </div>
-
-                    {/* Export Operations */}
-                    <div className="toolbar-group">
-                        <div className="dropdown-container">
-                            <button
-                                className="export-btn"
-                                onClick={() => setShowExport(!showExport)}
-                                title="Export"
-                            >
-                                <DownloadIcon size={16} />
-                                Export
-                                <ChevronDown size={12} />
-                            </button>
-                            {showExport && (
-                                <div className="dropdown-menu">
-                                    <div className="dropdown-header">Export Options</div>
-                                    <button className="dropdown-item" onClick={() => handleExportAction('JSON')}>
-                                        <DownloadIcon size={16} />
-                                        <div>Export JSON</div>
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => handleExportAction('HTML')}>
-                                        <CodeIcon size={16} />
-                                        <div>Export HTML</div>
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => handleExportAction('React')}>
-                                        <CodeIcon size={16} />
-                                        <div>Export React</div>
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => handleExportAction('Vue')}>
-                                        <CodeIcon size={16} />
-                                        <div>Export Vue</div>
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => handleExportAction('Angular')}>
-                                        <CodeIcon size={16} />
-                                        <div>Export Angular</div>
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Code export coming soon!')}
-                            title="Export Code"
-                        >
-                            <CodeIcon size={16} />
-                            Code
-                        </button>
-
-                        <button
-                            className="toolbar-btn"
-                            onClick={() => alert('Share functionality coming soon!')}
-                            title="Share Project"
-                        >
-                            <ShareIcon size={16} />
-                            Share
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            {/* Professional Toolbar */}
-            <div className="builder-toolbar">
-                <div className="toolbar-section">
-                    <span className="toolbar-label">Quick Actions</span>
-                    <QuickActions onAction={(action) => alert(`${action} action coming soon!`)} />
-                </div>
-
-                <div className="toolbar-section">
-                    <span className="toolbar-label">Alignment</span>
-                    <AlignmentTools onAlign={(alignment) => alert(`Align ${alignment} coming soon!`)} />
-                </div>
-
-                <div className="toolbar-section">
-                    <span className="toolbar-label">Text Formatting</span>
-                    <TextFormatting onFormat={(format) => alert(`Format ${format} coming soon!`)} />
-                </div>
-
-                <div className="toolbar-section">
-                    <span className="toolbar-label">Canvas Tools</span>
-                    <div className="canvas-tools">
-                        <button className="tool-btn" onClick={() => alert('Grid toggle coming soon!')}>
-                            <Grid size={16} />
-                        </button>
-                        <button className="tool-btn" onClick={() => alert('Rulers coming soon!')}>
-                            <Type size={16} />
-                        </button>
-                        <button className="tool-btn" onClick={() => alert('Guides coming soon!')}>
-                            <AlignLeft size={16} />
-                        </button>
-                        <button className="tool-btn" onClick={() => alert('Snapping coming soon!')}>
-                            <Grid size={16} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Main Workspace */}
-            <div className="builder-workspace">
-                <BuilderChatPanel />
-                <BuilderCanvas />
-            </div>
-
-            {/* Professional Status Bar */}
-            <div className="builder-status-bar">
-                <div className="status-left">
-                    <span className="status-item">Blocks: {blocks.length}</span>
-                    <span className="status-item">Device: {device}</span>
-                    <span className="status-item">Zoom: {Math.round(zoom * 100)}%</span>
-                </div>
-                
-                <div className="status-center">
-                    <span className="status-item">Auto-save: Enabled</span>
-                    <span className="status-item">Version: 1.0.0</span>
-                </div>
-
-                <div className="status-right">
-                    <span className="status-item">Last saved: {new Date().toLocaleTimeString()}</span>
-                    <button className="status-btn" onClick={handleSave}>
-                        <SaveIcon size={14} />
-                        Save Now
+                <div className="sidebar-middle">
+                    <button
+                        className={`nav-icon-btn ${activeSection === 'layers' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('layers')}
+                        title="Build & Structure"
+                    >
+                        <Layers size={20} />
                     </button>
+                    <button
+                        className={`nav-icon-btn ${activeSection === 'pages' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('pages')}
+                        title="Pages"
+                    >
+                        <FileText size={20} />
+                    </button>
+                    <button
+                        className={`nav-icon-btn ${activeSection === 'assets' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('assets')}
+                        title="Assets"
+                    >
+                        <Image size={20} />
+                    </button>
+                    <button
+                        className={`nav-icon-btn ${activeSection === 'theme' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('theme')}
+                        title="Themes"
+                    >
+                        <Palette size={20} />
+                    </button>
+                    <button
+                        className={`nav-icon-btn ${activeSection === 'database' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('database')}
+                        title="Database"
+                    >
+                        <Database size={20} />
+                    </button>
+                </div>
+                <div className="sidebar-bottom">
+                    <button
+                        className={`nav-icon-btn settings-btn ${activeSection === 'settings' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('settings')}
+                        title="Settings"
+                    >
+                        <Settings size={20} />
+                    </button>
+                    <div className="user-avatar-mini">
+                        <span>{initials}</span>
+                    </div>
+                </div>
+            </aside>
+
+            <div className="main-editor-container">
+                {/* Simplified Header */}
+                <header className="builder-header animate-in slide-down">
+                    <div className="header-left">
+                        <div className="breadcrumb-nav">
+                            <div className="breadcrumb-item brand" onClick={() => window.location.href = '/'}>
+                                <Sparkles size={18} className="sparkle-icon" />
+                                <span style={{ letterSpacing: '-0.02em' }}>Actyx</span>
+                            </div>
+                            <div className="breadcrumb-separator">/</div>
+                            <div className="breadcrumb-item project">
+                                <span className="project-name" style={{ fontWeight: 700 }}>Landing Page Builder</span>
+                                <div className="live-pill" style={{ background: 'var(--accent-secondary-light)', color: 'white' }}>
+                                    Active
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="header-center">
+                        {/* Viewport controls removed */}
+                    </div>
+
+                    <div className="header-right animate-in slide-left-delayed">
+                        <div className="active-actions">
+                            <button
+                                className={`preview-toggle-btn ${previewMode ? 'active' : ''}`}
+                                onClick={() => setPreviewMode(!previewMode)}
+                            >
+                                {previewMode ? <EyeOff size={18} /> : <Eye size={18} />}
+                                <span>{previewMode ? 'Edit' : 'Preview'}</span>
+                            </button>
+
+                            <div className="v-divider"></div>
+
+                            <button className="export-btn primary-pulse">
+                                <Zap size={16} fill="white" />
+                                <span>Publish</span>
+                                <ChevronDown size={14} />
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Command Palette Modal */}
+                {showCommandPalette && (
+                    <div className="command-palette-overlay" onClick={() => setShowCommandPalette(false)}>
+                        <div className="command-palette-modal animate-in zoom-in" onClick={e => e.stopPropagation()}>
+                            <div className="palette-header">
+                                <Search size={18} className="search-icon" />
+                                <input type="text" placeholder="Type a command or search..." autoFocus className="palette-input" />
+                                <div className="kbd-shortcut">ESC</div>
+                            </div>
+                            <div className="palette-list">
+                                <div className="palette-group">
+                                    <div className="group-label">Quick Actions</div>
+                                    <button className="palette-item"><Plus size={16} /> Add New Block <span className="item-kbd">A</span></button>
+                                    <button className="palette-item"><Save size={16} /> Save Design <span className="item-kbd">S</span></button>
+                                    <button className="palette-item" onClick={handleExport}><Download size={16} /> Export Code <span className="item-kbd">E</span></button>
+                                </div>
+                                <div className="palette-group">
+                                    <div className="group-label">View</div>
+                                    <button className="palette-item"><Monitor size={16} /> Mobile Preview</button>
+                                    <button className="palette-item"><Grid size={16} /> Toggle Dot-Grid</button>
+                                </div>
+                            </div>
+                            <div className="palette-footer">
+                                <span>↑↓ to navigate</span>
+                                <span>↵ to select</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div className="builder-workspace-container relative overflow-hidden">
+                    <div className="builder-workspace animate-in fade-in-delayed">
+                        <aside className="builder-sidebar animate-in slide-right-delayed">
+
+                            {/* Render Content Based on Active Section */}
+                            {activeSection === 'layers' && (
+                                <>
+                                    <div className="sidebar-tabs">
+                                        <button
+                                            className={`sidebar-tab ${activeSidebarTab === 'ai' ? 'active' : ''}`}
+                                            onClick={() => setActiveSidebarTab('ai')}
+                                        >
+                                            <Sparkles size={14} />
+                                            AI Designer
+                                        </button>
+                                        <button
+                                            className={`sidebar-tab ${activeSidebarTab === 'layers' ? 'active' : ''}`}
+                                            onClick={() => setActiveSidebarTab('layers')}
+                                        >
+                                            <Layers size={14} />
+                                            Structure
+                                        </button>
+                                    </div>
+
+                                    {activeSidebarTab === 'ai' ? (
+                                        <>
+                                            <div className="sidebar-header elite">
+                                                <div className="brand-icon-glow">
+                                                    <Sparkles size={18} />
+                                                </div>
+                                                <div className="sidebar-header-info">
+                                                    <h3>AI BUILDER</h3>
+                                                    <span className="premium-label">Engine v2.0</span>
+                                                </div>
+                                            </div>
+                                            <BuilderChatPanel />
+                                        </>
+                                    ) : (
+                                        <div className="layers-navigator animate-in fade-in">
+                                            <div className="layers-header">
+                                                <h4>Canvas Layers</h4>
+                                                <span className="layers-count">{blocks.length} elements</span>
+                                            </div>
+                                            <div className="layers-list">
+                                                {blocks.length > 0 ? blocks.map((block: any, idx: number) => (
+                                                    <div key={block.id || idx} className="layer-item">
+                                                        <Box size={14} className="layer-icon" />
+                                                        <span className="layer-name">{block.type || 'Generic Block'}</span>
+                                                        <div className="layer-actions">
+                                                            <Edit3 size={12} />
+                                                            <Trash2 size={12} />
+                                                        </div>
+                                                    </div>
+                                                )) : (
+                                                    <div className="empty-layers">No layers found</div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+
+                            {/* Pages Section */}
+                            {activeSection === 'pages' && (
+                                <div className="sidebar-section-container animate-in fade-in">
+                                    <div className="section-watermark">
+                                        <FileText size={120} strokeWidth={1} />
+                                    </div>
+                                    <div className="section-content-wrapper">
+                                        <h2 className="section-title-large">PAGES</h2>
+                                        <p className="section-subtitle">Site Map</p>
+                                        <div className="section-divider"></div>
+                                        <div className="sidebar-list">
+                                            {pages.map((page: any) => (
+                                                <div key={page.id} className={`sidebar-list-item ${page.isHome ? 'active' : ''}`}>
+                                                    <Globe size={14} />
+                                                    <span>{page.name}</span>
+                                                    {page.isHome && <span className="badge-mini">HOME</span>}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button className="action-btn-subtle" onClick={() => setPages([...pages, { id: Date.now().toString(), name: 'New Page', path: '/new' }])}>
+                                            <Plus size={14} />
+                                            Add New Page
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Assets Section */}
+                            {activeSection === 'assets' && (
+                                <div className="sidebar-section-container animate-in fade-in">
+                                    <div className="section-watermark">
+                                        <Image size={120} strokeWidth={1} />
+                                    </div>
+                                    <div className="section-content-wrapper">
+                                        <h2 className="section-title-large">ASSETS</h2>
+                                        <p className="section-subtitle">Library</p>
+                                        <div className="section-divider"></div>
+                                        <div className="assets-masonry">
+                                            {assets.map((asset: any) => (
+                                                <div key={asset.id} className="asset-card-premium group" title={asset.name}>
+                                                    <div className="asset-preview-wrap">
+                                                        <img src={asset.url} alt={asset.name} />
+                                                        <div className="asset-overlay">
+                                                            <button className="asset-action-btn"><Plus size={14} /></button>
+                                                        </div>
+                                                    </div>
+                                                    <span className="asset-name-mini">{asset.name}</span>
+                                                </div>
+                                            ))}
+                                            <div className="asset-card-premium upload-placeholder">
+                                                <Plus size={20} />
+                                                <span>Upload</span>
+                                            </div>
+                                        </div>
+                                        <button className="action-btn-subtle">
+                                            <Download size={14} />
+                                            Upload Asset
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Theme Section */}
+                            {activeSection === 'theme' && (
+                                <div className="sidebar-section-container animate-in fade-in">
+                                    <div className="section-watermark">
+                                        <Palette size={120} strokeWidth={1} />
+                                    </div>
+                                    <div className="section-content-wrapper">
+                                        <h2 className="section-title-large">THEME</h2>
+                                        <p className="section-subtitle">Design System</p>
+                                        <div className="section-divider"></div>
+                                        <div className="sidebar-section-group">
+                                            <h4>Brand Colors</h4>
+                                            <div className="theme-swatch-grid">
+                                                {Object.entries(siteTheme.colors).map(([key, val]: [string, any]) => (
+                                                    <div
+                                                        key={key}
+                                                        className="theme-swatch-wrapper group"
+                                                        onClick={() => {
+                                                            const newColor = prompt(`Enter new color for ${key}:`, val as string);
+                                                            if (newColor) updateTheme({ colors: { ...siteTheme.colors, [key]: newColor } });
+                                                        }}
+                                                    >
+                                                        <div className="theme-swatch" style={{ background: val }} title={key} />
+                                                        <span className="swatch-label">{key}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="sidebar-section-group">
+                                            <h4>Typography</h4>
+                                            <div className="sidebar-list">
+                                                <div className="sidebar-list-item active">
+                                                    <Type size={14} />
+                                                    <span>{siteTheme.font}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button className="action-btn-subtle">
+                                            <Edit3 size={14} />
+                                            Open Theme Editor
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Database Section */}
+                            {activeSection === 'database' && (
+                                <div className="sidebar-section-container animate-in fade-in">
+                                    <div className="section-watermark">
+                                        <Database size={120} strokeWidth={1} />
+                                    </div>
+                                    <div className="section-content-wrapper">
+                                        <h2 className="section-title-large">DATABASE</h2>
+                                        <p className="section-subtitle">CMS Content</p>
+                                        <div className="section-divider"></div>
+                                        <div className="sidebar-list">
+                                            {collections.map((col: any) => (
+                                                <div key={col.id} className="sidebar-list-item">
+                                                    <Database size={14} />
+                                                    <span>{col.name}</span>
+                                                    <span className="badge-mini">{col.count} items</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button className="action-btn-subtle">
+                                            <Plus size={14} />
+                                            New Collection
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Settings Section */}
+                            {activeSection === 'settings' && (
+                                <div className="sidebar-section-container animate-in fade-in">
+                                    <div className="section-watermark">
+                                        <Settings size={120} strokeWidth={1} />
+                                    </div>
+                                    <div className="section-content-wrapper">
+                                        <h2 className="section-title-large">SETTINGS</h2>
+                                        <p className="section-subtitle">Configuration</p>
+                                        <div className="section-divider"></div>
+                                        <div className="sidebar-list">
+                                            <div className="sidebar-list-item" onClick={() => updateEditorSettings({ showGrid: !editorSettings.showGrid })}>
+                                                <Grid size={14} />
+                                                <span>Show Grid</span>
+                                                <div className={`toggle-switch ${editorSettings.showGrid ? 'active' : ''}`} />
+                                            </div>
+                                            <div className="sidebar-list-item" onClick={() => updateEditorSettings({ autoSave: !editorSettings.autoSave })}>
+                                                <Save size={14} />
+                                                <span>Auto-save</span>
+                                                <div className={`toggle-switch ${editorSettings.autoSave ? 'active' : ''}`} />
+                                            </div>
+                                            <div className="sidebar-list-item">
+                                                <Shield size={14} />
+                                                <span>Project Privacy</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                        </aside>
+                        <main className="builder-content animate-in zoom-in-delayed">
+                            <BuilderCanvas />
+
+                            {/* Activity Console Removed */}
+                        </main>
+                    </div>
+
+                    {/* Professional Status Bar */}
+                    <div className="builder-status-bar">
+                        <div className="status-left">
+                            <span className="status-item">Blocks: {blocks.length}</span>
+                            <span className="status-item">Device: {device}</span>
+                            <span className="status-item">Zoom: {Math.round(zoom * 100)}%</span>
+                        </div>
+
+                        <div className="status-center">
+                            <span className="status-item">Auto-save: Enabled</span>
+                            <span className="status-item">Version: 1.0.0</span>
+                        </div>
+
+                        <div className="status-right">
+                            <span className="status-item">Last saved: {new Date().toLocaleTimeString()}</span>
+                            <button className="status-btn" onClick={handleSave}>
+                                <Save size={14} />
+                                Save Now
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

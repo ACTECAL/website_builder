@@ -9,7 +9,7 @@ export interface Industry {
   slug: string;
   description: string;
   longDescription: string;
-  icon: string; 
+  icon: string;
   keyFeatures: string[];
   imageUrl: string;
   testimonial?: Testimonial;
@@ -40,20 +40,20 @@ export const industryCategories: IndustryCategory[] = [
         },
         relatedApps: ['accounting', 'invoicing', 'expenses', 'documents'],
       },
-      { 
-        name: 'Billboard Rental', 
-        slug: 'billboard-rental', 
-        description: 'For advertising companies, media agencies, and outdoor space owners', 
+      {
+        name: 'Billboard Rental',
+        slug: 'billboard-rental',
+        description: 'For advertising companies, media agencies, and outdoor space owners',
         longDescription: 'Manage your billboard inventory, bookings, and client contracts with a dedicated solution. Track availability, automate billing, and get real-time analytics on your assets.',
         icon: 'fas fa-ad',
         keyFeatures: ['Inventory Management', 'Booking Calendar', 'Automated Invoicing', 'Client Contract Management'],
         imageUrl: '/images/industries/billboard.jpg',
         relatedApps: ['crm', 'sales', 'subscriptions', 'accounting'],
       },
-      { 
-        name: 'Audit & Certification', 
-        slug: 'audit-certification', 
-        description: 'For auditors, certification bodies, and compliance specialists', 
+      {
+        name: 'Audit & Certification',
+        slug: 'audit-certification',
+        description: 'For auditors, certification bodies, and compliance specialists',
         longDescription: 'A comprehensive platform for managing audits, certifications, and compliance. Schedule audits, track findings, and generate reports with ease.',
         icon: 'fas fa-stamp',
         keyFeatures: ['Audit Planning & Scheduling', 'Non-conformance Tracking', 'Corrective Action Plans', 'Certification Management'],
@@ -255,6 +255,16 @@ export const industryCategories: IndustryCategory[] = [
         imageUrl: '/images/industries/food-distribution.jpg',
         relatedApps: ['inventory', 'sales', 'purchase', 'quality'],
       },
+      {
+        name: 'Manufacturing',
+        slug: 'manufacturing',
+        description: 'For industrial production, factory management, and assembly lines',
+        longDescription: 'Optimize your manufacturing operations with advanced MRP, quality control, and maintenance tools. Actyx provides a unified platform to manage complex production cycles and supply chains from a single interface.',
+        icon: 'fas fa-industry',
+        keyFeatures: ['Advanced MRP', 'Quality Control', 'Maintenance Management', 'PLM Integration'],
+        imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000',
+        relatedApps: ['manufacturing', 'inventory', 'purchase', 'quality', 'maintenance'],
+      },
     ],
   },
   {
@@ -305,6 +315,16 @@ export const industryCategories: IndustryCategory[] = [
         imageUrl: '/images/industries/grocery-store.jpg',
         relatedApps: ['point-of-sale', 'inventory', 'purchase', 'accounting'],
       },
+      {
+        name: 'Retail',
+        slug: 'retail',
+        description: 'For modern retail chains, boutiques, and multi-channel stores',
+        longDescription: 'Power your retail business with an integrated solution for POS, inventory, and eCommerce. Actyx helps you deliver a seamless omnichannel experience to your customers while optimizing your back-office operations.',
+        icon: 'fas fa-store',
+        keyFeatures: ['Multi-channel Sales', 'Real-time Stock Sync', 'Customer Loyalty', 'Advanced POS'],
+        imageUrl: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000',
+        relatedApps: ['point-of-sale', 'inventory', 'e-commerce', 'crm', 'sales'],
+      },
     ],
   },
   {
@@ -354,6 +374,16 @@ export const industryCategories: IndustryCategory[] = [
         keyFeatures: ['Event & Menu Planning', 'Quote Generation', 'Kitchen Production Orders', 'Delivery Management'],
         imageUrl: '/images/industries/catering.jpg',
         relatedApps: ['sales', 'manufacturing', 'inventory', 'project'],
+      },
+      {
+        name: 'Healthcare',
+        slug: 'healthcare',
+        description: 'For hospitals, clinics, and medical practitioners',
+        longDescription: 'Deliver better patient care with a comprehensive healthcare management system. Manage appointments, patient records, and hospital operations efficiently while maintaining complete data security and compliance.',
+        icon: 'fas fa-stethoscope',
+        keyFeatures: ['Patient Records (EMR)', 'Appointment Scheduling', 'Billing & Claims', 'Inventory Management'],
+        imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d670db?auto=format&fit=crop&q=80&w=1000',
+        relatedApps: ['appointments', 'documents', 'accounting', 'inventory'],
       },
     ],
   },

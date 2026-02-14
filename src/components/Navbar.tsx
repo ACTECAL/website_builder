@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ChevronDown, Menu, X } from 'lucide-react';
-import { ActyxLogo } from './ActyxLogo';
+import { ChevronDown, Menu, X, User as UserIcon, LogOut, Settings as SettingsIcon, LayoutGrid } from 'lucide-react';
+import { ActyxLogoComponent } from './ActyxLogoComponent';
+import { useAuth } from '../auth/AuthContext';
 import '../styles/navbar-enhanced.css';
 
 const Navbar: React.FC = () => {
@@ -10,6 +11,18 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const closeTimerRef = useRef<number | null>(null);
+
+  const { user, logout } = useAuth();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+  const getInitials = (userName?: string) => {
+    if (!userName) return 'JD';
+    const parts = userName.split(' ');
+    if (parts.length > 1) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return parts[0][0].toUpperCase();
+  };
+
+  const initials = getInitials(user?.name);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 991);
@@ -24,15 +37,6 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  // Initialize theme from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark') {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -74,8 +78,10 @@ const Navbar: React.FC = () => {
               title: 'Use Cases',
               links: [
                 { label: 'All Industries', to: '/industries' },
+                { label: 'Accounting Firm', to: '/industries/accounting-firm' },
                 { label: 'Retail', to: '/industries/retail' },
-                { label: 'Manufacturing', to: '/industries/manufacturing' }
+                { label: 'Manufacturing', to: '/industries/manufacturing' },
+                { label: 'Healthcare', to: '/industries/healthcare' }
               ]
             }
           ]
@@ -136,7 +142,7 @@ const Navbar: React.FC = () => {
     >
       <div className="container d-flex align-items-center justify-content-between">
         <Link to="/" className="d-flex align-items-center text-decoration-none me-5">
-          <ActyxLogo showBadge style={{ fontSize: '1.75rem' }} />
+          <ActyxLogoComponent style={{ fontSize: '1.75rem' }} />
         </Link>
 
         {!isMobile && (
@@ -219,30 +225,87 @@ const Navbar: React.FC = () => {
         )}
 
         <div className="d-flex align-items-center gap-3">
-          {!isMobile && (
-            <Link to="/login" className="odoo-nav-link">
-              Sign in
-            </Link>
-          )}
-          {!isMobile && (
-            <Link to="/contact-sales" className="odoo-nav-link">
-              Contact Sales
-            </Link>
-          )}
-          <Link to="/get-started" className="btn btn-primary fw-bold px-4 py-2 shadow-sm" style={{ borderRadius: '4px' }}>
-            Try it free
-          </Link>
+          {user ? (
+            <div className="position-relative">
+              <button
+                className="btn d-flex align-items-center gap-2 p-1 border-0"
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                style={{ background: 'none' }}
+              >
+                <div
+                  className="d-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    background: 'linear-gradient(135deg, #714B67 0%, #017E84 100%)',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  {initials}
+                </div>
+              </button>
 
-          <button
-            className="btn btn-light ms-2"
-            onClick={() => {
-              const isDark = document.body.classList.toggle('dark-mode');
-              localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            }}
-            title="Toggle dark mode"
-          >
-            {document.body.classList.contains('dark-mode') ? '🌙' : '☀️'}
-          </button>
+              {showProfileMenu && (
+                <>
+                  <div
+                    className="position-fixed top-0 start-0 w-100 h-100"
+                    style={{ zIndex: 999 }}
+                    onClick={() => setShowProfileMenu(false)}
+                  />
+                  <div
+                    className="position-absolute end-0 mt-2 bg-white rounded-3 shadow-lg border py-2"
+                    style={{ zIndex: 1000, width: '220px', animation: 'slideInDown 0.2s ease-out' }}
+                  >
+                    <div className="px-3 py-2 border-bottom mb-1">
+                      <div className="fw-bold text-dark text-truncate">{user.name || user.email}</div>
+                      <div className="small text-muted text-truncate">{user.email}</div>
+                    </div>
+                    <Link to="/profile" className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 hover-bg-light text-decoration-none text-dark" onClick={() => setShowProfileMenu(false)}>
+                      <UserIcon size={16} className="text-muted" />
+                      <span>My Profile</span>
+                    </Link>
+                    <Link to="/apps" className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 hover-bg-light text-decoration-none text-dark" onClick={() => setShowProfileMenu(false)}>
+                      <LayoutGrid size={16} className="text-muted" />
+                      <span>My Apps</span>
+                    </Link>
+                    <Link to="/settings" className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 hover-bg-light text-decoration-none text-dark" onClick={() => setShowProfileMenu(false)}>
+                      <SettingsIcon size={16} className="text-muted" />
+                      <span>Settings</span>
+                    </Link>
+                    <div className="border-top mt-1 pt-1">
+                      <button
+                        className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 hover-bg-light w-100 text-start border-0 bg-transparent text-danger"
+                        onClick={() => {
+                          logout();
+                          setShowProfileMenu(false);
+                        }}
+                      >
+                        <LogOut size={16} />
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <>
+              {!isMobile && (
+                <Link to="/login" className="odoo-nav-link">
+                  Sign in
+                </Link>
+              )}
+              {!isMobile && (
+                <Link to="/contact-sales" className="odoo-nav-link">
+                  Contact Sales
+                </Link>
+              )}
+              <Link to="/get-started" className="btn btn-primary fw-bold px-4 py-2 shadow-sm" style={{ borderRadius: '4px' }}>
+                Try it free
+              </Link>
+            </>
+          )}
+
 
           {isMobile && (
             <button
@@ -288,12 +351,51 @@ const Navbar: React.FC = () => {
 
             <div className="odoo-mobile-divider" />
 
-            <Link to="/login" className="odoo-mobile-link" onClick={() => setMobileMenuOpen(false)}>
-              Sign in
-            </Link>
-            <Link to="/contact-sales" className="odoo-mobile-link" onClick={() => setMobileMenuOpen(false)}>
-              Contact Sales
-            </Link>
+            {user ? (
+              <div className="odoo-mobile-section shadow-sm p-3 mb-3 bg-white rounded border">
+                <div className="d-flex align-items-center gap-3 mb-3">
+                  <div
+                    className="d-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
+                    style={{
+                      width: '48px',
+                      height: '48px',
+                      background: 'linear-gradient(135deg, #714B67 0%, #017E84 100%)',
+                      fontSize: '1rem'
+                    }}
+                  >
+                    {initials}
+                  </div>
+                  <div className="overflow-hidden">
+                    <div className="fw-bold text-dark text-truncate">{user.name || user.email}</div>
+                    <div className="small text-muted text-truncate">{user.email}</div>
+                  </div>
+                </div>
+                <Link to="/profile" className="odoo-mobile-link py-2" onClick={() => setMobileMenuOpen(false)}>
+                  My Profile
+                </Link>
+                <Link to="/apps" className="odoo-mobile-link py-2" onClick={() => setMobileMenuOpen(false)}>
+                  My Apps
+                </Link>
+                <button
+                  className="odoo-mobile-link py-2 border-0 bg-transparent text-start text-danger"
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link to="/login" className="odoo-mobile-link" onClick={() => setMobileMenuOpen(false)}>
+                  Sign in
+                </Link>
+                <Link to="/contact-sales" className="odoo-mobile-link" onClick={() => setMobileMenuOpen(false)}>
+                  Contact Sales
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
