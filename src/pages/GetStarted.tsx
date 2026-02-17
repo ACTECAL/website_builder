@@ -1441,6 +1441,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../styles/GetStarted.css";
+import { Select } from "antd";
 
 // App selection data
 type AppTile = { key: string; label: string; icon: string; color: string };
@@ -1757,7 +1758,7 @@ const APP_CATEGORIES: AppCategory[] = [
 const MAX_APP_SELECTION = 10;
 
 const ACCOUNT_TYPES = ["demo", "paid"] as const;
-const SUBSCRIPTIONS = ["basic", "starter", "premium", "enterprise"] as const;
+const SUBSCRIPTIONS = ["basic", "standard", "premium", "enterprise"] as const;
 const INDUSTRIES = [
   "Manufacturing",
   "Retail",
@@ -1769,6 +1770,7 @@ const INDUSTRIES = [
   "Electronics",
   "Textiles",
   "Cold Storage",
+  "Exam",
   "Others",
 ];
 
@@ -1786,8 +1788,14 @@ export const GetStarted: React.FC = () => {
     selectedApps: [] as string[],
     name: "",
     accountType: "demo" as "demo" | "paid",
-    subscription: "starter" as "basic" | "starter" | "premium" | "enterprise",
+    subscription: "starter" as "basic" | "standard" | "premium" | "enterprise",
+    modules: [] as string[],
   });
+  const AVAILABLE_MODULES = [
+    { value: "erp:material_management", label: "Material Management" },
+    { value: "erp:sales_management", label: "Sales Management" },
+    { value: "erp:production_management", label: "Production Management" },
+  ];
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -1880,8 +1888,53 @@ export const GetStarted: React.FC = () => {
   };
 
   // API CALL ON NEXT FROM STEP 1
+  // const handleStep1Next = async () => {
+  //   if (!isStep1Valid()) return;
+  //   setIsCreatingAccount(true);
+  //   setIsSubmitting(true);
+  //   setApiError(null);
+
+  //   try {
+  //     const payload = {
+  //       name: formData.name,
+  //       email: formData.contactEmail || null,
+  //       company_name: formData.companyName,
+  //       domain: formData.domain,
+  //       industry: formData.industry || null,
+  //       account_type: formData.accountType,
+  //       subscription: formData.subscription,
+  //     };
+
+  //     const response = await fetch("http://127.0.0.1:4001/erp/create", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     const result = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(result.message || "Something went wrong");
+  //     }
+
+  //     setApiSuccess(true);
+  //     setTimeout(() => {
+  //       setCurrentStep(1); // Next step pe jao
+  //       setIsSubmitting(false);
+  //       setIsCreatingAccount(false);
+  //     }, 1500);
+  //   } catch (err: any) {
+  //     setApiError(err.message || "Server error, please try again");
+  //     setIsSubmitting(false);
+  //     setIsCreatingAccount(false);
+  //   }
+  // };
+
   const handleStep1Next = async () => {
     if (!isStep1Valid()) return;
+
     setIsCreatingAccount(true);
     setIsSubmitting(true);
     setApiError(null);
@@ -1895,6 +1948,7 @@ export const GetStarted: React.FC = () => {
         industry: formData.industry || null,
         account_type: formData.accountType,
         subscription: formData.subscription,
+        modules: formData.modules, // ← NEW: array jaise ["erp:material_management", "erp:sales_management"]
       };
 
       const response = await fetch("http://127.0.0.1:4001/erp/create", {
@@ -1913,7 +1967,7 @@ export const GetStarted: React.FC = () => {
 
       setApiSuccess(true);
       setTimeout(() => {
-        setCurrentStep(2); // Next step pe jao
+        setCurrentStep(2); // ya jo next step hai
         setIsSubmitting(false);
         setIsCreatingAccount(false);
       }, 1500);
@@ -1923,7 +1977,6 @@ export const GetStarted: React.FC = () => {
       setIsCreatingAccount(false);
     }
   };
-
   // Toggle App Selection
   const toggleAppSelection = (appKey: string) => {
     setFormData((prev) => {
@@ -2220,6 +2273,41 @@ export const GetStarted: React.FC = () => {
                     ))}
                   </div>
                 </div>
+                <div className="field-group-full" style={{ marginTop: "24px" }}>
+                  <label className="field-label-full">
+                    Select Modules <span className="required">*</span>
+                    <small
+                      style={{
+                        display: "block",
+                        color: "#64748b",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Choose the ERP modules you want to enable
+                    </small>
+                  </label>
+
+                  <Select
+                    mode="multiple"
+                    style={{ width: "100%" }}
+                    placeholder="Select modules (multiple allowed)"
+                    value={formData.modules}
+                    onChange={(value: any) =>
+                      handleInputChange("modules", value)
+                    }
+                    options={AVAILABLE_MODULES}
+                    maxTagCount="responsive"
+                    showSearch
+                    allowClear
+                    notFoundContent="No modules found"
+                  />
+
+                  {touched.modules && formData.modules.length === 0 && (
+                    <div className="field-error" style={{ marginTop: "8px" }}>
+                      Please select at least one module
+                    </div>
+                  )}
+                </div>
 
                 {/* API Status */}
                 {apiSuccess && (
@@ -2279,7 +2367,7 @@ export const GetStarted: React.FC = () => {
                         <div className="apps-grid">
                           {category.tiles.map((app) => {
                             const isSelected = formData.selectedApps.includes(
-                              app.key
+                              app.key,
                             );
                             return (
                               <div

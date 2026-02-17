@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../styles/Home.css";
-import { Boxes, Globe, ShoppingCart, Users } from "lucide-react";
+import { Boxes, Globe, GraduationCap, ShoppingCart, Users } from "lucide-react";
 
 const Typewriter: React.FC<{
   text: string;
@@ -48,6 +48,11 @@ const apps = [
     // icon: <i className="fa-solid fa-user" aria-hidden="true"></i>,
     icon: <Users />,
     color: "#A29BFE",
+  },
+  {
+    name: "Exam",
+    icon: <GraduationCap />,
+    color: "#6C5CE7",
   },
   // {
   //   name: "Accounting",
