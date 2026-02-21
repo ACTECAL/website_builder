@@ -82,7 +82,7 @@ export const AppDirectory: React.FC<AppDirectoryProps> = ({ items = DEFAULT_APPS
           </span>
           <span style={{ fontSize: 13 }}>Imagine without bizsuite</span>
         </div>
-        <a href="/apps" style={{ color: '#0f766e', textDecoration: 'none', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+        <a href="/solutions" style={{ color: '#0f766e', textDecoration: 'none', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
           View all Apps <span>→</span>
         </a>
       </div>

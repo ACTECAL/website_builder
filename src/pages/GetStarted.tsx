@@ -2125,9 +2125,8 @@ export const GetStarted: React.FC = () => {
                       Your Name <span className="required">*</span>
                     </label>
                     <input
-                      className={`field-input-full ${
-                        touched.name && !formData.name ? "error" : ""
-                      }`}
+                      className={`field-input-full ${touched.name && !formData.name ? "error" : ""
+                        }`}
                       placeholder="Rahul Sharma"
                       value={formData.name}
                       onChange={(e) =>
@@ -2160,9 +2159,8 @@ export const GetStarted: React.FC = () => {
                     </label>
                     <input
                       type="email"
-                      className={`field-input-full ${
-                        getFieldError("contactEmail") ? "error" : ""
-                      }`}
+                      className={`field-input-full ${getFieldError("contactEmail") ? "error" : ""
+                        }`}
                       placeholder="your@email.com"
                       value={formData.contactEmail}
                       onChange={(e) =>
@@ -2195,11 +2193,10 @@ export const GetStarted: React.FC = () => {
                     Company / Godown Name <span className="required">*</span>
                   </label>
                   <input
-                    className={`field-input-full ${
-                      touched.companyName && !formData.companyName
+                    className={`field-input-full ${touched.companyName && !formData.companyName
                         ? "error"
                         : ""
-                    }`}
+                      }`}
                     placeholder="Sharma Enterprises"
                     value={formData.companyName}
                     onChange={(e) =>
@@ -2336,9 +2333,8 @@ export const GetStarted: React.FC = () => {
                       <span>
                         {getSelectedAppsCount() === 0
                           ? "No apps selected"
-                          : `${getSelectedAppsCount()} ${
-                              getSelectedAppsCount() === 1 ? "app" : "apps"
-                            } selected`}
+                          : `${getSelectedAppsCount()} ${getSelectedAppsCount() === 1 ? "app" : "apps"
+                          } selected`}
                       </span>
                     </div>
                     {isSelectionLimitReached && (
@@ -2372,9 +2368,8 @@ export const GetStarted: React.FC = () => {
                             return (
                               <div
                                 key={app.key}
-                                className={`app-tile ${
-                                  isSelected ? "selected" : ""
-                                }`}
+                                className={`app-tile ${isSelected ? "selected" : ""
+                                  }`}
                                 onClick={() => toggleAppSelection(app.key)}
                                 role="button"
                                 tabIndex={0}
@@ -2427,9 +2422,8 @@ export const GetStarted: React.FC = () => {
                     </label>
                     <input
                       type="email"
-                      className={`field-input-full ${
-                        getFieldError("contactEmail") ? "error" : ""
-                      }`}
+                      className={`field-input-full ${getFieldError("contactEmail") ? "error" : ""
+                        }`}
                       placeholder="your@email.com"
                       value={formData.contactEmail}
                       onChange={(e) =>
@@ -2464,9 +2458,8 @@ export const GetStarted: React.FC = () => {
                     </label>
                     <input
                       type="tel"
-                      className={`field-input-full ${
-                        getFieldError("contactPhone") ? "error" : ""
-                      }`}
+                      className={`field-input-full ${getFieldError("contactPhone") ? "error" : ""
+                        }`}
                       placeholder="+1 (555) 123-4567"
                       value={formData.contactPhone}
                       onChange={(e) =>
@@ -2512,9 +2505,8 @@ export const GetStarted: React.FC = () => {
                     </span>
                   </label>
                   <textarea
-                    className={`field-textarea-full ${
-                      getFieldError("projectDescription") ? "error" : ""
-                    }`}
+                    className={`field-textarea-full ${getFieldError("projectDescription") ? "error" : ""
+                      }`}
                     placeholder="Describe your business goals, target audience, key features needed, design preferences, and any specific requirements. Please be as detailed as possible to help us create the perfect solution for you..."
                     rows={6}
                     maxLength={500}
@@ -2551,9 +2543,8 @@ export const GetStarted: React.FC = () => {
             )}
             {/* Navigation Buttons */}
             <div
-              className={`form-actions-full ${
-                showButtons ? "buttons-animate" : ""
-              }`}
+              className={`form-actions-full ${showButtons ? "buttons-animate" : ""
+                }`}
             >
               <div className="step-buttons">
                 {currentStep > 1 && (

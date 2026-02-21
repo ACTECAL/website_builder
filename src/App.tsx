@@ -3,7 +3,58 @@ import './App.css';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import SiteLayout from './components/SiteLayout';
 import Home from './pages/Home';
-import { Apps } from './pages/Apps';
+
+import { AccountingPage } from './pages/apps/Accounting';
+import { InvoicingPage } from './pages/apps/Invoicing';
+import { ExpensesPage } from './pages/apps/Expenses';
+import { SpreadsheetbiPage } from './pages/apps/Spreadsheetbi';
+import { DocumentsPage } from './pages/apps/Documents';
+import { SignPage } from './pages/apps/Sign';
+import { CRMPage } from './pages/apps/CRM';
+import { SalesPage } from './pages/apps/Sales';
+import { POSPage } from './pages/apps/POS';
+import { POSShopPage } from './pages/apps/POSShop';
+import { POSRestaurantPage } from './pages/apps/POSRestaurant';
+import { SubscriptionsPage } from './pages/apps/Subscriptions';
+import { RentalPage } from './pages/apps/Rental';
+import { WebsiteBuilderPage } from './pages/apps/WebsiteBuilder';
+import { ECommercePage } from './pages/apps/eCommerce';
+import { BlogPage } from './pages/apps/Blog';
+import { ForumPage } from './pages/apps/Forum';
+import { LiveChatPage } from './pages/apps/LiveChat';
+import { ELearningPage } from './pages/apps/eLearning';
+import { InventoryPage } from './pages/apps/Inventory';
+import { ManufacturingPage } from './pages/apps/Manufacturing';
+import { PurchasePage } from './pages/apps/Purchase';
+import { QualityPage } from './pages/apps/Quality';
+import { PLMPage } from './pages/apps/PLM';
+import { MaintenancePage } from './pages/apps/Maintenance';
+import { EmployeesPage } from './pages/apps/Employees';
+import { RecruitmentPage } from './pages/apps/Recruitment';
+import { TimeOffPage } from './pages/apps/TimeOff';
+import { PayrollPage } from './pages/apps/Payroll';
+import { AppraisalsPage } from './pages/apps/Appraisals';
+import { ReferralsPage } from './pages/apps/Referrals';
+import { FleetPage } from './pages/apps/Fleet';
+import { SocialMarketingPage } from './pages/apps/SocialMarketing';
+import { EmailMarketingPage } from './pages/apps/EmailMarketing';
+import { SMSMarketingPage } from './pages/apps/SMSMarketing';
+import { EventsPage } from './pages/apps/Events';
+import { MarketingAutomationPage } from './pages/apps/MarketingAutomation';
+import { SurveysPage } from './pages/apps/Surveys';
+import { ProjectPage } from './pages/apps/Project';
+import { TimesheetsPage } from './pages/apps/Timesheets';
+import { FieldServicePage } from './pages/apps/FieldService';
+import { HelpdeskPage } from './pages/apps/Helpdesk';
+import { PlanningPage } from './pages/apps/Planning';
+import { AppointmentsPage } from './pages/apps/Appointments';
+import { DiscussPage } from './pages/apps/Discuss';
+import { ApprovalsPage } from './pages/apps/Approvals';
+import { IoTPage } from './pages/apps/IoT';
+import { VoIPPage } from './pages/apps/VoIP';
+import { KnowledgePage } from './pages/apps/Knowledge';
+import { WhatsAppPage } from './pages/apps/WhatsApp';
+
 import { Pricing } from './pages/Pricing';
 import { Contact } from './pages/Contact';
 import { About } from './pages/About';
@@ -59,14 +110,65 @@ import LaunchPlan from './pages/LaunchPlan';
 import { GetStarted } from './pages/GetStarted';
 function App() {
   const location = useLocation();
-  const hideChrome = location.pathname.startsWith('/get-started') || location.pathname.startsWith('/choose-apps');
+  const hideChrome = location.pathname.startsWith('/get-started') ||
+    location.pathname.startsWith('/choose-apps') ||
+    location.pathname === '/login' ||
+    location.pathname === '/signup';
   return (
     <SiteLayout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/launch-plan" element={<LaunchPlan />} />
-        <Route path="/apps" element={<Apps />} />
-        <Route path="/apps/:slug" element={<AppDetail />} />
+        <Route path="/launch-plan" element={<LaunchPlan />} />        <Route path="/apps/accounting" element={<AccountingPage />} />
+        <Route path="/apps/invoicing" element={<InvoicingPage />} />
+        <Route path="/apps/expenses" element={<ExpensesPage />} />
+        <Route path="/apps/spreadsheet-bi" element={<SpreadsheetbiPage />} />
+        <Route path="/apps/documents" element={<DocumentsPage />} />
+        <Route path="/apps/sign" element={<SignPage />} />
+        <Route path="/apps/crm" element={<CRMPage />} />
+        <Route path="/apps/sales" element={<SalesPage />} />
+        <Route path="/apps/pos" element={<POSPage />} />
+        <Route path="/apps/pos-shop" element={<POSShopPage />} />
+        <Route path="/apps/pos-restaurant" element={<POSRestaurantPage />} />
+        <Route path="/apps/subscriptions" element={<SubscriptionsPage />} />
+        <Route path="/apps/rental" element={<RentalPage />} />
+        <Route path="/apps/website-builder" element={<WebsiteBuilderPage />} />
+        <Route path="/apps/ecommerce" element={<ECommercePage />} />
+        <Route path="/apps/blog" element={<BlogPage />} />
+        <Route path="/apps/forum" element={<ForumPage />} />
+        <Route path="/apps/live-chat" element={<LiveChatPage />} />
+        <Route path="/apps/elearning" element={<ELearningPage />} />
+        <Route path="/apps/inventory" element={<InventoryPage />} />
+        <Route path="/apps/manufacturing" element={<ManufacturingPage />} />
+        <Route path="/apps/purchase" element={<PurchasePage />} />
+        <Route path="/apps/quality" element={<QualityPage />} />
+        <Route path="/apps/plm" element={<PLMPage />} />
+        <Route path="/apps/maintenance" element={<MaintenancePage />} />
+        <Route path="/apps/employees" element={<EmployeesPage />} />
+        <Route path="/apps/recruitment" element={<RecruitmentPage />} />
+        <Route path="/apps/time-off" element={<TimeOffPage />} />
+        <Route path="/apps/payroll" element={<PayrollPage />} />
+        <Route path="/apps/appraisals" element={<AppraisalsPage />} />
+        <Route path="/apps/referrals" element={<ReferralsPage />} />
+        <Route path="/apps/fleet" element={<FleetPage />} />
+        <Route path="/apps/social-marketing" element={<SocialMarketingPage />} />
+        <Route path="/apps/email-marketing" element={<EmailMarketingPage />} />
+        <Route path="/apps/sms-marketing" element={<SMSMarketingPage />} />
+        <Route path="/apps/events" element={<EventsPage />} />
+        <Route path="/apps/marketing-automation" element={<MarketingAutomationPage />} />
+        <Route path="/apps/surveys" element={<SurveysPage />} />
+        <Route path="/apps/project" element={<ProjectPage />} />
+        <Route path="/apps/timesheets" element={<TimesheetsPage />} />
+        <Route path="/apps/field-service" element={<FieldServicePage />} />
+        <Route path="/apps/helpdesk" element={<HelpdeskPage />} />
+        <Route path="/apps/planning" element={<PlanningPage />} />
+        <Route path="/apps/appointments" element={<AppointmentsPage />} />
+        <Route path="/apps/discuss" element={<DiscussPage />} />
+        <Route path="/apps/approvals" element={<ApprovalsPage />} />
+        <Route path="/apps/iot" element={<IoTPage />} />
+        <Route path="/apps/voip" element={<VoIPPage />} />
+        <Route path="/apps/knowledge" element={<KnowledgePage />} />
+        <Route path="/apps/whatsapp" element={<WhatsAppPage />} />
+
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/get-started" element={<GetStarted />} />
         <Route path="/choose-apps" element={<GetStarted />} />
@@ -105,6 +207,9 @@ function App() {
         <Route path="/releases" element={<Releases />} />
         <Route path="/github" element={<Github />} />
         <Route path="/forum" element={<Forum />} />
+        <Route path="/third-party" element={<GetStarted />} />
+        <Route path="/studio" element={<GetStarted />} />
+        <Route path="/cloud" element={<GetStarted />} />
         <Route path="/events" element={<Events />} />
         <Route path="/translations" element={<Translations />} />
         <Route path="/become-a-partner" element={<BecomeAPartner />} />
@@ -137,7 +242,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer style={{ 
+    <footer style={{
       background: '#1A1A1A',
       color: 'white'
     }}>
@@ -255,17 +360,17 @@ const Footer: React.FC = () => {
         }}>
           {[
             {
-              icon: <i className="fa fa-envelope" aria-hidden="true" style={{ color:"#3B82F6" }}></i>,
+              icon: <i className="fa fa-envelope" aria-hidden="true" style={{ color: "#3B82F6" }}></i>,
               title: 'Weekly Updates',
               description: 'Get the latest product news and feature releases delivered to your inbox every week.'
             },
             {
-              icon:<i className="fa fa-bullseye" aria-hidden="true" style={{ color:"#8B5CF6" }}></i>,
+              icon: <i className="fa fa-bullseye" aria-hidden="true" style={{ color: "#8B5CF6" }}></i>,
               title: 'Exclusive Access',
               description: 'Be the first to access new features, beta programs, and special member-only content.'
             },
             {
-              icon:<i className="fa-solid fa-lightbulb" style={{ color:"#EAB308" }}></i>,
+              icon: <i className="fa-solid fa-lightbulb" style={{ color: "#EAB308" }}></i>,
               title: 'Pro Tips & Insights',
               description: 'Learn advanced techniques and best practices from our team of experts and industry leaders.'
             }
@@ -307,11 +412,11 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Links Section */}
-      <div style={{ 
+      <div style={{
         padding: '60px 24px 40px'
       }}>
-        <div style={{ 
-          maxWidth: 1200, 
+        <div style={{
+          maxWidth: 1200,
           margin: '0 auto'
         }}>
           <div style={{
@@ -321,14 +426,14 @@ const Footer: React.FC = () => {
             marginBottom: 40
           }}>
             <div>
-              <div style={{ 
-                fontWeight: 800, 
+              <div style={{
+                fontWeight: 800,
                 fontSize: '1.5rem',
                 marginBottom: 16,
                 color: 'var(--color-primary)'
               }}>
                 Nexora              </div>
-              <div style={{ 
+              <div style={{
                 color: 'rgba(255,255,255,0.9)',
                 lineHeight: 1.6,
                 marginBottom: 24
@@ -526,3 +631,4 @@ const Footer: React.FC = () => {
 };
 
 export default App;
+

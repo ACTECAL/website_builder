@@ -8,7 +8,7 @@ export const AppDetail: React.FC = () => {
   const module = appModules.find((item) => item.slug === slug);
 
   if (!module) {
-    return <Navigate to="/apps" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <AppTemplate module={module} />;

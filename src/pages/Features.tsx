@@ -157,7 +157,7 @@ export const Features: React.FC = () => {
           </p>
           <p style={{ marginTop: 12 }}>
             <i className="fa-solid fa-arrow-right" aria-hidden="true" style={{ marginRight: 8 }}></i>
-            <a href="/apps" style={{ color: '#667eea', textDecoration: 'none' }}>Ready to simplify your workflows?</a>
+            <a href="/solutions" style={{ color: '#667eea', textDecoration: 'none' }}>Ready to simplify your workflows?</a>
           </p>
         </div>
       </section>

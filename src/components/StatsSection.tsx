@@ -18,8 +18,8 @@ type Props = {
   background?: string;
 };
 
-export const StatsSection: React.FC<Props> = ({ 
-  stats, 
+export const StatsSection: React.FC<Props> = ({
+  stats,
   title = "our impact in numbers",
   subtitle = "see how we're helping teams around the world succeed",
   background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
@@ -71,10 +71,10 @@ export const StatsSection: React.FC<Props> = ({
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      style={{ 
-        padding: '80px 24px', 
+      style={{
+        padding: '80px 24px',
         background,
         color: 'white',
         position: 'relative',
@@ -91,22 +91,22 @@ export const StatsSection: React.FC<Props> = ({
         background: 'url("data:image/svg+xml,%3Csvg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M60 60c0-33.137 26.863-60 60-60v120c-33.137 0-60-26.863-60-60z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
         opacity: 0.3
       }} />
-      
+
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 80 }}>
-          <GothicH2 
+          <GothicH2
             text={title}
-            style={{ 
-              fontSize: 'clamp(2rem, 4vw, 3rem)', 
+            style={{
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
               margin: '0 0 20px',
               textShadow: '0 2px 4px rgba(0,0,0,0.1)',
               color: '#FFFFFF'
             }}
           />
-          <DrippingText 
+          <DrippingText
             text={subtitle}
-            style={{ 
-              fontSize: '1.2rem', 
+            style={{
+              fontSize: '1.2rem',
               maxWidth: 600,
               margin: '0 auto',
               lineHeight: 1.6,
@@ -115,13 +115,13 @@ export const StatsSection: React.FC<Props> = ({
           />
         </div>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: 40 
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: 40
         }}>
           {animatedStats.map((stat, idx) => (
-            <div key={idx} style={{ 
+            <div key={idx} style={{
               textAlign: 'center',
               padding: '32px 24px',
               background: 'rgba(255,255,255,0.1)',
@@ -136,7 +136,7 @@ export const StatsSection: React.FC<Props> = ({
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
             }}>
-              
+
               {stat.icon && (
                 <div style={{
                   fontSize: '3rem',
@@ -157,7 +157,7 @@ export const StatsSection: React.FC<Props> = ({
               }}>
                 {stat.prefix || ''}{stat.value.toLocaleString()}{stat.suffix || ''}
               </div>
-              
+
               <div style={{
                 fontSize: '1.1rem',
                 color: 'rgba(255,255,255,0.9)',
@@ -171,58 +171,7 @@ export const StatsSection: React.FC<Props> = ({
           ))}
         </div>
 
-        {/* Additional info section */}
-        <div style={{
-          marginTop: 80,
-          textAlign: 'center',
-          padding: '40px',
-          background: 'rgba(255,255,255,0.1)',
-          borderRadius: 20,
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
-          <GothicH3 
-            text="trusted by industry leaders"
-            style={{
-              fontSize: '1.5rem',
-              margin: '0 0 16px',
-              color: '#FFFFFF'
-            }}
-          />
-          <DrippingText 
-            text="join thousands of companies that have transformed their business with our platform"
-            style={{
-              fontSize: '1rem',
-              margin: '0 0 32px',
-              maxWidth: 600,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              color: 'rgba(255,255,255,0.8)'
-            }}
-          />
-          
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 40,
-            flexWrap: 'wrap',
-            opacity: 0.8
-          }}>
-            {['fortune 500', 'startups', 'enterprise', 'smbs', 'remote teams', 'global'].map((type, idx) => (
-              <div key={idx} style={{
-                background: 'rgba(255,255,255,0.2)',
-                padding: '8px 16px',
-                borderRadius: 20,
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                border: '1px solid rgba(255,255,255,0.3)'
-              }}>
-                {type}
-              </div>
-            ))}
-          </div>
-        </div>
+
       </div>
     </section>
   );

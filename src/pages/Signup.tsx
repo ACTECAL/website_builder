@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import '../styles/Auth.css';
 
 export const Signup: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,7 +38,6 @@ export const Signup: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      // basic validation: <= 2MB and image type
       const maxBytes = 2 * 1024 * 1024;
       if (!/^image\//.test(file.type)) {
         setErrors((prev: any) => ({ ...prev, form: 'Logo must be an image file.' }));
@@ -48,6 +49,22 @@ export const Signup: React.FC = () => {
       }
       setFormData({ ...formData, logo: file });
       setLogoPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSocialLogin = async (provider: string) => {
+    setErrors({});
+    setIsSubmitting(true);
+    try {
+      // Simulate social login delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Mock successful login
+      await login(`mock-token-${provider}-${Date.now()}`);
+      navigate('/');
+    } catch (err: any) {
+      setErrors({ form: `Failed to sign up with ${provider}` });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -87,97 +104,158 @@ export const Signup: React.FC = () => {
 
   if (submitted) {
     return (
-      <section style={{ padding: '60px 24px' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <div style={{ marginBottom: 24 }}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#667eea' }}>← Back to Home</Link>
+      <div className="auth-page">
+        <div className="auth-form-container">
+          <div className="auth-form-box" style={{ textAlign: 'center' }}>
+            <h1 className="auth-title">Success!</h1>
+            <p style={{ color: '#64748b', marginBottom: 24 }}>Registration Successful!</p>
+            <p style={{ color: '#64748b', marginBottom: 32 }}>Thank you for signing up. You are now logged in.</p>
+            <button onClick={() => navigate('/')} className="auth-primary-btn" style={{ width: '100%' }}>
+              Go to Home
+            </button>
           </div>
-          <h1 style={{ margin: '0 0 12px' }}>Signup</h1>
-          <p style={{ color: '#4a5568', margin: '0 0 24px' }}>Registration Successful!</p>
-          <p style={{ color: '#4a5568', margin: '0 0 24px' }}>Thank you for signing up. You are now logged in.</p>
-          <Link to="/" className="btn btn-primary">Go to Home</Link>
         </div>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section style={{ padding: '60px 24px' }}>
-      <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        <div style={{ marginBottom: 24 }}>
-          <Link to="/" style={{ textDecoration: 'none', color: '#667eea' }}>← Back to Home</Link>
-        </div>
-        <h1 style={{ margin: '0 0 12px' }}>Signup</h1>
-        <p style={{ color: '#4a5568', margin: '0 0 24px' }}>Create your account.</p>
-
-        {errors.form && (
-          <div style={{ background: '#FED7D7', color: '#742A2A', padding: '10px 12px', borderRadius: 8, marginBottom: 12 }}>
-            {errors.form}
+    <div className="auth-page">
+      {/* Sidebar Section */}
+      <div className="auth-sidebar">
+        <div className="auth-sidebar-content">
+          <div className="auth-glass-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m13 2-2 10h9L7 22l2-10H1L13 2z" /></svg>
+            <span>Join Actyx</span>
           </div>
-        )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
-          <input
-            type="text"
-            name="name"
-            required
-            placeholder="Full name"
-            value={formData.name}
-            onChange={handleChange}
-            autoFocus
-            style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-          />
-          {errors.name && <small style={{ color: '#E53E3E' }}>{errors.name}</small>}
+          <h2 className="auth-sidebar-title">
+            Start scaling your business with Actyx.
+          </h2>
 
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-          />
-          {errors.email && <small style={{ color: '#E53E3E' }}>{errors.email}</small>}
-
-          <input
-            type="text"
-            name="companyName"
-            required
-            placeholder="Company name"
-            value={formData.companyName}
-            onChange={handleChange}
-            style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-          />
-          {errors.companyName && <small style={{ color: '#E53E3E' }}>{errors.companyName}</small>}
-
-          <input
-            id="file-upload"
-            type="file"
-            name="logo"
-            onChange={handleFileChange}
-            style={{ padding: '10px', border: '1px solid #e2e8f0', borderRadius: 8 }}
-            accept="image/*"
-          />
-          {formData.logo && <small style={{ color: '#4a5568' }}>{formData.logo.name}</small>}
-
-          {logoPreview && (
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 8 }}>
-              <img src={logoPreview} alt="Logo Preview" style={{ maxWidth: '100%', display: 'block' }} />
+          <div className="auth-feature-list">
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+              </div>
+              <div className="auth-feature-text">Over 10,000 active users</div>
             </div>
-          )}
 
-          <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Creating account...' : 'Create Account'}
-          </button>
-        </form>
-        <div style={{ marginTop: 12, color: '#4a5568' }}>
-          Already have an account? <Link to="/login" style={{ color: '#667eea' }}>Log in</Link>
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
+              </div>
+              <div className="auth-feature-text">Available in 50+ countries</div>
+            </div>
+
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l4-4V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v10z" /><path d="M3 19v-7a4 4 0 0 1 4-4h3" /></svg>
+              </div>
+              <div className="auth-feature-text">24/7 Expert Support</div>
+            </div>
+          </div>
         </div>
-        <p style={{ marginTop: 12, color: '#718096' }}>
-          By signing up, you agree to our <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link>.
-        </p>
       </div>
-    </section>
+
+      {/* Form Section */}
+      <div className="auth-form-container">
+        <div className="auth-form-box">
+          <h1 className="auth-title">Create account</h1>
+          <p className="auth-subtitle" style={{ '--delay': '100ms' } as any}>Join thousands of businesses managing with Actyx</p>
+
+          {errors.form && <div className="auth-error">{errors.form}</div>}
+
+          <form onSubmit={handleSubmit} className="auth-form" style={{ '--delay': '200ms' } as any}>
+            <div className="auth-input-group">
+              <input
+                type="text"
+                name="name"
+                required
+                className="auth-input"
+                placeholder="Full name"
+                value={formData.name}
+                onChange={handleChange}
+                autoFocus
+              />
+              {errors.name && <small style={{ color: '#c53030', marginTop: 4, display: 'block' }}>{errors.name}</small>}
+            </div>
+
+            <div className="auth-input-group">
+              <input
+                type="email"
+                name="email"
+                required
+                className="auth-input"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              {errors.email && <small style={{ color: '#c53030', marginTop: 4, display: 'block' }}>{errors.email}</small>}
+            </div>
+
+            <div className="auth-input-group">
+              <input
+                type="text"
+                name="companyName"
+                required
+                className="auth-input"
+                placeholder="Company name"
+                value={formData.companyName}
+                onChange={handleChange}
+              />
+              {errors.companyName && <small style={{ color: '#c53030', marginTop: 4, display: 'block' }}>{errors.companyName}</small>}
+            </div>
+
+            <div className="auth-input-group">
+              <label style={{ fontSize: 13, color: '#64748b', fontWeight: 600, marginBottom: 8, display: 'block' }}>Company Logo (Optional)</label>
+              <input
+                id="file-upload"
+                type="file"
+                name="logo"
+                onChange={handleFileChange}
+                className="auth-input"
+                style={{ padding: '10px' }}
+                accept="image/*"
+              />
+              {formData.logo && <small style={{ color: '#64748b', marginTop: 4, display: 'block' }}>{formData.logo.name}</small>}
+            </div>
+
+            <button type="submit" className="auth-primary-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Creating account...' : 'Create Account'}
+            </button>
+          </form>
+
+          <div className="auth-divider" style={{ '--delay': '300ms' } as any}>
+            <span>or</span>
+          </div>
+
+          <div className="auth-social-list" style={{ '--delay': '400ms' } as any}>
+            <button className="auth-social-btn" onClick={() => handleSocialLogin('Google')}>
+              <i className="fa-brands fa-google" style={{ color: '#EA4335' }}></i>
+              Google
+            </button>
+            <button className="auth-social-btn" onClick={() => handleSocialLogin('Apple')}>
+              <i className="fa-brands fa-apple" style={{ fontSize: 20 }}></i>
+              Apple
+            </button>
+            <button className="auth-social-btn" onClick={() => handleSocialLogin('Twitter')}>
+              <i className="fa-brands fa-x-twitter" style={{ fontSize: 18 }}></i>
+              Twitter
+            </button>
+          </div>
+
+          <div className="auth-switch" style={{ '--delay': '500ms' } as any}>
+            Already have an account? <Link to="/login">Sign in</Link>
+          </div>
+
+
+
+          <p style={{ marginTop: 32, textAlign: 'center', fontSize: 13, color: '#64748b', lineHeight: 1.5 }}>
+            By signing up, you agree to our <Link to="/terms" style={{ color: '#0f172a', fontWeight: 700 }}>Terms</Link> and <Link to="/privacy" style={{ color: '#0f172a', fontWeight: 700 }}>Privacy Policy</Link>.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };

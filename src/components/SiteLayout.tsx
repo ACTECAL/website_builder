@@ -10,11 +10,18 @@ interface SiteLayoutProps {
 // Shared site layout with clean sticky navbar and cream background
 export const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
   const location = useLocation();
-  const hideChrome = location.pathname.startsWith('/get-started');
+  const hideChrome = location.pathname.startsWith('/get-started') ||
+    location.pathname === '/login' ||
+    location.pathname === '/signup';
   return (
-    <div style={{ background: 'var(--surface)', minHeight: '100vh' }}>
+    <div style={{
+      background: 'var(--surface)',
+      height: hideChrome ? '100vh' : 'auto',
+      minHeight: '100vh',
+      overflow: hideChrome ? 'hidden' : 'visible'
+    }}>
       {!hideChrome && <Navbar />}
-      <div>
+      <div style={{ height: hideChrome ? '100%' : 'auto' }}>
         {children}
       </div>
       {!hideChrome && <AIAssistant />}

@@ -21,7 +21,7 @@ export const Tutorials: React.FC = () => {
             <div style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
               <h4 style={{ margin: '0 0 8px' }}>Set up your first app</h4>
               <p style={{ margin: '0 0 12px', color: '#4a5568' }}>Install core modules and configure your workspace.</p>
-              <Link to="/apps" className="btn btn-outline-primary" reloadDocument>Open Apps</Link>
+              <Link to="/solutions" className="btn btn-outline-primary" reloadDocument>Explore Solutions</Link>
             </div>
             <div style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
               <h4 style={{ margin: '0 0 8px' }}>Integrate via API</h4>
@@ -39,9 +39,9 @@ export const Tutorials: React.FC = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
             {[{
               t: 'Onboarding checklist', d: 'Invite your team, set permissions, and launch fast.', link: '/help-center'
-            },{
+            }, {
               t: 'Connect integrations', d: 'Enable key integrations and automate workflows.', link: '/integrations'
-            },{
+            }, {
               t: 'Track deployments', d: 'Monitor health and releases with Status.', link: '/status'
             }].map((it, i) => (
               <div key={i} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>

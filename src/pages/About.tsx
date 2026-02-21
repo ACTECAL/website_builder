@@ -11,15 +11,15 @@ export const About: React.FC = () => {
   return (
     <main>
       <AnimatedBackground variant="gradient" intensity="medium">
-      <PageHero
-        title="About Nexora"
+        <PageHero
+          title="About Nexora"
           subtitle="we build modern, modular business apps so teams can move faster and work as one."
-        imageUrl="https://assets-persist.lovart.ai/agent_images/b25bca6b-06e7-40a8-88a2-64c1d4826334.jpg"
-        emphasize="scribble"
-        textColor="#ffffff"
-      />
+          imageUrl="https://assets-persist.lovart.ai/agent_images/b25bca6b-06e7-40a8-88a2-64c1d4826334.jpg"
+          emphasize="scribble"
+          textColor="#ffffff"
+        />
       </AnimatedBackground>
-      
+
       <AnimatedBackground variant="particles" intensity="low">
         <section style={{ padding: '80px 24px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -35,15 +35,15 @@ export const About: React.FC = () => {
                   marginBottom: '60px'
                 }}
               >
-                <p style={{ 
-                  color: '#475569', 
-                  lineHeight: 1.9, 
+                <p style={{
+                  color: '#475569',
+                  lineHeight: 1.9,
                   fontSize: '1.1rem',
                   margin: 0,
                   textAlign: 'center'
                 }}>
                   at nexora we believe the best software doesn't just help businesses run—it helps them thrive. in a world where companies are overloaded with tools, logins, and scattered data, we set out to create a unified platform that feels intuitive, scales with your needs, and makes collaboration effortless.
-                  <br/><br/>
+                  <br /><br />
                   our mission is simple: give every business the power of enterprise-level systems without the complexity, cost, or rigidity.
                 </p>
               </CreativeCard>
@@ -52,29 +52,29 @@ export const About: React.FC = () => {
             <FloatingElement direction="up" intensity="low" delay={0.4}>
               <GothicH2 text="Our Story" style={{ marginTop: 60, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
-            
+
             <CardGrid columns={1} gap={32} style={{ marginTop: '40px' }}>
               <FloatingElement direction="up" intensity="low" delay={0.6}>
                 <CreativeCard variant="minimal" hoverEffect="lift" size="large">
-          <DrippingText 
+                  <DrippingText
                     text="Every company has an origin story, and ours began with a simple pain point. a small group of us—entrepreneurs and developers—were frustrated by how much time was wasted on repetitive tasks like invoicing. we wanted something better: a lightweight tool that automated invoices without needing a full it team to maintain it."
                     style={{ color: '#475569', lineHeight: 1.9, fontSize: '1.1rem' }}
-          />
+                  />
                 </CreativeCard>
               </FloatingElement>
-              
+
               <FloatingElement direction="up" intensity="low" delay={0.8}>
                 <CreativeCard variant="gradient" hoverEffect="glow" size="large">
-          <DrippingText 
+                  <DrippingText
                     text="That first tool was small, but it made a big difference. customers began asking for more: could we add customer tracking? what about expense management? could we handle hr processes, too?"
                     style={{ color: 'white', lineHeight: 1.9, fontSize: '1.1rem' }}
-          />
+                  />
                 </CreativeCard>
               </FloatingElement>
 
               <FloatingElement direction="up" intensity="low" delay={1.0}>
                 <CreativeCard variant="neon" hoverEffect="scale" size="large">
-          <DrippingText 
+                  <DrippingText
                     text="One by one, we answered those requests. but instead of bolting on clunky features, we reimagined what a business platform should be: modular, open, and coherent."
                     style={{ color: 'white', lineHeight: 1.9, fontSize: '1.1rem' }}
                   />
@@ -85,7 +85,7 @@ export const About: React.FC = () => {
             <FloatingElement direction="up" intensity="low" delay={1.2}>
               <GothicH2 text="Our Principles" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
-            
+
             <CardGrid columns={2} gap={32} style={{ marginTop: '40px' }}>
               {[
                 {
@@ -127,23 +127,23 @@ export const About: React.FC = () => {
                     <div style={{ textAlign: 'center', marginBottom: '20px', fontSize: '3rem' }}>
                       {principle.icon}
                     </div>
-                    <h3 style={{ 
-                      fontSize: '1.5rem', 
-                      fontWeight: 700, 
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 700,
                       margin: '0 0 8px',
                       color: principle.variant === 'cyber' ? '#00ffff' : 'inherit'
                     }}>
                       {principle.title}
                     </h3>
-                    <p style={{ 
-                      fontSize: '0.9rem', 
-                      opacity: 0.8, 
+                    <p style={{
+                      fontSize: '0.9rem',
+                      opacity: 0.8,
                       margin: '0 0 16px',
                       fontWeight: 600
                     }}>
                       {principle.subtitle}
                     </p>
-                    <p style={{ 
+                    <p style={{
                       color: principle.variant === 'cyber' ? '#00ffff' : 'inherit',
                       lineHeight: 1.7,
                       fontSize: '1rem'
@@ -158,7 +158,7 @@ export const About: React.FC = () => {
             <FloatingElement direction="up" intensity="low" delay={2.2}>
               <GothicH2 text="Our Impact" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
-            
+
             <FloatingElement direction="up" intensity="low" delay={2.4}>
               <CreativeCard
                 variant="glass"
@@ -174,7 +174,7 @@ export const About: React.FC = () => {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginBottom: '32px' }}>
                   {[
                     "save time by automating repetitive tasks",
-                    "cut costs by reducing tool sprawl", 
+                    "cut costs by reducing tool sprawl",
                     "improve collaboration by unifying teams on one system",
                     "scale faster by adapting tools as you grow"
                   ].map((impact, idx) => (
@@ -184,9 +184,9 @@ export const About: React.FC = () => {
                     </div>
                   ))}
                 </div>
-                <p style={{ 
-                  color: '#475569', 
-                  lineHeight: 1.9, 
+                <p style={{
+                  color: '#475569',
+                  lineHeight: 1.9,
                   fontSize: '1.1rem',
                   textAlign: 'center',
                   fontStyle: 'italic',
@@ -200,7 +200,7 @@ export const About: React.FC = () => {
             <FloatingElement direction="up" intensity="low" delay={2.6}>
               <GothicH2 text="Closing Note" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
-            
+
             <FloatingElement direction="up" intensity="low" delay={2.8}>
               <CreativeCard
                 variant="gradient"
@@ -213,8 +213,8 @@ export const About: React.FC = () => {
                   marginTop: '40px'
                 }}
               >
-                <p style={{ 
-                  lineHeight: 1.9, 
+                <p style={{
+                  lineHeight: 1.9,
                   fontSize: '1.2rem',
                   margin: '0 0 24px'
                 }}>
@@ -222,12 +222,12 @@ export const About: React.FC = () => {
                 </p>
                 <p style={{ margin: 0, fontSize: '1.1rem' }}>
                   <i className="fa-solid fa-arrow-right" aria-hidden="true" style={{ marginRight: 8 }}></i>
-                  <a href="/apps" style={{ color: '#FDBA26', textDecoration: 'none', fontWeight: 700 }}>explore nexora today</a> — and build the system your business deserves.
+                  <a href="/solutions" style={{ color: '#FDBA26', textDecoration: 'none', fontWeight: 700 }}>explore nexora today</a> — and build the system your business deserves.
                 </p>
               </CreativeCard>
             </FloatingElement>
-        </div>
-      </section>
+          </div>
+        </section>
       </AnimatedBackground>
     </main>
   );

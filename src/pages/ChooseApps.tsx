@@ -329,6 +329,8 @@ export const ChooseApps: React.FC = () => {
     );
   }, [search]);
   const [selected, setSelected] = useState<string[]>(initialSelected);
+  const [activeCategory, setActiveCategory] = useState<string>(CATEGORIES[0].name);
+
   useEffect(() => {
     setSelected(initialSelected);
   }, [initialSelected]);
@@ -375,20 +377,32 @@ export const ChooseApps: React.FC = () => {
               Free instant access. No credit card required.
             </p>
           </header>
+          <div className="choose-tabs-wrapper">
+            <div className="choose-tabs">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.name}
+                  className={`choose-tab ${activeCategory === cat.name ? "tab-active" : ""}`}
+                  onClick={() => setActiveCategory(cat.name)}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className={`choose-layout ${count === 0 ? "no-aside" : ""}`}>
             <div className="choose-main">
-              {CATEGORIES.map((cat) => (
+              {CATEGORIES.filter(cat => cat.name === activeCategory).map((cat) => (
                 <div key={cat.name} className="choose-cat">
-                  <h2 className="choose-cat-title">{cat.name}</h2>
                   <div className="choose-grid">
                     {cat.tiles.map((t) => {
                       const isSel = selected.includes(t.key);
                       return (
                         <div
                           key={t.key}
-                          className={`choose-tile ${
-                            isSel ? "tile-selected" : ""
-                          }`}
+                          className={`choose-tile ${isSel ? "tile-selected" : ""
+                            }`}
                           role="button"
                           tabIndex={0}
                           aria-pressed={isSel}

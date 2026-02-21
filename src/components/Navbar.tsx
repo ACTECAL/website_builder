@@ -1,11 +1,41 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AppsMegaMenu } from './AppsMegaMenu';
+import { IndustriesMegaMenu } from './IndustriesMegaMenu';
 
 const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isAppsMenuOpen, setIsAppsMenuOpen] = useState(false);
+  const [isIndustriesMenuOpen, setIsIndustriesMenuOpen] = useState(false);
+  const closeAppsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const closeIndustriesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastY = useRef(0);
+
+  const handleAppsMouseEnter = () => {
+    if (closeAppsTimeoutRef.current) clearTimeout(closeAppsTimeoutRef.current);
+    setIsAppsMenuOpen(true);
+  };
+
+  const handleAppsMouseLeave = () => {
+    closeAppsTimeoutRef.current = setTimeout(() => {
+      setIsAppsMenuOpen(false);
+    }, 150);
+  };
+
+  const handleIndustriesMouseEnter = () => {
+    if (closeIndustriesTimeoutRef.current) clearTimeout(closeIndustriesTimeoutRef.current);
+    setIsIndustriesMenuOpen(true);
+  };
+
+  const handleIndustriesMouseLeave = () => {
+    closeIndustriesTimeoutRef.current = setTimeout(() => {
+      setIsIndustriesMenuOpen(false);
+    }, 150);
+  };
+
+
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 768);
@@ -89,7 +119,7 @@ const Navbar: React.FC = () => {
             height: 8,
             borderRadius: '50%',
             background: 'var(--color-primary)'
-          }}/>
+          }} />
         </Link>
 
         {/* Center links */}
@@ -97,10 +127,37 @@ const Navbar: React.FC = () => {
           display: isMobile ? 'none' : 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 28
+          gap: 28,
+          position: 'static'
         }}>
-          {renderNavLink('/apps', 'Applications')}
-          {renderNavLink('/solutions', 'Industries')}
+          <div
+            onMouseEnter={handleAppsMouseEnter}
+            onMouseLeave={handleAppsMouseLeave}
+            style={{ display: 'flex', alignItems: 'center', height: '100%', cursor: 'pointer' }}
+          >
+            <span style={{
+              ...navLinkBase,
+              borderBottom: '2px solid',
+              borderBottomColor: isAppsMenuOpen ? 'var(--color-primary)' : 'transparent',
+              color: isAppsMenuOpen ? 'var(--color-primary)' : '#6b7280'
+            }}>
+              Applications
+            </span>
+          </div>
+          <div
+            onMouseEnter={handleIndustriesMouseEnter}
+            onMouseLeave={handleIndustriesMouseLeave}
+            style={{ display: 'flex', alignItems: 'center', height: '100%', cursor: 'pointer' }}
+          >
+            <span style={{
+              ...navLinkBase,
+              borderBottom: '2px solid',
+              borderBottomColor: isIndustriesMenuOpen ? 'var(--color-primary)' : 'transparent',
+              color: isIndustriesMenuOpen ? 'var(--color-primary)' : '#6b7280'
+            }}>
+              Industries
+            </span>
+          </div>
           {renderNavLink('/community', 'Community')}
           {renderNavLink('/pricing', 'Pricing')}
         </div>
@@ -112,13 +169,13 @@ const Navbar: React.FC = () => {
         </div>
 
         {isMobile && (
-          <button 
-            onClick={() => setOpen(!open)} 
+          <button
+            onClick={() => setOpen(!open)}
             style={{
-              background: 'transparent', 
-              border: 'none', 
-              fontSize: '1.5rem', 
-              cursor: 'pointer', 
+              background: 'transparent',
+              border: 'none',
+              fontSize: '1.5rem',
+              cursor: 'pointer',
               color: 'var(--color-text)'
             }}
           >
@@ -126,6 +183,17 @@ const Navbar: React.FC = () => {
           </button>
         )}
       </div>
+
+      <AppsMegaMenu
+        isOpen={isAppsMenuOpen}
+        onMouseEnter={handleAppsMouseEnter}
+        onMouseLeave={handleAppsMouseLeave}
+      />
+      <IndustriesMegaMenu
+        isOpen={isIndustriesMenuOpen}
+        onMouseEnter={handleIndustriesMouseEnter}
+        onMouseLeave={handleIndustriesMouseLeave}
+      />
 
       {isMobile && open && (
         <div style={{
@@ -136,8 +204,26 @@ const Navbar: React.FC = () => {
           gap: 12
         }}>
           <div style={{ display: 'grid', gap: 12, textAlign: 'center' }}>
-            {renderNavLink('/apps', 'Applications')}
-            {renderNavLink('/solutions', 'Industries')}
+            <span
+              onClick={() => setIsAppsMenuOpen(!isAppsMenuOpen)}
+              style={{
+                ...navLinkBase,
+                cursor: 'pointer',
+                color: isAppsMenuOpen ? 'var(--color-primary)' : '#6b7280'
+              }}
+            >
+              Applications
+            </span>
+            <span
+              onClick={() => setIsIndustriesMenuOpen(!isIndustriesMenuOpen)}
+              style={{
+                ...navLinkBase,
+                cursor: 'pointer',
+                color: isIndustriesMenuOpen ? 'var(--color-primary)' : '#6b7280'
+              }}
+            >
+              Industries
+            </span>
             {renderNavLink('/community', 'Community')}
             {renderNavLink('/pricing', 'Pricing')}
             <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>

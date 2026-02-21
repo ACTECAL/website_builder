@@ -6,7 +6,12 @@
 
 /* Heading */
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-.choose-head { text-align: center; margin: 6px 0 18px; }
+
+.choose-head {
+  text-align: center;
+  margin: 6px 0 18px;
+}
+
 .choose-title {
   font-family: 'Pacifico', 'Segoe Script', 'Brush Script MT', cursive;
   font-size: clamp(2.2rem, 5vw, 3.2rem);
@@ -14,17 +19,78 @@
   margin: 0 0 6px;
   line-height: 1.1;
 }
-.choose-title-accent { position: relative; display: inline-block; }
+
+.choose-title-accent {
+  position: relative;
+  display: inline-block;
+}
+
 .choose-title-accent::after {
   content: '';
   position: absolute;
-  left: 8px; right: 6px; bottom: -8px;
+  left: 8px;
+  right: 6px;
+  bottom: -8px;
   height: 10px;
   background: #06b6d4;
   border-radius: 10px;
   opacity: 0.9;
 }
-.choose-subtitle { margin: 0; color: #334155; font-weight: 600; }
+
+.choose-subtitle {
+  margin: 0 0 24px;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Tabs */
+.choose-tabs-wrapper {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  margin: 0 -24px 24px;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.choose-tabs {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.choose-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.choose-tab {
+  padding: 16px 0;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.choose-tab:hover {
+  color: #0f172a;
+}
+
+.choose-tab.tab-active {
+  color: #7c4dff;
+  border-bottom-color: #7c4dff;
+}
 
 .choose-layout {
   display: grid;
@@ -38,7 +104,7 @@
 }
 
 .choose-cat {
-  margin: 18px 0 34px;
+  margin: 0 0 34px;
 }
 
 .choose-cat-title {
@@ -63,14 +129,14 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 16px 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
   cursor: pointer;
 }
 
 .choose-tile:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
 }
 
 .choose-tile.tile-selected {
@@ -100,7 +166,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 .choose-selected-header {
@@ -134,8 +200,19 @@
   justify-content: center;
 }
 
-.choose-selected-label { font-weight: 600; color: #0f172a; }
-.choose-selected-empty { color: #64748b; font-size: .95rem; border: 1px dashed #e5e7eb; border-radius: 10px; padding: 10px; text-align: center; }
+.choose-selected-label {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.choose-selected-empty {
+  color: #64748b;
+  font-size: .95rem;
+  border: 1px dashed #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
 
 .choose-info {
   background: #ecfdf5;
@@ -159,11 +236,36 @@
   box-shadow: 0 14px 28px rgba(108, 92, 231, 0.25);
   transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
 }
-.continue-btn:hover { transform: translateY(-1px); box-shadow: 0 18px 36px rgba(108, 92, 231, 0.3); }
-.continue-btn:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; transform: none; }
+
+.continue-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(108, 92, 231, 0.3);
+}
+
+.continue-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+@media (max-width: 1120px) {
+  .choose-tabs-wrapper {
+    margin: 0;
+    padding: 0 16px;
+  }
+}
 
 @media (max-width: 640px) {
-  .choose-grid { grid-template-columns: 1fr; }
-  .choose-layout { grid-template-columns: 1fr; }
-  .choose-aside { position: static; }
+  .choose-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choose-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .choose-aside {
+    position: static;
+  }
 }
