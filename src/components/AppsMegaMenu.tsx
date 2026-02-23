@@ -1,55 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Package, PenTool, Cloud } from 'lucide-react';
-
-interface AppCategory {
-    title: string;
-    color: string;
-    items: string[];
-}
-
-const APPS_DATA: AppCategory[] = [
-    {
-        title: 'FINANCE',
-        color: '#017e84',
-        items: ['Accounting', 'Invoicing', 'Expenses', 'Spreadsheet (BI)', 'Documents', 'Sign']
-    },
-    {
-        title: 'SALES',
-        color: '#e85a4f',
-        items: ['CRM', 'Sales', 'POS Shop', 'POS Restaurant', 'Subscriptions', 'Rental']
-    },
-    {
-        title: 'WEBSITES',
-        color: '#4d6c8b',
-        items: ['Website Builder', 'eCommerce', 'Blog', 'Forum', 'Live Chat', 'eLearning']
-    },
-    {
-        title: 'SUPPLY CHAIN',
-        color: '#75628b',
-        items: ['Inventory', 'Manufacturing', 'PLM', 'Purchase', 'Maintenance', 'Quality']
-    },
-    {
-        title: 'HUMAN RESOURCES',
-        color: '#65738f',
-        items: ['Employees', 'Recruitment', 'Time Off', 'Appraisals', 'Referrals', 'Fleet']
-    },
-    {
-        title: 'MARKETING',
-        color: '#eb6b45',
-        items: ['Social Marketing', 'Email Marketing', 'SMS Marketing', 'Events', 'Marketing Automation', 'Surveys']
-    },
-    {
-        title: 'SERVICES',
-        color: '#e66244',
-        items: ['Project', 'Timesheets', 'Field Service', 'Helpdesk', 'Planning', 'Appointments']
-    },
-    {
-        title: 'PRODUCTIVITY',
-        color: '#8b566b',
-        items: ['Discuss', 'Approvals', 'IoT', 'VoIP', 'Knowledge', 'WhatsApp']
-    }
-];
+import { appCategories } from '../data/appModules';
 
 export const AppsMegaMenu: React.FC<{
     isOpen: boolean;
@@ -57,6 +9,18 @@ export const AppsMegaMenu: React.FC<{
     onMouseLeave: () => void;
 }> = ({ isOpen, onMouseEnter, onMouseLeave }) => {
     if (!isOpen) return null;
+
+    // Map category titles to their respective colors
+    const categoryColors: Record<string, string> = {
+        'Finance': '#017e84',
+        'Sales': '#e85a4f',
+        'Websites': '#4d6c8b',
+        'Supply Chain': '#75628b',
+        'Human Resources': '#65738f',
+        'Marketing': '#eb6b45',
+        'Services': '#e66244',
+        'Productivity': '#8b566b',
+    };
 
     return (
         <div
@@ -83,41 +47,44 @@ export const AppsMegaMenu: React.FC<{
                     rowGap: '40px',
                     marginBottom: '32px'
                 }}>
-                    {APPS_DATA.map((category) => (
-                        <div key={category.title} style={{ display: 'flex', flexDirection: 'column' }}>
-                            <h4 style={{
-                                color: category.color,
-                                fontSize: '0.875rem',
-                                fontWeight: 700,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.5px',
-                                margin: '0 0 12px 0',
-                                paddingBottom: '8px',
-                                borderBottom: `1px solid ${category.color}33` // 20% opacity matching color
-                            }}>
-                                {category.title}
-                            </h4>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                {category.items.map(item => (
-                                    <li key={item}>
-                                        <Link
-                                            to={`/apps/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                                            style={{
-                                                textDecoration: 'none',
-                                                color: '#4B5563',
-                                                fontSize: '0.85rem',
-                                                transition: 'color 0.15s ease'
-                                            }}
-                                            onMouseEnter={(e) => (e.currentTarget.style.color = '#111827')}
-                                            onMouseLeave={(e) => (e.currentTarget.style.color = '#4B5563')}
-                                        >
-                                            {item}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                    {appCategories.map((category) => {
+                        const color = categoryColors[category.title] || '#6366f1';
+                        return (
+                            <div key={category.title} style={{ display: 'flex', flexDirection: 'column' }}>
+                                <h4 style={{
+                                    color: color,
+                                    fontSize: '0.875rem',
+                                    fontWeight: 700,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.5px',
+                                    margin: '0 0 12px 0',
+                                    paddingBottom: '8px',
+                                    borderBottom: `1px solid ${color}33`
+                                }}>
+                                    {category.title}
+                                </h4>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    {category.modules.map(module => (
+                                        <li key={module.slug}>
+                                            <Link
+                                                to={`/apps/${module.slug}`}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    color: '#4B5563',
+                                                    fontSize: '0.85rem',
+                                                    transition: 'color 0.15s ease'
+                                                }}
+                                                onMouseEnter={(e) => (e.currentTarget.style.color = '#111827')}
+                                                onMouseLeave={(e) => (e.currentTarget.style.color = '#4B5563')}
+                                            >
+                                                {module.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -166,3 +133,4 @@ const FooterLink = ({ icon, text, to }: { icon: React.ReactNode; text: string; t
         {text}
     </Link>
 );
+

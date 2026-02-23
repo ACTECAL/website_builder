@@ -78,7 +78,6 @@ import { CookiePolicy } from './pages/CookiePolicy';
 import { HelpCenter } from './pages/HelpCenter';
 import { APIReference } from './pages/APIReference';
 import { Status } from './pages/Status';
-import { AppDetail } from './pages/AppDetail';
 import { BookStorePage } from './pages/industries/BookStore';
 import { ClothingStorePage } from './pages/industries/ClothingStore';
 import { FurnitureStorePage } from './pages/industries/FurnitureStore';
