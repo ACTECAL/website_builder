@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { industryCategories } from '../data/industries';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { industryCategories, Industry } from '../data/industries';
 import { appModules } from '../data/appModules';
 import '../styles/Industry.css';
 
-export const Industry: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [isVisible, setIsVisible] = useState(false);
+interface IndustryTemplateProps {
+  industry: Industry;
+  isVisible: boolean;
+}
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, [slug]);
-
-  const category = industryCategories.find(c => c.industries.some(i => i.slug === slug));
-  const industry = category?.industries.find((i) => i.slug === slug);
+export const IndustryTemplate: React.FC<IndustryTemplateProps> = ({ industry, isVisible }) => {
+  const category = industryCategories.find(c => c.industries.some(i => i.slug === industry.slug));
 
   // Use the same category colors defined in IndustriesMegaMenu
   const categoryColorMap: Record<string, string> = {
@@ -28,16 +25,6 @@ export const Industry: React.FC = () => {
   };
 
   const primaryColor = category ? (categoryColorMap[category.name] || '#6366f1') : '#6366f1';
-
-  if (!industry) {
-    return (
-      <div style={{ padding: '120px 24px', textAlign: 'center', background: '#fafafa', minHeight: '100vh' }}>
-        <h2 style={{ fontSize: '2rem', color: '#111827' }}>Industry not found</h2>
-        <p style={{ color: '#6b7280' }}>The industry profile you are looking for does not exist.</p>
-        <Link to="/industries" className="btn btn-primary" style={{ marginTop: 24 }}>Browse All Industries</Link>
-      </div>
-    );
-  }
 
   return (
     <main style={{ background: '#fafafa', minHeight: '100vh', fontFamily: 'Inter, system-ui, sans-serif' }}>
@@ -231,3 +218,4 @@ export const Industry: React.FC = () => {
     </main>
   );
 };
+

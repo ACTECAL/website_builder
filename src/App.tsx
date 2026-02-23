@@ -79,7 +79,54 @@ import { HelpCenter } from './pages/HelpCenter';
 import { APIReference } from './pages/APIReference';
 import { Status } from './pages/Status';
 import { AppDetail } from './pages/AppDetail';
-import { Industry } from './pages/Industry';
+import { BookStorePage } from './pages/industries/BookStore';
+import { ClothingStorePage } from './pages/industries/ClothingStore';
+import { FurnitureStorePage } from './pages/industries/FurnitureStore';
+import { GroceryStorePage } from './pages/industries/GroceryStore';
+import { HardwareStorePage } from './pages/industries/HardwareStore';
+import { ToyStorePage } from './pages/industries/ToyStore';
+import { BarAndPubPage } from './pages/industries/BarAndPub';
+import { RestaurantPage } from './pages/industries/Restaurant';
+import { FastFoodPage } from './pages/industries/FastFood';
+import { GuestHousePage } from './pages/industries/GuestHouse';
+import { BeverageDistributorPage } from './pages/industries/BeverageDistributor';
+import { HotelPage } from './pages/industries/Hotel';
+import { RealEstateAgencyPage } from './pages/industries/RealEstateAgency';
+import { ArchitectureFirmPage } from './pages/industries/ArchitectureFirm';
+import { ConstructionPage } from './pages/industries/Construction';
+import { PropertyManagementPage } from './pages/industries/PropertyManagement';
+import { GardeningPage } from './pages/industries/Gardening';
+import { PropertyOwnerAssociationPage } from './pages/industries/PropertyOwnerAssociation';
+import { AccountingFirmPage } from './pages/industries/AccountingFirm';
+import { OdooPartnerPage } from './pages/industries/OdooPartner';
+import { MarketingAgencyPage } from './pages/industries/MarketingAgency';
+import { LawFirmPage } from './pages/industries/LawFirm';
+import { TalentAcquisitionPage } from './pages/industries/TalentAcquisition';
+import { AuditCertificationPage } from './pages/industries/AuditCertification';
+import { TextilePage } from './pages/industries/Textile';
+import { MetalPage } from './pages/industries/Metal';
+import { FurnituresPage } from './pages/industries/Furnitures';
+import { FoodPage } from './pages/industries/Food';
+import { BreweryPage } from './pages/industries/Brewery';
+import { CorporateGiftsPage } from './pages/industries/CorporateGifts';
+import { SportsClubPage } from './pages/industries/SportsClub';
+import { EyewearStorePage } from './pages/industries/EyewearStore';
+import { FitnessCenterPage } from './pages/industries/FitnessCenter';
+import { WellnessPractitionersPage } from './pages/industries/WellnessPractitioners';
+import { PharmacyPage } from './pages/industries/Pharmacy';
+import { HairSalonPage } from './pages/industries/HairSalon';
+import { HandymanPage } from './pages/industries/Handyman';
+import { ItHardwareSupportPage } from './pages/industries/ItHardwareSupport';
+import { SolarEnergySystemsPage } from './pages/industries/SolarEnergySystems';
+import { ShoeMakerPage } from './pages/industries/ShoeMaker';
+import { CleaningServicesPage } from './pages/industries/CleaningServices';
+import { HvacServicesPage } from './pages/industries/HvacServices';
+import { NonprofitOrganizationPage } from './pages/industries/NonprofitOrganization';
+import { EnvironmentalAgencyPage } from './pages/industries/EnvironmentalAgency';
+import { BillboardRentalPage } from './pages/industries/BillboardRental';
+import { PhotographyPage } from './pages/industries/Photography';
+import { BikeLeasingPage } from './pages/industries/BikeLeasing';
+import { SoftwareResellerPage } from './pages/industries/SoftwareReseller';
 import { AllIndustries } from './pages/AllIndustries';
 import { Community } from './pages/Community';
 import { Tutorials } from './pages/Tutorials';
@@ -118,7 +165,8 @@ function App() {
     <SiteLayout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/launch-plan" element={<LaunchPlan />} />        <Route path="/apps/accounting" element={<AccountingPage />} />
+        <Route path="/launch-plan" element={<LaunchPlan />} />
+        <Route path="/apps/accounting" element={<AccountingPage />} />
         <Route path="/apps/invoicing" element={<InvoicingPage />} />
         <Route path="/apps/expenses" element={<ExpensesPage />} />
         <Route path="/apps/spreadsheet-bi" element={<SpreadsheetbiPage />} />
@@ -193,7 +241,54 @@ function App() {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/cookies" element={<CookiePolicy />} />
         <Route path="/industries" element={<AllIndustries />} />
-        <Route path="/industries/:slug" element={<Industry />} />
+        <Route path="/industries/book-store" element={<BookStorePage />} />
+        <Route path="/industries/clothing-store" element={<ClothingStorePage />} />
+        <Route path="/industries/furniture-store" element={<FurnitureStorePage />} />
+        <Route path="/industries/grocery-store" element={<GroceryStorePage />} />
+        <Route path="/industries/hardware-store" element={<HardwareStorePage />} />
+        <Route path="/industries/toy-store" element={<ToyStorePage />} />
+        <Route path="/industries/bar-and-pub" element={<BarAndPubPage />} />
+        <Route path="/industries/restaurant" element={<RestaurantPage />} />
+        <Route path="/industries/fast-food" element={<FastFoodPage />} />
+        <Route path="/industries/guest-house" element={<GuestHousePage />} />
+        <Route path="/industries/beverage-distributor" element={<BeverageDistributorPage />} />
+        <Route path="/industries/hotel" element={<HotelPage />} />
+        <Route path="/industries/real-estate-agency" element={<RealEstateAgencyPage />} />
+        <Route path="/industries/architecture-firm" element={<ArchitectureFirmPage />} />
+        <Route path="/industries/construction" element={<ConstructionPage />} />
+        <Route path="/industries/property-management" element={<PropertyManagementPage />} />
+        <Route path="/industries/gardening" element={<GardeningPage />} />
+        <Route path="/industries/property-owner-association" element={<PropertyOwnerAssociationPage />} />
+        <Route path="/industries/accounting-firm" element={<AccountingFirmPage />} />
+        <Route path="/industries/odoo-partner" element={<OdooPartnerPage />} />
+        <Route path="/industries/marketing-agency" element={<MarketingAgencyPage />} />
+        <Route path="/industries/law-firm" element={<LawFirmPage />} />
+        <Route path="/industries/talent-acquisition" element={<TalentAcquisitionPage />} />
+        <Route path="/industries/audit-certification" element={<AuditCertificationPage />} />
+        <Route path="/industries/textile" element={<TextilePage />} />
+        <Route path="/industries/metal" element={<MetalPage />} />
+        <Route path="/industries/furnitures" element={<FurnituresPage />} />
+        <Route path="/industries/food" element={<FoodPage />} />
+        <Route path="/industries/brewery" element={<BreweryPage />} />
+        <Route path="/industries/corporate-gifts" element={<CorporateGiftsPage />} />
+        <Route path="/industries/sports-club" element={<SportsClubPage />} />
+        <Route path="/industries/eyewear-store" element={<EyewearStorePage />} />
+        <Route path="/industries/fitness-center" element={<FitnessCenterPage />} />
+        <Route path="/industries/wellness-practitioners" element={<WellnessPractitionersPage />} />
+        <Route path="/industries/pharmacy" element={<PharmacyPage />} />
+        <Route path="/industries/hair-salon" element={<HairSalonPage />} />
+        <Route path="/industries/handyman" element={<HandymanPage />} />
+        <Route path="/industries/it-hardware-support" element={<ItHardwareSupportPage />} />
+        <Route path="/industries/solar-energy-systems" element={<SolarEnergySystemsPage />} />
+        <Route path="/industries/shoe-maker" element={<ShoeMakerPage />} />
+        <Route path="/industries/cleaning-services" element={<CleaningServicesPage />} />
+        <Route path="/industries/hvac-services" element={<HvacServicesPage />} />
+        <Route path="/industries/nonprofit-organization" element={<NonprofitOrganizationPage />} />
+        <Route path="/industries/environmental-agency" element={<EnvironmentalAgencyPage />} />
+        <Route path="/industries/billboard-rental" element={<BillboardRentalPage />} />
+        <Route path="/industries/photography" element={<PhotographyPage />} />
+        <Route path="/industries/bike-leasing" element={<BikeLeasingPage />} />
+        <Route path="/industries/software-reseller" element={<SoftwareResellerPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/tutorials" element={<Tutorials />} />
         <Route path="/certifications" element={<Certifications />} />
