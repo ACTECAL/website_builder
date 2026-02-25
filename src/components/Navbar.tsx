@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AppsMegaMenu } from './AppsMegaMenu';
 import { IndustriesMegaMenu } from './IndustriesMegaMenu';
+import '../styles/Navbar.css';
 
 const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isAppsMenuOpen, setIsAppsMenuOpen] = useState(false);
   const [isIndustriesMenuOpen, setIsIndustriesMenuOpen] = useState(false);
   const closeAppsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const closeIndustriesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastY = useRef(0);
+  const lastScrollY = useRef(0);
 
   const handleAppsMouseEnter = () => {
     if (closeAppsTimeoutRef.current) clearTimeout(closeAppsTimeoutRef.current);
@@ -35,8 +36,6 @@ const Navbar: React.FC = () => {
     }, 150);
   };
 
-
-
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 768);
     onResize();
@@ -45,141 +44,68 @@ const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    lastY.current = window.scrollY;
     const onScroll = () => {
-      if (open) { setHidden(false); lastY.current = window.scrollY; return; }
-      const y = window.scrollY;
-      const delta = y - lastY.current;
-      if (y <= 0) setHidden(false);
-      else if (delta > 4 && y > 80) setHidden(true); // scrolling down
-      else if (delta < -4) setHidden(false);        // scrolling up
-      lastY.current = y;
+      if (isMobileMenuOpen) { setIsHidden(false); return; }
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (currentScrollY <= 0) setIsHidden(false);
+      else if (delta > 5 && currentScrollY > 100) setIsHidden(true);
+      else if (delta < -5) setIsHidden(false);
+
+      lastScrollY.current = currentScrollY;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [open]);
-
-  const navLinkBase: React.CSSProperties = {
-    color: '#6b7280',
-    textDecoration: 'none',
-    fontSize: '0.95rem',
-    fontWeight: 500,
-    padding: '8px 6px',
-    transition: 'color .15s ease'
-  };
-
-  const renderNavLink = (to: string, label: string) => (
-    <NavLink
-      to={to}
-      style={({ isActive }) => ({
-        ...navLinkBase,
-        borderBottom: '2px solid',
-        borderBottomColor: isActive ? 'var(--color-primary)' : 'transparent',
-        color: isActive ? 'var(--color-primary)' : '#6b7280'
-      })}
-      onClick={() => setOpen(false)}
-    >
-      {label}
-    </NavLink>
-  );
+  }, [isMobileMenuOpen]);
 
   return (
-    <nav style={{
-      position: 'sticky',
-      top: 0,
-      zIndex: 1000,
-      background: 'rgba(255,255,255,0.8)',
-      backdropFilter: 'saturate(180%) blur(12px)',
-      WebkitBackdropFilter: 'saturate(180%) blur(12px)',
-      borderBottom: '1px solid rgba(0,0,0,0.04)',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
-      transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
-      transition: 'transform .25s ease'
-    }}>
-      <div style={{
-        maxWidth: 1200,
-        margin: '0 auto',
-        padding: '12px 24px',
-        display: 'grid',
-        gridTemplateColumns: 'auto 1fr auto',
-        alignItems: 'center',
-        columnGap: 16
-      }}>
+    <nav className="navbar-container" style={{ transform: isHidden ? 'translateY(-100%)' : 'translateY(0)' }}>
+      <div className="navbar-inner">
         {/* Brand */}
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: 6 }}>
-          <span style={{
-            fontFamily: 'Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
-            fontWeight: 800,
-            fontSize: '1.25rem',
-            color: 'var(--color-text)'
-          }}>Nexora</span>
-          <span style={{
-            display: 'inline-block',
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            background: 'var(--color-primary)'
-          }} />
+        <Link to="/" className="brand">
+          <span>Nexora</span>
+          <div className="brand-dot" />
         </Link>
 
-        {/* Center links */}
-        <div style={{
-          display: isMobile ? 'none' : 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 28,
-          position: 'static'
-        }}>
-          <div
-            onMouseEnter={handleAppsMouseEnter}
-            onMouseLeave={handleAppsMouseLeave}
-            style={{ display: 'flex', alignItems: 'center', height: '100%', cursor: 'pointer' }}
-          >
-            <span style={{
-              ...navLinkBase,
-              borderBottom: '2px solid',
-              borderBottomColor: isAppsMenuOpen ? 'var(--color-primary)' : 'transparent',
-              color: isAppsMenuOpen ? 'var(--color-primary)' : '#6b7280'
-            }}>
+        {/* Desktop Links */}
+        {!isMobile && (
+          <div className="nav-links-center">
+            <div
+              onMouseEnter={handleAppsMouseEnter}
+              onMouseLeave={handleAppsMouseLeave}
+              className={`nav-link-item ${isAppsMenuOpen ? 'active' : ''}`}
+            >
               Applications
-            </span>
-          </div>
-          <div
-            onMouseEnter={handleIndustriesMouseEnter}
-            onMouseLeave={handleIndustriesMouseLeave}
-            style={{ display: 'flex', alignItems: 'center', height: '100%', cursor: 'pointer' }}
-          >
-            <span style={{
-              ...navLinkBase,
-              borderBottom: '2px solid',
-              borderBottomColor: isIndustriesMenuOpen ? 'var(--color-primary)' : 'transparent',
-              color: isIndustriesMenuOpen ? 'var(--color-primary)' : '#6b7280'
-            }}>
+            </div>
+            <div
+              onMouseEnter={handleIndustriesMouseEnter}
+              onMouseLeave={handleIndustriesMouseLeave}
+              className={`nav-link-item ${isIndustriesMenuOpen ? 'active' : ''}`}
+            >
               Industries
-            </span>
+            </div>
+            <NavLink to="/community" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
+              Community
+            </NavLink>
+            <NavLink to="/pricing" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
+              Pricing
+            </NavLink>
           </div>
-          {renderNavLink('/community', 'Community')}
-          {renderNavLink('/pricing', 'Pricing')}
-        </div>
+        )}
 
-        {/* Right actions */}
-        <div style={{ display: isMobile ? 'none' : 'flex', alignItems: 'center', gap: 12, justifySelf: 'end' }}>
-          <Link to="/login" className="btn">Log in</Link>
-          <Link to="/signup" className="btn btn-primary">Sign up</Link>
-        </div>
+        {/* Desktop Actions */}
+        {!isMobile && (
+          <div className="nav-actions-right">
+            <Link to="/login" className="btn-login">Log in</Link>
+            <Link to="/signup" className="btn btn-primary">Sign up</Link>
+          </div>
+        )}
 
+        {/* Mobile Toggle */}
         {isMobile && (
-          <button
-            onClick={() => setOpen(!open)}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              fontSize: '1.5rem',
-              cursor: 'pointer',
-              color: 'var(--color-text)'
-            }}
-          >
-            {open ? '✕' : '☰'}
+          <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? '✕' : '☰'}
           </button>
         )}
       </div>
@@ -195,50 +121,24 @@ const Navbar: React.FC = () => {
         onMouseLeave={handleIndustriesMouseLeave}
       />
 
-      {isMobile && open && (
-        <div style={{
-          background: '#fff',
-          padding: '16px 24px',
-          borderTop: '1px solid rgba(0,0,0,0.06)',
-          display: 'grid',
-          gap: 12
-        }}>
-          <div style={{ display: 'grid', gap: 12, textAlign: 'center' }}>
-            <span
-              onClick={() => setIsAppsMenuOpen(!isAppsMenuOpen)}
-              style={{
-                ...navLinkBase,
-                cursor: 'pointer',
-                color: isAppsMenuOpen ? 'var(--color-primary)' : '#6b7280'
-              }}
-            >
-              Applications
-            </span>
-            <span
-              onClick={() => setIsIndustriesMenuOpen(!isIndustriesMenuOpen)}
-              style={{
-                ...navLinkBase,
-                cursor: 'pointer',
-                color: isIndustriesMenuOpen ? 'var(--color-primary)' : '#6b7280'
-              }}
-            >
-              Industries
-            </span>
-            {renderNavLink('/community', 'Community')}
-            {renderNavLink('/pricing', 'Pricing')}
-            <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
-              <Link to="/login" className="btn">Log in</Link>
-              <Link to="/signup" className="btn btn-primary">Sign up</Link>
-            </div>
-            <div style={{ marginTop: 8 }}>
-              <Link to="/get-started" className="btn" style={{
-                width: '100%',
-                textAlign: 'center',
-                boxShadow: '0 8px 20px rgba(255,107,0,0.25)'
-              }} onClick={() => setOpen(false)}>
-                Get Started
-              </Link>
-            </div>
+      {/* Mobile Menu Content */}
+      {isMobile && isMobileMenuOpen && (
+        <div className="mobile-menu">
+          <div onClick={() => setIsAppsMenuOpen(!isAppsMenuOpen)} className="nav-link-item">
+            Applications
+          </div>
+          <div onClick={() => setIsIndustriesMenuOpen(!isIndustriesMenuOpen)} className="nav-link-item">
+            Industries
+          </div>
+          <NavLink to="/community" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
+            Community
+          </NavLink>
+          <NavLink to="/pricing" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
+            Pricing
+          </NavLink>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 10 }}>
+            <Link to="/login" className="btn" onClick={() => setIsMobileMenuOpen(false)}>Log in</Link>
+            <Link to="/signup" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>Sign up</Link>
           </div>
         </div>
       )}
@@ -247,3 +147,4 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+

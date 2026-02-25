@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,43 +11,48 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Simple design system tokens */
+/* Odoo-inspired design system tokens */
 :root {
-  /* Orange + Peach + Yellow + Cream palette */
   --color-text: #1a1a1a;
   --color-muted: #666666;
-  /* Orange */
-  --color-primary: #6c5ce7;       /* primary brand (links, highlights) */
-  --color-primary-600: #ff5722;   /* darker orange */
-  --color-primary-700: #e64a19;   /* darker */
-  --color-primary-800: #d84315;   /* darkest */
-  --color-primary-light: #ffab91; /* peachy orange */
-  --color-primary-lighter: #ffe0d6; /* soft peach */
-  /* Peach */
-  --peach-100: #fff3f0;
-  --peach-200: #ffe0d6;
-  --peach-300: #ffc6a8;
-  /* Yellow */
-  --yellow-300: #ffe08a;
-  --yellow-400: #ffd166;
-  --yellow-500: #ffcc47;
-  /* Cream surfaces */
-  --color-bg: #f7f8fb;      /* neutral light */
-  --surface: #f7f8fb;       /* neutral surface */
-  --surface-alt: #ffffff;   /* pure white cards */
-  --surface-accent: #ffffff;/* light wash */
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
-  --shadow-orange: 0 4px 20px rgba(234, 88, 12, 0.25);
+
+  /* Odoo Purple Palette */
+  --color-primary: #714B67;
+  --color-primary-600: #613d58;
+  --color-primary-700: #523049;
+  --color-primary-800: #42233b;
+  --color-primary-light: #a3899d;
+  --color-primary-lighter: #f3eff2;
+
+  /* Accent Colors */
+  --color-accent: #00A09D;
+  /* Odoo Teal */
+  --color-accent-hover: #008b88;
+
+  /* Neutral Surfaces */
+  --color-bg: #ffffff;
+  --surface: #ffffff;
+  --surface-alt: #f8f9fa;
+  --surface-accent: #f3eff2;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 4px 20px rgba(113, 75, 103, 0.15);
   --container: 1200px;
+
+  --font-handwritten: 'Caveat', cursive;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 @media (max-width: 768px) {
-  h1 { font-size: 36px !important; }
+  h1 {
+    font-size: 36px !important;
+  }
 }
 
 code {
@@ -53,11 +60,21 @@ code {
     monospace;
 }
 
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
 /* Default link styles */
-a { color: var(--color-primary); text-decoration-color: rgba(0,0,0,0.08); }
-a:hover { color: var(--color-primary-700); }
+a {
+  color: var(--color-primary);
+  text-decoration-color: rgba(0, 0, 0, 0.08);
+}
+
+a:hover {
+  color: var(--color-primary-700);
+}
 
 .btn-primary {
   background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-800) 100%);
@@ -70,12 +87,22 @@ a:hover { color: var(--color-primary-700); }
   transition: transform .15s ease, box-shadow .2s ease;
 }
 
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
 
-.muted { color: var(--color-muted); }
+.muted {
+  color: var(--color-muted);
+}
 
 /* Headings use Poppins */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-weight: 700;
@@ -102,32 +129,62 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   box-shadow: var(--shadow-orange);
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
 
 .btn-secondary {
   background: #ffffff;
   color: var(--color-text);
   border: 2px solid var(--color-primary-light);
 }
-.btn-secondary:hover { box-shadow: var(--shadow-sm); }
+
+.btn-secondary:hover {
+  box-shadow: var(--shadow-sm);
+}
 
 /* Apply palette to headings and common surfaces */
-h1, h2, h3, h4, h5, h6 { color: var(--color-text); }
-section { background: transparent; }
-.text-muted { color: var(--color-muted); }
-.accent { color: var(--color-primary); }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text);
+}
+
+section {
+  background: transparent;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.accent {
+  color: var(--color-primary);
+}
 
 /* Reusable UI primitives */
-.section { padding: 60px 24px; }
+.section {
+  padding: 60px 24px;
+}
+
 .card {
   background: var(--surface-alt);
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   padding: 20px;
   transition: transform .15s ease, box-shadow .2s ease;
 }
-.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
 
 /* Outline primary button (used across pages) */
 .btn-outline-primary {
@@ -138,40 +195,88 @@ section { background: transparent; }
   padding: 12px 20px;
   font-weight: 700;
 }
-.btn-outline-primary:hover { background: rgba(108, 92, 231, 0.08); }
+
+.btn-outline-primary:hover {
+  background: rgba(108, 92, 231, 0.08);
+}
 
 /* Fallback overrides for common inline hex colors used in components */
-  /* Map old slate text to new muted */
-  [style*="#4a5568"] { color: var(--color-muted) !important; border-color: var(--color-muted) !important; }
-  [style*="#475467"],
-  [style*="#667085"],
-  [style*="#94a3b8"] { color: var(--color-muted) !important; border-color: var(--color-muted) !important; }
-  /* Map common dark text to our base text color */
-  [style*="#111827"],
-  [style*="#101828"],
-  [style*="#0f172a"],
-  [style*="#1f2937"] { color: var(--color-text) !important; border-color: var(--color-text) !important; }
+/* Map old slate text to new muted */
+[style*="#4a5568"] {
+  color: var(--color-muted) !important;
+  border-color: var(--color-muted) !important;
+}
+
+[style*="#475467"],
+[style*="#667085"],
+[style*="#94a3b8"] {
+  color: var(--color-muted) !important;
+  border-color: var(--color-muted) !important;
+}
+
+/* Map common dark text to our base text color */
+[style*="#111827"],
+[style*="#101828"],
+[style*="#0f172a"],
+[style*="#1f2937"] {
+  color: var(--color-text) !important;
+  border-color: var(--color-text) !important;
+}
+
 /* Map old indigo/purple primary to new orange accent */
-[style*="#667eea"] { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
+[style*="#667eea"] {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
 [style*="#6a38f0"],
 [style*="#5b2ee6"],
 [style*="#7c3aed"],
-[style*="#764ba2"] { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
+[style*="#764ba2"] {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
 /* Additional Tailwind-esque blues and React blue */
-[style*="#6366f1"], /* indigo-500 */
-[style*="#4f46e5"], /* indigo-600 */
-[style*="#3b82f6"], /* blue-500 */
-[style*="#2563eb"], /* blue-600 */
-[style*="#1d4ed8"], /* blue-700 */
-[style*="#61dafb"]  /* react blue */ { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
+[style*="#6366f1"],
+/* indigo-500 */
+[style*="#4f46e5"],
+/* indigo-600 */
+[style*="#3b82f6"],
+/* blue-500 */
+[style*="#2563eb"],
+/* blue-600 */
+[style*="#1d4ed8"],
+/* blue-700 */
+[style*="#61dafb"]
+
+/* react blue */
+  {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
 /* Map more accent colors used in pages to orange */
-[style*="#0ea5e9"], /* sky-500 */
-[style*="#0284c7"], /* sky-600 */
-[style*="#14b8a6"], /* teal-500 */
-[style*="#8b5cf6"], /* violet-500 */
-[style*="#ef4444"], /* red-500 */
-[style*="#e11d48"], /* rose-600 */
-[style*="#00ffff"]  /* cyan */ { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
+[style*="#0ea5e9"],
+/* sky-500 */
+[style*="#0284c7"],
+/* sky-600 */
+[style*="#14b8a6"],
+/* teal-500 */
+[style*="#8b5cf6"],
+/* violet-500 */
+[style*="#ef4444"],
+/* red-500 */
+[style*="#e11d48"],
+/* rose-600 */
+[style*="#00ffff"]
+
+/* cyan */
+  {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
 /* Background remaps for common inline patterns */
 [style*="background"][style*="#667eea"],
 [style*="background"][style*="#6a38f0"],
@@ -190,13 +295,24 @@ section { background: transparent; }
 [style*="background"][style*="#8b5cf6"],
 [style*="background"][style*="#ef4444"],
 [style*="background"][style*="#e11d48"],
-[style*="background"][style*="#00ffff"] { background: var(--color-primary) !important; }
+[style*="background"][style*="#00ffff"] {
+  background: var(--color-primary) !important;
+}
+
 /* Transparent button hovers that switch to old primary */
 [style*="background: #667eea"],
-[style*="background:#667eea"] { background: var(--color-primary) !important; }
+[style*="background:#667eea"] {
+  background: var(--color-primary) !important;
+}
+
 /* Light gray borders remapped to peach */
 [style*="#eee"],
-[style*="#e5e7eb"] { border-color: var(--peach-200) !important; }
+[style*="#e5e7eb"] {
+  border-color: var(--peach-200) !important;
+}
 
 /* Focus visible outlines for accessibility */
-:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

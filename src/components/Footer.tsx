@@ -1,56 +1,61 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer: React.FC = () => {
   return (
     <footer className="footer">
-      {/* Community Section */}
-      <section className="footer-community-section">
-        <div className="footer-community-container">
-          <div className="footer-community-avatars">
-            <div className="footer-avatar-grid">
-              {[...Array(40)].map((_, index) => {
-                const hasImage = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35].includes(index);
-                const avatarEmojis = [
-                  <i className="fa-solid fa-user" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-user" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-laptop-code" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-flask" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-paintbrush" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-chalkboard" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-user" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-user" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-laptop-code" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-flask" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-paintbrush" aria-hidden="true"></i>,
-                  <i className="fa-solid fa-stethoscope" aria-hidden="true"></i>
-                ];
-                return (
-                  <div key={index} className={`footer-avatar-item ${hasImage ? 'has-image' : ''}`}>
-                    {hasImage && (
-                      <div className="footer-avatar-placeholder">
-                        <span className="footer-avatar-emoji">{avatarEmojis[index % avatarEmojis.length]}</span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="footer-community-text">
-              <h2 className="footer-community-title">
-                Join <span className="footer-highlight-happy">15 million</span> users
-              </h2>
-              <p className="footer-community-subtitle">who grow their business with Nexora</p>
+      {/* Main Footer Links */}
+      <section className="footer-main">
+        <div className="footer-main-container">
+          <div className="footer-brand">
+            <div className="footer-brand-title">Nexora</div>
+            <p className="footer-brand-description">
+              The world's easiest all-in-one management software. It's integrated, open-source, and loved by millions.
+            </p>
+            <div className="footer-social-links">
+              <a href="#" className="footer-social-link">TW</a>
+              <a href="#" className="footer-social-link">FB</a>
+              <a href="#" className="footer-social-link">LI</a>
+              <a href="#" className="footer-social-link">IG</a>
             </div>
           </div>
 
-          <div className="footer-testimonial-card">
-            <div className="footer-quote-icon"><i className="fa-solid fa-quote-left" aria-hidden="true"></i></div>
-            <div className="footer-testimonial-content">
-              <p className="footer-testimonial-text">
-                The processing time for accounting documents has been noticeably reduced, in certain cases even from 2 days to only 5 hours. As a result we can now focus on what matters: reporting and advising the client.
-              </p>
-            </div>
+          <div className="footer-links-group">
+            <h4 className="footer-links-title">Applications</h4>
+            <Link to="/apps/crm" className="footer-link">CRM</Link>
+            <Link to="/apps/sales" className="footer-link">Sales</Link>
+            <Link to="/apps/accounting" className="footer-link">Accounting</Link>
+            <Link to="/apps/inventory" className="footer-link">Inventory</Link>
+            <Link to="/choose-apps" className="footer-link">View all apps</Link>
+          </div>
+
+          <div className="footer-links-group">
+            <h4 className="footer-links-title">Community</h4>
+            <Link to="/blog" className="footer-link">Tutorials</Link>
+            <Link to="/community" className="footer-link">Forum</Link>
+            <Link to="/events" className="footer-link">Events</Link>
+            <Link to="/podcast" className="footer-link">Podcast</Link>
+          </div>
+
+          <div className="footer-links-group">
+            <h4 className="footer-links-title">Support</h4>
+            <Link to="/help" className="footer-link">Documentation</Link>
+            <Link to="/contact" className="footer-link">Contact Us</Link>
+            <Link to="/pricing" className="footer-link">Pricing</Link>
+            <Link to="/status" className="footer-link">System Status</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Bottom */}
+      <section className="footer-bottom">
+        <div className="footer-bottom-container">
+          <p className="footer-copyright">© 2026 Nexora Inc. All rights reserved.</p>
+          <div className="footer-bottom-links">
+            <Link to="/privacy" className="footer-bottom-link">Privacy Policy</Link>
+            <Link to="/terms" className="footer-bottom-link">Terms of Service</Link>
+            <Link to="/legal" className="footer-bottom-link">Legal</Link>
           </div>
         </div>
       </section>
