@@ -1442,6 +1442,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../styles/GetStarted.css";
 import { Select } from "antd";
+import { PRODUCTS, Product } from "../data/products";
 
 // App selection data
 type AppTile = { key: string; label: string; icon: string; color: string };
@@ -1774,9 +1775,22 @@ const INDUSTRIES = [
   "Others",
 ];
 
+interface ModuleOption {
+  value: string;
+  label: string;
+  // agar description ya aur fields chahiye to add kar sakte ho
+}
 export const GetStarted: React.FC = () => {
   const navigate = useNavigate();
   const [search] = useSearchParams();
+
+  const [searchParams] = useSearchParams();
+
+  // URL se product check karo
+  const selectedProductName = searchParams.get("product") || "";
+  const selectedProduct: Product | undefined = PRODUCTS.find(
+    (p) => p.name.toLowerCase() === selectedProductName.toLowerCase(),
+  );
 
   const [formData, setFormData] = useState({
     domain: "",
@@ -2005,6 +2019,23 @@ export const GetStarted: React.FC = () => {
 
   const isSelectionLimitReached = getSelectedAppsCount() >= MAX_APP_SELECTION;
 
+  const availablePlans: any = selectedProduct
+    ? selectedProduct.plans
+    : SUBSCRIPTIONS.map((id) => ({
+        id,
+        name: id.charAt(0).toUpperCase() + id.slice(1) + " Plan",
+      }));
+
+  const availableModules: ModuleOption[] = selectedProduct
+    ? selectedProduct.modules.map((mod) => ({
+        value: mod.id, // yahan id use kar rahe ho (tumhare PRODUCTS mein "id" hai)
+        label: mod.name, // display ke liye name
+      }))
+    : [
+        { value: "erp:material_management", label: "Material Management" },
+        { value: "erp:sales_management", label: "Sales Management" },
+        { value: "erp:production_management", label: "Production Management" },
+      ];
   return (
     <main className="getstarted-fullpage">
       {isCreatingAccount && (
@@ -2237,9 +2268,9 @@ export const GetStarted: React.FC = () => {
                         handleInputChange("subscription", e.target.value as any)
                       }
                     >
-                      {SUBSCRIPTIONS.map((p) => (
-                        <option key={p} value={p}>
-                          {p.charAt(0).toUpperCase() + p.slice(1)}
+                      {availablePlans.map((p: any) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
                         </option>
                       ))}
                     </select>
@@ -2295,7 +2326,7 @@ export const GetStarted: React.FC = () => {
                     onChange={(value: any) =>
                       handleInputChange("modules", value)
                     }
-                    options={AVAILABLE_MODULES}
+                    options={availableModules}
                     maxTagCount="responsive"
                     showSearch
                     allowClear

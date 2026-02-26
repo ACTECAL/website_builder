@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../styles/Home.css";
 import { Boxes, Globe, GraduationCap, ShoppingCart, Users } from "lucide-react";
+import { PRODUCTS } from "../data/products";
 
 const Typewriter: React.FC<{
   text: string;
@@ -422,7 +423,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Apps Grid Section */}
-      <section className="apps-section">
+      {/* <section className="apps-section">
         <div className="apps-container">
           <div className="apps-grid">
             {apps.map((app, index) => (
@@ -437,6 +438,37 @@ const Home: React.FC = () => {
                 </div>
                 <h3 className="app-name">{app.name}</h3>
               </div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+      <section className="apps-section">
+        <div className="apps-container">
+          <div className="apps-grid">
+            {PRODUCTS.map((product) => (
+              <Link
+                key={product.name}
+                to={`/get-started?product=${encodeURIComponent(product.name)}`}
+                className="app-card"
+                style={{ textDecoration: "none" }}
+              >
+                <div
+                  className="app-icon-wrapper"
+                  style={{
+                    background: `rgba(16, 185, 129, 0.1)`, // ERP ke green theme se match
+                    border: "2px solid #10b981",
+                  }}
+                >
+                  <i
+                    className={product.icon}
+                    style={{
+                      fontSize: "2.8rem",
+                      color: "#10b981",
+                    }}
+                  />
+                </div>
+                <h3 className="app-name">{product.name}</h3>
+              </Link>
             ))}
           </div>
         </div>
