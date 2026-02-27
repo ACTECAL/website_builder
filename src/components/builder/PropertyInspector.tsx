@@ -52,8 +52,9 @@ export const PropertyInspector: React.FC = () => {
 
                     {selectedBlock.type === 'text' && (
                         <div className="form-group">
-                            <label>Text</label>
+                            <label htmlFor="content-text">Text</label>
                             <textarea
+                                id="content-text"
                                 value={selectedBlock.content.text}
                                 onChange={(e) => handleContentChange('text', e.target.value)}
                                 rows={4}
@@ -64,24 +65,27 @@ export const PropertyInspector: React.FC = () => {
                     {selectedBlock.type === 'hero' && (
                         <>
                             <div className="form-group">
-                                <label>Title</label>
+                                <label htmlFor="content-title">Title</label>
                                 <input
+                                    id="content-title"
                                     type="text"
                                     value={selectedBlock.content.title}
                                     onChange={(e) => handleContentChange('title', e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Subtitle</label>
+                                <label htmlFor="content-subtitle">Subtitle</label>
                                 <input
+                                    id="content-subtitle"
                                     type="text"
                                     value={selectedBlock.content.subtitle}
                                     onChange={(e) => handleContentChange('subtitle', e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
-                                <label>CTA Label</label>
+                                <label htmlFor="content-cta">CTA Label</label>
                                 <input
+                                    id="content-cta"
                                     type="text"
                                     value={selectedBlock.content.cta}
                                     onChange={(e) => handleContentChange('cta', e.target.value)}
@@ -92,8 +96,9 @@ export const PropertyInspector: React.FC = () => {
 
                     {selectedBlock.type === 'button' && (
                         <div className="form-group">
-                            <label>Label</label>
+                            <label htmlFor="content-label">Label</label>
                             <input
+                                id="content-label"
                                 type="text"
                                 value={selectedBlock.content.label}
                                 onChange={(e) => handleContentChange('label', e.target.value)}
@@ -103,8 +108,9 @@ export const PropertyInspector: React.FC = () => {
 
                     {selectedBlock.type === 'image' && (
                         <div className="form-group">
-                            <label>Image URL</label>
+                            <label htmlFor="content-src">Image URL</label>
                             <input
+                                id="content-src"
                                 type="text"
                                 value={selectedBlock.content.src}
                                 onChange={(e) => handleContentChange('src', e.target.value)}
@@ -117,8 +123,9 @@ export const PropertyInspector: React.FC = () => {
                     <h4 style={{ fontSize: 13, textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: 12 }}>Styles</h4>
 
                     <div className="form-group">
-                        <label>Padding (px)</label>
+                        <label htmlFor="style-padding">Padding (px)</label>
                         <input
+                            id="style-padding"
                             type="range" min="0" max="100"
                             value={selectedBlock.styles?.padding || 0}
                             onChange={(e) => handleStyleChange('padding', Number(e.target.value))}
@@ -127,8 +134,9 @@ export const PropertyInspector: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Background</label>
+                        <label htmlFor="style-background">Background</label>
                         <input
+                            id="style-background"
                             type="text"
                             value={selectedBlock.styles?.background || 'transparent'}
                             onChange={(e) => handleStyleChange('background', e.target.value)}
@@ -136,8 +144,9 @@ export const PropertyInspector: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Text Color</label>
+                        <label htmlFor="style-color">Text Color</label>
                         <input
+                            id="style-color"
                             type="color"
                             value={selectedBlock.styles?.color || '#000000'}
                             onChange={(e) => handleStyleChange('color', e.target.value)}
@@ -146,8 +155,9 @@ export const PropertyInspector: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Text Align</label>
+                        <label htmlFor="style-textAlign">Text Align</label>
                         <select
+                            id="style-textAlign"
                             value={selectedBlock.styles?.textAlign || 'left'}
                             onChange={(e) => handleStyleChange('textAlign', e.target.value)}
                         >

@@ -31,12 +31,6 @@ const Partners: React.FC = () => {
     'Sandbox environments, technical training, and certification badges'
   ];
 
-  const steps = [
-    'Apply with your company details and customer focus.',
-    'Meet with the partner team to design a joint success plan.',
-    'Launch with enablement assets, training, and co-branded marketing.'
-  ];
-
   return (
     <main>
       <PageHero

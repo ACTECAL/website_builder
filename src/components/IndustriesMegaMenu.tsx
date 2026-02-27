@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/IndustriesMegaMenu.css';
 
 interface IndustryCategory {
     title: string;
@@ -61,54 +62,24 @@ export const IndustriesMegaMenu: React.FC<{
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                right: 0,
-                backgroundColor: '#ffffff',
-                borderBottom: '1px solid rgba(0,0,0,0.06)',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
-                padding: '32px 0 0',
-                zIndex: 999,
-                cursor: 'default'
-            }}
+            className="industries-mega-menu"
         >
-            <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    columnGap: '48px',
-                    rowGap: '40px',
-                    marginBottom: '32px'
-                }}>
+            <div className="industries-mega-menu-content">
+                <div className="industries-grid">
                     {INDUSTRIES_DATA.map((category) => (
-                        <div key={category.title} style={{ display: 'flex', flexDirection: 'column' }}>
-                            <h4 style={{
+                        <div key={category.title} className="industry-category">
+                            <h4 className="industry-category-title" style={{
                                 color: category.color,
-                                fontSize: '0.875rem',
-                                fontWeight: 700,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.5px',
-                                margin: '0 0 12px 0',
-                                paddingBottom: '8px',
                                 borderBottom: `1px solid ${category.color}33`
                             }}>
                                 {category.title}
                             </h4>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <ul className="industry-items-list">
                                 {category.items.map(item => (
                                     <li key={item}>
                                         <Link
                                             to={`/industries/${item.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-')}`}
-                                            style={{
-                                                textDecoration: 'none',
-                                                color: '#4B5563',
-                                                fontSize: '0.85rem',
-                                                transition: 'color 0.15s ease'
-                                            }}
-                                            onMouseEnter={(e) => (e.currentTarget.style.color = '#111827')}
-                                            onMouseLeave={(e) => (e.currentTarget.style.color = '#4B5563')}
+                                            className="industry-item-link"
                                         >
                                             {item}
                                         </Link>
@@ -120,23 +91,10 @@ export const IndustriesMegaMenu: React.FC<{
                 </div>
             </div>
 
-            <div style={{
-                borderTop: '1px solid rgba(0,0,0,0.06)',
-                backgroundColor: '#fdfdfd',
-                padding: '16px 24px',
-                textAlign: 'center'
-            }}>
+            <div className="industries-mega-menu-footer">
                 <Link
                     to="/industries"
-                    style={{
-                        textDecoration: 'none',
-                        color: '#4B5563',
-                        fontSize: '0.9rem',
-                        fontWeight: 600,
-                        transition: 'color 0.15s ease'
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#111827')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#4B5563')}
+                    className="browse-all-industries-link"
                 >
                     Browse all Industries
                 </Link>

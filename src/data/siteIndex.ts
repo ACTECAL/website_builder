@@ -76,7 +76,6 @@ export function searchSite(query: string): Array<{ doc: SiteDoc; score: number }
   if (!q) return [];
   const tokens = q.split(/\s+/).filter(Boolean);
   const scored = siteIndex.map(doc => {
-    const hay = `${doc.title} ${doc.description ?? ''} ${doc.category} ${(doc.tags ?? []).join(' ')}`.toLowerCase();
     let score = 0;
     for (const t of tokens) {
       if (doc.title.toLowerCase().includes(t)) score += 3;

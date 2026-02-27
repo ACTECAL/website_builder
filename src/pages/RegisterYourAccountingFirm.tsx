@@ -22,7 +22,7 @@ export const RegisterYourAccountingFirm: React.FC = () => {
             <li>Get listed in the directory and receive client leads.</li>
           </ol>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
-            <a href="#" className="btn btn-primary">Start registration</a>
+            <a href="#!" className="btn btn-primary">Start registration</a>
             <Link to="/become-a-partner" className="btn btn-outline-primary" reloadDocument>Partner program</Link>
           </div>
         </div>

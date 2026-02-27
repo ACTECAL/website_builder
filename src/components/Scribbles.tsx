@@ -60,7 +60,10 @@ export const HighlightMarker: React.FC<HighlightMarkerProps> = ({ children, colo
         aria-hidden
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
           transform: 'skewX(-10deg) rotate(-1deg)',
           background: color,
           borderRadius: 6,
@@ -90,6 +93,12 @@ export const ArrowNote: React.FC<ArrowNoteProps> = ({ text, color = '#7b5aa6', s
   );
 };
 
-export default {};
+const Scribbles = {
+  Underline: ScribbleUnderline,
+  Highlight: HighlightMarker,
+  Note: ArrowNote
+};
+
+export default Scribbles;
 
 

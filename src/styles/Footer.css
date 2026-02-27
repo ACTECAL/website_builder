@@ -6,7 +6,7 @@
 
 /* Community Section */
 .footer-community-section {
-  padding: 6rem 0;
+  padding: 3rem 0;
   background-color: #f9fafb;
   position: relative;
   overflow: hidden;
@@ -20,8 +20,8 @@
 
 .footer-community-avatars {
   position: relative;
-  margin-bottom: 4rem;
-  min-height: 400px;
+  margin-bottom: 2rem;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,7 +142,7 @@
 
 /* Newsletter Section */
 .footer-newsletter {
-  padding: 5rem 0;
+  padding: 2.5rem 0;
   background-color: #f8f9fa;
   color: #212529;
 }
@@ -220,7 +220,7 @@
 
 /* Features Section */
 .footer-features {
-  padding: 4rem 0;
+  padding: 2rem 0;
   background-color: #ffffff;
 }
 
@@ -262,7 +262,7 @@
 
 /* Main Footer */
 .footer-main {
-  padding: 4rem 0 2rem;
+  padding: 2rem 0 1rem;
   background-color: #f8f9fa;
   color: #212529;
 }
@@ -344,7 +344,7 @@
 
 /* Footer Bottom */
 .footer-bottom {
-  padding: 2rem 0;
+  padding: 1rem 0;
   background-color: #e9ecef;
   border-top: 1px solid #dee2e6;
 }

@@ -4,7 +4,7 @@ import { industryCategories } from '../data/industries';
 
 export const Solutions: React.FC = () => {
   return (
-        <main style={{ padding: '80px 24px' }}>
+    <main style={{ padding: '40px 24px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{
           display: 'grid',
@@ -46,7 +46,7 @@ export const Solutions: React.FC = () => {
             </div>
           ))}
         </div>
-        <div style={{ textAlign: 'center', marginTop: '80px' }}>
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
           <Link
             to="/industries"
             className="btn btn-primary"

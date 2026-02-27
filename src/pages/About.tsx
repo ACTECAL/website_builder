@@ -1,6 +1,5 @@
 import React from 'react';
 import { PageHero } from '../components/PageHero';
-import { ScribbleUnderline } from '../components/Scribbles';
 import { GothicH2 } from '../components/GothicHeading';
 import { DrippingText } from '../components/DrippingText';
 import { AnimatedBackground } from '../components/AnimatedBackground';
@@ -21,7 +20,7 @@ export const About: React.FC = () => {
       </AnimatedBackground>
 
       <AnimatedBackground variant="particles" intensity="low">
-        <section style={{ padding: '80px 24px' }}>
+        <section style={{ padding: '40px 24px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <FloatingElement direction="up" intensity="low" delay={0.2}>
               <CreativeCard
@@ -32,7 +31,7 @@ export const About: React.FC = () => {
                   background: 'rgba(255, 255, 255, 0.1)',
                   backdropFilter: 'blur(20px)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
-                  marginBottom: '60px'
+                  marginBottom: '30px'
                 }}
               >
                 <p style={{
@@ -50,10 +49,10 @@ export const About: React.FC = () => {
             </FloatingElement>
 
             <FloatingElement direction="up" intensity="low" delay={0.4}>
-              <GothicH2 text="Our Story" style={{ marginTop: 60, fontSize: '2.5rem', textAlign: 'center' }} />
+              <GothicH2 text="Our Story" style={{ marginTop: 30, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
 
-            <CardGrid columns={1} gap={32} style={{ marginTop: '40px' }}>
+            <CardGrid columns={1} gap={32} style={{ marginTop: '20px' }}>
               <FloatingElement direction="up" intensity="low" delay={0.6}>
                 <CreativeCard variant="minimal" hoverEffect="lift" size="large">
                   <DrippingText
@@ -83,10 +82,10 @@ export const About: React.FC = () => {
             </CardGrid>
 
             <FloatingElement direction="up" intensity="low" delay={1.2}>
-              <GothicH2 text="Our Principles" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
+              <GothicH2 text="Our Principles" style={{ marginTop: 40, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
 
-            <CardGrid columns={2} gap={32} style={{ marginTop: '40px' }}>
+            <CardGrid columns={2} gap={32} style={{ marginTop: '20px' }}>
               {[
                 {
                   title: "Modular first",
@@ -156,7 +155,7 @@ export const About: React.FC = () => {
             </CardGrid>
 
             <FloatingElement direction="up" intensity="low" delay={2.2}>
-              <GothicH2 text="Our Impact" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
+              <GothicH2 text="Our Impact" style={{ marginTop: 40, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
 
             <FloatingElement direction="up" intensity="low" delay={2.4}>
@@ -168,7 +167,7 @@ export const About: React.FC = () => {
                   background: 'rgba(255, 255, 255, 0.1)',
                   backdropFilter: 'blur(20px)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
-                  marginTop: '40px'
+                  marginTop: '20px'
                 }}
               >
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginBottom: '32px' }}>
@@ -198,7 +197,7 @@ export const About: React.FC = () => {
             </FloatingElement>
 
             <FloatingElement direction="up" intensity="low" delay={2.6}>
-              <GothicH2 text="Closing Note" style={{ marginTop: 80, fontSize: '2.5rem', textAlign: 'center' }} />
+              <GothicH2 text="Closing Note" style={{ marginTop: 40, fontSize: '2.5rem', textAlign: 'center' }} />
             </FloatingElement>
 
             <FloatingElement direction="up" intensity="low" delay={2.8}>
@@ -210,7 +209,7 @@ export const About: React.FC = () => {
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   color: 'white',
                   textAlign: 'center',
-                  marginTop: '40px'
+                  marginTop: '20px'
                 }}
               >
                 <p style={{

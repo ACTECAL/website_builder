@@ -39,14 +39,14 @@ export const SupportLayout: React.FC<SupportLayoutProps> = ({
 
   return (
     <main style={{ background: '#fff5eb', minHeight: '100vh', color: baseTextColor }}>
-      <div style={{ maxWidth: 1040, margin: '0 auto', padding: isMobile ? '64px 20px 96px' : '88px 24px 120px' }}>
+      <div style={{ maxWidth: 1040, margin: '0 auto', padding: isMobile ? '32px 20px 48px' : '44px 24px 60px' }}>
         <header
           style={{
             display: 'grid',
             gap: isMobile ? 28 : 40,
             gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(280px, 360px)',
             alignItems: 'center',
-            marginBottom: isMobile ? 48 : 64
+            marginBottom: isMobile ? 24 : 32
           }}
         >
           <h1
@@ -75,7 +75,7 @@ export const SupportLayout: React.FC<SupportLayoutProps> = ({
         {intro && (
           <p
             style={{
-              margin: '0 0 36px',
+              margin: '0 0 20px',
               maxWidth: 720,
               color: '#4b5563',
               fontSize: '1.05rem',
@@ -91,7 +91,7 @@ export const SupportLayout: React.FC<SupportLayoutProps> = ({
             display: 'grid',
             gap: 12,
             gridTemplateColumns: `repeat(${isMobile ? 2 : 4}, minmax(0, 1fr))`,
-            marginBottom: 48
+            marginBottom: 24
           }}
         >
           {galleryImages.map((image, index) => (

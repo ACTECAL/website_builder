@@ -13,9 +13,9 @@ export const AllIndustries: React.FC = () => {
   })).filter(category => category.industries.length > 0);
 
   return (
-    <main style={{ padding: '60px 24px' }}>
+    <main style={{ padding: '30px 24px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
           <h1 style={{ fontSize: '3rem', fontWeight: 700 }}>Choose your Industry</h1>
           <div style={{ position: 'relative', maxWidth: '600px', margin: '24px auto' }}>
             <input
@@ -36,7 +36,7 @@ export const AllIndustries: React.FC = () => {
         </div>
 
         {filteredCategories.map(category => (
-          <div key={category.name} style={{ marginBottom: '60px' }}>
+          <div key={category.name} style={{ marginBottom: '30px' }}>
             <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '24px' }}>{category.name}</h2>
             <div style={{
               display: 'grid',

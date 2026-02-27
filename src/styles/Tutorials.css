@@ -1,0 +1,54 @@
+.tutorials-section {
+    padding: 10px 24px 60px;
+}
+
+.tutorials-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.back-link-container {
+    margin-bottom: 12px;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #667eea;
+}
+
+.tutorials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.tutorial-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.tutorial-card-title {
+    margin: 0 0 8px;
+}
+
+.tutorial-card-desc {
+    margin: 0 0 12px;
+    color: #4a5568;
+}
+
+.tutorials-heading {
+    margin: 0 0 16px;
+}
+
+.featured-tutorials-heading {
+    margin: 24px 0 16px;
+}
+
+.tutorials-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}

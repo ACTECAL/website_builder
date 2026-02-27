@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import SiteLayout from './components/SiteLayout';
 import Home from './pages/Home';
 import Footer from './components/Footer';
@@ -65,7 +65,6 @@ import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
 import { Careers } from './pages/Careers';
 import { Docs } from './pages/Docs';
-import { Support } from './pages/Support';
 import { NotFound } from './pages/NotFound';
 import { Billing } from './pages/Billing';
 import { Plan } from './pages/Plan';

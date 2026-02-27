@@ -23,9 +23,6 @@ type BlockType = 'hero' | 'header' | 'features' | 'footer' | 'text' | 'image' | 
 
 const AIWebsiteBuilder: React.FC = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [isPaletteOpen, setIsPaletteOpen] = useState(false);
-  const [isInspectorOpen, setIsInspectorOpen] = useState(false);
   const [chatState, setChatState] = useState<ChatState>({
     messages: [
       { role: 'assistant', text: 'Hello! I\'m your AI assistant. I can help you build a website by adding components, styling, and functionality. What would you like to create?', time: '10:00 AM' }
@@ -33,8 +30,6 @@ const AIWebsiteBuilder: React.FC = () => {
     inputValue: '',
     isLoading: false
   });
-  const [showCodeReview, setShowCodeReview] = useState(false);
-  const [activeCodeTab, setActiveCodeTab] = useState<'html' | 'css' | 'js'>('html');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -65,16 +60,6 @@ const AIWebsiteBuilder: React.FC = () => {
     setBlocks([...blocks, newBlock]);
   };
 
-  const updateBlock = (id: string, content: any) => {
-    setBlocks(blocks.map(block => 
-      block.id === id ? { ...block, content } : block
-    ));
-  };
-
-  const deleteBlock = (id: string) => {
-    setBlocks(blocks.filter(block => block.id !== id));
-    if (selectedId === id) setSelectedId(null);
-  };
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +85,7 @@ const AIWebsiteBuilder: React.FC = () => {
         text: 'I\'ll help you with that! Let me add the appropriate components to your website.',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      
+
       setChatState(prev => ({
         ...prev,
         messages: [...prev.messages, aiResponse],
@@ -196,7 +181,7 @@ const AIWebsiteBuilder: React.FC = () => {
     }
   };
 
-  const selectedBlock = blocks.find((b: Block) => b.id === selectedId) || null;
+  // const selectedBlock = blocks.find((b: Block) => b.id === selectedId) || null;
 
   return (
     <>
@@ -267,6 +252,7 @@ const AIWebsiteBuilder: React.FC = () => {
         .lovable-left-panel {
           width: 320px;
           background: rgba(17, 24, 39, 0.95);
+          -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
           border-right: 1px solid rgba(255, 255, 255, 0.1);
           display: flex;
@@ -276,6 +262,7 @@ const AIWebsiteBuilder: React.FC = () => {
         .lovable-center {
           flex: 1;
           background: rgba(15, 15, 30, 0.8);
+          -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
           display: flex;
           flex-direction: column;
@@ -284,6 +271,7 @@ const AIWebsiteBuilder: React.FC = () => {
         .lovable-right-panel {
           width: 380px;
           background: rgba(17, 24, 39, 0.95);
+          -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
           border-left: 1px solid rgba(255, 255, 255, 0.1);
           display: flex;
@@ -292,6 +280,7 @@ const AIWebsiteBuilder: React.FC = () => {
 
         .lovable-header {
           background: rgba(17, 24, 39, 0.95);
+          -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding: 16px 24px;
@@ -318,6 +307,7 @@ const AIWebsiteBuilder: React.FC = () => {
 
         .lovable-toolbar {
           background: rgba(17, 24, 39, 0.95);
+          -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding: 12px 20px;
@@ -410,6 +400,7 @@ const AIWebsiteBuilder: React.FC = () => {
         .lovable-block-item {
           background: rgba(255, 255, 255, 0.05);
           border: 1px solid rgba(255, 255, 255, 0.1);
+          -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
           border-radius: 16px;
           padding: 16px;
@@ -441,6 +432,7 @@ const AIWebsiteBuilder: React.FC = () => {
 
         .lovable-message {
           background: rgba(255, 255, 255, 0.1);
+          -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 16px;
@@ -462,6 +454,7 @@ const AIWebsiteBuilder: React.FC = () => {
         .lovable-input {
           background: rgba(255, 255, 255, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
+          -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
           color: white;
           border-radius: 12px;
@@ -484,6 +477,7 @@ const AIWebsiteBuilder: React.FC = () => {
         .lovable-quick-action {
           background: rgba(255, 255, 255, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
+          -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
           border-radius: 20px;
           padding: 8px 16px;
@@ -623,7 +617,7 @@ const AIWebsiteBuilder: React.FC = () => {
           box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
       `}</style>
-      
+
       <div className="lovable-main">
         <div className="lovable-content">
           {/* Left Panel - Block Library */}
@@ -696,7 +690,7 @@ const AIWebsiteBuilder: React.FC = () => {
                       <div className="ai-message-bubble">
                         <div className="ai-message-text">
                           {message.text.includes('**') ? (
-                            message.text.split('**').map((part: string, index: number) => 
+                            message.text.split('**').map((part: string, index: number) =>
                               index % 2 === 1 ? <strong key={index}>{part}</strong> : <span key={index}>{part}</span>
                             )
                           ) : (
@@ -715,16 +709,16 @@ const AIWebsiteBuilder: React.FC = () => {
                   type="text"
                   placeholder="Type your message..."
                   className="lovable-input"
-                  id="ai-chat-input" 
+                  id="ai-chat-input"
                   value={chatState.inputValue}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setChatState(prev => ({ ...prev, inputValue: e.target.value }))
                   }
-                  onKeyPress={(e: React.KeyboardEvent) => 
+                  onKeyPress={(e: React.KeyboardEvent) =>
                     e.key === 'Enter' && handleSendMessage(e)
                   }
                 />
-                <button 
+                <button
                   className="lovable-send-btn"
                   onClick={(e) => handleSendMessage(e as unknown as React.FormEvent)}
                 >

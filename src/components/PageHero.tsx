@@ -1,5 +1,4 @@
 import React from 'react';
-import { HighlightMarker, ScribbleUnderline } from './Scribbles';
 import { GothicH1 } from './GothicHeading';
 
 type Props = {
@@ -17,11 +16,11 @@ export const PageHero: React.FC<Props> = ({ title, subtitle, imageUrl, icon, emp
       const [first, ...rest] = title.split(' ');
       return (
         <div style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', margin: 0 }}>
-          <GothicH1 
+          <GothicH1
             text={first}
             style={{ display: 'inline-block', marginRight: '0.5em', color: textColor }}
           />
-          <GothicH1 
+          <GothicH1
             text={rest.join(' ')}
             style={{ display: 'inline-block', color: textColor }}
           />
@@ -30,14 +29,14 @@ export const PageHero: React.FC<Props> = ({ title, subtitle, imageUrl, icon, emp
     }
     if (emphasize === 'scribble') {
       return (
-        <GothicH1 
+        <GothicH1
           text={title}
           style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', margin: 0, color: textColor }}
         />
       );
     }
     return (
-      <GothicH1 
+      <GothicH1
         text={title}
         style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', margin: 0, color: textColor }}
       />
@@ -45,7 +44,7 @@ export const PageHero: React.FC<Props> = ({ title, subtitle, imageUrl, icon, emp
   };
 
   return (
-    <section style={{ padding: '40px 24px' }}>
+    <section style={{ padding: '20px 24px' }}>
       <div style={{
         maxWidth: 1100,
         margin: '0 auto',
@@ -57,7 +56,7 @@ export const PageHero: React.FC<Props> = ({ title, subtitle, imageUrl, icon, emp
         <div>
           {renderTitle()}
           {subtitle && (
-            <p style={{ color: textColor, marginTop: 10, lineHeight: 1.7 }}>{subtitle}</p>
+            <p style={{ color: textColor, marginTop: 4, lineHeight: 1.7 }}>{subtitle}</p>
           )}
         </div>
         {(imageUrl || icon) && (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScribbleUnderline, HighlightMarker, ArrowNote } from './Scribbles';
+import { ArrowNote } from './Scribbles';
 import { GothicH2, GothicH3, GothicH4 } from './GothicHeading';
 import { DrippingText } from './DrippingText';
 
@@ -37,32 +37,32 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
   };
 
   return (
-    <section style={{ 
-      padding: '72px 24px', 
+    <section style={{
+      padding: '40px 24px',
       background: 'var(--surface)'
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 60 }}>
-          <GothicH2 
+        <div style={{ textAlign: 'center', marginBottom: 30 }}>
+          <GothicH2
             text="Simple Transparent Pricing"
-            style={{ 
-              fontSize: 'clamp(2rem, 4vw, 3rem)', 
+            style={{
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
               margin: '0 0 20px'
             }}
           />
-          <DrippingText 
+          <DrippingText
             text="Choose the perfect plan for your team. All plans include a 14-day free trial."
-            style={{ 
-              fontSize: '1.2rem', 
+            style={{
+              fontSize: '1.2rem',
               maxWidth: 600,
-              margin: '0 auto 40px',
+              margin: '0 auto 20px',
               lineHeight: 1.6,
               color: '#4a5568'
             }}
           />
 
           {/* Billing toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 20 }}>
             <div style={{
               display: 'inline-flex',
               background: 'white',
@@ -104,10 +104,10 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
           </div>
         </div>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-          gap: 30,
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: 20,
           alignItems: 'start'
         }}>
           {tiers.map((tier, idx) => {
@@ -116,10 +116,10 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
             const yearlyDisplay = getYearlyTotal(baseMonthly);
 
             return (
-              <div key={idx} style={{ 
+              <div key={idx} style={{
                 background: 'white',
                 borderRadius: 20,
-                padding: 40,
+                padding: 24,
                 boxShadow: '0 16px 50px rgba(0,0,0,0.08)',
                 border: tier.popular ? '2px solid var(--color-primary)' : '1px solid rgba(0,0,0,0.06)',
                 position: 'relative',
@@ -131,7 +131,7 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 16px 50px rgba(0,0,0,0.08)';
               }}>
-                
+
                 {tier.popular && (
                   <div style={{
                     position: 'absolute',
@@ -151,15 +151,15 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                   </div>
                 )}
 
-                <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                  <GothicH3 
+                <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                  <GothicH3
                     text={tier.name}
-                    style={{ 
+                    style={{
                       fontSize: '1.5rem',
                       margin: '0 0 12px'
                     }}
                   />
-                  
+
                   <div style={{ marginBottom: 8 }}>
                     <span style={{
                       fontSize: '3rem',
@@ -182,7 +182,7 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                       <ArrowNote text={`Save 20% → ${yearlyDisplay}/yr`} style={{ position: 'absolute', right: -20, top: -20 }} />
                     </div>
                   )}
-                  
+
                   <p style={{
                     color: '#4a5568',
                     lineHeight: 1.6,
@@ -192,13 +192,13 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                   </p>
                 </div>
 
-                <ul style={{ 
-                  margin: '0 0 32px', 
+                <ul style={{
+                  margin: '0 0 32px',
                   paddingLeft: 0,
                   listStyle: 'none'
                 }}>
                   {tier.features.map((feature, featureIdx) => (
-                    <li key={featureIdx} style={{ 
+                    <li key={featureIdx} style={{
                       marginBottom: 16,
                       display: 'flex',
                       alignItems: 'center',
@@ -249,24 +249,24 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
 
         {/* FAQ section */}
         <div style={{
-          marginTop: 80,
+          marginTop: 40,
           textAlign: 'center'
         }}>
-          <GothicH3 
+          <GothicH3
             text="Frequently Asked Questions"
             style={{
               fontSize: '1.5rem',
               margin: '0 0 16px'
             }}
           />
-          <DrippingText 
+          <DrippingText
             text="Can't find what you're looking for? Contact our sales team"
             style={{
               margin: '0 0 32px',
               color: '#4a5568'
             }}
           />
-          
+
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -286,7 +286,7 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                 boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
                 textAlign: 'left'
               }}>
-                <GothicH4 
+                <GothicH4
                   text={faq.q}
                   style={{
                     fontSize: '1rem',

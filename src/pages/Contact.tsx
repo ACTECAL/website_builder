@@ -41,7 +41,7 @@ export const Contact: React.FC = () => {
     borderRadius: 26,
     border: '1px solid rgba(251, 146, 60, 0.3)',
     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 247, 237, 0.92) 100%)',
-    padding: '30px 32px',
+    padding: '20px 24px',
     display: 'grid',
     gap: 18,
     boxShadow: '0 28px 60px rgba(249, 115, 22, 0.14)'
@@ -55,7 +55,7 @@ export const Contact: React.FC = () => {
       <div
         style={{
           display: 'grid',
-          gap: 28,
+          gap: 20,
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))'
         }}
       >
@@ -66,7 +66,7 @@ export const Contact: React.FC = () => {
             borderRadius: 30,
             border: '1px solid rgba(251, 146, 60, 0.4)',
             background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 244, 229, 0.92) 100%)',
-            padding: '34px 36px',
+            padding: '24px 28px',
             boxShadow: '0 40px 85px rgba(249, 115, 22, 0.18)'
           }}
           onSubmit={(e) => e.preventDefault()}

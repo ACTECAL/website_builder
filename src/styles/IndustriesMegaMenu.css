@@ -1,0 +1,79 @@
+.industries-mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    padding: 32px 0 0;
+    z-index: 999;
+    cursor: default;
+}
+
+.industries-mega-menu-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.industries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 48px;
+    row-gap: 40px;
+    margin-bottom: 32px;
+}
+
+.industry-category {
+    display: flex;
+    flex-direction: column;
+}
+
+.industry-category-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+}
+
+.industry-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.industry-item-link {
+    text-decoration: none;
+    color: #4B5563;
+    font-size: 0.85rem;
+    transition: color 0.15s ease;
+}
+
+.industry-item-link:hover {
+    color: #111827;
+}
+
+.industries-mega-menu-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    background-color: #fdfdfd;
+    padding: 16px 24px;
+    text-align: center;
+}
+
+.browse-all-industries-link {
+    text-decoration: none;
+    color: #4B5563;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.browse-all-industries-link:hover {
+    color: #111827;
+}

@@ -365,101 +365,134 @@ export const ChooseApps: React.FC = () => {
   const count = selected.length;
 
   return (
-    <main className="choose-apps-page">
-      <section className="section">
-        <div className="container" style={{ maxWidth: 1120 }}>
-          <header className="choose-head">
-            <h1 className="choose-title">
-              <span>Choose your </span>
-              <span className="choose-title-accent">Apps</span>
-            </h1>
-            <p className="choose-subtitle">
-              Free instant access. No credit card required.
-            </p>
-          </header>
-          <div className="choose-tabs-wrapper">
-            <div className="choose-tabs">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.name}
-                  className={`choose-tab ${activeCategory === cat.name ? "tab-active" : ""}`}
-                  onClick={() => setActiveCategory(cat.name)}
-                >
-                  {cat.name}
-                </button>
-              ))}
-            </div>
+    <div className="choose-apps-page auth-page">
+      {/* Sidebar Section - Replicating Login Aesthetic */}
+      <div className="auth-sidebar">
+        <div className="auth-sidebar-content">
+          <div className="auth-glass-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>
+            <span>Actyx Suite</span>
           </div>
 
-          <div className={`choose-layout ${count === 0 ? "no-aside" : ""}`}>
-            <div className="choose-main">
-              {CATEGORIES.filter(cat => cat.name === activeCategory).map((cat) => (
-                <div key={cat.name} className="choose-cat">
-                  <div className="choose-grid">
-                    {cat.tiles.map((t) => {
-                      const isSel = selected.includes(t.key);
-                      return (
-                        <div
-                          key={t.key}
-                          className={`choose-tile ${isSel ? "tile-selected" : ""
-                            }`}
-                          role="button"
-                          tabIndex={0}
-                          aria-pressed={isSel}
-                          data-key={t.key}
-                          onClick={() => toggle(t.key)}
-                          onKeyDown={onKeyToggle}
-                        >
-                          <div
-                            className="choose-icon"
-                            style={{ color: t.color }}
-                          >
-                            <i className={t.icon} aria-hidden="true"></i>
-                          </div>
-                          <div className="choose-label">{t.label}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+          <h2 className="auth-sidebar-title">
+            Unlock the power of integrated applications.
+          </h2>
+
+          <div className="auth-feature-list">
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              </div>
+              <div className="auth-feature-text">Everything you need, in one place</div>
             </div>
 
-            {count > 0 && (
-              <aside className="choose-aside">
-                <div className="choose-selected-header">
-                  {count} {count === 1 ? "App" : "Apps"} selected
-                </div>
-                <div className="choose-selected-list">
-                  {selected.map((key) => {
-                    const t = tilesMap.get(key);
-                    if (!t) return null;
-                    return (
-                      <div key={key} className="choose-selected-item">
-                        <div
-                          className="choose-selected-icon"
-                          style={{ color: t.color }}
-                        >
-                          <i className={t.icon} aria-hidden="true"></i>
-                        </div>
-                        <div className="choose-selected-label">{t.label}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="choose-info">
-                  <strong>Free</strong>, with <strong>unlimited</strong> users,{" "}
-                  <strong>forever</strong>.
-                </div>
-                <button className="continue-btn" onClick={onContinue}>
-                  Continue
-                </button>
-              </aside>
-            )}
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              </div>
+              <div className="auth-feature-text">Zero cost, unlimited users forever</div>
+            </div>
+
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m13 2-2 10h9L7 22l2-10H1L13 2z" /></svg>
+              </div>
+              <div className="auth-feature-text">Instant cloud deployment</div>
+            </div>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="choose-apps-main-container">
+        <div className="choose-apps-scroll-area">
+          <div className="choose-apps-box">
+            <header className="choose-head">
+              <h1 className="choose-title">Choose your Apps</h1>
+              <p className="choose-subtitle">Start your journey with a few simple clicks.</p>
+            </header>
+
+            <div className="choose-tabs-wrapper">
+              <div className="choose-tabs">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.name}
+                    className={`choose-tab ${activeCategory === cat.name ? "tab-active" : ""}`}
+                    onClick={() => setActiveCategory(cat.name)}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="choose-layout">
+              <div className="choose-main">
+                {CATEGORIES.filter(cat => cat.name === activeCategory).map((cat) => (
+                  <div key={cat.name} className="choose-cat">
+                    <div className="choose-grid">
+                      {cat.tiles.map((t) => {
+                        const isSel = selected.includes(t.key);
+                        return (
+                          <div
+                            key={t.key}
+                            className={`choose-tile ${isSel ? "tile-selected" : ""}`}
+                            role="button"
+                            tabIndex={0}
+                            aria-pressed={isSel ? "true" : "false"}
+                            data-key={t.key}
+                            onClick={() => toggle(t.key)}
+                            onKeyDown={onKeyToggle}
+                          >
+                            <div className="choose-icon" style={{ borderColor: isSel ? t.color : '#e2e8f0' }}>
+                              <i className={t.icon} style={{ color: t.color }} aria-hidden="true"></i>
+                            </div>
+                            <div className="choose-label">{t.label}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Selection Panel */}
+        {count > 0 && (
+          <aside className="choose-aside">
+            <div className="choose-selected-header">
+              <span>{count} {count === 1 ? "App" : "Apps"}</span>
+              <span style={{ fontSize: '12px', opacity: 0.7 }}>Ready to go</span>
+            </div>
+
+            <div className="choose-selected-list">
+              {selected.map((key) => {
+                const t = tilesMap.get(key);
+                if (!t) return null;
+                return (
+                  <div key={key} className="choose-selected-item">
+                    <div className="choose-selected-icon" style={{ color: t.color }}>
+                      <i className={t.icon} aria-hidden="true"></i>
+                    </div>
+                    <div className="choose-selected-label">{t.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="choose-info">
+              <strong>Free forever</strong> with unlimited users and storage.
+            </div>
+
+            <button className="continue-btn" onClick={onContinue}>
+              Continue →
+            </button>
+          </aside>
+        )}
+      </div>
+    </div>
   );
 };
 

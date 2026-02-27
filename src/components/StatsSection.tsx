@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { GothicH2, GothicH3 } from './GothicHeading';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { GothicH2 } from './GothicHeading';
 import { DrippingText } from './DrippingText';
 
 type Stat = {
@@ -28,27 +28,7 @@ export const StatsSection: React.FC<Props> = ({
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-            animateCounters();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
-  const animateCounters = () => {
+  const animateCounters = useCallback(() => {
     const duration = 2000; // 2 seconds
     const steps = 60;
     const stepDuration = duration / steps;
@@ -68,7 +48,27 @@ export const StatsSection: React.FC<Props> = ({
         setAnimatedStats(stats);
       }
     }, stepDuration);
-  };
+  }, [stats]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            animateCounters();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated, animateCounters]);
 
   return (
     <section
@@ -88,7 +88,7 @@ export const StatsSection: React.FC<Props> = ({
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'url("data:image/svg+xml,%3Csvg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M60 60c0-33.137 26.863-60 60-60v120c-33.137 0-60-26.863-60-60z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+        background: 'url("data:image/svg+xml,%3Csvg width=\'120\' height=\'120\' viewBox=\'0 0 120 120\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M60 60c0-33.137 26.863-60 60-60v120c-33.137 0-60-26.863-60-60z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
         opacity: 0.3
       }} />
 
@@ -170,9 +170,9 @@ export const StatsSection: React.FC<Props> = ({
             </div>
           ))}
         </div>
-
-
       </div>
     </section>
   );
 };
+
+export default StatsSection;

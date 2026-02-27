@@ -157,7 +157,7 @@ export const BuilderChatPanel: React.FC = () => {
                         disabled={loading}
                     />
                     <button className="action-btn send-btn" onClick={handleSendMessage} disabled={loading || !q.trim()}>
-                        {loading ? <div className="dot" style={{ background: 'white' }} /> : <Send size={16} />}
+                        {loading ? <div className="typing-dot-white" /> : <Send size={16} />}
                     </button>
                 </div>
             </div>

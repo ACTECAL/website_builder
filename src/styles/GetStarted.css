@@ -1155,7 +1155,7 @@
   display: grid;
   /* grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); */
   /* grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); */
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
 }
 
@@ -1382,6 +1382,7 @@
   right: 0;
   bottom: 0;
   /* background: rgba(0, 0, 0, 0.92); */
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;

@@ -14,10 +14,10 @@ const Footer: React.FC = () => {
               The world's easiest all-in-one management software. It's integrated, open-source, and loved by millions.
             </p>
             <div className="footer-social-links">
-              <a href="#" className="footer-social-link">TW</a>
-              <a href="#" className="footer-social-link">FB</a>
-              <a href="#" className="footer-social-link">LI</a>
-              <a href="#" className="footer-social-link">IG</a>
+              <a href="#!" className="footer-social-link">TW</a>
+              <a href="#!" className="footer-social-link">FB</a>
+              <a href="#!" className="footer-social-link">LI</a>
+              <a href="#!" className="footer-social-link">IG</a>
             </div>
           </div>
 

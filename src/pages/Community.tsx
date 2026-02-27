@@ -120,24 +120,24 @@ const getSectionIcon = (title: string) => {
   switch (title.toLowerCase()) {
     case 'learn':
       return (
-        <svg {...common} aria-hidden="true"><path d="M4 19.5V6.8a1 1 0 0 1 .6-.9l6.7-3a1 1 0 0 1 .8 0l6.7 3a1 1 0 0 1 .6.9V19.5"/><path d="M12 22V7"/></svg>
+        <svg {...common} aria-hidden="true"><path d="M4 19.5V6.8a1 1 0 0 1 .6-.9l6.7-3a1 1 0 0 1 .8 0l6.7 3a1 1 0 0 1 .6.9V19.5" /><path d="M12 22V7" /></svg>
       );
     case 'get the software':
       return (
-        <svg {...common} aria-hidden="true"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M20 21H4"/></svg>
+        <svg {...common} aria-hidden="true"><path d="M12 3v12" /><path d="M8 11l4 4 4-4" /><path d="M20 21H4" /></svg>
       );
     case 'collaborate':
       return (
-        <svg {...common} aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M10 21a7 7 0 0 1 12 0"/></svg>
+        <svg {...common} aria-hidden="true"><circle cx="9" cy="7" r="3" /><circle cx="17" cy="7" r="3" /><path d="M2 21a7 7 0 0 1 14 0" /><path d="M10 21a7 7 0 0 1 12 0" /></svg>
       );
     case 'get services':
       return (
-        <svg {...common} aria-hidden="true"><path d="M12 1v6"/><path d="M5.22 6.22l4.24 4.24"/><path d="M1 12h6"/><path d="M6.22 18.78l4.24-4.24"/><path d="M12 23v-6"/><path d="M18.78 17.78l-4.24-4.24"/><path d="M23 12h-6"/><path d="M17.78 6.22l-4.24 4.24"/></svg>
+        <svg {...common} aria-hidden="true"><path d="M12 1v6" /><path d="M5.22 6.22l4.24 4.24" /><path d="M1 12h6" /><path d="M6.22 18.78l4.24-4.24" /><path d="M12 23v-6" /><path d="M18.78 17.78l-4.24-4.24" /><path d="M23 12h-6" /><path d="M17.78 6.22l-4.24 4.24" /></svg>
       );
     case 'empower education':
     default:
       return (
-        <svg {...common} aria-hidden="true"><path d="M22 12l-10 7L2 12l10-7 10 7z"/><path d="M6 15v3a10 10 0 0 0 12 0v-3"/></svg>
+        <svg {...common} aria-hidden="true"><path d="M22 12l-10 7L2 12l10-7 10 7z" /><path d="M6 15v3a10 10 0 0 0 12 0v-3" /></svg>
       );
   }
 };
@@ -183,7 +183,7 @@ export const Community: React.FC = () => {
   );
   return (
     <main>
-      <PageHero 
+      <PageHero
         title="Join Our Community"
         subtitle="Connect with other Nexora users, get help, and share your ideas. Explore our resources to learn, collaborate, and get the most out of our software."
         emphasize='none'
@@ -251,7 +251,7 @@ export const Community: React.FC = () => {
           )}
         </div>
       </section>
-      
+
       <section className="events-section">
         <div className="community-container">
           <h2 className="section-title center">Upcoming Community Events</h2>
@@ -358,17 +358,17 @@ export const Community: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       <section className="social-strip">
         <div className="community-container">
           <ul className="social-list">
-            <li><a href="#" aria-label="GitHub">GH</a></li>
-            <li><a href="#" aria-label="YouTube">YT</a></li>
-            <li><a href="#" aria-label="X Twitter">X</a></li>
-            <li><a href="#" aria-label="LinkedIn">IN</a></li>
-            <li><a href="#" aria-label="Instagram">IG</a></li>
-            <li><a href="#" aria-label="Facebook">FB</a></li>
-            <li><a href="#" aria-label="Spotify">SP</a></li>
+            <li><a href="#!" aria-label="GitHub">GH</a></li>
+            <li><a href="#!" aria-label="YouTube">YT</a></li>
+            <li><a href="#!" aria-label="X Twitter">X</a></li>
+            <li><a href="#!" aria-label="LinkedIn">IN</a></li>
+            <li><a href="#!" aria-label="Instagram">IG</a></li>
+            <li><a href="#!" aria-label="Facebook">FB</a></li>
+            <li><a href="#!" aria-label="Spotify">SP</a></li>
           </ul>
         </div>
       </section>

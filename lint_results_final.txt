@@ -1,0 +1,13 @@
+﻿
+> client@0.1.0 lint
+> eslint src --ext .ts,.tsx
+
+
+C:\Actecal\erp-ui\src\pages\Blog.tsx
+  31:19  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+C:\Actecal\erp-ui\src\pages\LaunchPlan_clean.tsx
+  64:9  warning  'deleteBlock' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 2 problems (0 errors, 2 warnings)
+

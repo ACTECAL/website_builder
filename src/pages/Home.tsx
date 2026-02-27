@@ -12,7 +12,6 @@ import {
   Mail,
   CheckCircle2,
   XCircle,
-  BarChart3,
   ShieldCheck,
   Zap,
   Layers,
@@ -24,6 +23,30 @@ import {
 const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"Dashboard" | "Analytics" | "Reports">("Dashboard");
   const [isIntegrated, setIsIntegrated] = useState(true);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  React.useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+
+    const observerOptions = { threshold: 0.1 };
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      revealObserver.disconnect();
+    };
+  }, []);
 
   // Icon mapping for featured apps
   const iconMap: Record<string, React.ReactNode> = {
@@ -50,16 +73,41 @@ const Home: React.FC = () => {
   const featuredApps = appModules.filter(app => featuredAppSlugs.includes(app.slug));
 
   return (
-    <div className="home-container">
+    <div className="home-container" style={{
+      '--mouse-x': `${mousePos.x}px`,
+      '--mouse-y': `${mousePos.y}px`
+    } as any}>
+      <div className="spotlight"></div>
+
       {/* Hero Section */}
       <section className="hero">
+        {/* Floating Background Particles */}
+        <div className="hero-particle p-1"></div>
+        <div className="hero-particle p-2"></div>
+        <div className="hero-particle p-3"></div>
+        <div className="hero-particle p-4"></div>
+
         <div className="container hero-inner">
           <div className="hero-content">
             <div className="pricing-badge">Free for 1 user, forever</div>
-            <h1 className="hero-title">
+            <h1 className="hero-title shimmer-active">
               Manage your entire business <br />
-              <span className="accent-text">with one platform.</span>
-              <span className="handwritten-accent">integrated</span>
+              <span className="accent-text" style={{ color: 'var(--color-primary)' }}>with one platform.</span>
+              <span className="handwritten-accent" style={{
+                position: 'absolute',
+                top: '-25px',
+                right: '25px',
+                fontFamily: 'var(--font-handwritten)',
+                fontSize: '2.8rem',
+                color: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                padding: '2px 10px',
+                borderRadius: '4px',
+                transform: 'rotate(-8deg)',
+                fontWeight: 700,
+                zIndex: 20,
+                textShadow: '0 0 20px rgba(16, 185, 129, 0.2)'
+              }}>integrated</span>
             </h1>
             <p className="hero-subtitle">
               The world's easiest all-in-one management software. <br />
@@ -83,27 +131,50 @@ const Home: React.FC = () => {
                   <span className="dot green"></span>
                 </div>
                 <div className="window-tabs">
-                  <button className={activeTab === 'Dashboard' ? 'active' : ''} onClick={() => setActiveTab('Dashboard')}>Dashboard</button>
-                  <button className={activeTab === 'Analytics' ? 'active' : ''} onClick={() => setActiveTab('Analytics')}>Analytics</button>
+                  <button className={activeTab === 'Dashboard' ? 'active' : ''} onClick={() => setActiveTab('Dashboard')}>Overview</button>
+                  <button className={activeTab === 'Analytics' ? 'active' : ''} onClick={() => setActiveTab('Analytics')}>Performance</button>
                 </div>
               </div>
               <div className="window-body">
+                <div className="mock-summary">
+                  <div className="summary-item">
+                    <span className="dot-pulse"></span>
+                    Live Activity
+                  </div>
+                </div>
                 <div className="mock-grid">
-                  <div className="mock-card">
-                    <div className="mock-label">Monthly Revenue</div>
-                    <div className="mock-value">$124,500</div>
-                    <div className="mock-trend positive">+14%</div>
+                  <div className="mock-card highlight">
+                    <div className="mock-label">Total Revenue</div>
+                    <div className="mock-value">$142.8k</div>
+                    <div className="mock-trend positive">
+                      <TrendingUp size={12} /> +24%
+                    </div>
                   </div>
                   <div className="mock-card">
-                    <div className="mock-label">Active Orders</div>
-                    <div className="mock-value">842</div>
-                    <div className="mock-trend positive">+8%</div>
+                    <div className="mock-label">New Customers</div>
+                    <div className="mock-value">1,204</div>
+                    <div className="mock-trend positive">
+                      <Users size={12} /> +12%
+                    </div>
                   </div>
-                  <div className="mock-chart">
-                    <div className="chart-bars">
-                      {[40, 70, 45, 90, 65, 80, 55].map((h, i) => (
-                        <div key={i} className="bar" style={{ height: `${h}%` }}></div>
-                      ))}
+                  <div className="mock-chart-container">
+                    <div className="chart-header">
+                      <span>Weekly Sales</span>
+                      <div className="chart-legend">
+                        <span className="legend-dot current"></span>
+                        <span className="legend-dot past"></span>
+                      </div>
+                    </div>
+                    <div className="mock-chart">
+                      <div className="chart-bars">
+                        {[30, 60, 40, 85, 55, 95, 70, 45, 80].map((h, i) => (
+                          <div key={i} className="bar-wrapper">
+                            <div className="bar" style={{ height: `${h}%` }}>
+                              <div className="bar-glow"></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -129,7 +200,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* App Grid Section */}
-      <section className="apps-grid-section">
+      <section className="apps-grid-section reveal-on-scroll">
         <div className="container">
           <div className="section-header-lite">
             <div className="badge-alt">The Complete Suite</div>
@@ -172,7 +243,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Comparison: Integrated vs Fragmented */}
-      <section className="comparison-section">
+      <section className="comparison-section reveal-on-scroll">
         <div className="container">
           <div className="section-header-lite">
             <h2 className="title-handwritten">Imagine without Nexora <span className="handwritten-accent alt">fragmented</span></h2>
@@ -222,7 +293,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Value Prop: Integrated Section */}
-      <section className="value-prop-section">
+      <section className="value-prop-section reveal-on-scroll">
         <div className="container">
           <div className="prop-row">
             <div className="prop-text">
@@ -250,29 +321,6 @@ const Home: React.FC = () => {
                 <div className="connection c3"></div>
                 <div className="connection c4"></div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Section */}
-      <section className="why-us-section">
-        <div className="container">
-          <div className="why-grid">
-            <div className="why-item">
-              <BarChart3 size={32} className="why-icon" />
-              <h3>Data-Driven</h3>
-              <p>Advanced BI dashboards for every single module, out of the box.</p>
-            </div>
-            <div className="why-item">
-              <TrendingUp size={32} className="why-icon" />
-              <h3>Scalable</h3>
-              <p>Start with one app. Add more as your business reaches new heights.</p>
-            </div>
-            <div className="why-item">
-              <Monitor size={32} className="why-icon" />
-              <h3>Modern UI</h3>
-              <p>The cleanest interface in the ERP market, designed for speed.</p>
             </div>
           </div>
         </div>

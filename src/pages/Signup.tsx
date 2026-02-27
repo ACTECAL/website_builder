@@ -12,7 +12,6 @@ export const Signup: React.FC = () => {
     companyName: '',
   });
   const [errors, setErrors] = useState<any>({});
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const { login } = useAuth();
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +47,6 @@ export const Signup: React.FC = () => {
         return;
       }
       setFormData({ ...formData, logo: file });
-      setLogoPreview(URL.createObjectURL(file));
     }
   };
 
@@ -174,6 +172,7 @@ export const Signup: React.FC = () => {
                 required
                 className="auth-input"
                 placeholder="Full name"
+                aria-label="Full name"
                 value={formData.name}
                 onChange={handleChange}
                 autoFocus
@@ -188,6 +187,7 @@ export const Signup: React.FC = () => {
                 required
                 className="auth-input"
                 placeholder="Email"
+                aria-label="Email address"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -201,6 +201,7 @@ export const Signup: React.FC = () => {
                 required
                 className="auth-input"
                 placeholder="Company name"
+                aria-label="Company name"
                 value={formData.companyName}
                 onChange={handleChange}
               />
@@ -217,6 +218,7 @@ export const Signup: React.FC = () => {
                 className="auth-input"
                 style={{ padding: '10px' }}
                 accept="image/*"
+                aria-label="Company logo"
               />
               {formData.logo && <small style={{ color: '#64748b', marginTop: 4, display: 'block' }}>{formData.logo.name}</small>}
             </div>

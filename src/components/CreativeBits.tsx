@@ -19,7 +19,7 @@ export const StickerButton: React.FC<StickerButtonProps> = ({ children, href = '
       transform: 'rotate(-2deg)',
       transition: 'transform 150ms ease, box-shadow 150ms ease'
     }}
-    className="hover-bounce"
+      className="hover-bounce"
     >{children}</span>
   );
   return href ? <a href={href} style={{ textDecoration: 'none' }}>{content}</a> : content;
@@ -32,7 +32,7 @@ type DoodleBackgroundProps = {
 export const DoodleBackground: React.FC<DoodleBackgroundProps> = ({ children }) => {
   return (
     <div style={{ position: 'relative' }}>
-      <svg aria-hidden viewBox="0 0 800 200" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.08 }}>
+      <svg aria-hidden viewBox="0 0 800 200" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, width: '100%', height: '100%', opacity: 0.08 }}>
         <defs>
           <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
             <circle cx="2" cy="2" r="2" fill="#6b7280" />
@@ -62,6 +62,12 @@ export const HandBullets: React.FC<HandBulletsProps> = ({ items }) => {
   );
 };
 
-export default {};
+const CreativeBits = {
+  StickerButton,
+  DoodleBackground,
+  HandBullets
+};
+
+export default CreativeBits;
 
 

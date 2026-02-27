@@ -107,6 +107,7 @@ export const Login: React.FC = () => {
 								required
 								className="auth-input"
 								placeholder="Email"
+								aria-label="Email address"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
@@ -124,6 +125,7 @@ export const Login: React.FC = () => {
 								type="button"
 								className="auth-password-toggle"
 								onClick={() => setShowPassword(!showPassword)}
+								aria-label={showPassword ? 'Hide password' : 'Show password'}
 							>
 								<i className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
 							</button>

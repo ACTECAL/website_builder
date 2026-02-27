@@ -69,6 +69,7 @@ code {
 /* Default link styles */
 a {
   color: var(--color-primary);
+  -webkit-text-decoration-color: rgba(0, 0, 0, 0.08);
   text-decoration-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -169,7 +170,7 @@ section {
 
 /* Reusable UI primitives */
 .section {
-  padding: 60px 24px;
+  padding: 30px 24px;
 }
 
 .card {

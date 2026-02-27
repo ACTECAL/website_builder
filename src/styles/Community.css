@@ -1,12 +1,12 @@
 .community-page {
-  padding: 80px 24px;
+  padding: 40px 24px;
   background-color: #fff;
 }
 
 /* Centered section title helper */
 .section-title.center {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 /* Search bar styles */
@@ -117,7 +117,7 @@ mark {
 .count-badge {
   margin-left: auto;
   margin-right: 10px;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   color: #2d3748;
   padding: 2px 8px;
   border-radius: 999px;
@@ -132,7 +132,7 @@ mark {
 .community-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 40px;
+  gap: 24px;
 }
 
 .community-section-title {
@@ -164,15 +164,13 @@ mark {
 
 /* New enhanced styles */
 .community-page-section {
-  padding: 60px 0;
+  padding: 30px 0;
   /* subtle vertical stripes for columns */
-  background-image: repeating-linear-gradient(
-    to right,
-    #ffffff 0,
-    #ffffff 260px,
-    #fff6ef 260px,
-    #fff6ef 300px
-  );
+  background-image: repeating-linear-gradient(to right,
+      #ffffff 0,
+      #ffffff 260px,
+      #fff6ef 260px,
+      #fff6ef 300px);
 }
 
 .community-section {
@@ -261,7 +259,7 @@ mark {
 .cta-section {
   background: linear-gradient(90deg, #6b5b95 0%, #00a09d 100%);
   color: #ffffff;
-  padding: 60px 0;
+  padding: 30px 0;
   text-align: center;
 }
 
@@ -287,9 +285,11 @@ mark {
   .community-page {
     padding: 48px 16px;
   }
+
   .community-grid {
     gap: 24px;
   }
+
   .community-section {
     padding: 16px;
   }
@@ -298,18 +298,18 @@ mark {
 /* Sections previously inlined */
 .events-section {
   background-color: #f8f9fa;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .testimonial-section {
-  padding: 60px 0;
+  padding: 30px 0;
   background-color: #fff;
 }
 
 /* Stats */
 .stats-section {
   background: #fff;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .stats-grid {
@@ -339,7 +339,7 @@ mark {
 /* Featured Repos */
 .repos-section {
   background: #f8f9fa;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .repos-grid {
@@ -361,16 +361,23 @@ mark {
 
 .repo-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
 }
 
-.repo-name { margin: 0 0 6px; font-weight: 700; }
-.repo-desc { margin: 0; color: #4a5568; }
+.repo-name {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.repo-desc {
+  margin: 0;
+  color: #4a5568;
+}
 
 /* Blog section */
 .blog-section {
   background: #f8f9fa;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .blog-grid {
@@ -392,7 +399,7 @@ mark {
 
 .blog-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
 }
 
 .blog-title {
@@ -438,7 +445,7 @@ mark {
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
+  gap: 24px;
 }
 
 .testimonial-quote {

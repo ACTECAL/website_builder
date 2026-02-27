@@ -10,7 +10,7 @@ export const Features: React.FC = () => {
         subtitle="At Nexora, we don’t just give you tools—we give you a connected system that grows with your business. Every feature helps your team move faster and work as one."
         imageUrl="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
       />
-      <section style={{ padding: '0 24px 40px' }}>
+      <section style={{ padding: '0 24px 20px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{
             display: 'grid',

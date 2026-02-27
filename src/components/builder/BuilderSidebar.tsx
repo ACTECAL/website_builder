@@ -3,8 +3,7 @@ import { useBuilder } from './BuilderContext';
 import { BlockType } from './types';
 import {
     Type, Image as ImageIcon, Layout, Box,
-    MinusSquare, AlignCenter, MousePointer,
-    TableProperties
+    MinusSquare, AlignCenter, MousePointer
 } from 'lucide-react';
 
 const BLOCK_TYPES: { type: BlockType; label: string; icon: any }[] = [

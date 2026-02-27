@@ -1,6 +1,5 @@
 import React from 'react';
 import { PageHero } from '../components/PageHero';
-import { HighlightMarker } from '../components/Scribbles';
 import { GothicH3 } from '../components/GothicHeading';
 import { posts } from './blogData';
 
@@ -29,13 +28,11 @@ export const Blog: React.FC = () => {
               }}>
                 <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: 6 }}>{post.category}</div>
                 <div style={{ margin: '0 0 8px', fontSize: '1.05rem' }}>
-                  <a href="#" style={{ textDecoration: 'none', color: '#111827' }}>
-                <div style={{ margin: '0 0 8px', fontSize: '1.05rem' }}>
-                  <a href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: '#111827' }}>
-                    <GothicH3 text={post.title} style={{ fontSize: '1.05rem', margin: 0 }} />
-                  </a>
-                </div>
-                  </a>
+                  <div style={{ margin: '0 0 8px', fontSize: '1.05rem' }}>
+                    <a href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: '#111827' }}>
+                      <GothicH3 text={post.title} style={{ fontSize: '1.05rem', margin: 0 }} />
+                    </a>
+                  </div>
                 </div>
                 <p style={{ color: '#475569', margin: '0 0 12px' }}>{post.summary}</p>
                 <div style={{ color: '#64748b', fontSize: '0.85rem' }}>{post.date} • {post.read} read</div>

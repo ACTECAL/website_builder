@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import type { AppModuleMeta } from '../data/appModules';
 
 interface AppTemplateProps {
@@ -7,9 +7,6 @@ interface AppTemplateProps {
 }
 
 export const AppTemplate: React.FC<AppTemplateProps> = ({ module }) => {
-  const [searchParams] = useSearchParams();
-  const category = searchParams.get('category');
-  const backUrl = category ? `/apps?category=${category}` : '/apps';
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

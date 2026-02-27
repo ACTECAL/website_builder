@@ -2,25 +2,28 @@ import React from 'react';
 import { BuilderCanvas } from './BuilderCanvas';
 import { BuilderChatPanel } from './BuilderChatPanel';
 import { useBuilder } from './BuilderContext';
-import { Monitor, Smartphone, Tablet, Download, ZoomIn, ZoomOut, Upload } from 'lucide-react';
+import { Monitor, Smartphone, Tablet, ZoomIn, ZoomOut } from 'lucide-react';
 
 const DeviceToggle: React.FC<{ device: any, setDevice: any }> = ({ device, setDevice }) => (
     <div style={{ display: 'flex', background: '#f3f4f6', padding: 4, borderRadius: 8, gap: 4 }}>
         <button
             onClick={() => setDevice('desktop')}
             style={{ padding: 8, borderRadius: 6, border: 'none', background: device === 'desktop' ? 'white' : 'transparent', color: device === 'desktop' ? 'black' : '#6b7280', boxShadow: device === 'desktop' ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', cursor: 'pointer' }}
+            aria-label="Desktop view"
         >
             <Monitor size={16} />
         </button>
         <button
             onClick={() => setDevice('tablet')}
             style={{ padding: 8, borderRadius: 6, border: 'none', background: device === 'tablet' ? 'white' : 'transparent', color: device === 'tablet' ? 'black' : '#6b7280', boxShadow: device === 'tablet' ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', cursor: 'pointer' }}
+            aria-label="Tablet view"
         >
             <Tablet size={16} />
         </button>
         <button
             onClick={() => setDevice('mobile')}
             style={{ padding: 8, borderRadius: 6, border: 'none', background: device === 'mobile' ? 'white' : 'transparent', color: device === 'mobile' ? 'black' : '#6b7280', boxShadow: device === 'mobile' ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', cursor: 'pointer' }}
+            aria-label="Mobile view"
         >
             <Smartphone size={16} />
         </button>
@@ -28,17 +31,7 @@ const DeviceToggle: React.FC<{ device: any, setDevice: any }> = ({ device, setDe
 );
 
 export const BuilderLayout: React.FC = () => {
-    const { device, setDevice, zoom, setZoom, blocks } = useBuilder();
-
-    const handleExport = () => {
-        const data = JSON.stringify(blocks, null, 2);
-        const blob = new Blob([data], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'website-design.json';
-        a.click();
-    };
+    const { device, setDevice, zoom, setZoom } = useBuilder();
 
     return (
         <div className="builder-root" style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: 'white' }}>
@@ -56,9 +49,9 @@ export const BuilderLayout: React.FC = () => {
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <div style={{ display: 'flex', alignItems: 'center', background: '#1e2126', borderRadius: 8, padding: '4px 8px', border: '1px solid #2d3139' }}>
-                        <button onClick={() => setZoom(Math.max(0.5, zoom - 0.1))} style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: 4, color: '#9ca3af' }}><ZoomOut size={14} /></button>
+                        <button onClick={() => setZoom(Math.max(0.5, zoom - 0.1))} style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: 4, color: '#9ca3af' }} aria-label="Zoom out"><ZoomOut size={14} /></button>
                         <span style={{ fontSize: 12, width: 40, textAlign: 'center', color: '#e5e7eb' }}>{Math.round(zoom * 100)}%</span>
-                        <button onClick={() => setZoom(Math.min(1.5, zoom + 0.1))} style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: 4, color: '#9ca3af' }}><ZoomIn size={14} /></button>
+                        <button onClick={() => setZoom(Math.min(1.5, zoom + 0.1))} style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: 4, color: '#9ca3af' }} aria-label="Zoom in"><ZoomIn size={14} /></button>
                     </div>
 
                 </div>
