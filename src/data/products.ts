@@ -15,19 +15,19 @@ export const PRODUCTS: Product[] = [
     color: "#0984E3",
     modules: [
       {
-        id: "erp:sales",
+        id: "erp:sales_management",
         name: "Sales Management",
         description:
           "Lead to opportunity to quotation to sales order & invoicing",
       },
       {
-        id: "erp:ppc",
+        id: "erp:production_management",
         name: "Production Management",
         description: "MRP, Work orders, Manufacturing orders, BOM & routing",
       },
       {
-        id: "erp:purchase",
-        name: "Purchase Management",
+        id: "erp:material_management",
+        name: "Material Management",
         description: "RFQ, Purchase orders, Vendor management & bills",
       },
       {
