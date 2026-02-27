@@ -1965,13 +1965,16 @@ export const GetStarted: React.FC = () => {
         modules: formData.modules, // ← NEW: array jaise ["erp:material_management", "erp:sales_management"]
       };
 
-      const response = await fetch("http://127.0.0.1:4001/erp/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://api-dev.actecal.com/admin/erp/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify(payload),
-      });
+      );
 
       const result = await response.json();
 
