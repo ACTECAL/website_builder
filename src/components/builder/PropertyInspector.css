@@ -1,0 +1,94 @@
+.property-inspector-root {
+    width: 320px;
+    border-left: 1px solid #e5e7eb;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.inspector-empty {
+    width: 300px;
+    padding: 20px;
+    border-left: 1px solid #e5e7eb;
+    background: white;
+}
+
+.inspector-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inspector-title {
+    margin: 0;
+    font-size: 16px;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.inspector-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.inspector-section {
+    margin-bottom: 24px;
+}
+
+.section-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 12px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--color-text);
+}
+
+.form-group input[type=text],
+.form-group input[type=color],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form-group input[type=color] {
+    padding: 0;
+    height: 40px;
+}
+
+.form-group input[type=text]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.1);
+}
+
+.range-value {
+    font-size: 12px;
+    color: var(--color-muted);
+    float: right;
+}

@@ -193,6 +193,13 @@
     box-shadow: 0 0 0 5px rgba(15, 23, 42, 0.05);
 }
 
+select.auth-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
 .auth-form>*,
 .auth-input-group,
 .auth-social-list,

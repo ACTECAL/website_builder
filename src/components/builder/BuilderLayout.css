@@ -1,0 +1,105 @@
+.dev-toggle-container {
+    display: flex;
+    background: #f3f4f6;
+    padding: 4px;
+    border-radius: 8px;
+    gap: 4px;
+}
+
+.dev-toggle-btn {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dev-toggle-btn.active {
+    background: white;
+    color: black;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dev-toggle-btn.inactive {
+    background: transparent;
+    color: #6b7280;
+}
+
+.builder-header {
+    height: 60px;
+    border-bottom: 1px solid #1e2126;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #0f1115;
+    color: white;
+    z-index: 10;
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+.brand-icon-text {
+    font-size: 18px;
+}
+
+.brand-title-text {
+    font-weight: 600;
+    font-size: 16px;
+    color: #f3f4f6;
+}
+
+.builder-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    background: #1e2126;
+    border-radius: 8px;
+    padding: 4px 8px;
+    border: 1px solid #2d3139;
+}
+
+.zoom-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 4px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+}
+
+.zoom-value {
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
+    color: #e5e7eb;
+}
+
+.builder-main-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}

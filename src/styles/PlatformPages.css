@@ -1,0 +1,22 @@
+.platform-page-section {
+    padding: 0 24px 60px;
+}
+
+.platform-page-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.platform-page-benefit {
+    color: #475569;
+    margin-bottom: 40px;
+}
+
+.platform-page-actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.platform-page-actions .btn:first-child {
+    margin-right: 16px;
+}

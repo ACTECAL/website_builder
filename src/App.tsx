@@ -154,6 +154,9 @@ import { Upgrades } from './pages/Upgrades';
 import { LearnMore } from './pages/LearnMore';
 import LaunchPlan from './pages/LaunchPlan';
 import { GetStarted } from './pages/GetStarted';
+import { ThirdPartyApps } from './pages/ThirdPartyApps';
+import { Studio } from './pages/Studio';
+import { CloudPlatform } from './pages/CloudPlatform';
 function App() {
   const location = useLocation();
   const hideChrome = location.pathname.startsWith('/get-started') ||
@@ -301,9 +304,9 @@ function App() {
         <Route path="/releases" element={<Releases />} />
         <Route path="/github" element={<Github />} />
         <Route path="/forum" element={<Forum />} />
-        <Route path="/third-party" element={<GetStarted />} />
-        <Route path="/studio" element={<GetStarted />} />
-        <Route path="/cloud" element={<GetStarted />} />
+        <Route path="/third-party" element={<ThirdPartyApps />} />
+        <Route path="/studio" element={<Studio />} />
+        <Route path="/cloud" element={<CloudPlatform />} />
         <Route path="/events" element={<Events />} />
         <Route path="/translations" element={<Translations />} />
         <Route path="/become-a-partner" element={<BecomeAPartner />} />

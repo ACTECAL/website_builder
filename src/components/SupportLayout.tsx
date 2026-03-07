@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../styles/SupportLayout.css';
 
 interface SupportLayoutProps {
   title: string;
@@ -7,8 +8,6 @@ interface SupportLayoutProps {
   heroGallery?: string[];
   children: React.ReactNode;
 }
-
-const baseTextColor = '#1f2937';
 
 export const SupportLayout: React.FC<SupportLayoutProps> = ({
   title,
@@ -38,79 +37,34 @@ export const SupportLayout: React.FC<SupportLayoutProps> = ({
   ];
 
   return (
-    <main style={{ background: '#fff5eb', minHeight: '100vh', color: baseTextColor }}>
-      <div style={{ maxWidth: 1040, margin: '0 auto', padding: isMobile ? '32px 20px 48px' : '44px 24px 60px' }}>
-        <header
-          style={{
-            display: 'grid',
-            gap: isMobile ? 28 : 40,
-            gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(280px, 360px)',
-            alignItems: 'center',
-            marginBottom: isMobile ? 24 : 32
-          }}
-        >
-          <h1
-            style={{
-              margin: 0,
-              fontSize: isMobile ? '2.1rem' : '2.8rem',
-              fontWeight: 800,
-              lineHeight: 1.2,
-              letterSpacing: '-0.02em'
-            }}
-          >
+    <main className="support-layout-main">
+      <div className={`support-layout-container ${isMobile ? 'mobile' : 'desktop'}`}>
+        <header className={`support-layout-header ${isMobile ? 'mobile' : 'desktop'}`}>
+          <h1 className={`support-layout-title ${isMobile ? 'mobile' : 'desktop'}`}>
             {title}
           </h1>
           <div
-            style={{
-              width: '100%',
-              height: isMobile ? 180 : 220,
-              borderRadius: 18,
-              backgroundImage: `url(${heroImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              boxShadow: '0 22px 40px rgba(30, 41, 59, 0.18)'
-            }}
+            className={`support-layout-hero-img ${isMobile ? 'mobile' : 'desktop'}`}
+            style={{ backgroundImage: `url(${heroImage})` }}
           />
         </header>
         {intro && (
-          <p
-            style={{
-              margin: '0 0 20px',
-              maxWidth: 720,
-              color: '#4b5563',
-              fontSize: '1.05rem',
-              lineHeight: 1.7
-            }}
-          >
+          <p className="support-layout-intro">
             {intro}
           </p>
         )}
 
-        <div
-          style={{
-            display: 'grid',
-            gap: 12,
-            gridTemplateColumns: `repeat(${isMobile ? 2 : 4}, minmax(0, 1fr))`,
-            marginBottom: 24
-          }}
-        >
+        <div className={`support-layout-gallery ${isMobile ? 'mobile' : 'desktop'}`}>
           {galleryImages.map((image, index) => (
             <div
               key={`${image}-${index}`}
-              style={{
-                width: '100%',
-                paddingBottom: '70%',
-                borderRadius: 16,
-                backgroundImage: `url(${image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                boxShadow: '0 14px 28px rgba(15, 23, 42, 0.18)'
-              }}
+              className="support-layout-gallery-item"
+              style={{ backgroundImage: `url(${image})` }}
             />
           ))}
         </div>
 
-        <div style={{ color: '#374151', lineHeight: 1.8 }}>{children}</div>
+        <div className="support-layout-content">{children}</div>
       </div>
     </main>
   );

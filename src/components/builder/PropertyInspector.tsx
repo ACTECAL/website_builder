@@ -1,6 +1,7 @@
 import React from 'react';
 import { useBuilder } from './BuilderContext';
 import { Trash2 } from 'lucide-react';
+import './PropertyInspector.css';
 
 export const PropertyInspector: React.FC = () => {
     const { selectedId, blocks, updateBlock, removeBlock } = useBuilder();
@@ -9,7 +10,7 @@ export const PropertyInspector: React.FC = () => {
 
     if (!selectedBlock) {
         return (
-            <div style={{ width: 300, padding: 20, borderLeft: '1px solid #e5e7eb', background: 'white' }}>
+            <div className="inspector-empty">
                 <p className="muted">Select a block to edit its properties.</p>
             </div>
         );
@@ -34,21 +35,21 @@ export const PropertyInspector: React.FC = () => {
     };
 
     return (
-        <div style={{ width: 320, borderLeft: '1px solid #e5e7eb', background: 'white', display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div style={{ padding: '16px 20px', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h3 style={{ margin: 0, fontSize: 16 }}>Inspector</h3>
+        <div className="property-inspector-root">
+            <div className="inspector-header">
+                <h3 className="inspector-title">Inspector</h3>
                 <button
                     onClick={() => removeBlock(selectedBlock.id)}
-                    style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: 4 }}
+                    className="btn-delete"
                     title="Delete Block"
                 >
                     <Trash2 size={18} />
                 </button>
             </div>
 
-            <div style={{ padding: 20, overflowY: 'auto', flex: 1 }}>
-                <div style={{ marginBottom: 24 }}>
-                    <h4 style={{ fontSize: 13, textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: 12 }}>Content</h4>
+            <div className="inspector-body">
+                <div className="inspector-section">
+                    <h4 className="section-label">Content</h4>
 
                     {selectedBlock.type === 'text' && (
                         <div className="form-group">
@@ -119,8 +120,8 @@ export const PropertyInspector: React.FC = () => {
                     )}
                 </div>
 
-                <div>
-                    <h4 style={{ fontSize: 13, textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: 12 }}>Styles</h4>
+                <div className="inspector-section">
+                    <h4 className="section-label">Styles</h4>
 
                     <div className="form-group">
                         <label htmlFor="style-padding">Padding (px)</label>
@@ -130,7 +131,7 @@ export const PropertyInspector: React.FC = () => {
                             value={selectedBlock.styles?.padding || 0}
                             onChange={(e) => handleStyleChange('padding', Number(e.target.value))}
                         />
-                        <span style={{ fontSize: 12, color: 'var(--color-muted)', float: 'right' }}>{selectedBlock.styles?.padding}px</span>
+                        <span className="range-value">{selectedBlock.styles?.padding}px</span>
                     </div>
 
                     <div className="form-group">
@@ -150,7 +151,6 @@ export const PropertyInspector: React.FC = () => {
                             type="color"
                             value={selectedBlock.styles?.color || '#000000'}
                             onChange={(e) => handleStyleChange('color', e.target.value)}
-                            style={{ width: '100%', padding: 0, height: 40 }}
                         />
                     </div>
 
@@ -168,22 +168,6 @@ export const PropertyInspector: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <style>{`
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: var(--color-text); }
-        .form-group input[type=text], .form-group textarea, .form-group select {
-          width: 100%;
-          padding: 8px 12px;
-          border: 1px solid #e5e7eb;
-          border-radius: 6px;
-          font-size: 14px;
-        }
-        .form-group input[type=text]:focus, .form-group textarea:focus {
-          outline: none;
-          border-color: var(--color-primary);
-          box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.1);
-        }
-      `}</style>
         </div>
     );
 };

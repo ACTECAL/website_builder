@@ -11,7 +11,7 @@
 
 .feature-grid-header {
     text-align: center;
-    bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .feature-grid-title {
@@ -91,4 +91,56 @@
     color: var(--color-muted);
     line-height: 1.5;
     font-size: 0.9rem;
+}
+
+.feature-icon-wrapper i {
+    font-size: 2.5rem;
+}
+
+.icon-cloud {
+    color: #FF7A00;
+}
+
+.icon-key {
+    color: #FF934F;
+}
+
+.icon-cogs {
+    color: #FF5A1F;
+}
+
+.icon-users {
+    color: #FFB84D;
+}
+
+.icon-photo {
+    color: #FF6F61;
+}
+
+.icon-chart {
+    color: #FF4D4D;
+}
+
+.icon-people {
+    color: #FF884D;
+}
+
+.icon-code {
+    color: #FF7A45;
+}
+
+.icon-cart {
+    color: #FF5C33;
+}
+
+.icon-lightbulb {
+    color: #FF6600;
+}
+
+.icon-shield {
+    color: #CC4400;
+}
+
+.icon-pen {
+    color: #FFA366;
 }

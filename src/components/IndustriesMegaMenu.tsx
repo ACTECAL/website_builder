@@ -70,7 +70,7 @@ export const IndustriesMegaMenu: React.FC<{
                         <div key={category.title} className="industry-category">
                             <h4 className="industry-category-title" style={{
                                 color: category.color,
-                                borderBottom: `1px solid ${category.color}33`
+                                borderBottomColor: `${category.color}33`
                             }}>
                                 {category.title}
                             </h4>

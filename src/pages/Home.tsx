@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import { appModules } from "../data/appModules";
+import { AdvisorDropdown } from '../components/AdvisorDropdown';
 import {
   Cpu,
   ShoppingCart,
@@ -117,9 +118,7 @@ const Home: React.FC = () => {
               <Link to="/choose-apps" className="btn btn-primary btn-large">
                 Start now — It's free
               </Link>
-              <Link to="/meet-an-advisor" className="btn btn-secondary btn-large">
-                Meet an advisor
-              </Link>
+              <AdvisorDropdown />
             </div>
           </div>
           <div className="hero-visual">
@@ -184,20 +183,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust Marquee */}
-      <section className="marquee-section">
-        <div className="marquee-container">
-          <div className="marquee-content">
-            <span>TRUSTED BY OVER 12,000+ COMPANIES WORLDWIDE</span>
-            <div className="logo-placeholder">MICROSOFT</div>
-            <div className="logo-placeholder">ADOBE</div>
-            <div className="logo-placeholder">TESLA</div>
-            <div className="logo-placeholder">NETFLIX</div>
-            <div className="logo-placeholder">AIRBNB</div>
-            <div className="logo-placeholder">UBER</div>
-          </div>
-        </div>
-      </section>
 
       {/* App Grid Section */}
       <section className="apps-grid-section reveal-on-scroll">

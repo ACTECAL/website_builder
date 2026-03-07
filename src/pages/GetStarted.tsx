@@ -359,6 +359,10 @@ export const GetStarted: React.FC = () => {
   ];
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const [showProcessingPopup, setShowProcessingPopup] = useState(false);
+  const [processingProgress, setProcessingProgress] = useState(0);
+  const [statusMessage, setStatusMessage] = useState("Initializing Configuration...");
+  const [showSuccessState, setShowSuccessState] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -422,9 +426,25 @@ export const GetStarted: React.FC = () => {
 
     setIsCreatingAccount(true);
     setIsSubmitting(true);
+    setShowProcessingPopup(true);
+    setProcessingProgress(15);
+    setStatusMessage("Initializing Configuration...");
     setApiError(null);
 
     try {
+      // Simulate multi-stage progress while waiting for API
+      const progressSimulation = async () => {
+        await new Promise(r => setTimeout(r, 800));
+        setProcessingProgress(35);
+        setStatusMessage("Provisioning ERP Instance...");
+        await new Promise(r => setTimeout(r, 1200));
+        setProcessingProgress(65);
+        setStatusMessage("Configuring Selected Modules...");
+        await new Promise(r => setTimeout(r, 1000));
+        setProcessingProgress(90);
+        setStatusMessage("Finalizing Setup...");
+      };
+
       const payload = {
         name: formData.name,
         email: formData.contactEmail || null,
@@ -436,13 +456,16 @@ export const GetStarted: React.FC = () => {
         modules: formData.modules,
       };
 
-      const response = await fetch("http://127.0.0.1:4001/erp/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const [response] = await Promise.all([
+        fetch("http://127.0.0.1:4001/erp/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }),
+        progressSimulation()
+      ]);
 
       const result = await response.json();
 
@@ -450,16 +473,25 @@ export const GetStarted: React.FC = () => {
         throw new Error(result.message || "Something went wrong");
       }
 
+      setProcessingProgress(100);
+      setStatusMessage("System Ready!");
       setApiSuccess(true);
+      setShowSuccessState(true);
+
       setTimeout(() => {
         setCurrentStep(2);
         setIsSubmitting(false);
         setIsCreatingAccount(false);
-      }, 1500);
+        setShowProcessingPopup(false);
+        setShowSuccessState(false);
+        setProcessingProgress(0);
+      }, 2500);
     } catch (err: any) {
       setApiError(err.message || "Server error, please try again");
       setIsSubmitting(false);
       setIsCreatingAccount(false);
+      setShowProcessingPopup(false);
+      setProcessingProgress(0);
     }
   };
 
@@ -507,497 +539,245 @@ export const GetStarted: React.FC = () => {
         </div>
       )}
 
-      <div className="background-particles" />
-      <div className="floating-elements">
-        <div className="floating-element floating-1">
-          <i className="fas fa-chart-line"></i>
-        </div>
-        <div className="floating-element floating-2">
-          <i className="fas fa-users"></i>
-        </div>
-        <div className="floating-element floating-3">
-          <i className="fas fa-cog"></i>
-        </div>
-        <div className="floating-element floating-4">
-          <i className="fas fa-lightbulb"></i>
-        </div>
-        <div className="floating-element floating-5">
-          <i className="fas fa-rocket"></i>
-        </div>
-      </div>
+      <div className="getstarted-page auth-page">
+        {/* Sidebar Section - Replicating Login aesthetic exactly */}
+        <div className="auth-sidebar">
+          <div className="auth-sidebar-content">
+            <div className="auth-glass-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>
+              <span>Actyx Enterprise</span>
+            </div>
 
-      <section className="form-section-full in">
-        <div className="form-container-full" ref={formSectionRef}>
-          <form
-            className="multi-step-form"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            {/* STEP 1 - Company Details + API Call */}
-            {currentStep === 1 && (
-              <div className="step-fields">
-                <h3 className="step-heading">Company & Plan Details</h3>
+            <h2 className="auth-sidebar-title">
+              The foundation of your digital ecosystem.
+            </h2>
 
-                <div className="form-row">
-                  <div className="field-group-full">
-                    <label>
-                      Your Name <span className="required">*</span>
-                    </label>
-                    <input
-                      className={`field-input-full ${touched.name && !formData.name ? "error" : ""
-                        }`}
-                      placeholder="Rahul Sharma"
-                      value={formData.name}
-                      onChange={(e) =>
-                        handleInputChange("name", e.target.value)
-                      }
-                      onBlur={() => handleBlur("name")}
-                    />
+            <div className="auth-feature-list">
+              <div className="auth-feature-item">
+                <div className="auth-feature-icon-wrapper">
+                  <i className="fas fa-rocket" style={{ color: '#4ade80' }}></i>
+                </div>
+                <div className="auth-feature-text">Rapid Deployment Architecture</div>
+              </div>
+
+              <div className="auth-feature-item">
+                <div className="auth-feature-icon-wrapper">
+                  <i className="fas fa-shield-alt" style={{ color: '#4ade80' }}></i>
+                </div>
+                <div className="auth-feature-text">Bank-Grade Infrastructure</div>
+              </div>
+
+              <div className="auth-feature-item">
+                <div className="auth-feature-icon-wrapper">
+                  <i className="fas fa-sync" style={{ color: '#4ade80' }}></i>
+                </div>
+                <div className="auth-feature-text">Real-time Data Synchronization</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Form Section - Aligning with Login.tsx structure */}
+        <div className="auth-form-container getstarted-content-wrapper">
+          <div className="auth-form-box getstarted-form-box">
+            <header className="form-header-full">
+              <h1 className="auth-title">Complete your setup</h1>
+              <p className="auth-subtitle">Just a few more details to customize your workspace.</p>
+            </header>
+
+            <form
+              className="auth-form"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              {/* STEP 1 - Company Details */}
+              {currentStep === 1 && (
+                <div className="step-fields animate-fade-in">
+                  <div className="form-row">
+                    <div className="field-group-full">
+                      <label className="field-label-full">
+                        Your Name <span className="required">*</span>
+                      </label>
+                      <input
+                        className={`auth-input ${touched.name && !formData.name ? "error" : ""}`}
+                        placeholder="Rahul Sharma"
+                        value={formData.name}
+                        onChange={(e) => handleInputChange("name", e.target.value)}
+                        onBlur={() => handleBlur("name")}
+                      />
+                    </div>
+
+                    <div className="field-group-full">
+                      <label className="field-label-full">Company Email</label>
+                      <input
+                        type="email"
+                        className={`auth-input ${getFieldError("contactEmail") ? "error" : ""}`}
+                        placeholder="your@email.com"
+                        value={formData.contactEmail}
+                        onChange={(e) => handleInputChange("contactEmail", e.target.value)}
+                        onBlur={() => handleBlur("contactEmail")}
+                      />
+                    </div>
                   </div>
 
-                  <div className="field-group-full">
+                  <div className="field-group-full" style={{ marginBottom: '1.5rem' }}>
                     <label className="field-label-full">
-                      <label>Company Email</label>
-                      <span className="required"></span>
+                      Company / Godown Name <span className="required">*</span>
                     </label>
                     <input
-                      type="email"
-                      className={`field-input-full ${getFieldError("contactEmail") ? "error" : ""
-                        }`}
-                      placeholder="your@email.com"
-                      value={formData.contactEmail}
-                      onChange={(e) =>
-                        handleInputChange("contactEmail", e.target.value)
-                      }
-                      onBlur={() => handleBlur("contactEmail")}
-                      aria-required="true"
-                      aria-invalid={getFieldError("contactEmail") ? "true" : "false"}
-                      aria-describedby={
-                        getFieldError("contactEmail")
-                          ? "email-error"
-                          : undefined
-                      }
+                      className={`auth-input ${touched.companyName && !formData.companyName ? "error" : ""}`}
+                      placeholder="Sharma Enterprises"
+                      value={formData.companyName}
+                      onChange={(e) => handleInputChange("companyName", e.target.value)}
+                      onBlur={() => handleBlur("companyName")}
                     />
-                    {getFieldError("contactEmail") && (
-                      <div
-                        className="field-error"
-                        id="email-error"
-                        role="alert"
+                  </div>
+
+                  <div className="form-row">
+                    <div className="field-group-full">
+                      <label className="field-label-full">Industry</label>
+                      <select
+                        title="Select Industry"
+                        className="auth-input field-select"
+                        value={formData.industry}
+                        onChange={(e) => handleInputChange("industry", e.target.value)}
                       >
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError("contactEmail")}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                        <option value="">Select Industry</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Services">Services</option>
+                        <option value="Logistics">Logistics</option>
+                      </select>
+                    </div>
 
-                <div className="field-group-full">
-                  <label>
-                    Company / Godown Name <span className="required">*</span>
-                  </label>
-                  <input
-                    className={`field-input-full ${touched.companyName && !formData.companyName
-                      ? "error"
-                      : ""
-                      }`}
-                    placeholder="Sharma Enterprises"
-                    value={formData.companyName}
-                    onChange={(e) =>
-                      handleInputChange("companyName", e.target.value)
-                    }
-                    onBlur={() => handleBlur("companyName")}
-                  />
-                </div>
-
-                <div className="form-row">
-                  <div className="field-group-full">
-                    <label>Industry</label>
-                    <select
-                      className="field-input-full field-select"
-                      value={formData.industry}
-                      onChange={(e) =>
-                        handleInputChange("industry", e.target.value)
-                      }
-                    >
-                      <option value="">Select Industry</option>
-                      {INDUSTRIES.map((i) => (
-                        <option key={i} value={i}>
-                          {i}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="field-group-full">
-                    <label>Choose Plan</label>
-                    <select
-                      className="field-input-full field-select"
-                      value={formData.subscription}
-                      onChange={(e) =>
-                        handleInputChange("subscription", e.target.value as any)
-                      }
-                    >
-                      {SUBSCRIPTIONS.map((p) => (
-                        <option key={p} value={p}>
-                          {p.charAt(0).toUpperCase() + p.slice(1)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="field-group-full">
-                  <label>Account Type</label>
-                  <div
-                    style={{ display: "flex", gap: "20px", marginTop: "10px" }}
-                  >
-                    {ACCOUNT_TYPES.map((t) => (
-                      <label
-                        key={t}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          cursor: "pointer",
-                        }}
+                    <div className="field-group-full">
+                      <label className="field-label-full">Choose Plan</label>
+                      <select
+                        title="Choose Subscription Plan"
+                        className="auth-input field-select"
+                        value={formData.subscription}
+                        onChange={(e) => handleInputChange("subscription", e.target.value as any)}
                       >
+                        <option value="basic">Basic</option>
+                        <option value="standard">Standard</option>
+                        <option value="premium">Premium</option>
+                        <option value="enterprise">Enterprise</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="field-group-full" style={{ marginBottom: '1.5rem' }}>
+                    <label className="field-label-full">Account Type</label>
+                    <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>
                         <input
                           type="radio"
-                          name="acct"
-                          checked={formData.accountType === t}
-                          onChange={() => handleInputChange("accountType", t)}
+                          name="accountType"
+                          value="demo"
+                          checked={formData.accountType === "demo"}
+                          onChange={() => handleInputChange("accountType", "demo")}
                         />
-                        <span style={{ marginLeft: "8px" }}>
-                          {t === "demo" ? "14-Day Free Demo" : "Paid Account"}
-                        </span>
+                        14-Day Free Demo
                       </label>
-                    ))}
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>
+                        <input
+                          type="radio"
+                          name="accountType"
+                          value="paid"
+                          checked={formData.accountType === "paid"}
+                          onChange={() => handleInputChange("accountType", "paid")}
+                        />
+                        Paid Account
+                      </label>
+                    </div>
                   </div>
-                </div>
-                <div className="field-group-full" style={{ marginTop: "24px" }}>
-                  <label className="field-label-full">
-                    Select Modules <span className="required">*</span>
-                    <small
-                      style={{
-                        display: "block",
-                        color: "#64748b",
-                        marginTop: "4px",
+
+                  <div className="field-group-full" style={{ marginBottom: '2.5rem' }}>
+                    <div className="legacy-label-row">
+                      <div className="legacy-label-title-group">
+                        <span className="legacy-label-title">Select Modules</span>
+                        <span className="legacy-label-star">*</span>
+                        {formData.modules.length > 0 && (
+                          <span className="module-counter">Selected: {formData.modules.length}</span>
+                        )}
+                      </div>
+                      <span className="legacy-label-subtitle">Choose the ERP modules you want to enable</span>
+                    </div>
+                    <select
+                      title="Select ERP Modules"
+                      multiple
+                      className="legacy-multi-select"
+                      value={formData.modules}
+                      onChange={(e) => {
+                        const values = Array.from(e.target.selectedOptions, (option) => option.value);
+                        handleInputChange("modules", values);
                       }}
                     >
-                      Choose the ERP modules you want to enable
-                    </small>
-                  </label>
-
-                  <Select
-                    mode="multiple"
-                    style={{ width: "100%" }}
-                    placeholder="Select modules (multiple allowed)"
-                    value={formData.modules}
-                    onChange={(value: any) =>
-                      handleInputChange("modules", value)
-                    }
-                    options={AVAILABLE_MODULES}
-                    maxTagCount="responsive"
-                    showSearch
-                    allowClear
-                    notFoundContent="No modules found"
-                  />
-
-                  {touched.modules && formData.modules.length === 0 && (
-                    <div className="field-error" style={{ marginTop: "8px" }}>
-                      Please select at least one module
-                    </div>
-                  )}
-                </div>
-
-                {/* API Status */}
-                {apiSuccess && (
-                  <div className="success-msg">
-                    Account created successfully! Taking you forward...
-                  </div>
-                )}
-                {apiError && (
-                  <div className="field-error">Error: {apiError}</div>
-                )}
-              </div>
-            )}
-
-            {currentStep === 2 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-puzzle-piece"></i>
-                  App Selection
-                </h3>
-                <div className="app-selection-container">
-                  <div className="selected-apps-summary">
-                    <div className="apps-count">
-                      <i className="fas fa-check-circle"></i>
-                      <span>
-                        {getSelectedAppsCount() === 0
-                          ? "No apps selected"
-                          : `${getSelectedAppsCount()} ${getSelectedAppsCount() === 1 ? "app" : "apps"
-                          } selected`}
-                      </span>
-                    </div>
-                    {isSelectionLimitReached && (
-                      <div className="selection-limit" role="status">
-                        Maximum of {MAX_APP_SELECTION} apps can be selected.
-                      </div>
-                    )}
-                    {getSelectedAppsCount() >= 3 && (
-                      <div className="selection-reward" role="status">
-                        You qualify for a 15-day free trial with 3+ apps
-                        selected.
-                      </div>
-                    )}
-                    {getSelectedAppsCount() === 0 && (
-                      <div className="selection-hint">
-                        <i className="fas fa-info-circle"></i>
-                        Please select at least one app to continue
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="apps-categories">
-                    {APP_CATEGORIES.map((category) => (
-                      <div key={category.name} className="apps-category">
-                        <h4 className="category-title">{category.name}</h4>
-                        <div className="apps-grid">
-                          {category.tiles.map((app) => {
-                            const isSelected = formData.selectedApps.includes(
-                              app.key,
-                            );
-                            return (
-                              <div
-                                key={app.key}
-                                className={`app-tile ${isSelected ? "selected" : ""
-                                  }`}
-                                onClick={() => toggleAppSelection(app.key)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter" || e.key === " ") {
-                                    e.preventDefault();
-                                    toggleAppSelection(app.key);
-                                  }
-                                }}
-                                aria-pressed={isSelected}
-                                aria-disabled={
-                                  isSelectionLimitReached && !isSelected
-                                }
-                              >
-                                <div
-                                  className="app-icon"
-                                  style={{ backgroundColor: app.color }}
-                                >
-                                  <i className={app.icon}></i>
-                                </div>
-                                <div className="app-label">{app.label}</div>
-                                {isSelected && (
-                                  <div className="selection-indicator">
-                                    <i className="fas fa-check"></i>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
+                      <option value="Inventory">Inventory Management</option>
+                      <option value="Sales">Sales & CRM</option>
+                      <option value="Purchase">Purchase & Procurement</option>
+                      <option value="Accounting">Financial Accounting</option>
+                      <option value="HRM">HR & Payroll</option>
+                      <option value="Manufacturing">Manufacturing / MRP</option>
+                    </select>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {currentStep === 3 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-user"></i>
-                  Contact Information
-                </h3>
-                <div className="form-row">
-                  <div className="field-group-full">
-                    <label className="field-label-full">
-                      <i className="fas fa-envelope"></i>
-                      <span className="label-word">Contact Email</span>
-                      <span className="required">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      className={`field-input-full ${getFieldError("contactEmail") ? "error" : ""
-                        }`}
-                      placeholder="your@email.com"
-                      value={formData.contactEmail}
-                      onChange={(e) =>
-                        handleInputChange("contactEmail", e.target.value)
-                      }
-                      onBlur={() => handleBlur("contactEmail")}
-                      aria-required="true"
-                      aria-invalid={Boolean(getFieldError("contactEmail"))}
-                      aria-describedby={
-                        getFieldError("contactEmail")
-                          ? "email-error"
-                          : undefined
-                      }
-                    />
-                    {getFieldError("contactEmail") && (
-                      <div
-                        className="field-error"
-                        id="email-error"
-                        role="alert"
-                      >
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError("contactEmail")}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="field-group-full">
-                    <label className="field-label-full">
-                      <i className="fas fa-phone"></i>
-                      <span className="label-word">Contact Phone</span>
-                      <span className="required">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      className={`field-input-full ${getFieldError("contactPhone") ? "error" : ""
-                        }`}
-                      placeholder="+1 (555) 123-4567"
-                      value={formData.contactPhone}
-                      onChange={(e) =>
-                        handleInputChange("contactPhone", e.target.value)
-                      }
-                      onBlur={() => handleBlur("contactPhone")}
-                      aria-required="true"
-                      aria-invalid={Boolean(getFieldError("contactPhone"))}
-                      aria-describedby={
-                        getFieldError("contactPhone")
-                          ? "phone-error"
-                          : undefined
-                      }
-                    />
-                    {getFieldError("contactPhone") && (
-                      <div
-                        className="field-error"
-                        id="phone-error"
-                        role="alert"
-                      >
-                        <i className="fas fa-exclamation-circle"></i>
-                        {getFieldError("contactPhone")}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {currentStep === 4 && (
-              <div className="step-fields">
-                <h3 className="step-heading">
-                  <i className="fas fa-lightbulb"></i>
-                  Project Description
-                </h3>
-                <div className="field-group-full">
-                  <label className="field-label-full">
-                    <i className="fas fa-edit"></i>
-                    <span className="label-word">Project Description</span>
-                    <span className="required">*</span>
-                    <span className="character-count">
-                      {formData.projectDescription.length}/500
-                    </span>
-                  </label>
-                  <textarea
-                    className={`field-textarea-full ${getFieldError("projectDescription") ? "error" : ""
-                      }`}
-                    placeholder="Describe your business goals, target audience, key features needed, design preferences, and any specific requirements. Please be as detailed as possible to help us create the perfect solution for you..."
-                    rows={6}
-                    maxLength={500}
-                    value={formData.projectDescription}
-                    onChange={(e) =>
-                      handleInputChange("projectDescription", e.target.value)
-                    }
-                    onBlur={() => handleBlur("projectDescription")}
-                    required
-                    aria-required="true"
-                    aria-invalid={Boolean(getFieldError("projectDescription"))}
-                    aria-describedby={
-                      getFieldError("projectDescription")
-                        ? "description-error"
-                        : "description-help"
-                    }
-                  />
-                  <div className="field-help" id="description-help">
-                    <i className="fas fa-info-circle"></i>
-                    Minimum 50 characters required
-                  </div>
-                  {getFieldError("projectDescription") && (
-                    <div
-                      className="field-error"
-                      id="description-error"
-                      role="alert"
-                    >
-                      <i className="fas fa-exclamation-circle"></i>
-                      {getFieldError("projectDescription")}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-            {/* Navigation Buttons */}
-            <div className="form-actions-full buttons-animate">
-              <div className="step-buttons">
-                {currentStep > 1 && (
-                  <button
-                    type="button"
-                    className="btn btn-secondary-full"
-                    onClick={() => setCurrentStep((prev) => prev - 1)}
-                  >
-                    Previous
-                  </button>
-                )}
-
+              {/* Navigation Buttons */}
+              <div className="form-actions-full" style={{ marginTop: '1rem' }}>
                 {currentStep === 1 && (
                   <button
                     type="button"
-                    className="btn btn-primary-full"
+                    className="auth-primary-btn"
+                    style={{ width: '100%' }}
                     onClick={handleStep1Next}
                     disabled={!isStep1Valid() || isSubmitting}
                   >
                     {isSubmitting ? (
-                      <>
-                        Creating Account...{" "}
-                        <i className="fas fa-spinner fa-spin"></i>
-                      </>
+                      <>Creating Account... <i className="fas fa-spinner fa-spin"></i></>
                     ) : (
-                      <>
-                        Next Step <i className="fas fa-arrow-right"></i>
-                      </>
+                      <>Next Step <i className="fas fa-arrow-right"></i></>
                     )}
                   </button>
                 )}
-
-                {currentStep > 1 && currentStep < 4 && (
-                  <button
-                    type="button"
-                    className="btn btn-primary-full"
-                    onClick={() => setCurrentStep((prev) => prev - 1)}
-                  >
-                    Next Step
-                  </button>
-                )}
-
-                {currentStep === 4 && (
-                  <button
-                    type="button"
-                    className="btn btn-primary-full"
-                    onClick={() => navigate("/thank-you")}
-                  >
-                    Complete Setup
-                  </button>
-                )}
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </section>
+      </div>
+
+      {showProcessingPopup && (
+        <div className="processing-modal-overlay">
+          <div className="processing-modal-content">
+            {!showSuccessState ? (
+              <>
+                <div className="processing-spinner"></div>
+                <h2 className="processing-text">Wait for few minutes</h2>
+                <div className="processing-progress-container">
+                  <div className="processing-progress-bar">
+                    <div
+                      className="processing-progress-fill"
+                      style={{ width: `${processingProgress}%` }}
+                    ></div>
+                  </div>
+                  <p className="processing-status-text">{statusMessage}</p>
+                </div>
+              </>
+            ) : (
+              <div className="success-state">
+                <div className="success-checkmark-container">
+                  <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle className="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                    <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                  </svg>
+                </div>
+                <h2 className="success-title">Success!</h2>
+                <p className="success-subtitle">{statusMessage}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 };

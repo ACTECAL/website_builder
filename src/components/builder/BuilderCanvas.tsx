@@ -3,6 +3,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { SortableContext, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useBuilder } from './BuilderContext';
 import { BuilderBlockItem } from './BuilderBlockItem';
+import './BuilderCanvas.css';
 
 export const BuilderCanvas: React.FC = () => {
     const { blocks, moveBlock, selectBlock, device, zoom } = useBuilder();
@@ -30,26 +31,14 @@ export const BuilderCanvas: React.FC = () => {
     };
 
     return (
-        <div style={{
-            flex: 1,
-            background: '#eee',
-            padding: 40,
-            overflow: 'auto',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start'
-        }} onClick={() => selectBlock(null)}>
-            <div style={{
-                width: getWidth(),
-                maxWidth: '1200px',
-                minHeight: '80vh',
-                background: 'white',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                transform: `scale(${zoom})`,
-                transformOrigin: 'top center',
-                transition: 'width 0.3s ease, transform 0.3s ease',
-                paddingBottom: 40
-            }}>
+        <div className="canvas-root" onClick={() => selectBlock(null)}>
+            <div
+                className="canvas-surface"
+                style={{
+                    width: getWidth(),
+                    transform: `scale(${zoom})`
+                }}
+            >
                 <DndContext
                     sensors={sensors}
                     collisionDetection={closestCenter}
@@ -63,13 +52,7 @@ export const BuilderCanvas: React.FC = () => {
                             <BuilderBlockItem key={block.id} block={block} />
                         ))}
                         {blocks.length === 0 && (
-                            <div style={{
-                                padding: 40,
-                                textAlign: 'center',
-                                color: 'var(--color-muted)',
-                                border: '2px dashed var(--color-muted)',
-                                margin: 20
-                            }}>
+                            <div className="empty-canvas-msg">
                                 Drag blocks here or select a template to start
                             </div>
                         )}

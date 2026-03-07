@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
+import '../styles/Download.css';
 
 export const Download: React.FC = () => {
   return (
@@ -10,26 +11,26 @@ export const Download: React.FC = () => {
         subtitle="Get BizSuite for your platform. Choose the edition that fits your needs."
         emphasize="none"
       />
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+      <section className="download-section">
+        <div className="download-container">
+          <div className="back-link-wrapper">
+            <Link to="/community" className="back-link" reloadDocument>← Back to Community</Link>
           </div>
-          <h2 style={{ margin: '0 0 16px' }}>Choose platform</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginBottom: 32 }}>
-            {['Windows','macOS','Linux','Docker'].map((p) => (
-              <div key={p} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ margin: 0 }}>{p}</h4>
-                <button className="btn btn-primary" type="button" style={{ marginTop: 10 }}>Download</button>
+          <h2 className="section-title">Choose platform</h2>
+          <div className="platform-grid">
+            {['Windows', 'macOS', 'Linux', 'Docker'].map((p) => (
+              <div key={p} className="platform-card">
+                <h4 className="platform-name">{p}</h4>
+                <button className="btn btn-primary btn-download" type="button">Download</button>
               </div>
             ))}
           </div>
-          <h2 style={{ margin: '24px 0 16px' }}>Before you download</h2>
-          <ul style={{ margin: 0, paddingLeft: 18, color: '#4a5568' }}>
+          <h2 className="secondary-title">Before you download</h2>
+          <ul className="info-list">
             <li>Compare features in different editions.</li>
             <li>Review latest release notes.</li>
           </ul>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
+          <div className="download-footer">
             <Link to="/compare-editions" className="btn btn-outline-primary" reloadDocument>Compare Editions</Link>
             <Link to="/releases" className="btn btn-outline-primary" reloadDocument>View Releases</Link>
           </div>

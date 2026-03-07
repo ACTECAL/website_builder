@@ -1,0 +1,27 @@
+.canvas-root {
+    flex: 1;
+    background: #eee;
+    padding: 40px;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.canvas-surface {
+    max-width: 1200px;
+    min-height: 80vh;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform-origin: top center;
+    transition: width 0.3s ease, transform 0.3s ease;
+    padding-bottom: 40px;
+}
+
+.empty-canvas-msg {
+    padding: 40px;
+    text-align: center;
+    color: var(--color-muted);
+    border: 2px dashed var(--color-muted);
+    margin: 20px;
+}

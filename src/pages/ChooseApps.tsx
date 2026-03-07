@@ -330,6 +330,7 @@ export const ChooseApps: React.FC = () => {
   }, [search]);
   const [selected, setSelected] = useState<string[]>(initialSelected);
   const [activeCategory, setActiveCategory] = useState<string>(CATEGORIES[0].name);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     setSelected(initialSelected);
@@ -346,6 +347,22 @@ export const ChooseApps: React.FC = () => {
       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
     );
   };
+
+  const filteredCategories = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return CATEGORIES.filter((cat) => cat.name === activeCategory);
+    }
+
+    const lowerSearch = searchTerm.toLowerCase();
+    return CATEGORIES.map((cat) => ({
+      ...cat,
+      tiles: cat.tiles.filter(
+        (tile) =>
+          tile.label.toLowerCase().includes(lowerSearch) ||
+          tile.key.toLowerCase().includes(lowerSearch)
+      ),
+    })).filter((cat) => cat.tiles.length > 0);
+  }, [activeCategory, searchTerm]);
 
   const onKeyToggle: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -366,16 +383,16 @@ export const ChooseApps: React.FC = () => {
 
   return (
     <div className="choose-apps-page auth-page">
-      {/* Sidebar Section - Replicating Login Aesthetic */}
+      {/* Sidebar Section - Replicating Login aesthetic exactly */}
       <div className="auth-sidebar">
         <div className="auth-sidebar-content">
           <div className="auth-glass-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>
-            <span>Actyx Suite</span>
+            <span>Actyx Enterprise</span>
           </div>
 
           <h2 className="auth-sidebar-title">
-            Unlock the power of integrated applications.
+            Professional business management, simplified.
           </h2>
 
           <div className="auth-feature-list">
@@ -383,83 +400,122 @@ export const ChooseApps: React.FC = () => {
               <div className="auth-feature-icon-wrapper">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               </div>
-              <div className="auth-feature-text">Everything you need, in one place</div>
+              <div className="auth-feature-text">Integrated App Ecosystem</div>
             </div>
 
             <div className="auth-feature-item">
               <div className="auth-feature-icon-wrapper">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               </div>
-              <div className="auth-feature-text">Zero cost, unlimited users forever</div>
+              <div className="auth-feature-text">Enterprise-Grade Security</div>
             </div>
 
             <div className="auth-feature-item">
               <div className="auth-feature-icon-wrapper">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m13 2-2 10h9L7 22l2-10H1L13 2z" /></svg>
               </div>
-              <div className="auth-feature-text">Instant cloud deployment</div>
+              <div className="auth-feature-text">Ultra-Fast Cloud Infrastructure</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="choose-apps-main-container">
-        <div className="choose-apps-scroll-area">
-          <div className="choose-apps-box">
-            <header className="choose-head">
-              <h1 className="choose-title">Choose your Apps</h1>
-              <p className="choose-subtitle">Start your journey with a few simple clicks.</p>
-            </header>
+      {/* Form Section - Aligning with Login.tsx structure */}
+      <div className="auth-form-container choose-apps-content-wrapper">
+        <div className="auth-form-box choose-apps-form-box">
+          <header className="choose-head stagger-0">
+            <h1 className="auth-title">Choose your apps</h1>
+            <p className="auth-subtitle">Select the tools you need to build your perfect workspace.</p>
+          </header>
 
-            <div className="choose-tabs-wrapper">
-              <div className="choose-tabs">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat.name}
-                    className={`choose-tab ${activeCategory === cat.name ? "tab-active" : ""}`}
-                    onClick={() => setActiveCategory(cat.name)}
-                  >
-                    {cat.name}
-                  </button>
-                ))}
-              </div>
+          <div className="choose-search-container stagger-1">
+            <div className="choose-search-wrapper">
+              <i className="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                placeholder="Search apps (e.g. CRM, Accounting...)"
+                className="choose-search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <button
+                  className="search-clear-btn"
+                  onClick={() => setSearchTerm("")}
+                  title="Clear search"
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              )}
             </div>
+          </div>
 
-            <div className="choose-layout">
-              <div className="choose-main">
-                {CATEGORIES.filter(cat => cat.name === activeCategory).map((cat) => (
-                  <div key={cat.name} className="choose-cat">
-                    <div className="choose-grid">
-                      {cat.tiles.map((t) => {
-                        const isSel = selected.includes(t.key);
-                        return (
-                          <div
-                            key={t.key}
-                            className={`choose-tile ${isSel ? "tile-selected" : ""}`}
-                            role="button"
-                            tabIndex={0}
-                            aria-pressed={isSel ? "true" : "false"}
-                            data-key={t.key}
-                            onClick={() => toggle(t.key)}
-                            onKeyDown={onKeyToggle}
-                          >
+          <div className="choose-tabs-wrapper stagger-2">
+            <div className="choose-tabs">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.name}
+                  className={`choose-tab ${activeCategory === cat.name ? "tab-active" : ""}`}
+                  onClick={() => {
+                    setActiveCategory(cat.name);
+                    setSearchTerm(""); // Optional: clear search on tab change
+                  }}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="choose-layout stagger-3">
+            <div className="choose-main">
+              {filteredCategories.map((cat) => (
+                <div key={cat.name} className="choose-cat">
+                  {searchTerm && <h3 className="search-result-category">{cat.name}</h3>}
+                  <div className="choose-grid">
+                    {cat.tiles.map((t) => {
+                      const isSel = selected.includes(t.key);
+                      return (
+                        <div
+                          key={t.key}
+                          className={`choose-tile ${isSel ? "tile-selected" : ""}`}
+                          role="button"
+                          tabIndex={0}
+                          aria-pressed={isSel ? "true" : "false"}
+                          data-key={t.key}
+                          onClick={() => toggle(t.key)}
+                          onKeyDown={onKeyToggle}
+                        >
+                          <div className="choose-tile-glass"></div>
+                          <div className="choose-icon-wrapper">
                             <div className="choose-icon" style={{ borderColor: isSel ? t.color : '#e2e8f0' }}>
                               <i className={t.icon} style={{ color: t.color }} aria-hidden="true"></i>
                             </div>
-                            <div className="choose-label">{t.label}</div>
+                            {isSel && (
+                              <div className="choose-selection-badge" style={{ backgroundColor: t.color }}>
+                                <i className="fa-solid fa-check"></i>
+                              </div>
+                            )}
                           </div>
-                        );
-                      })}
-                    </div>
+                          <div className="choose-label">{t.label}</div>
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
+              {filteredCategories.length === 0 && (
+                <div className="no-results">
+                  <i className="fa-solid fa-circle-info"></i>
+                  <p>No apps found matching "<strong>{searchTerm}</strong>"</p>
+                  <button className="clear-search-link" onClick={() => setSearchTerm("")}>Clear search</button>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Floating Selection Panel */}
+        {/* Floating Selection Panel - Restyled for the new layout */}
         {count > 0 && (
           <aside className="choose-aside">
             <div className="choose-selected-header">

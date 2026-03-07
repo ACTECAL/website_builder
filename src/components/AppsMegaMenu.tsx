@@ -37,7 +37,7 @@ export const AppsMegaMenu: React.FC<{
                             <div key={category.title} className="apps-category">
                                 <h4 className="apps-category-title" style={{
                                     color: color,
-                                    borderBottom: `1px solid ${color}33`
+                                    borderBottomColor: `${color}33`
                                 }}>
                                     {category.title}
                                 </h4>
