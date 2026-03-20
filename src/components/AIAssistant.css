@@ -18,8 +18,62 @@
 }
 
 .ai-fab:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 20px 40px rgba(107, 91, 149, 0.4);
+}
+
+.ai-fab.active {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ai-fab-icon {
+  position: relative;
+  z-index: 10;
+}
+
+/* Sentient Aura System */
+.sentient-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.layer-1 {
+  background: radial-gradient(circle, rgba(107, 91, 149, 0.4) 0%, transparent 70%);
+  animation: sentientBreath 4s infinite ease-in-out;
+}
+
+.layer-2 {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+  animation: sentientBreath 6s infinite ease-in-out reverse;
+}
+
+.layer-3 {
+  border: 1px solid rgba(113, 75, 103, 0.1);
+  animation: sentientPulse 3s infinite cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ai-fab:hover .layer-1 {
+  background: radial-gradient(circle, rgba(107, 91, 149, 0.8) 0%, transparent 70%);
+  animation-duration: 1s;
+}
+
+@keyframes sentientBreath {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.6; }
+}
+
+@keyframes sentientPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
 }
 
 .ai-overlay {
@@ -274,6 +328,26 @@
 .bubble.typing {
   color: #94a3b8;
   font-style: italic;
+  position: relative;
+  overflow: hidden;
+}
+
+.thought-ripple {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(107, 91, 149, 0.1) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: thoughtRipple 2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes thoughtRipple {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; border: 1px solid rgba(107, 91, 149, 0.2); }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; border: 1px solid rgba(107, 91, 149, 0); }
 }
 
 .chat-input-area {

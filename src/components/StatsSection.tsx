@@ -19,7 +19,7 @@ type Props = {
   background?: string;
 };
 
-export const StatsSection: React.FC<Props> = ({
+export const StatsSection: React.FC<Props> = React.memo(({
   stats,
   title = "our impact in numbers",
   subtitle = "see how we're helping teams around the world succeed",
@@ -117,6 +117,6 @@ export const StatsSection: React.FC<Props> = ({
       </div>
     </section>
   );
-};
+});
 
 export default StatsSection;

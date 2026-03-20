@@ -1,100 +1,217 @@
+/* NewsletterSignup.css - Elite++ Edition */
+
 .newsletter-section {
-    padding: 40px 24px;
-    background: #4a4a4a;
+    padding: 80px 24px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: white;
     position: relative;
     overflow: hidden;
+    border-radius: 32px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 40px 80px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+    animation: pulseAura 15s linear infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes pulseAura {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.2) translate(5%, 5%); }
 }
 
 .newsletter-container {
     position: relative;
     z-index: 1;
-    maxWidth: 800;
+    max-width: 900px;
     margin: 0 auto;
     text-align: center;
 }
 
 .newsletter-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     margin: 0 0 20px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    color: #FFFFFF;
+    color: #f8fafc;
+    letter-spacing: -0.02em;
+    font-weight: 900;
+}
+
+.newsletter-title i {
+    color: #6366f1;
 }
 
 .newsletter-subtitle {
     font-size: 0.95rem;
-    margin: 0 0 20px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.8);
+    margin: 0 auto 40px;
+    line-height: 1.8;
+    color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    max-width: 600px;
+    font-weight: 700;
 }
 
 .newsletter-form {
     display: flex;
-    gap: 12px;
-    max-width: 500px;
-    margin: 0 auto;
+    gap: 16px;
+    max-width: 540px;
+    margin: 0 auto 24px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .newsletter-input {
     flex: 1;
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
+    padding: 16px 24px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
     color: white;
-    font-size: 1rem;
+    font-size: 1.05rem;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+}
+
+.newsletter-input::placeholder {
+    color: #64748b;
 }
 
 .newsletter-input:focus {
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
 .newsletter-button {
-    padding: 12px 24px;
-    border-radius: 8px;
-    background: white;
-    color: #4a4a4a;
+    padding: 16px 32px;
+    border-radius: 14px;
+    background: #6366f1;
+    color: white;
     font-weight: 700;
+    font-size: 1.05rem;
     border: none;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
 }
 
-.newsletter-button:hover {
-    background: #f0f0f0;
+.newsletter-button:hover:not(:disabled) {
+    background: #4f46e5;
     transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
 }
 
-.newsletter-button:active {
+.newsletter-button:active:not(:disabled) {
     transform: translateY(0);
 }
 
 .newsletter-button:disabled {
+    background: #475569;
+    color: #94a3b8;
+    box-shadow: none;
     opacity: 0.7;
     cursor: not-allowed;
 }
 
 .newsletter-success {
-    margin-top: 20px;
-    padding: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: fadeIn 0.5s ease-out;
+    margin: 0 auto 30px;
+    max-width: 500px;
+    padding: 24px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.newsletter-privacy {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ================================================================
+   Benefits Grid (Fixing the missing styles)
+================================================================ */
+.newsletter-benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+    text-align: left;
+}
+
+.newsletter-benefit-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 28px;
+    border-radius: 20px;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.newsletter-benefit-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.newsletter-benefit-icon {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.benefit-icon-blue { color: #38bdf8; }
+.benefit-icon-purple { color: #c084fc; }
+.benefit-icon-yellow { color: #facc15; }
+
+.newsletter-benefit-title {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.newsletter-benefit-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .newsletter-form { flex-direction: column; }
+    .newsletter-benefits { grid-template-columns: 1fr; }
 }

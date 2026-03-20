@@ -17,6 +17,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
     // no-op: animations removed per request
   }, [variant, intensity]);
 
+  // Animations are intentionally disabled to focus on the static elite background styles.
   const getBackgroundStyle = () => {
     switch (variant) {
       case 'gradient':

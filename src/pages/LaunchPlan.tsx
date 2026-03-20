@@ -1,13 +1,8 @@
 import React from 'react';
-import { BuilderProvider } from '../components/builder/BuilderContext';
 import { BuilderLayout } from '../components/builder/BuilderLayout';
 
 const LaunchPlan: React.FC = () => {
-  return (
-    <BuilderProvider>
-      <BuilderLayout />
-    </BuilderProvider>
-  );
+  return <BuilderLayout />;
 };
 
 export default LaunchPlan;

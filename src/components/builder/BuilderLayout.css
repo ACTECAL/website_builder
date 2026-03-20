@@ -102,4 +102,49 @@
     flex: 1;
     display: flex;
     overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preview-active .builder-main-content {
+    background: transparent;
+}
+
+.preview-toggle-btn {
+    border: none;
+    background: #1e2126;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid #2d3139;
+}
+
+.preview-toggle-btn:hover {
+    color: white;
+    background: #2d3139;
+}
+
+.preview-toggle-btn.active {
+    background: var(--aura-primary);
+    color: white;
+    box-shadow: 0 0 15px var(--aura-primary-transparent);
+}
+
+/* Portal Animation */
+.preview-active .builder-chat-panel {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.preview-active .canvas-root {
+    padding: 0;
+}
+
+.preview-active .canvas-surface {
+    box-shadow: none;
+    border-radius: 0;
 }

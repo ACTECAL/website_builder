@@ -1,50 +1,243 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { PageHero } from '../components/PageHero';
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Video, Clock } from 'lucide-react';
+import CelestialParticles from '../components/visuals/CelestialParticles';
+import '../styles/MeetAnAdvisor.css';
 
 export const MeetAnAdvisor: React.FC = () => {
-  const advisors = [
-    { name: 'Priya Sharma', focus: 'Manufacturing & Inventory', tz: 'GMT+5:30' },
-    { name: 'Daniel Kim', focus: 'Finance & Reporting', tz: 'GMT-8' },
-    { name: 'Ana García', focus: 'CRM & Sales', tz: 'GMT+1' },
-    { name: 'Mariam Al-Farsi', focus: 'Procurement & Suppliers', tz: 'GMT+4' },
-    { name: 'Lucas Moretti', focus: 'HR & Payroll', tz: 'GMT-3' },
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get('type') || 'demo';
+
+  const [selectedDate, setSelectedDate] = useState(9);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [step, setStep] = useState<'selection' | 'details' | 'confirmation'>('selection');
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    jobTitle: '',
+    employees: '',
+    message: ''
+  });
+
+  const isAssessment = type === 'assessment';
+
+  const title = isAssessment
+    ? "Project Assessment (250+ employees)"
+    : "Demo with an Expert (1-250 employees)";
+
+  const timeSlots = [
+    "10:00 AM", "11:00 AM", "12:00 PM",
+    "2:00 PM", "3:00 PM", "4:00 PM",
+    "5:00 PM", "6:00 PM"
   ];
-  return (
-    <main>
-      <PageHero
-        title="Meet an advisor"
-        subtitle="Book time with a BizSuite expert to discuss solutions, scope projects, and get guidance."
-        emphasize="none"
-      />
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+
+  const renderCalendar = () => {
+    const daysInMonth = 31;
+    const days = [];
+    for (let i = 1; i <= daysInMonth; i++) {
+        const isSelected = selectedDate === i;
+        const isToday = i === 9;
+        days.push(
+            <div
+                key={i}
+                className={`calendar-day ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''}`}
+                onClick={() => setSelectedDate(i)}
+            >
+                {i}
+            </div>
+        );
+    }
+    return days;
+  };
+
+  const renderDetails = () => (
+    <div className="scheduler-page-root">
+      <CelestialParticles />
+      <main className="scheduler-container details-view glass-morphism">
+        <div className="back-button" onClick={() => setStep('selection')}>
+          <i className="fa-solid fa-arrow-left" /> Back
+        </div>
+        <h1 className="scheduler-title">Enter your details</h1>
+        <div className="details-form-container">
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Name</label>
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="your.email@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                placeholder="+1 (123) 456-7890"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Company Name</label>
+              <input
+                type="text"
+                placeholder="Your Company"
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              />
+            </div>
           </div>
-          <h2 style={{ margin: '0 0 16px' }}>Advisors</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
-            {advisors.map((a) => (
-              <div key={a.name} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ margin: '0 0 6px' }}>{a.name}</h4>
-                <p style={{ margin: 0, color: '#4a5568' }}>{a.focus}</p>
-                <p style={{ margin: '6px 0 10px', color: '#4a5568' }}><strong>Time zone:</strong> {a.tz}</p>
-                <button className="btn btn-primary" type="button">Book a session</button>
+          <div className="form-group full-width">
+            <label>Specific topics you'd like to discuss?</label>
+            <textarea
+              placeholder="e.g. I want to learn more about Odoo's CRM and Inventory modules."
+              rows={4}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            />
+          </div>
+          <button
+            className="confirm-button animated-gradient"
+            onClick={() => setStep('confirmation')}
+          >
+            Confirm Appointment
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+
+  const renderConfirmation = () => (
+    <div className="scheduler-page-root">
+      <CelestialParticles />
+      <main className="scheduler-container confirmation-view glass-morphism">
+        <div className="success-icon">
+          <i className="fa-solid fa-circle-check" />
+        </div>
+        <h1 className="scheduler-title">Appointment Confirmed!</h1>
+        <p className="confirmation-text">
+          Thank you, {formData.name}. Your {isAssessment ? "Project Assessment" : "Demo"} with an expert has been scheduled for <strong>March {selectedDate}, 2026 at {selectedTime}</strong>.
+        </p>
+        <p className="confirmation-subtext">
+          A calendar invitation and zoom link have been sent to <strong>{formData.email}</strong>.
+        </p>
+        <button
+          className="back-home-button animated-gradient"
+          onClick={() => window.location.href = '/'}
+        >
+          Back to Home
+        </button>
+      </main>
+    </div>
+  );
+
+  const renderSelection = () => (
+    <div className="scheduler-page-root">
+      <CelestialParticles />
+      <main className="scheduler-container glass-morphism">
+        <h1 className="scheduler-title">{title}</h1>
+
+        <div className="scheduler-grid">
+          <div className="scheduler-column">
+            <h2 className="section-label">Select a date</h2>
+            <div className="calendar-card">
+              <div className="calendar-header">March 2026</div>
+              <div className="calendar-grid">
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                  <div key={day} className="day-header">{day}</div>
+                ))}
+                {renderCalendar()}
               </div>
-            ))}
+            </div>
+            <div className="timezone-footer">
+              <span>Timezone:</span>
+              <select className="timezone-select" defaultValue="Asia/Calcutta" title="Select your timezone">
+                <option value="Asia/Calcutta">Asia/Calcutta (GMT+5:30)</option>
+                <option value="UTC">UTC (GMT+0:00)</option>
+                <option value="America/New_York">New York (GMT-5:00)</option>
+              </select>
+            </div>
           </div>
-          <h2 style={{ margin: '24px 0 12px' }}>How it works</h2>
-          <ol style={{ margin: 0, paddingLeft: 18, color: '#4a5568' }}>
-            <li>Tell us about your use case and goals.</li>
-            <li>We match you with an advisor for a 30–45 min call.</li>
-            <li>Receive a summary with recommendations and next steps.</li>
-          </ol>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
-            <Link to="/find-a-partner" className="btn btn-outline-primary" reloadDocument>Find a Partner</Link>
-            <Link to="/implementation-services" className="btn btn-outline-primary" reloadDocument>Implementation Services</Link>
+
+          <div className="scheduler-column">
+            <h2 className="section-label">Time</h2>
+            <div className="time-slots-grid">
+              {timeSlots.map(time => (
+                <div
+                  key={time}
+                  className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
+                  onClick={() => setSelectedTime(time)}
+                >
+                  {time}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="scheduler-column details-sidebar">
+            <h2 className="section-label">Meeting details</h2>
+            <div className="meeting-meta">
+              <div className="meta-item">
+                <Video size={20} />
+                <span>Online</span>
+              </div>
+              <div className="meta-item">
+                <Clock size={20} />
+                <span>1 hour</span>
+              </div>
+            </div>
+
+            <div className="description-box">
+              <h2 className="section-label">Description</h2>
+              {isAssessment ? (
+                <p>
+                  Meet an Odoo expert to discuss your RFP, get a planning, a budget or a tailored demonstration.
+                </p>
+              ) : (
+                <>
+                  <p>Schedule a 1-hour free meeting with an expert, to get:</p>
+                  <ul className="description-list">
+                    <li>a tailored demonstration</li>
+                    <li>recommendations based on your needs</li>
+                    <li>answers to your questions about Odoo</li>
+                    <li>information about pricing & methodology</li>
+                  </ul>
+                </>
+              )}
+            </div>
+
+            {selectedDate && selectedTime && (
+              <button
+                className="next-button animated-gradient"
+                onClick={() => setStep('details')}
+              >
+                Next: Enter Details
+              </button>
+            )}
           </div>
         </div>
-      </section>
-    </main>
+      </main>
+    </div>
   );
+
+  switch (step) {
+    case 'details': return renderDetails();
+    case 'confirmation': return renderConfirmation();
+    default: return renderSelection();
+  }
 };
+
+export default MeetAnAdvisor;

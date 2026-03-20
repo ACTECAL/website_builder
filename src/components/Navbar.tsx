@@ -13,6 +13,8 @@ const Navbar: React.FC = () => {
   const closeAppsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const closeIndustriesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastScrollY = useRef(0);
+  const navItemsRef = useRef<{ element: HTMLElement; rect: DOMRect }[]>([]);
+  const rafId = useRef<number>(0);
 
   const handleAppsMouseEnter = () => {
     if (closeAppsTimeoutRef.current) clearTimeout(closeAppsTimeoutRef.current);
@@ -43,27 +45,90 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
+    const updateItemPositions = () => {
+      const items = document.querySelectorAll('.nav-link-item');
+      navItemsRef.current = Array.from(items).map(item => ({
+        element: item as HTMLElement,
+        rect: item.getBoundingClientRect()
+      }));
+    };
+
+    updateItemPositions();
+
     const onScroll = () => {
       if (isMobileMenuOpen) { setIsHidden(false); return; }
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY.current;
+
+      if (currentScrollY > 20) setIsScrolled(true);
+      else setIsScrolled(false);
 
       if (currentScrollY <= 0) setIsHidden(false);
       else if (delta > 5 && currentScrollY > 100) setIsHidden(true);
       else if (delta < -5) setIsHidden(false);
 
       lastScrollY.current = currentScrollY;
+      updateItemPositions(); // Recalculate on scroll
     };
+
+    let mousePos = { x: 0, y: 0 };
+    let mouseMoved = false;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos = { x: e.clientX, y: e.clientY };
+      mouseMoved = true;
+      if (rafId.current === 0) {
+        rafId.current = requestAnimationFrame(processMouseMove);
+      }
+    };
+
+    const processMouseMove = () => {
+      if (!mouseMoved) {
+        rafId.current = 0;
+        return;
+      }
+
+      navItemsRef.current.forEach(({ element, rect }) => {
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.sqrt((mousePos.x - centerX) ** 2 + (mousePos.y - centerY) ** 2);
+        const intensity = Math.max(0, 1 - dist / 200);
+        element.style.setProperty('--proximity', intensity.toFixed(2));
+      });
+
+      // Neural Breadcrumbs logic - Optimized
+      if (Math.random() > 0.95) { // Reduced frequency
+        const crumb = document.createElement('div');
+        crumb.className = 'neural-crumb';
+        crumb.style.left = `${mousePos.x}px`;
+        crumb.style.top = `${mousePos.y}px`;
+        document.body.appendChild(crumb);
+        setTimeout(() => crumb.remove(), 1000);
+      }
+
+      mouseMoved = false;
+      rafId.current = requestAnimationFrame(processMouseMove);
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('resize', updateItemPositions);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', updateItemPositions);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
   }, [isMobileMenuOpen]);
 
   return (
-    <nav className="navbar-container" style={{ transform: isHidden ? 'translateY(-100%)' : 'translateY(0)' }}>
-      <div className="navbar-inner">
+    <nav className={`navbar ${isHidden ? 'hidden' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         {/* Brand */}
-        <Link to="/" className="brand">
+        <Link to="/" className="nav-logo">
           <span>Nexora</span>
           <div className="brand-dot" />
         </Link>
@@ -98,17 +163,16 @@ const Navbar: React.FC = () => {
         {!isMobile && (
           <div className="nav-actions-right">
             <Link to="/login" className="btn-login">Log in</Link>
-            <Link to="/signup" className="btn btn-primary">Sign up</Link>
+            <Link to="/signup" className="btn-nav-cta">Sign up</Link>
           </div>
         )}
 
-        {/* Mobile Toggle */}
-        {isMobile && (
-          <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? '✕' : '☰'}
-          </button>
-        )}
-      </div>
+      {/* Mobile Toggle */}
+      {isMobile && (
+        <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? '✕' : '☰'}
+        </button>
+      )}
 
       <AppsMegaMenu
         isOpen={isAppsMenuOpen}
@@ -136,9 +200,9 @@ const Navbar: React.FC = () => {
           <NavLink to="/pricing" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
             Pricing
           </NavLink>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 10 }}>
-            <Link to="/login" className="btn" onClick={() => setIsMobileMenuOpen(false)}>Log in</Link>
-            <Link to="/signup" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>Sign up</Link>
+          <div className="mobile-actions">
+            <Link to="/login" className="btn-login" onClick={() => setIsMobileMenuOpen(false)}>Log in</Link>
+            <Link to="/signup" className="btn-nav-cta" style={{width: '100%', textAlign: 'center', marginTop: '10px'}} onClick={() => setIsMobileMenuOpen(false)}>Sign up</Link>
           </div>
         </div>
       )}

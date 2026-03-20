@@ -21,29 +21,26 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="footer-links-group">
-            <h4 className="footer-links-title">Applications</h4>
-            <Link to="/apps/crm" className="footer-link">CRM</Link>
-            <Link to="/apps/sales" className="footer-link">Sales</Link>
-            <Link to="/apps/accounting" className="footer-link">Accounting</Link>
-            <Link to="/apps/inventory" className="footer-link">Inventory</Link>
-            <Link to="/choose-apps" className="footer-link">View all apps</Link>
+          <div className="footer-links-group neural-cluster">
+            <h4 className="footer-links-title">Ecosystem</h4>
+            <Link to="/apps/crm" className="footer-link">Customer CRM</Link>
+            <Link to="/apps/sales" className="footer-link">Global Sales</Link>
+            <Link to="/apps/accounting" className="footer-link">Ledger Sync</Link>
+            <Link to="/apps/inventory" className="footer-link">Stock Intelligence</Link>
           </div>
 
-          <div className="footer-links-group">
-            <h4 className="footer-links-title">Community</h4>
-            <Link to="/blog" className="footer-link">Tutorials</Link>
-            <Link to="/community" className="footer-link">Forum</Link>
-            <Link to="/events" className="footer-link">Events</Link>
-            <Link to="/podcast" className="footer-link">Podcast</Link>
+          <div className="footer-links-group neural-cluster">
+            <h4 className="footer-links-title">Resources Cluster</h4>
+            <Link to="/community" className="footer-link">Neural Forum</Link>
+            <Link to="/docs" className="footer-link">Core Docs</Link>
+            <Link to="/pricing" className="footer-link">Scaling Plans</Link>
           </div>
 
-          <div className="footer-links-group">
-            <h4 className="footer-links-title">Support</h4>
-            <Link to="/help" className="footer-link">Documentation</Link>
-            <Link to="/contact" className="footer-link">Contact Us</Link>
-            <Link to="/pricing" className="footer-link">Pricing</Link>
-            <Link to="/status" className="footer-link">System Status</Link>
+          <div className="footer-links-group neural-cluster">
+            <h4 className="footer-links-title">Connect</h4>
+            <Link to="/contact" className="footer-link">Direct Line</Link>
+            <Link to="/meet-an-advisor" className="footer-link">Expert Consult</Link>
+            <Link to="/legal" className="footer-link">Governance</Link>
           </div>
         </div>
       </section>

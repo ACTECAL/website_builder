@@ -40,21 +40,59 @@ const DEFAULT_APPS: AppItem[] = [
 ];
 
 export const AppDirectory: React.FC<AppDirectoryProps> = ({ items = DEFAULT_APPS, title = 'Choose your apps', subtitle = 'Start with one. Add more anytime.' }) => {
+  const [searchTerm, setSearchTerm] = React.useState('');
+  
+  const filteredItems = React.useMemo(() => {
+    return items.filter(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [items, searchTerm]);
+
   return (
     <section className="app-directory-section">
       <div className="app-directory-header">
         <h3 className="app-directory-title">{title}</h3>
         <p className="app-directory-subtitle">{subtitle}</p>
-      </div>
-      <div className="apps-grid-container">
-        {items.map((app, idx) => (
-          <div key={idx} className="app-card">
-            <div className="app-icon-wrapper">
-              <span className="app-icon-inner">{app.icon}</span>
-            </div>
-            <div className="app-name-label">{app.name}</div>
+        
+        <div className="app-search-wrapper">
+          <div className="search-input-container">
+            <i className="fa-solid fa-magnifying-glass search-icon" />
+            <input 
+              type="text" 
+              placeholder="Search for an app..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="app-search-input"
+            />
+            {searchTerm && (
+              <button 
+                className="clear-search-btn" 
+                onClick={() => setSearchTerm('')}
+                aria-label="Clear search"
+              >
+                <i className="fa-solid fa-xmark" />
+              </button>
+            )}
           </div>
-        ))}
+        </div>
+      </div>
+
+      <div className="apps-grid-container">
+        {filteredItems.length > 0 ? (
+          filteredItems.map((app, idx) => (
+            <div key={idx} className="app-card">
+              <div className="app-icon-wrapper">
+                <span className="app-icon-inner">{app.icon}</span>
+              </div>
+              <div className="app-name-label">{app.name}</div>
+            </div>
+          ))
+        ) : (
+          <div className="no-apps-found">
+            <i className="fa-solid fa-ghost no-apps-icon" />
+            <p>No apps found for "{searchTerm}"</p>
+          </div>
+        )}
       </div>
 
       <div className="app-directory-footer">

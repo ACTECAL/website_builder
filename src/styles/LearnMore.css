@@ -1,0 +1,339 @@
+/* LearnMore.css - Elite++ Edition */
+
+.learn-more-page {
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+/* ================================================================
+   Main Content Wrapper
+================================================================ */
+.learn-more-content {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+}
+
+/* ================================================================
+   Section Headers
+================================================================ */
+.lm-section {
+    margin-bottom: 56px;
+}
+
+.lm-section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    background: rgba(99, 102, 241, 0.07);
+    border: 1px solid rgba(99, 102, 241, 0.18);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #6366f1;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+}
+
+.lm-section-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    margin: 0 0 20px;
+    line-height: 1.2;
+}
+
+/* ================================================================
+   Modules Grid
+================================================================ */
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.module-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.module-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--module-accent, linear-gradient(90deg, #6366f1, #a855f7));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.module-card:hover::before {
+    transform: scaleX(1);
+}
+
+.module-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    border-color: transparent;
+}
+
+.module-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+    background: var(--module-icon-bg, #ede9fe);
+    color: var(--module-icon-color, #6366f1);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.module-card:hover .module-card-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.module-card-title {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+
+.module-card-desc {
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* ================================================================
+   Customer Snapshots
+================================================================ */
+.snapshots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.snapshot-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 28px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.snapshot-card::after {
+    content: '"';
+    position: absolute;
+    top: -20px; right: 20px;
+    font-size: 5rem;
+    color: #e2e8f0;
+    font-family: Georgia, serif;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.snapshot-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+.snapshot-company {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.snapshot-company::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    flex-shrink: 0;
+}
+
+.snapshot-impact {
+    color: #475569;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================================
+   FAQ
+================================================================ */
+.faq-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.faq-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px 28px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.faq-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border-color: rgba(99, 102, 241, 0.25);
+    transform: translateX(4px);
+}
+
+.faq-question {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.faq-question::before {
+    content: 'Q';
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    color: #6366f1;
+    font-size: 0.75rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.faq-answer {
+    color: #64748b;
+    font-size: 0.925rem;
+    line-height: 1.65;
+    padding-left: 34px;
+}
+
+/* ================================================================
+   CTA Buttons Row
+================================================================ */
+.lm-cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.lm-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.28);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lm-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(99, 102, 241, 0.35);
+}
+
+.lm-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 2px solid #6366f1;
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.lm-btn-secondary:hover {
+    background: #6366f1;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* ================================================================
+   Explore Next
+================================================================ */
+.explore-next {
+    margin-top: 48px;
+    padding: 28px 32px;
+    background: rgba(99, 102, 241, 0.04);
+    border: 1px solid rgba(99, 102, 241, 0.12);
+    border-radius: 20px;
+}
+
+.explore-next h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 10px;
+}
+
+.explore-next p {
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.explore-next a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.explore-next a:hover {
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+/* ================================================================
+   Responsive
+================================================================ */
+@media (max-width: 640px) {
+    .modules-grid { grid-template-columns: repeat(2, 1fr); }
+    .snapshots-grid { grid-template-columns: 1fr; }
+    .lm-cta-row { flex-direction: column; }
+}

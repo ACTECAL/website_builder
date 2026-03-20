@@ -1,0 +1,120 @@
+.holographic-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+.holographic-blueprint {
+    background: rgba(30, 60, 114, 0.1);
+    border: 2px solid var(--aura-primary);
+    border-radius: 12px;
+    padding: 40px;
+    position: relative;
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(180%);
+    box-shadow: 0 0 30px var(--aura-primary-transparent);
+    overflow: hidden;
+    animation: holo-flicker 4s infinite;
+}
+
+.holographic-glitch-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        var(--aura-primary-transparent) 3px
+    );
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.holographic-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--aura-primary);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.holographic-type {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--aura-primary);
+    font-size: 32px;
+    font-weight: 900;
+    opacity: 0.5;
+    text-align: center;
+}
+
+.holographic-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.holographic-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--aura-primary);
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.holographic-btn.confirm {
+    background: var(--aura-primary);
+    box-shadow: 0 0 20px var(--aura-primary-transparent);
+}
+
+.holographic-btn.cancel:hover {
+    background: rgba(255, 0, 0, 0.2);
+    border-color: #ef4444;
+}
+
+.holographic-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(168, 85, 247, 0.2) 50%,
+        transparent
+    );
+    background-size: 100% 200%;
+    animation: scan 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes holo-flicker {
+    0%, 100% { opacity: 0.9; }
+    5%, 15%, 25% { opacity: 1; }
+    10%, 20% { opacity: 0.8; }
+}
+
+@keyframes scan {
+    from { background-position: 0 -100%; }
+    to { background-position: 0 100%; }
+}

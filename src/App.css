@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  animation: morphicEntry 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes morphicEntry {
+  0% { opacity: 0; transform: scale(1.02); filter: blur(10px); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
 }
 
 .App-logo {

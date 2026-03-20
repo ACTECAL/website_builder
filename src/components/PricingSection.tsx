@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowNote } from './Scribbles';
+import ScribbleDecorations from './Scribbles';
 import { GothicH2, GothicH3, GothicH4 } from './GothicHeading';
 import { DrippingText } from './DrippingText';
 import '../styles/PricingSection.css';
@@ -103,8 +103,8 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                   </div>
 
                   {isAnnual && (
-                    <div style={{ position: 'relative', display: 'inline-block' }}>
-                      <ArrowNote text={`Save 20% → ${yearlyDisplay}/yr`} style={{ position: 'absolute', right: -20, top: -20 }} />
+                    <div className="save-badge-wrapper">
+                      <ScribbleDecorations.Note text={`Save 20% → ${yearlyDisplay}/yr`} style={{ position: 'absolute', right: -20, top: -20 }} />
                     </div>
                   )}
 
@@ -119,7 +119,7 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
                       <div className="check-icon">
                         <span>✓</span>
                       </div>
-                      <span style={{ fontSize: '0.95rem' }}>{feature}</span>
+                      <span className="feature-item-text">{feature}</span>
                     </li>
                   ))}
                 </ul>

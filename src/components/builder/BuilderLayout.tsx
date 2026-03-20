@@ -2,7 +2,7 @@ import React from 'react';
 import { BuilderCanvas } from './BuilderCanvas';
 import { BuilderChatPanel } from './BuilderChatPanel';
 import { useBuilder } from './BuilderContext';
-import { Monitor, Smartphone, Tablet, ZoomIn, ZoomOut } from 'lucide-react';
+import { Monitor, Smartphone, Tablet, ZoomIn, ZoomOut, Eye, EyeOff } from 'lucide-react';
 import './BuilderLayout.css';
 
 const DeviceToggle: React.FC<{ device: any, setDevice: any }> = ({ device, setDevice }) => (
@@ -32,10 +32,10 @@ const DeviceToggle: React.FC<{ device: any, setDevice: any }> = ({ device, setDe
 );
 
 export const BuilderLayout: React.FC = () => {
-    const { device, setDevice, zoom, setZoom } = useBuilder();
+    const { device, setDevice, zoom, setZoom, isPreviewMode, setIsPreviewMode } = useBuilder();
 
     return (
-        <div className="builder-root" style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: 'white' }}>
+        <div className={`builder-root ${isPreviewMode ? 'preview-active' : ''}`} style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: 'white' }}>
             <header className="builder-header">
                 <div className="brand-section">
                     <div className="brand-icon-wrapper">
@@ -44,22 +44,33 @@ export const BuilderLayout: React.FC = () => {
                     <div className="brand-title-text">Odoo Studio</div>
                 </div>
 
-                <div>
-                    <DeviceToggle device={device} setDevice={setDevice} />
-                </div>
+                {!isPreviewMode && (
+                    <div>
+                        <DeviceToggle device={device} setDevice={setDevice} />
+                    </div>
+                )}
 
                 <div className="builder-controls">
-                    <div className="zoom-controls">
-                        <button onClick={() => setZoom(Math.max(0.5, zoom - 0.1))} className="zoom-btn" aria-label="Zoom out"><ZoomOut size={14} /></button>
-                        <span className="zoom-value">{Math.round(zoom * 100)}%</span>
-                        <button onClick={() => setZoom(Math.min(1.5, zoom + 0.1))} className="zoom-btn" aria-label="Zoom in"><ZoomIn size={14} /></button>
-                    </div>
+                    {!isPreviewMode && (
+                        <div className="zoom-controls">
+                            <button onClick={() => setZoom(Math.max(0.5, zoom - 0.1))} className="zoom-btn" aria-label="Zoom out"><ZoomOut size={14} /></button>
+                            <span className="zoom-value">{Math.round(zoom * 100)}%</span>
+                            <button onClick={() => setZoom(Math.min(1.5, zoom + 0.1))} className="zoom-btn" aria-label="Zoom in"><ZoomIn size={14} /></button>
+                        </div>
+                    )}
 
+                    <button 
+                        className={`preview-toggle-btn ${isPreviewMode ? 'active' : ''}`} 
+                        onClick={() => setIsPreviewMode(!isPreviewMode)}
+                        title={isPreviewMode ? 'Exit Preview' : 'Enter Preview'}
+                    >
+                        {isPreviewMode ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                 </div>
             </header>
 
             <div className="builder-main-content">
-                <BuilderChatPanel />
+                {!isPreviewMode && <BuilderChatPanel />}
                 <BuilderCanvas />
             </div>
         </div>

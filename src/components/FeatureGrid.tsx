@@ -15,11 +15,14 @@ type Props = {
   sections: Section[];
 };
 
-export const FeatureGrid: React.FC<Props> = ({ sections }) => {
+export const FeatureGrid: React.FC<Props> = React.memo(({ sections }) => {
   return (
     <section className="feature-grid-section">
       <div className="feature-grid-container">
         <div className="feature-grid-header">
+          <div className="feature-grid-badge">
+            <i className="fa-solid fa-bolt" /> Platform Capabilities
+          </div>
           <h2 className="feature-grid-title">Transform your digital workflow</h2>
           <div className="feature-grid-divider" />
           <h3 className="feature-grid-subtitle">Tailored solutions for every digital need</h3>
@@ -71,6 +74,6 @@ export const FeatureGrid: React.FC<Props> = ({ sections }) => {
       </div>
     </section>
   );
-};
+});
 
 export default FeatureGrid;

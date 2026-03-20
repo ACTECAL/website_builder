@@ -75,12 +75,12 @@ export const ArrowNote: React.FC<ArrowNoteProps> = ({ text, color = '#7b5aa6', s
 };
 
 
-const Scribbles = {
+const ScribbleDecorations = {
   Underline: ScribbleUnderline,
   Highlight: HighlightMarker,
   Note: ArrowNote
 };
 
-export default Scribbles;
+export default ScribbleDecorations;
 
 

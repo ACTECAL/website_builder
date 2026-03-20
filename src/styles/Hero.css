@@ -4,10 +4,11 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    z-index: 10;
 }
 
 .hero-bg-overlay {

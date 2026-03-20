@@ -1,21 +1,69 @@
+:root {
+  --aura-primary: #6366f1;
+  --aura-primary-transparent: rgba(99, 102, 241, 0.1);
+  --aura-gradient: linear-gradient(135deg, var(--aura-primary) 0%, #ec4899 100%);
+}
+
 .canvas-root {
     flex: 1;
-    background: #eee;
-    padding: 40px;
+    background: #f8fafc;
+    padding: 60px;
     overflow: auto;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    position: relative;
+}
+
+/* Magnetic Grid Lines (Phase 12) */
+.canvas-root::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .canvas-surface {
     max-width: 1200px;
-    min-height: 80vh;
+    min-height: 85vh;
     background: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
     transform-origin: top center;
-    transition: width 0.3s ease, transform 0.3s ease;
-    padding-bottom: 40px;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding-bottom: 60px;
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Glassmorphic Blocks (Editorial Mastery) */
+.glass-block {
+    background: rgba(255, 255, 255, 0.7) !important;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.magnetic-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 10;
+    border-radius: 4px;
+    border: 2px dashed var(--aura-primary);
+    opacity: 0.3;
+}
+
+.aura-shadow {
+    box-shadow: 0 0 30px var(--aura-primary-transparent);
 }
 
 .empty-canvas-msg {

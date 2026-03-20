@@ -1,342 +1,18 @@
-import React, { useState, useRef } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/GetStarted.css";
-import { Select } from "antd";
 
-// App selection data
-type AppTile = { key: string; label: string; icon: string; color: string };
-type AppCategory = { name: string; tiles: AppTile[] };
-
-const APP_CATEGORIES: AppCategory[] = [
-  {
-    name: "Website",
-    tiles: [
-      {
-        key: "website",
-        label: "Website",
-        icon: "fa-solid fa-globe",
-        color: "#06b6d4",
-      },
-      {
-        key: "ecommerce",
-        label: "eCommerce",
-        icon: "fa-solid fa-cart-shopping",
-        color: "#a855f7",
-      },
-      {
-        key: "blog",
-        label: "Blog",
-        icon: "fa-solid fa-pen-nib",
-        color: "#ef4444",
-      },
-      {
-        key: "forum",
-        label: "Forum",
-        icon: "fa-solid fa-comments",
-        color: "#10b981",
-      },
-      {
-        key: "elearning",
-        label: "eLearning",
-        icon: "fa-solid fa-graduation-cap",
-        color: "#22c55e",
-      },
-      {
-        key: "events",
-        label: "Events",
-        icon: "fa-solid fa-calendar-days",
-        color: "#f97316",
-      },
-    ],
-  },
-  {
-    name: "Sales",
-    tiles: [
-      { key: "crm", label: "CRM", icon: "fa-solid fa-users", color: "#14b8a6" },
-      {
-        key: "sales",
-        label: "Sales",
-        icon: "fa-solid fa-chart-line",
-        color: "#a855f7",
-      },
-      {
-        key: "pos",
-        label: "Point of Sale",
-        icon: "fa-solid fa-store",
-        color: "#f59e0b",
-      },
-      {
-        key: "restaurant",
-        label: "Restaurant",
-        icon: "fa-solid fa-utensils",
-        color: "#f97316",
-      },
-      {
-        key: "subscriptions",
-        label: "Subscriptions",
-        icon: "fa-solid fa-arrows-rotate",
-        color: "#06b6d4",
-      },
-      {
-        key: "rental",
-        label: "Rental",
-        icon: "fa-solid fa-key",
-        color: "#8b5cf6",
-      },
-    ],
-  },
-  {
-    name: "Finance",
-    tiles: [
-      {
-        key: "invoicing",
-        label: "Invoicing",
-        icon: "fa-solid fa-file-invoice-dollar",
-        color: "#3b82f6",
-      },
-      {
-        key: "accounting",
-        label: "Accounting",
-        icon: "fa-solid fa-coins",
-        color: "#10b981",
-      },
-      {
-        key: "expenses",
-        label: "Expenses",
-        icon: "fa-solid fa-wallet",
-        color: "#06b6d4",
-      },
-      {
-        key: "sign",
-        label: "Sign",
-        icon: "fa-solid fa-signature",
-        color: "#0ea5e9",
-      },
-      {
-        key: "equity",
-        label: "Equity",
-        icon: "fa-solid fa-chart-pie",
-        color: "#f59e0b",
-      },
-      { key: "esg", label: "ESG", icon: "fa-solid fa-leaf", color: "#22c55e" },
-    ],
-  },
-  {
-    name: "Services",
-    tiles: [
-      {
-        key: "project",
-        label: "Project",
-        icon: "fa-solid fa-diagram-project",
-        color: "#10b981",
-      },
-      {
-        key: "timesheets",
-        label: "Timesheets",
-        icon: "fa-solid fa-stopwatch",
-        color: "#64748b",
-      },
-      {
-        key: "field-service",
-        label: "Field Service",
-        icon: "fa-solid fa-bolt",
-        color: "#f59e0b",
-      },
-      {
-        key: "helpdesk",
-        label: "Helpdesk",
-        icon: "fa-solid fa-headphones",
-        color: "#10b981",
-      },
-      {
-        key: "appointments",
-        label: "Appointments",
-        icon: "fa-solid fa-calendar-check",
-        color: "#a855f7",
-      },
-      {
-        key: "planning",
-        label: "Planning",
-        icon: "fa-solid fa-calendar-days",
-        color: "#22c55e",
-      },
-    ],
-  },
-  {
-    name: "Productivity",
-    tiles: [
-      {
-        key: "documents",
-        label: "Documents",
-        icon: "fa-regular fa-file-lines",
-        color: "#f97316",
-      },
-      {
-        key: "approvals",
-        label: "Approvals",
-        icon: "fa-solid fa-circle-check",
-        color: "#22c55e",
-      },
-      {
-        key: "knowledge",
-        label: "Knowledge",
-        icon: "fa-solid fa-book",
-        color: "#0ea5e9",
-      },
-    ],
-  },
-  {
-    name: "Supply Chain",
-    tiles: [
-      {
-        key: "inventory",
-        label: "Inventory",
-        icon: "fa-solid fa-box",
-        color: "#a855f7",
-      },
-      {
-        key: "manufacturing",
-        label: "Manufacturing",
-        icon: "fa-solid fa-industry",
-        color: "#10b981",
-      },
-      {
-        key: "purchase",
-        label: "Purchase",
-        icon: "fa-solid fa-cart-shopping",
-        color: "#22c55e",
-      },
-      {
-        key: "maintenance",
-        label: "Maintenance",
-        icon: "fa-solid fa-screwdriver-wrench",
-        color: "#0ea5e9",
-      },
-      {
-        key: "quality",
-        label: "Quality",
-        icon: "fa-solid fa-circle-check",
-        color: "#f59e0b",
-      },
-      {
-        key: "repair",
-        label: "Repair",
-        icon: "fa-solid fa-wrench",
-        color: "#ef4444",
-      },
-    ],
-  },
-  {
-    name: "Marketing",
-    tiles: [
-      {
-        key: "email-marketing",
-        label: "Email Marketing",
-        icon: "fa-solid fa-envelope",
-        color: "#3b82f6",
-      },
-      {
-        key: "sms-marketing",
-        label: "SMS Marketing",
-        icon: "fa-solid fa-comment-dots",
-        color: "#06b6d4",
-      },
-      {
-        key: "survey",
-        label: "Survey",
-        icon: "fa-solid fa-chart-simple",
-        color: "#8b5cf6",
-      },
-      {
-        key: "social-marketing",
-        label: "Social Marketing",
-        icon: "fa-solid fa-heart",
-        color: "#f97316",
-      },
-    ],
-  },
-  {
-    name: "Human Resources",
-    tiles: [
-      {
-        key: "employees",
-        label: "Employees",
-        icon: "fa-solid fa-user-group",
-        color: "#8b5cf6",
-      },
-      {
-        key: "attendances",
-        label: "Attendances",
-        icon: "fa-solid fa-user-check",
-        color: "#f59e0b",
-      },
-      {
-        key: "recruitment",
-        label: "Recruitment",
-        icon: "fa-solid fa-user-plus",
-        color: "#22c55e",
-      },
-      {
-        key: "time-off",
-        label: "Time Off",
-        icon: "fa-solid fa-umbrella-beach",
-        color: "#06b6d4",
-      },
-      {
-        key: "appraisals",
-        label: "Appraisals",
-        icon: "fa-solid fa-star",
-        color: "#f59e0b",
-      },
-      {
-        key: "fleet",
-        label: "Fleet",
-        icon: "fa-solid fa-car-side",
-        color: "#a855f7",
-      },
-      {
-        key: "payroll",
-        label: "Payroll",
-        icon: "fa-solid fa-file-invoice",
-        color: "#ef4444",
-      },
-    ],
-  },
-  {
-    name: "Customizations",
-    tiles: [
-      {
-        key: "studio",
-        label: "Studio",
-        icon: "fa-solid fa-screwdriver-wrench",
-        color: "#06b6d4",
-      },
-    ],
-  },
-];
-
-const MAX_APP_SELECTION = 10;
-
-const ACCOUNT_TYPES = ["demo", "paid"] as const;
-const SUBSCRIPTIONS = ["basic", "standard", "premium", "enterprise"] as const;
-const INDUSTRIES = [
-  "Manufacturing",
-  "Retail",
-  "E-commerce",
-  "Logistics",
-  "FMCG",
-  "Pharmaceuticals",
-  "Automotive",
-  "Electronics",
-  "Textiles",
-  "Cold Storage",
-  "Exam",
-  "Others",
-];
+// App selection logic refined for Elite++ grid
 
 export const GetStarted: React.FC = () => {
+
+  const location = useLocation();
   const navigate = useNavigate();
-  useSearchParams();
+
+  // Parse query params for pre-selected modules
+  const searchParams = new URLSearchParams(location.search);
+  const selectedAppsParam = searchParams.get("selected");
+  const initialModules = selectedAppsParam ? selectedAppsParam.split(",") : [];
 
   const [formData, setFormData] = useState({
     domain: "",
@@ -349,13 +25,16 @@ export const GetStarted: React.FC = () => {
     name: "",
     accountType: "demo" as "demo" | "paid",
     subscription: "starter" as "basic" | "standard" | "premium" | "enterprise",
-    modules: [] as string[],
+    modules: initialModules,
   });
 
   const AVAILABLE_MODULES = [
-    { value: "erp:material_management", label: "Material Management" },
-    { value: "erp:sales_management", label: "Sales Management" },
-    { value: "erp:production_management", label: "Production Management" },
+    { value: "Inventory", label: "Inventory Management", icon: "fa-solid fa-box", color: "#a855f7" },
+    { value: "Sales", label: "Sales & CRM", icon: "fa-solid fa-chart-line", color: "#14b8a6" },
+    { value: "Purchase", label: "Purchase & Procurement", icon: "fa-solid fa-cart-shopping", color: "#22c55e" },
+    { value: "Accounting", label: "Financial Accounting", icon: "fa-solid fa-coins", color: "#10b981" },
+    { value: "HRM", label: "HR & Payroll", icon: "fa-solid fa-user-group", color: "#ef4444" },
+    { value: "Manufacturing", label: "Manufacturing / MRP", icon: "fa-solid fa-industry", color: "#f97316" },
   ];
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
@@ -370,10 +49,8 @@ export const GetStarted: React.FC = () => {
   // API Loading States
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  const [apiSuccess, setApiSuccess] = useState(false);
 
-  const [currentStep, setCurrentStep] = useState(1);
-  const formSectionRef = useRef<HTMLDivElement>(null);
+  const [currentStep] = useState(1);
 
   // Validation
   const validateField = (name: string, value: any) => {
@@ -409,6 +86,14 @@ export const GetStarted: React.FC = () => {
   const handleBlur = (name: string) => {
     setTouched((prev) => ({ ...prev, [name]: true }));
     validateField(name, formData[name as keyof typeof formData]);
+  };
+
+  const handleInputMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
   };
 
   // Step 1 Validation
@@ -475,16 +160,16 @@ export const GetStarted: React.FC = () => {
 
       setProcessingProgress(100);
       setStatusMessage("System Ready!");
-      setApiSuccess(true);
       setShowSuccessState(true);
 
       setTimeout(() => {
-        setCurrentStep(2);
         setIsSubmitting(false);
         setIsCreatingAccount(false);
         setShowProcessingPopup(false);
         setShowSuccessState(false);
         setProcessingProgress(0);
+        // After success, navigate to the dashboard or clear
+        navigate("/dashboard");
       }, 2500);
     } catch (err: any) {
       setApiError(err.message || "Server error, please try again");
@@ -495,29 +180,11 @@ export const GetStarted: React.FC = () => {
     }
   };
 
-  // Toggle App Selection
-  const toggleAppSelection = (appKey: string) => {
-    setFormData((prev) => {
-      const selected = prev.selectedApps.includes(appKey);
-      if (selected) {
-        return {
-          ...prev,
-          selectedApps: prev.selectedApps.filter((k) => k !== appKey),
-        };
-      } else if (prev.selectedApps.length < MAX_APP_SELECTION) {
-        return { ...prev, selectedApps: [...prev.selectedApps, appKey] };
-      }
-      return prev;
-    });
-  };
-
   const getFieldError = (fieldName: string) => {
     return touched[fieldName] && errors[fieldName] ? errors[fieldName] : "";
   };
 
-  const getSelectedAppsCount = () => formData.selectedApps.length;
-
-  const isSelectionLimitReached = getSelectedAppsCount() >= MAX_APP_SELECTION;
+  // getSelectedAppsCount and other app selection functions removed as they are no longer used in the new module grid logic
 
   return (
     <main className="getstarted-fullpage">
@@ -527,10 +194,10 @@ export const GetStarted: React.FC = () => {
             <div className="spinner">
               <i className="fas fa-cog fa-spin fa-3x"></i>
             </div>
-            <h2>Please wait…</h2>
-            <p className="loading-title">We’re preparing your workspace…</p>
+            <h2>Please waitâ€¦</h2>
+            <p className="loading-title">Weâ€™re preparing your workspaceâ€¦</p>
             <p className="loading-subtitle">
-              This process may take 2–3 minutes.
+              This process may take 2â€“3 minutes.
             </p>
             <div className="progress-bar-small">
               <div className="progress-fill-small"></div>
@@ -548,6 +215,31 @@ export const GetStarted: React.FC = () => {
               <span>Actyx Enterprise</span>
             </div>
 
+            {/* Ambient Background Elements */}
+            <div className="auth-ambient-blob blob-1"></div>
+            <div className="auth-ambient-blob blob-2"></div>
+            <div className="auth-ambient-blob blob-3"></div>
+
+            {/* Cinematic Light Streaks */}
+            <div className="auth-light-streaks">
+              <div className="light-streak streak-1"></div>
+              <div className="light-streak streak-2"></div>
+              <div className="light-streak streak-3"></div>
+            </div>
+
+            {/* Floating Particle System */}
+            <div className="auth-particles">
+              {[...Array(40)].map((_, i) => (
+                <div key={i} className={`particle p-${i % 5}`} style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  opacity: 0.1 + Math.random() * 0.4,
+                  transform: `scale(${0.5 + Math.random()})`
+                }}></div>
+              ))}
+            </div>
+
             <h2 className="auth-sidebar-title">
               The foundation of your digital ecosystem.
             </h2>
@@ -555,21 +247,21 @@ export const GetStarted: React.FC = () => {
             <div className="auth-feature-list">
               <div className="auth-feature-item">
                 <div className="auth-feature-icon-wrapper">
-                  <i className="fas fa-rocket" style={{ color: '#4ade80' }}></i>
+                  <i className="fas fa-rocket"></i>
                 </div>
                 <div className="auth-feature-text">Rapid Deployment Architecture</div>
               </div>
 
               <div className="auth-feature-item">
                 <div className="auth-feature-icon-wrapper">
-                  <i className="fas fa-shield-alt" style={{ color: '#4ade80' }}></i>
+                  <i className="fas fa-shield-alt"></i>
                 </div>
                 <div className="auth-feature-text">Bank-Grade Infrastructure</div>
               </div>
 
               <div className="auth-feature-item">
                 <div className="auth-feature-icon-wrapper">
-                  <i className="fas fa-sync" style={{ color: '#4ade80' }}></i>
+                  <i className="fas fa-sync"></i>
                 </div>
                 <div className="auth-feature-text">Real-time Data Synchronization</div>
               </div>
@@ -580,9 +272,27 @@ export const GetStarted: React.FC = () => {
         {/* Form Section - Aligning with Login.tsx structure */}
         <div className="auth-form-container getstarted-content-wrapper">
           <div className="auth-form-box getstarted-form-box">
-            <header className="form-header-full">
-              <h1 className="auth-title">Complete your setup</h1>
+            
+            {/* Step indicator */}
+            <div className="setup-step-indicator animate-slide-up" style={{ animationDelay: '0.05s' }}>
+              <div className="step-item step-done"><div className="step-dot"><i className="fa-solid fa-check"></i></div><span>Account</span></div>
+              <div className="step-line step-done-line"></div>
+              <div className="step-item step-done"><div className="step-dot"><i className="fa-solid fa-check"></i></div><span>Choose Apps</span></div>
+              <div className="step-line step-done-line"></div>
+              <div className="step-item step-active"><div className="step-dot"><span>3</span></div><span>Setup</span></div>
+            </div>
+
+            <header className="form-header-full animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              <div className="auth-title-wrapper">
+                <h1 className="auth-title text-shimmer">Complete your <span className="auth-title-accent">setup</span></h1>
+                <div className="title-glass-accent"></div>
+              </div>
               <p className="auth-subtitle">Just a few more details to customize your workspace.</p>
+              {apiError && (
+                <div className="auth-api-error">
+                  <i className="fas fa-exclamation-circle"></i> {apiError}
+                </div>
+              )}
             </header>
 
             <form
@@ -593,51 +303,70 @@ export const GetStarted: React.FC = () => {
               {currentStep === 1 && (
                 <div className="step-fields animate-fade-in">
                   <div className="form-row">
-                    <div className="field-group-full">
-                      <label className="field-label-full">
-                        Your Name <span className="required">*</span>
-                      </label>
+                    <div 
+                      className="auth-input-group animate-slide-up" 
+                      style={{ animationDelay: '0.1s' }}
+                      onMouseMove={handleInputMouseMove}
+                    >
+                      <i className="fa-regular fa-user auth-input-icon"></i>
                       <input
-                        className={`auth-input ${touched.name && !formData.name ? "error" : ""}`}
-                        placeholder="Rahul Sharma"
+                        id="name"
+                        className={`auth-input-max with-icon ${touched.name && !formData.name ? "error" : ""}`}
+                        placeholder=" "
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
                         onBlur={() => handleBlur("name")}
                       />
+                      <label htmlFor="name" className="auth-label-max">Your Name *</label>
                     </div>
 
-                    <div className="field-group-full">
-                      <label className="field-label-full">Company Email</label>
+                    <div 
+                      className="auth-input-group animate-slide-up" 
+                      style={{ animationDelay: '0.2s' }}
+                      onMouseMove={handleInputMouseMove}
+                    >
+                      <i className="fa-regular fa-envelope auth-input-icon"></i>
                       <input
+                        id="contactEmail"
                         type="email"
-                        className={`auth-input ${getFieldError("contactEmail") ? "error" : ""}`}
-                        placeholder="your@email.com"
+                        className={`auth-input-max with-icon ${getFieldError("contactEmail") ? "error" : ""}`}
+                        placeholder=" "
                         value={formData.contactEmail}
                         onChange={(e) => handleInputChange("contactEmail", e.target.value)}
                         onBlur={() => handleBlur("contactEmail")}
                       />
+                      <label htmlFor="contactEmail" className="auth-label-max">Company Email</label>
                     </div>
                   </div>
 
-                  <div className="field-group-full" style={{ marginBottom: '1.5rem' }}>
-                    <label className="field-label-full">
-                      Company / Godown Name <span className="required">*</span>
-                    </label>
+                  <div 
+                    className="auth-input-group animate-slide-up" 
+                    style={{ animationDelay: '0.3s' }}
+                    onMouseMove={handleInputMouseMove}
+                  >
+                    <i className="fa-regular fa-building auth-input-icon"></i>
                     <input
-                      className={`auth-input ${touched.companyName && !formData.companyName ? "error" : ""}`}
-                      placeholder="Sharma Enterprises"
+                      id="companyName"
+                      className={`auth-input-max with-icon ${touched.companyName && !formData.companyName ? "error" : ""}`}
+                      placeholder=" "
                       value={formData.companyName}
                       onChange={(e) => handleInputChange("companyName", e.target.value)}
                       onBlur={() => handleBlur("companyName")}
                     />
+                    <label htmlFor="companyName" className="auth-label-max">Company / Godown Name *</label>
                   </div>
 
                   <div className="form-row">
-                    <div className="field-group-full">
-                      <label className="field-label-full">Industry</label>
+                    <div 
+                      className="auth-input-group animate-slide-up" 
+                      style={{ animationDelay: '0.4s' }}
+                      onMouseMove={handleInputMouseMove}
+                    >
+                      <i className="fa-solid fa-industry auth-input-icon"></i>
                       <select
+                        id="industry"
                         title="Select Industry"
-                        className="auth-input field-select"
+                        className="auth-input-max field-select with-icon"
                         value={formData.industry}
                         onChange={(e) => handleInputChange("industry", e.target.value)}
                       >
@@ -647,13 +376,19 @@ export const GetStarted: React.FC = () => {
                         <option value="Services">Services</option>
                         <option value="Logistics">Logistics</option>
                       </select>
+                      <label htmlFor="industry" className="auth-label-max">Industry</label>
                     </div>
 
-                    <div className="field-group-full">
-                      <label className="field-label-full">Choose Plan</label>
+                    <div 
+                      className="auth-input-group animate-slide-up" 
+                      style={{ animationDelay: '0.5s' }}
+                      onMouseMove={handleInputMouseMove}
+                    >
+                      <i className="fa-regular fa-credit-card auth-input-icon"></i>
                       <select
+                        id="subscription"
                         title="Choose Subscription Plan"
-                        className="auth-input field-select"
+                        className="auth-input-max field-select with-icon"
                         value={formData.subscription}
                         onChange={(e) => handleInputChange("subscription", e.target.value as any)}
                       >
@@ -662,81 +397,98 @@ export const GetStarted: React.FC = () => {
                         <option value="premium">Premium</option>
                         <option value="enterprise">Enterprise</option>
                       </select>
+                      <label htmlFor="subscription" className="auth-label-max">Choose Plan</label>
                     </div>
                   </div>
 
-                  <div className="field-group-full" style={{ marginBottom: '1.5rem' }}>
+                  <div className="field-group-full animate-slide-up" style={{ animationDelay: '0.6s' }}>
                     <label className="field-label-full">Account Type</label>
-                    <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>
-                        <input
-                          type="radio"
-                          name="accountType"
-                          value="demo"
-                          checked={formData.accountType === "demo"}
-                          onChange={() => handleInputChange("accountType", "demo")}
-                        />
-                        14-Day Free Demo
-                      </label>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>
-                        <input
-                          type="radio"
-                          name="accountType"
-                          value="paid"
-                          checked={formData.accountType === "paid"}
-                          onChange={() => handleInputChange("accountType", "paid")}
-                        />
-                        Paid Account
-                      </label>
+                    <div className="account-type-grid">
+                      <div
+                        className={`account-card-max ${formData.accountType === "demo" ? "active" : ""}`}
+                        onClick={() => handleInputChange("accountType", "demo")}
+                      >
+                        <div className="card-glow"></div>
+                        <div className="account-card-icon"><i className="fa-solid fa-flask"></i></div>
+                        <div className="account-card-content">
+                          <div className="account-card-title">14-Day Free Demo</div>
+                          <div className="account-card-desc">Try all features with sample data. No credit card required.</div>
+                        </div>
+                      </div>
+                      <div
+                        className={`account-card-max ${formData.accountType === "paid" ? "active" : ""}`}
+                        onClick={() => handleInputChange("accountType", "paid")}
+                      >
+                        <div className="card-glow"></div>
+                        <div className="account-card-icon"><i className="fa-solid fa-building-shield"></i></div>
+                        <div className="account-card-content">
+                          <div className="account-card-title">Paid Account</div>
+                          <div className="account-card-desc">Create your official production environment.</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="field-group-full" style={{ marginBottom: '2.5rem' }}>
-                    <div className="legacy-label-row">
-                      <div className="legacy-label-title-group">
-                        <span className="legacy-label-title">Select Modules</span>
-                        <span className="legacy-label-star">*</span>
+                  <div className="field-group-full module-selection-group">
+                    <div className="module-header-max animate-slide-up" style={{ animationDelay: '0.65s' }}>
+                      <div className="module-header-title-row">
+                        <h3 className="module-title-max">Select Modules</h3>
                         {formData.modules.length > 0 && (
-                          <span className="module-counter">Selected: {formData.modules.length}</span>
+                          <span className="module-badge-max">{formData.modules.length}</span>
                         )}
                       </div>
-                      <span className="legacy-label-subtitle">Choose the ERP modules you want to enable</span>
+                      <p className="module-subtitle-max">Tailor your workspace by enabling core business modules.</p>
                     </div>
-                    <select
-                      title="Select ERP Modules"
-                      multiple
-                      className="legacy-multi-select"
-                      value={formData.modules}
-                      onChange={(e) => {
-                        const values = Array.from(e.target.selectedOptions, (option) => option.value);
-                        handleInputChange("modules", values);
-                      }}
-                    >
-                      <option value="Inventory">Inventory Management</option>
-                      <option value="Sales">Sales & CRM</option>
-                      <option value="Purchase">Purchase & Procurement</option>
-                      <option value="Accounting">Financial Accounting</option>
-                      <option value="HRM">HR & Payroll</option>
-                      <option value="Manufacturing">Manufacturing / MRP</option>
-                    </select>
+
+                    <div className="module-grid-elite">
+                      {AVAILABLE_MODULES.map((mod, index) => {
+                        const isSel = formData.modules.includes(mod.value);
+                        return (
+                          <div
+                            key={mod.value}
+                            className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
+                            style={{ animationDelay: `${0.7 + index * 0.1}s` }}
+                            onClick={() => {
+                              const newModules = isSel
+                                ? formData.modules.filter((v) => v !== mod.value)
+                                : [...formData.modules, mod.value];
+                              handleInputChange("modules", newModules);
+                            }}
+                          >
+                            <div className="module-tile-shimmer"></div>
+                            <div className="module-icon-wrapper">
+                              <div className="module-icon-glow" style={{ backgroundColor: isSel ? mod.color : 'transparent' }}></div>
+                              <div className="module-icon" style={{ borderColor: isSel ? mod.color : '#e2e8f0' }}>
+                                <i className={mod.icon} style={{ color: mod.color }} aria-hidden="true"></i>
+                              </div>
+                            </div>
+                            <div className="module-label">{mod.label}</div>
+                            {isSel && (
+                              <div className="module-selection-badge" style={{ backgroundColor: mod.color }}>
+                                <i className="fa-solid fa-check"></i>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               )}
 
               {/* Navigation Buttons */}
-              <div className="form-actions-full" style={{ marginTop: '1rem' }}>
+              <div className="form-actions-full animate-slide-up" style={{ animationDelay: '0.7s' }}>
                 {currentStep === 1 && (
                   <button
                     type="button"
-                    className="auth-primary-btn"
-                    style={{ width: '100%' }}
+                    className="getstarted-btn-max"
                     onClick={handleStep1Next}
                     disabled={!isStep1Valid() || isSubmitting}
                   >
                     {isSubmitting ? (
-                      <>Creating Account... <i className="fas fa-spinner fa-spin"></i></>
+                      <>Processing Your Setup <i className="fas fa-spinner fa-spin"></i></>
                     ) : (
-                      <>Next Step <i className="fas fa-arrow-right"></i></>
+                      <>Complete Setup <i className="fa-solid fa-check-circle"></i></>
                     )}
                   </button>
                 )}

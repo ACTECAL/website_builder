@@ -26,6 +26,7 @@
 .page-hero-subtitle {
     margin-top: 4px;
     line-height: 1.7;
+    text-align: justify;
 }
 
 .page-hero-media-wrapper {

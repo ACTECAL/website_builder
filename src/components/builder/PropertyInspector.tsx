@@ -1,10 +1,56 @@
 import React from 'react';
 import { useBuilder } from './BuilderContext';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Sparkles } from 'lucide-react';
+import { GeminiService } from '../../services/gemini';
 import './PropertyInspector.css';
 
+const PropertyInput: React.FC<{ 
+    label: string; 
+    value: string; 
+    onChange: (val: string) => void;
+    type?: string;
+    textarea?: boolean;
+}> = ({ label, value, onChange, type = "text", textarea = false }) => {
+    const [localValue, setLocalValue] = React.useState(value);
+
+    React.useEffect(() => {
+        setLocalValue(value);
+    }, [value]);
+
+    const handleBlur = () => {
+        if (localValue !== value) {
+            onChange(localValue);
+        }
+    };
+
+    return (
+        <div className="form-group">
+            <label>{label}</label>
+            {textarea ? (
+                <textarea
+                    title={`Edit ${label}`}
+                    value={localValue}
+                    onChange={(e) => setLocalValue(e.target.value)}
+                    onBlur={handleBlur}
+                    rows={4}
+                />
+            ) : (
+                <input
+                    title={`Edit ${label}`}
+                    type={type}
+                    value={localValue}
+                    onChange={(e) => setLocalValue(e.target.value)}
+                    onBlur={handleBlur}
+                />
+            )}
+        </div>
+    );
+};
+
 export const PropertyInspector: React.FC = () => {
-    const { selectedId, blocks, updateBlock, removeBlock } = useBuilder();
+    const { selectedId, blocks, updateBlock, removeBlock, addMessage } = useBuilder();
+    const [reviewing, setReviewing] = React.useState(false);
+    const [apiKey] = React.useState(() => localStorage.getItem('gemini_api_key') || '');
 
     const selectedBlock = blocks.find(b => b.id === selectedId);
 
@@ -34,17 +80,44 @@ export const PropertyInspector: React.FC = () => {
         });
     };
 
+    const runAIReview = async () => {
+        if (!apiKey) {
+            addMessage('model', "Please set your Gemini API key in the chat panel first.");
+            return;
+        }
+        setReviewing(true);
+        try {
+            const service = new GeminiService(apiKey);
+            const feedback = await service.analyzeLayout(blocks);
+            addMessage('model', `AI Design Review:\n${feedback}`);
+        } catch (err: any) {
+            addMessage('model', `AI Review Error: ${err.message}`);
+        } finally {
+            setReviewing(false);
+        }
+    };
+
     return (
         <div className="property-inspector-root">
             <div className="inspector-header">
                 <h3 className="inspector-title">Inspector</h3>
-                <button
-                    onClick={() => removeBlock(selectedBlock.id)}
-                    className="btn-delete"
-                    title="Delete Block"
-                >
-                    <Trash2 size={18} />
-                </button>
+                <div className="header-actions">
+                    <button 
+                        className={`btn-ai-review ${reviewing ? 'loading' : ''}`}
+                        onClick={runAIReview}
+                        disabled={reviewing}
+                        title="AI Design Critique"
+                    >
+                        <Sparkles size={16} />
+                    </button>
+                    <button
+                        onClick={() => removeBlock(selectedId!)}
+                        className="btn-delete"
+                        title="Delete Block"
+                    >
+                        <Trash2 size={18} />
+                    </button>
+                </div>
             </div>
 
             <div className="inspector-body">
@@ -52,71 +125,48 @@ export const PropertyInspector: React.FC = () => {
                     <h4 className="section-label">Content</h4>
 
                     {selectedBlock.type === 'text' && (
-                        <div className="form-group">
-                            <label htmlFor="content-text">Text</label>
-                            <textarea
-                                id="content-text"
-                                value={selectedBlock.content.text}
-                                onChange={(e) => handleContentChange('text', e.target.value)}
-                                rows={4}
-                            />
-                        </div>
+                        <PropertyInput
+                            label="Text"
+                            value={selectedBlock.content.text}
+                            onChange={(val) => handleContentChange('text', val)}
+                            textarea
+                        />
                     )}
 
                     {selectedBlock.type === 'hero' && (
                         <>
-                            <div className="form-group">
-                                <label htmlFor="content-title">Title</label>
-                                <input
-                                    id="content-title"
-                                    type="text"
-                                    value={selectedBlock.content.title}
-                                    onChange={(e) => handleContentChange('title', e.target.value)}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="content-subtitle">Subtitle</label>
-                                <input
-                                    id="content-subtitle"
-                                    type="text"
-                                    value={selectedBlock.content.subtitle}
-                                    onChange={(e) => handleContentChange('subtitle', e.target.value)}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="content-cta">CTA Label</label>
-                                <input
-                                    id="content-cta"
-                                    type="text"
-                                    value={selectedBlock.content.cta}
-                                    onChange={(e) => handleContentChange('cta', e.target.value)}
-                                />
-                            </div>
+                            <PropertyInput
+                                label="Title"
+                                value={selectedBlock.content.title}
+                                onChange={(val) => handleContentChange('title', val)}
+                            />
+                            <PropertyInput
+                                label="Subtitle"
+                                value={selectedBlock.content.subtitle}
+                                onChange={(val) => handleContentChange('subtitle', val)}
+                            />
+                            <PropertyInput
+                                label="CTA Label"
+                                value={selectedBlock.content.cta}
+                                onChange={(val) => handleContentChange('cta', val)}
+                            />
                         </>
                     )}
 
                     {selectedBlock.type === 'button' && (
-                        <div className="form-group">
-                            <label htmlFor="content-label">Label</label>
-                            <input
-                                id="content-label"
-                                type="text"
-                                value={selectedBlock.content.label}
-                                onChange={(e) => handleContentChange('label', e.target.value)}
-                            />
-                        </div>
+                        <PropertyInput
+                            label="Label"
+                            value={selectedBlock.content.label}
+                            onChange={(val) => handleContentChange('label', val)}
+                        />
                     )}
 
                     {selectedBlock.type === 'image' && (
-                        <div className="form-group">
-                            <label htmlFor="content-src">Image URL</label>
-                            <input
-                                id="content-src"
-                                type="text"
-                                value={selectedBlock.content.src}
-                                onChange={(e) => handleContentChange('src', e.target.value)}
-                            />
-                        </div>
+                        <PropertyInput
+                            label="Image URL"
+                            value={selectedBlock.content.src}
+                            onChange={(val) => handleContentChange('src', val)}
+                        />
                     )}
                 </div>
 
@@ -165,6 +215,24 @@ export const PropertyInspector: React.FC = () => {
                             <option value="center">Center</option>
                             <option value="right">Right</option>
                         </select>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Quantum Depth (3D)</label>
+                        <div className="dual-range">
+                            <input
+                                type="range" min="-30" max="30"
+                                value={selectedBlock.styles?.rotateX || 0}
+                                onChange={(e) => handleStyleChange('rotateX', Number(e.target.value))}
+                                title="Rotate X"
+                            />
+                            <input
+                                type="range" min="-30" max="30"
+                                value={selectedBlock.styles?.rotateY || 0}
+                                onChange={(e) => handleStyleChange('rotateY', Number(e.target.value))}
+                                title="Rotate Y"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

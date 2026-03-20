@@ -1,0 +1,156 @@
+.about-section {
+    padding: 40px 24px;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-intro-card {
+    background: rgba(255, 255, 255, 0.1) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    margin-bottom: 30px;
+}
+
+.mt-5 {
+    margin-top: 20px;
+}
+
+.about-intro-text {
+    color: #475569;
+    line-height: 1.9;
+    font-size: 1.1rem;
+    margin: 0;
+    text-align: justify;
+}
+
+.about-story-title {
+    margin-top: 30px;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.about-story-text {
+    color: #475569;
+    line-height: 1.9;
+    font-size: 1.1rem;
+    text-align: justify;
+}
+
+.about-story-text-light {
+    color: white;
+    line-height: 1.9;
+    font-size: 1.1rem;
+    text-align: justify;
+}
+
+.about-principles-title {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.principle-icon-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 3rem;
+}
+
+.principle-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+
+.principle-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0 0 16px;
+    font-weight: 600;
+}
+
+.principle-content {
+    line-height: 1.7;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.about-impact-title {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.impact-item {
+    text-align: center;
+}
+
+.impact-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.impact-text {
+    color: #475569;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.impact-quote {
+    color: #475569;
+    line-height: 1.9;
+    font-size: 1.1rem;
+    text-align: center;
+    font-style: italic;
+    margin: 0;
+}
+
+.about-closing-title {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.about-closing-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    margin-top: 20px;
+}
+
+.about-closing-text {
+    line-height: 1.9;
+    font-size: 1.2rem;
+    margin: 0 0 24px;
+    text-align: justify;
+}
+
+.about-closing-cta {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.about-impact-card {
+    background: rgba(255, 255, 255, 0.1) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    margin-top: 20px;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.text-cyber {
+    color: #00ffff !important;
+}
