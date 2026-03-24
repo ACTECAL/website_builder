@@ -163,26 +163,9 @@ const LearnMore = React.lazy(() => import('./pages/LearnMore').then(m => ({ defa
 const GetStarted = React.lazy(() => import('./pages/GetStarted').then(m => ({ default: m.GetStarted })));
 
 const EliteLoader = () => (
-  <div style={{
-    height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center', background: '#0f172a',
-    position: 'fixed', top: 0, left: 0, zIndex: 99999
-  }}>
-    <div style={{
-      width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid rgba(255,255,255,0.05)',
-      borderTopColor: '#8b5cf6', borderRightColor: '#38bdf8',
-      animation: 'appSpin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite',
-      boxShadow: '0 0 40px rgba(139, 92, 246, 0.3)'
-    }} />
-    <style>{`
-      @keyframes appSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      @keyframes appPulse { 0%, 100% { opacity: 0.4; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
-    `}</style>
-    <div style={{
-      marginTop: '32px', color: '#f8fafc', fontSize: '1rem', fontWeight: 700,
-      letterSpacing: '0.3em', textTransform: 'uppercase', animation: 'appPulse 2s ease-in-out infinite'
-    }}>
+  <div className="elite-loader-container">
+    <div className="elite-loader-spinner" />
+    <div className="elite-loader-text">
       Loading Nexora
     </div>
   </div>

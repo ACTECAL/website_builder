@@ -35,13 +35,13 @@ export const BuilderLayout: React.FC = () => {
     const { device, setDevice, zoom, setZoom, isPreviewMode, setIsPreviewMode } = useBuilder();
 
     return (
-        <div className={`builder-root ${isPreviewMode ? 'preview-active' : ''}`} style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: 'white' }}>
+        <div className={`builder-root ${isPreviewMode ? 'preview-active' : ''}`} style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: '#030712' }}>
             <header className="builder-header">
                 <div className="brand-section">
                     <div className="brand-icon-wrapper">
-                        <span className="brand-icon-text">AI</span>
+                        <span className="brand-icon-text">N</span>
                     </div>
-                    <div className="brand-title-text">Odoo Studio</div>
+                    <div className="brand-title-text">Nexora Studio</div>
                 </div>
 
                 {!isPreviewMode && (

@@ -24,8 +24,9 @@ export const CelestialParticles: React.FC = () => {
         let isVisible = true;
         
         const isLowPower = (window as any).isLowPower || false;
-        const particleCount = isLowPower ? 30 : 60;
-        const connectionDistance = 150;
+        const particleCount = isLowPower ? 20 : 40; // Reduced from 30/60 for smoothness
+        const connectionDistance = 140; // Slightly tighter connections
+        const maxConnectionsPerParticle = 3; // Hard limit for performance
 
         const observer = new IntersectionObserver((entries) => {
             const wasVisible = isVisible;
@@ -48,9 +49,9 @@ export const CelestialParticles: React.FC = () => {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 2 + 1
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    size: Math.random() * 1.5 + 0.8
                 });
             }
         };
@@ -79,7 +80,7 @@ export const CelestialParticles: React.FC = () => {
             }
 
             // Batch draw particles
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
             ctx.beginPath();
             for (let i = 0; i < len; i++) {
                 const p = particles[i];
@@ -89,20 +90,24 @@ export const CelestialParticles: React.FC = () => {
             ctx.fill();
 
             // Batch draw connections
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             
             const connLimitSq = connectionDistance * connectionDistance;
-            const mouseLimitSq = (connectionDistance * 1.5) ** 2;
             const mx = mouseRef.current.x;
             const my = mouseRef.current.y;
+            const mouseLimit = connectionDistance * 1.2;
+            const mouseLimitSq = mouseLimit * mouseLimit;
 
             for (let i = 0; i < len; i++) {
                 const p = particles[i];
+                let connections = 0;
                 
-                // Optimized connection loop
+                // Optimized connection loop with connection limit
                 for (let j = i + 1; j < len; j++) {
+                    if (connections >= maxConnectionsPerParticle) break;
+
                     const p2 = particles[j];
                     const dx = p.x - p2.x;
                     const dy = p.y - p2.y;
@@ -113,13 +118,13 @@ export const CelestialParticles: React.FC = () => {
                     if (distSq < connLimitSq) {
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
+                        connections++;
                     }
                 }
 
-                // Connection to mouse
+                // Connection to mouse (independent of inter-particle limit)
                 const mdx = p.x - mx;
                 const mdy = p.y - my;
-                const mouseLimit = connectionDistance * 1.5;
                 if (Math.abs(mdx) < mouseLimit && Math.abs(mdy) < mouseLimit) {
                     const mdistSq = mdx * mdx + mdy * mdy;
                     if (mdistSq < mouseLimitSq) {

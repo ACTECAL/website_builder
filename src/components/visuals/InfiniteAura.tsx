@@ -47,25 +47,27 @@ export const InfiniteAura: React.FC = () => {
         const render = () => {
             if (!isVisible) return;
 
-            time += 0.002;
+            time += 0.0015; // Slightly slower for elegance
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const drawLiquidLayer = (offsetX: number, offsetY: number, scale: number, alpha: number, speed: number) => {
-                const shiftX = Math.sin(time * speed + offsetX) * 100;
-                const shiftY = Math.cos(time * speed + offsetY) * 100;
+                const shiftX = Math.sin(time * speed + offsetX) * 150;
+                const shiftY = Math.cos(time * speed + offsetY) * 150;
                 
+                // Use a much larger radius to simulate blur in-canvas
                 const gradient = ctx.createRadialGradient(
                     canvas.width / 2 + shiftX,
                     canvas.height / 2 + shiftY,
                     0,
                     canvas.width / 2 + shiftX * 0.5,
                     canvas.height / 2 + shiftY * 0.5,
-                    canvas.width * scale
+                    canvas.width * scale * 1.5 // Increased scale for "software blur"
                 );
 
                 const baseColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}`;
                 gradient.addColorStop(0, `${baseColor}, ${alpha})`);
-                gradient.addColorStop(0.6, `${baseColor}, ${alpha * 0.2})`);
+                gradient.addColorStop(0.4, `${baseColor}, ${alpha * 0.3})`); // Smoother transition
+                gradient.addColorStop(0.8, `${baseColor}, ${alpha * 0.05})`);
                 gradient.addColorStop(1, 'transparent');
 
                 ctx.fillStyle = gradient;
@@ -73,9 +75,9 @@ export const InfiniteAura: React.FC = () => {
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             };
 
-            // Optimization: Only one high-quality layer + one subtle layer
-            drawLiquidLayer(0, 0, 1.2, 0.12, 1.0);
-            drawLiquidLayer(Math.PI, Math.PI, 1.5, 0.05, 0.6);
+            // Optimization: Only two very large, soft layers
+            drawLiquidLayer(0, 0, 1.4, 0.08, 0.8);
+            drawLiquidLayer(Math.PI, Math.PI, 1.8, 0.04, 0.5);
             
             animationFrameId = requestAnimationFrame(render);
         };

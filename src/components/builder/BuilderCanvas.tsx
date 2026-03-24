@@ -78,12 +78,13 @@ export const BuilderCanvas: React.FC = React.memo(() => {
                 )}
             </div>
 
-            {/* Global SVG Filters for Performance */}
+            {/* Global SVG Filters for Performance - Simplified */}
             <svg className="refraction-svg" style={{ position: 'absolute', width: 0, height: 0 }}>
                 <defs>
-                    <filter id="refraction-filter" x="-20%" y="-20%" width="140%" height="140%">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="1" result="noise" />
-                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" />
+                    <filter id="refraction-filter" x="-10%" y="-10%" width="120%" height="120%">
+                        {/* Simplified glass effect without heavy turbulence */}
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
                     </filter>
                 </defs>
             </svg>

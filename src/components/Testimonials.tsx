@@ -102,11 +102,15 @@ export const Testimonials: React.FC<Props> = ({ items }) => {
               position: 'relative',
               transition: 'all 0.3s ease'
             }} onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.transform = 'translateY(-10px) scale(1.02) rotateX(4deg) rotateY(-2deg)';
               e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+              e.currentTarget.style.boxShadow = '0 25px 50px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.3), 0 0 40px rgba(102, 126, 234, 0.4)';
+              e.currentTarget.style.borderColor = 'transparent';
             }} onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.transform = 'translateY(0) scale(1) rotateX(0deg) rotateY(0deg)';
               e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
             }}>
               
               {/* Quote mark */}

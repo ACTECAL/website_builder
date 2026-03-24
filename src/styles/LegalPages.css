@@ -139,3 +139,44 @@
     box-shadow: 0 15px 30px rgba(56, 189, 248, 0.3);
     color: #ffffff;
 }
+
+/* =========================================
+   Layout Utilities for Grid Pages
+   ========================================= */
+.legal-grid-300 { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 32px; }
+.legal-grid-320 { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: 32px; }
+.legal-grid-280 { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 32px; }
+.legal-grid-split { display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr; align-items: stretch; margin-top: 24px; }
+
+/* Item Layouts */
+.legal-flex-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.legal-icon-box { padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; }
+.legal-icon-box.blue { color: #38bdf8; }
+.legal-icon-box.purple { color: #a855f7; }
+.legal-card-title { margin: 0; font-size: 1.25rem; color: #f8fafc; }
+.legal-card-title-lg { margin: 0; font-size: 1.3rem; color: #f8fafc; }
+
+/* Lists & Text */
+.legal-list { margin: 0; padding-left: 20px; color: #94a3b8; line-height: 1.8; }
+.legal-list-item { margin-bottom: 12px; }
+.legal-list-item-sm { margin-bottom: 8px; }
+.legal-desc-text { margin: 0 0 24px 0; color: #94a3b8; line-height: 1.7; flex: 1; }
+
+/* Badges */
+.legal-badge-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.legal-badge-purple { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; padding: 4px 12px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+/* Steps */
+.legal-step-card { background: rgba(255, 255, 255, 0.02); border-radius: 20px; padding: 32px; border: 1px solid rgba(255, 255, 255, 0.05); border-left: 4px solid #38bdf8; }
+.legal-step-title { margin: 0 0 12px 0; font-size: 1.1rem; color: #f8fafc; }
+.legal-step-desc { margin: 0; color: #94a3b8; line-height: 1.7; }
+
+/* CTA Block */
+.legal-cta-section { margin-top: 64px; text-align: center; }
+.legal-cta-card { display: inline-block; max-width: 800px; padding: 48px 32px; }
+.legal-cta-icon { color: #ec4899; margin: 0 auto 24px auto; display: block; }
+.legal-cta-title { font-size: 1.8rem; color: #f8fafc; margin-bottom: 16px; }
+.legal-cta-title-lg { font-size: 2rem; color: #f8fafc; margin-bottom: 16px; }
+.legal-cta-desc { color: #94a3b8; line-height: 1.7; margin-bottom: 32px; font-size: 1.1rem; }
+.legal-contact-btn.pink { background: #ec4899; border: none; }
+.legal-contact-btn.blue { background: #38bdf8; color: #0f172a; border: none; }

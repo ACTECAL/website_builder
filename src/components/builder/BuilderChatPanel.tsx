@@ -136,7 +136,7 @@ export const BuilderChatPanel: React.FC = () => {
                 <div className="chat-logo-icon">
                     <Sparkles size={18} />
                 </div>
-                <div className="chat-title">AI Builder</div>
+                <div className="chat-title">Nexora AI Architect</div>
             </div>
 
             {/* Chat Area */}

@@ -145,89 +145,98 @@ const FEATURES = [
   },
 ];
 
-const GALLERY_IMAGES = [
-  'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=800&auto=format&fit=crop',
-];
 
 export const Features: React.FC = () => {
   return (
     <main className="features-page">
+      {/* Elite++ Aurora System */}
+      <div className="features-aurora-glow features-aurora-purple"></div>
+      <div className="features-aurora-glow features-aurora-cyan"></div>
+      <div className="features-aurora-glow features-aurora-indigo"></div>
+
       <PageHero
         title="Nexora Features"
-        subtitle="At Nexora, we don't just give you tools—we give you a connected system that grows with your business."
-        imageUrl="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
+        subtitle="Experience the next generation of connected enterprise intelligence."
+        imageUrl="https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=1200&auto=format&fit=crop"
       />
 
       {/* Intro */}
       <div className="features-intro">
         <div className="features-intro-badge">
           <i className="fa-solid fa-bolt" />
-          10 Core Capabilities
+          Quantum Ecosystem
         </div>
         <h2 className="features-intro-title">
-          Everything your business needs, <span>beautifully unified</span>
+          Unified Intelligence, <span>Limitless Scale</span>
         </h2>
         <p className="features-intro-subtitle">
-          Every feature is built with a single goal: to help your team move faster and work as one.
+          Every capability is woven into a single fluid fabric, designed to accelerate your global operations.
         </p>
       </div>
 
-      {/* Gallery */}
-      <div className="features-gallery">
-        {GALLERY_IMAGES.map((src, i) => (
-          <img key={i} src={src} alt="" className="gallery-img" loading="lazy" />
-        ))}
-      </div>
-
-      {/* Feature Cards */}
+      {/* Feature Bento Grid */}
       <section className="features-grid-section">
-        <div className="features-grid">
-          {FEATURES.map((f) => (
+        <div className="features-bento-grid">
+          {FEATURES.map((f, i) => (
             <div
               key={f.num}
-              className="feature-showcase-card"
+              className={`feature-bento-card card-size-${(i % 5) + 1}`}
               style={{
                 '--card-accent': f.accent,
                 '--card-icon-bg': f.iconBg,
                 '--card-icon-color': f.iconColor,
               } as React.CSSProperties}
             >
-              <div className="fsc-number">Feature {f.num}</div>
-              <div className="fsc-icon" style={{ background: f.iconBg, color: f.iconColor }}>
-                <i className={f.icon} />
+              <div className="fsc-glass-depth"></div>
+              <div className="fsc-content">
+                <div className="fsc-header">
+                  <div className="fsc-number">Capability {f.num}</div>
+                  <div className="fsc-icon-aura" style={{ '--icon-color': f.iconColor } as any}>
+                    <i className={f.icon} />
+                  </div>
+                </div>
+
+                <h3 className="fsc-title">{f.title}</h3>
+                
+                <div className="fsc-benefit-badge">
+                  <i className="fa-solid fa-sparkles" />
+                  {f.benefit}
+                </div>
+
+                <div className="fsc-description-box">
+                    <ul className="fsc-bullets">
+                        {f.bullets.map((b, bi) => (
+                        <li key={bi}>{b}</li>
+                        ))}
+                    </ul>
+                </div>
               </div>
-              <h3 className="fsc-title">{f.title}</h3>
-              <div className="fsc-benefit">
-                <i className="fa-solid fa-star" />
-                {f.benefit}
-              </div>
-              <ul className="fsc-bullets">
-                {f.bullets.map((b, bi) => (
-                  <li key={bi}>{b}</li>
-                ))}
-              </ul>
+              
+              {/* Decorative corner glow */}
+              <div className="fsc-corner-glow"></div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <div className="features-cta-banner">
-        <div className="features-cta-inner">
-          <p className="cta-eyebrow">Ready to Transform?</p>
-          <h2 className="cta-title">The operating system for your business</h2>
-          <p className="cta-subtitle">Modular, open, secure, and delightfully easy to use.</p>
-          <div className="cta-btn-row">
-            <a href="/get-started" className="cta-btn-primary">
-              Get Started Free <i className="fa-solid fa-arrow-right" />
-            </a>
-            <a href="/solutions" className="cta-btn-secondary">
-              Explore Solutions <i className="fa-solid fa-compass" />
-            </a>
+      {/* CTA Section */}
+      <div className="features-cta-section">
+        <div className="features-cta-capsule">
+          <div className="cta-glass-blur"></div>
+          <div className="cta-content">
+            <span className="cta-eyebrow">The Evolution of ERP</span>
+            <h2 className="cta-title">Build your empire on Nexora</h2>
+            <p className="cta-subtitle">Deploy the world's most advanced business OS in minutes.</p>
+            <div className="cta-btn-group">
+                <a href="/get-started" className="cta-premium-btn">
+                Initialize Nexora <i className="fa-solid fa-chevron-right" />
+                </a>
+                <a href="/solutions" className="cta-ghost-btn">
+                View Architecture
+                </a>
+            </div>
           </div>
+          <div className="cta-aurora"></div>
         </div>
       </div>
     </main>
