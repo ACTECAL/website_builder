@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import { appModules } from "../data/appModules";
+import { PRODUCTS } from "../data/products";
 import { AdvisorDropdown } from '../components/AdvisorDropdown';
 import {
   Cpu,
@@ -513,67 +514,46 @@ const Home: React.FC = () => {
                   <span className="dot yellow"></span>
                   <span className="dot green"></span>
                 </div>
-                <div className="window-tabs">
-                  <button className={activeTab === 'Dashboard' ? 'active' : ''} onClick={() => setActiveTab('Dashboard')}>Overview</button>
-                  <button className={activeTab === 'Analytics' ? 'active' : ''} onClick={() => setActiveTab('Analytics')}>Performance</button>
-                </div>
-              </div>              <div className="window-body">
-                <div className="dashboard-particles">
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className="nano-p" style={{ 
-                      left: `${Math.random() * 100}%`, 
-                      top: `${Math.random() * 100}%`,
-                      animationDelay: `${i * 1.5}s`
-                    }}></div>
-                  ))}
-                </div>
-
-                <div className="mock-summary">
-                  <div className="summary-item">
-                    <span className="dot-pulse"></span>
-                    Live Activity
-                  </div>
-                </div>
-                <div className="mock-grid">
-                  <MockDataDisplay />
-                  <div className="mock-chart-container">
-                    <div className="chart-header">
-                      <span>Weekly Sales</span>
-                      <div className="chart-legend">
-                        <span className="legend-dot current"></span>
-                        <span className="legend-dot past"></span>
-                      </div>
+              </div>
+              <div className="mock-grid">
+                <MockDataDisplay />
+                <div className="mock-chart-container">
+                  <div className="chart-header">
+                    <span>Weekly Sales</span>
+                    <div className="chart-legend">
+                      <span className="legend-dot current"></span>
+                      <span className="legend-dot past"></span>
                     </div>
-                    
-                    <svg className="line-chart-svg" viewBox="0 0 400 120">
-                      <defs>
-                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.2" />
-                          <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      <path 
-                        className="chart-path-area" 
-                        d="M0,120 L0,80 Q50,40 100,70 T200,50 T300,90 T400,40 L400,120 Z" 
-                        fill="url(#chartGradient)"
-                      />
-                      <path 
-                        className="chart-path-main" 
-                        d="M0,80 Q50,40 100,70 T200,50 T300,90 T400,40" 
-                      />
-                      <circle className="chart-node" cx="100" cy="70" />
-                      <circle className="chart-node node-pulse" cx="100" cy="70" />
-                      <circle className="chart-node delay-500" cx="200" cy="50" />
-                      <circle className="chart-node" cx="300" cy="90" style={{ animationDelay: '1s' }} />
-                    </svg>
                   </div>
+                  
+                  <svg className="line-chart-svg" viewBox="0 0 400 120">
+                    <defs>
+                      <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path 
+                      className="chart-path-area" 
+                      d="M0,120 L0,80 Q50,40 100,70 T200,50 T300,90 T400,40 L400,120 Z" 
+                      fill="url(#chartGradient)"
+                    />
+                    <path 
+                      className="chart-path-main" 
+                      d="M0,80 Q50,40 100,70 T200,50 T300,90 T400,40" 
+                    />
+                    <circle className="chart-node" cx="100" cy="70" />
+                    <circle className="chart-node node-pulse" cx="100" cy="70" />
+                    <circle className="chart-node delay-500" cx="200" cy="50" />
+                    <circle className="chart-node" cx="300" cy="90" style={{ animationDelay: '1s' }} />
+                  </svg>
                 </div>
-
-                {/* Ghost Cursor Simulation */}
-                <GhostCursor />
               </div>
 
+              {/* Ghost Cursor Simulation */}
+              <GhostCursor />
             </div>
+
           </div>
         </div>
         <svg className="section-divider-organic" viewBox="0 0 1440 120">
@@ -581,6 +561,42 @@ const Home: React.FC = () => {
         </svg>
       </section>
 
+      {/* Products Grid Section */}
+      <section className="apps-section">
+        <div className="apps-container">
+          <div className="section-header">
+            <h2>Our Products</h2>
+            <p>Choose the right solution for your business</p>
+          </div>
+          <div className="apps-grid">
+            {PRODUCTS.map((product: any) => (
+              <Link
+                key={product.name}
+                to={`/get-started?product=${encodeURIComponent(product.name)}`}
+                className="app-card"
+                style={{ textDecoration: "none" }}
+              >
+                <div
+                  className="app-icon-wrapper"
+                  style={{
+                    background: `rgba(16, 185, 129, 0.1)`,
+                    border: "2px solid #10b981",
+                  }}
+                >
+                  <i
+                    className="fa-solid fa-cube"
+                    style={{
+                      fontSize: "2.8rem",
+                      color: "#10b981",
+                    }}
+                  />
+                </div>
+                <h3 className="app-name">{product.name}</h3>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* App Grid Section */}
       <section className="apps-grid-section reveal-on-scroll">

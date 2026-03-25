@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/GetStarted.css";
+import { PRODUCTS } from "../data/products";
 
 // App selection logic refined for Elite++ grid
 
 export const GetStarted: React.FC = () => {
-
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Parse query params for pre-selected modules
+  // Parse query params for pre-selected modules and product
   const searchParams = new URLSearchParams(location.search);
   const selectedAppsParam = searchParams.get("selected");
+  const selectedProductParam = searchParams.get("product");
   const initialModules = selectedAppsParam ? selectedAppsParam.split(",") : [];
+
+  // Find selected product from URL
+  const selectedProduct = PRODUCTS.find(
+    (p) => p.name.toLowerCase() === selectedProductParam?.toLowerCase()
+  );
 
   const [formData, setFormData] = useState({
     domain: "",
@@ -26,21 +32,54 @@ export const GetStarted: React.FC = () => {
     accountType: "demo" as "demo" | "paid",
     subscription: "starter" as "basic" | "standard" | "premium" | "enterprise",
     modules: initialModules,
+    selectedProduct: selectedProductParam || "",
   });
 
   const AVAILABLE_MODULES = [
-    { value: "Inventory", label: "Inventory Management", icon: "fa-solid fa-box", color: "#a855f7" },
-    { value: "Sales", label: "Sales & CRM", icon: "fa-solid fa-chart-line", color: "#14b8a6" },
-    { value: "Purchase", label: "Purchase & Procurement", icon: "fa-solid fa-cart-shopping", color: "#22c55e" },
-    { value: "Accounting", label: "Financial Accounting", icon: "fa-solid fa-coins", color: "#10b981" },
-    { value: "HRM", label: "HR & Payroll", icon: "fa-solid fa-user-group", color: "#ef4444" },
-    { value: "Manufacturing", label: "Manufacturing / MRP", icon: "fa-solid fa-industry", color: "#f97316" },
+    {
+      value: "Inventory",
+      label: "Inventory Management",
+      icon: "fa-solid fa-box",
+      color: "#a855f7",
+    },
+    {
+      value: "Sales",
+      label: "Sales & CRM",
+      icon: "fa-solid fa-chart-line",
+      color: "#14b8a6",
+    },
+    {
+      value: "Purchase",
+      label: "Purchase & Procurement",
+      icon: "fa-solid fa-cart-shopping",
+      color: "#22c55e",
+    },
+    {
+      value: "Accounting",
+      label: "Financial Accounting",
+      icon: "fa-solid fa-coins",
+      color: "#10b981",
+    },
+    {
+      value: "HRM",
+      label: "HR & Payroll",
+      icon: "fa-solid fa-user-group",
+      color: "#ef4444",
+    },
+    {
+      value: "Manufacturing",
+      label: "Manufacturing / MRP",
+      icon: "fa-solid fa-industry",
+      color: "#f97316",
+    },
   ];
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [showProcessingPopup, setShowProcessingPopup] = useState(false);
   const [processingProgress, setProcessingProgress] = useState(0);
-  const [statusMessage, setStatusMessage] = useState("Initializing Configuration...");
+  const [statusMessage, setStatusMessage] = useState(
+    "Initializing Configuration...",
+  );
   const [showSuccessState, setShowSuccessState] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -75,6 +114,24 @@ export const GetStarted: React.FC = () => {
         delete newErrors[name];
       }
     }
+    // Product validation
+    if (name === "selectedProduct") {
+      if (!value) {
+        newErrors[name] = "Please select a product";
+      } else {
+        delete newErrors[name];
+      }
+    }
+
+    // Modules validation
+    if (name === "modules") {
+      if (!Array.isArray(value) || value.length === 0) {
+        newErrors[name] = "Please select at least one module";
+      } else {
+        delete newErrors[name];
+      }
+    }
+
     setErrors(newErrors);
   };
 
@@ -92,8 +149,8 @@ export const GetStarted: React.FC = () => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
-    e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
+    e.currentTarget.style.setProperty("--mouse-x", `${x}%`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}%`);
   };
 
   // Step 1 Validation
@@ -101,8 +158,12 @@ export const GetStarted: React.FC = () => {
     return (
       formData.name.trim() &&
       formData.companyName.trim() &&
+      formData.selectedProduct &&
+      formData.modules.length > 0 &&
       !errors.name &&
-      !errors.companyName
+      !errors.companyName &&
+      !errors.selectedProduct &&
+      !errors.modules
     );
   };
 
@@ -119,13 +180,13 @@ export const GetStarted: React.FC = () => {
     try {
       // Simulate multi-stage progress while waiting for API
       const progressSimulation = async () => {
-        await new Promise(r => setTimeout(r, 800));
+        await new Promise((r) => setTimeout(r, 800));
         setProcessingProgress(35);
         setStatusMessage("Provisioning ERP Instance...");
-        await new Promise(r => setTimeout(r, 1200));
+        await new Promise((r) => setTimeout(r, 1200));
         setProcessingProgress(65);
         setStatusMessage("Configuring Selected Modules...");
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise((r) => setTimeout(r, 1000));
         setProcessingProgress(90);
         setStatusMessage("Finalizing Setup...");
       };
@@ -149,7 +210,7 @@ export const GetStarted: React.FC = () => {
           },
           body: JSON.stringify(payload),
         }),
-        progressSimulation()
+        progressSimulation(),
       ]);
 
       const result = await response.json();
@@ -211,7 +272,18 @@ export const GetStarted: React.FC = () => {
         <div className="auth-sidebar">
           <div className="auth-sidebar-content">
             <div className="auth-glass-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m5 12 5 5L20 7" />
+              </svg>
               <span>Actyx Enterprise</span>
             </div>
 
@@ -230,13 +302,17 @@ export const GetStarted: React.FC = () => {
             {/* Floating Particle System */}
             <div className="auth-particles">
               {[...Array(40)].map((_, i) => (
-                <div key={i} className={`particle p-${i % 5}`} style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  opacity: 0.1 + Math.random() * 0.4,
-                  transform: `scale(${0.5 + Math.random()})`
-                }}></div>
+                <div
+                  key={i}
+                  className={`particle p-${i % 5}`}
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 5}s`,
+                    opacity: 0.1 + Math.random() * 0.4,
+                    transform: `scale(${0.5 + Math.random()})`,
+                  }}
+                ></div>
               ))}
             </div>
 
@@ -249,21 +325,27 @@ export const GetStarted: React.FC = () => {
                 <div className="auth-feature-icon-wrapper">
                   <i className="fas fa-rocket"></i>
                 </div>
-                <div className="auth-feature-text">Rapid Deployment Architecture</div>
+                <div className="auth-feature-text">
+                  Rapid Deployment Architecture
+                </div>
               </div>
 
               <div className="auth-feature-item">
                 <div className="auth-feature-icon-wrapper">
                   <i className="fas fa-shield-alt"></i>
                 </div>
-                <div className="auth-feature-text">Bank-Grade Infrastructure</div>
+                <div className="auth-feature-text">
+                  Bank-Grade Infrastructure
+                </div>
               </div>
 
               <div className="auth-feature-item">
                 <div className="auth-feature-icon-wrapper">
                   <i className="fas fa-sync"></i>
                 </div>
-                <div className="auth-feature-text">Real-time Data Synchronization</div>
+                <div className="auth-feature-text">
+                  Real-time Data Synchronization
+                </div>
               </div>
             </div>
           </div>
@@ -272,22 +354,46 @@ export const GetStarted: React.FC = () => {
         {/* Form Section - Aligning with Login.tsx structure */}
         <div className="auth-form-container getstarted-content-wrapper">
           <div className="auth-form-box getstarted-form-box">
-            
             {/* Step indicator */}
-            <div className="setup-step-indicator animate-slide-up" style={{ animationDelay: '0.05s' }}>
-              <div className="step-item step-done"><div className="step-dot"><i className="fa-solid fa-check"></i></div><span>Account</span></div>
+            <div
+              className="setup-step-indicator animate-slide-up"
+              style={{ animationDelay: "0.05s" }}
+            >
+              <div className="step-item step-done">
+                <div className="step-dot">
+                  <i className="fa-solid fa-check"></i>
+                </div>
+                <span>Account</span>
+              </div>
               <div className="step-line step-done-line"></div>
-              <div className="step-item step-done"><div className="step-dot"><i className="fa-solid fa-check"></i></div><span>Choose Apps</span></div>
+              <div className="step-item step-done">
+                <div className="step-dot">
+                  <i className="fa-solid fa-check"></i>
+                </div>
+                <span>Choose Apps</span>
+              </div>
               <div className="step-line step-done-line"></div>
-              <div className="step-item step-active"><div className="step-dot"><span>3</span></div><span>Setup</span></div>
+              <div className="step-item step-active">
+                <div className="step-dot">
+                  <span>3</span>
+                </div>
+                <span>Setup</span>
+              </div>
             </div>
 
-            <header className="form-header-full animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <header
+              className="form-header-full animate-slide-up"
+              style={{ animationDelay: "0.1s" }}
+            >
               <div className="auth-title-wrapper">
-                <h1 className="auth-title text-shimmer">Complete your <span className="auth-title-accent">setup</span></h1>
+                <h1 className="auth-title text-shimmer">
+                  Complete your <span className="auth-title-accent">setup</span>
+                </h1>
                 <div className="title-glass-accent"></div>
               </div>
-              <p className="auth-subtitle">Just a few more details to customize your workspace.</p>
+              <p className="auth-subtitle">
+                Just a few more details to customize your workspace.
+              </p>
               {apiError && (
                 <div className="auth-api-error">
                   <i className="fas fa-exclamation-circle"></i> {apiError}
@@ -295,17 +401,14 @@ export const GetStarted: React.FC = () => {
               )}
             </header>
 
-            <form
-              className="auth-form"
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
               {/* STEP 1 - Company Details */}
               {currentStep === 1 && (
                 <div className="step-fields animate-fade-in">
                   <div className="form-row">
-                    <div 
-                      className="auth-input-group animate-slide-up" 
-                      style={{ animationDelay: '0.1s' }}
+                    <div
+                      className="auth-input-group animate-slide-up"
+                      style={{ animationDelay: "0.1s" }}
                       onMouseMove={handleInputMouseMove}
                     >
                       <i className="fa-regular fa-user auth-input-icon"></i>
@@ -314,15 +417,19 @@ export const GetStarted: React.FC = () => {
                         className={`auth-input-max with-icon ${touched.name && !formData.name ? "error" : ""}`}
                         placeholder=" "
                         value={formData.name}
-                        onChange={(e) => handleInputChange("name", e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("name", e.target.value)
+                        }
                         onBlur={() => handleBlur("name")}
                       />
-                      <label htmlFor="name" className="auth-label-max">Your Name *</label>
+                      <label htmlFor="name" className="auth-label-max">
+                        Your Name *
+                      </label>
                     </div>
 
-                    <div 
-                      className="auth-input-group animate-slide-up" 
-                      style={{ animationDelay: '0.2s' }}
+                    <div
+                      className="auth-input-group animate-slide-up"
+                      style={{ animationDelay: "0.2s" }}
                       onMouseMove={handleInputMouseMove}
                     >
                       <i className="fa-regular fa-envelope auth-input-icon"></i>
@@ -332,16 +439,20 @@ export const GetStarted: React.FC = () => {
                         className={`auth-input-max with-icon ${getFieldError("contactEmail") ? "error" : ""}`}
                         placeholder=" "
                         value={formData.contactEmail}
-                        onChange={(e) => handleInputChange("contactEmail", e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("contactEmail", e.target.value)
+                        }
                         onBlur={() => handleBlur("contactEmail")}
                       />
-                      <label htmlFor="contactEmail" className="auth-label-max">Company Email</label>
+                      <label htmlFor="contactEmail" className="auth-label-max">
+                        Company Email
+                      </label>
                     </div>
                   </div>
 
-                  <div 
-                    className="auth-input-group animate-slide-up" 
-                    style={{ animationDelay: '0.3s' }}
+                  <div
+                    className="auth-input-group animate-slide-up"
+                    style={{ animationDelay: "0.3s" }}
                     onMouseMove={handleInputMouseMove}
                   >
                     <i className="fa-regular fa-building auth-input-icon"></i>
@@ -350,38 +461,51 @@ export const GetStarted: React.FC = () => {
                       className={`auth-input-max with-icon ${touched.companyName && !formData.companyName ? "error" : ""}`}
                       placeholder=" "
                       value={formData.companyName}
-                      onChange={(e) => handleInputChange("companyName", e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("companyName", e.target.value)
+                      }
                       onBlur={() => handleBlur("companyName")}
                     />
-                    <label htmlFor="companyName" className="auth-label-max">Company / Godown Name *</label>
+                    <label htmlFor="companyName" className="auth-label-max">
+                      Company / Godown Name *
+                    </label>
                   </div>
 
                   <div className="form-row">
-                    <div 
-                      className="auth-input-group animate-slide-up" 
-                      style={{ animationDelay: '0.4s' }}
+                    <div
+                      className="auth-input-group animate-slide-up"
+                      style={{ animationDelay: "0.4s" }}
                       onMouseMove={handleInputMouseMove}
                     >
                       <i className="fa-solid fa-industry auth-input-icon"></i>
                       <select
-                        id="industry"
-                        title="Select Industry"
-                        className="auth-input-max field-select with-icon"
-                        value={formData.industry}
-                        onChange={(e) => handleInputChange("industry", e.target.value)}
+                        id="selectedProduct"
+                        title="Select Product"
+                        className={`auth-input-max field-select with-icon ${getFieldError("selectedProduct") ? "error" : ""}`}
+                        value={formData.selectedProduct}
+                        onChange={(e) =>
+                          handleInputChange("selectedProduct", e.target.value)
+                        }
+                        onBlur={() => handleBlur("selectedProduct")}
                       >
-                        <option value="">Select Industry</option>
-                        <option value="Manufacturing">Manufacturing</option>
-                        <option value="Retail">Retail</option>
-                        <option value="Services">Services</option>
-                        <option value="Logistics">Logistics</option>
+                        <option value="">Select Product</option>
+                        {PRODUCTS.map((product) => (
+                          <option key={product.name} value={product.name}>
+                            {product.name.toUpperCase()}
+                          </option>
+                        ))}
                       </select>
-                      <label htmlFor="industry" className="auth-label-max">Industry</label>
+                      <label htmlFor="selectedProduct" className="auth-label-max">
+                        Select Product *
+                      </label>
+                      {getFieldError("selectedProduct") && (
+                        <div className="field-error">{getFieldError("selectedProduct")}</div>
+                      )}
                     </div>
 
-                    <div 
-                      className="auth-input-group animate-slide-up" 
-                      style={{ animationDelay: '0.5s' }}
+                    <div
+                      className="auth-input-group animate-slide-up"
+                      style={{ animationDelay: "0.5s" }}
                       onMouseMove={handleInputMouseMove}
                     >
                       <i className="fa-regular fa-credit-card auth-input-icon"></i>
@@ -390,18 +514,28 @@ export const GetStarted: React.FC = () => {
                         title="Choose Subscription Plan"
                         className="auth-input-max field-select with-icon"
                         value={formData.subscription}
-                        onChange={(e) => handleInputChange("subscription", e.target.value as any)}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "subscription",
+                            e.target.value as any,
+                          )
+                        }
                       >
                         <option value="basic">Basic</option>
                         <option value="standard">Standard</option>
                         <option value="premium">Premium</option>
                         <option value="enterprise">Enterprise</option>
                       </select>
-                      <label htmlFor="subscription" className="auth-label-max">Choose Plan</label>
+                      <label htmlFor="subscription" className="auth-label-max">
+                        Choose Plan
+                      </label>
                     </div>
                   </div>
 
-                  <div className="field-group-full animate-slide-up" style={{ animationDelay: '0.6s' }}>
+                  <div
+                    className="field-group-full animate-slide-up"
+                    style={{ animationDelay: "0.6s" }}
+                  >
                     <label className="field-label-full">Account Type</label>
                     <div className="account-type-grid">
                       <div
@@ -409,10 +543,17 @@ export const GetStarted: React.FC = () => {
                         onClick={() => handleInputChange("accountType", "demo")}
                       >
                         <div className="card-glow"></div>
-                        <div className="account-card-icon"><i className="fa-solid fa-flask"></i></div>
+                        <div className="account-card-icon">
+                          <i className="fa-solid fa-flask"></i>
+                        </div>
                         <div className="account-card-content">
-                          <div className="account-card-title">14-Day Free Demo</div>
-                          <div className="account-card-desc">Try all features with sample data. No credit card required.</div>
+                          <div className="account-card-title">
+                            14-Day Free Demo
+                          </div>
+                          <div className="account-card-desc">
+                            Try all features with sample data. No credit card
+                            required.
+                          </div>
                         </div>
                       </div>
                       <div
@@ -420,24 +561,35 @@ export const GetStarted: React.FC = () => {
                         onClick={() => handleInputChange("accountType", "paid")}
                       >
                         <div className="card-glow"></div>
-                        <div className="account-card-icon"><i className="fa-solid fa-building-shield"></i></div>
+                        <div className="account-card-icon">
+                          <i className="fa-solid fa-building-shield"></i>
+                        </div>
                         <div className="account-card-content">
                           <div className="account-card-title">Paid Account</div>
-                          <div className="account-card-desc">Create your official production environment.</div>
+                          <div className="account-card-desc">
+                            Create your official production environment.
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="field-group-full module-selection-group">
-                    <div className="module-header-max animate-slide-up" style={{ animationDelay: '0.65s' }}>
+                    <div
+                      className="module-header-max animate-slide-up"
+                      style={{ animationDelay: "0.65s" }}
+                    >
                       <div className="module-header-title-row">
                         <h3 className="module-title-max">Select Modules</h3>
                         {formData.modules.length > 0 && (
-                          <span className="module-badge-max">{formData.modules.length}</span>
+                          <span className="module-badge-max">
+                            {formData.modules.length}
+                          </span>
                         )}
                       </div>
-                      <p className="module-subtitle-max">Tailor your workspace by enabling core business modules.</p>
+                      <p className="module-subtitle-max">
+                        Tailor your workspace by enabling core business modules.
+                      </p>
                     </div>
 
                     <div className="module-grid-elite">
@@ -450,21 +602,42 @@ export const GetStarted: React.FC = () => {
                             style={{ animationDelay: `${0.7 + index * 0.1}s` }}
                             onClick={() => {
                               const newModules = isSel
-                                ? formData.modules.filter((v) => v !== mod.value)
+                                ? formData.modules.filter(
+                                    (v) => v !== mod.value,
+                                  )
                                 : [...formData.modules, mod.value];
                               handleInputChange("modules", newModules);
                             }}
                           >
                             <div className="module-tile-shimmer"></div>
                             <div className="module-icon-wrapper">
-                              <div className="module-icon-glow" style={{ backgroundColor: isSel ? mod.color : 'transparent' }}></div>
-                              <div className="module-icon" style={{ borderColor: isSel ? mod.color : '#e2e8f0' }}>
-                                <i className={mod.icon} style={{ color: mod.color }} aria-hidden="true"></i>
+                              <div
+                                className="module-icon-glow"
+                                style={{
+                                  backgroundColor: isSel
+                                    ? mod.color
+                                    : "transparent",
+                                }}
+                              ></div>
+                              <div
+                                className="module-icon"
+                                style={{
+                                  borderColor: isSel ? mod.color : "#e2e8f0",
+                                }}
+                              >
+                                <i
+                                  className={mod.icon}
+                                  style={{ color: mod.color }}
+                                  aria-hidden="true"
+                                ></i>
                               </div>
                             </div>
                             <div className="module-label">{mod.label}</div>
                             {isSel && (
-                              <div className="module-selection-badge" style={{ backgroundColor: mod.color }}>
+                              <div
+                                className="module-selection-badge"
+                                style={{ backgroundColor: mod.color }}
+                              >
                                 <i className="fa-solid fa-check"></i>
                               </div>
                             )}
@@ -477,7 +650,10 @@ export const GetStarted: React.FC = () => {
               )}
 
               {/* Navigation Buttons */}
-              <div className="form-actions-full animate-slide-up" style={{ animationDelay: '0.7s' }}>
+              <div
+                className="form-actions-full animate-slide-up"
+                style={{ animationDelay: "0.7s" }}
+              >
                 {currentStep === 1 && (
                   <button
                     type="button"
@@ -486,9 +662,15 @@ export const GetStarted: React.FC = () => {
                     disabled={!isStep1Valid() || isSubmitting}
                   >
                     {isSubmitting ? (
-                      <>Processing Your Setup <i className="fas fa-spinner fa-spin"></i></>
+                      <>
+                        Processing Your Setup{" "}
+                        <i className="fas fa-spinner fa-spin"></i>
+                      </>
                     ) : (
-                      <>Complete Setup <i className="fa-solid fa-check-circle"></i></>
+                      <>
+                        Complete Setup{" "}
+                        <i className="fa-solid fa-check-circle"></i>
+                      </>
                     )}
                   </button>
                 )}
@@ -518,9 +700,23 @@ export const GetStarted: React.FC = () => {
             ) : (
               <div className="success-state">
                 <div className="success-checkmark-container">
-                  <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle className="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
-                    <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                  <svg
+                    className="checkmark"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 52 52"
+                  >
+                    <circle
+                      className="checkmark-circle"
+                      cx="26"
+                      cy="26"
+                      r="25"
+                      fill="none"
+                    />
+                    <path
+                      className="checkmark-check"
+                      fill="none"
+                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                    />
                   </svg>
                 </div>
                 <h2 className="success-title">Success!</h2>

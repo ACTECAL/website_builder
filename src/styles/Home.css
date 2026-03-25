@@ -12,6 +12,48 @@
   --mouse-n-y: 0;
 }
 
+/* Product Card Styles */
+.product-info {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+
+.product-modules-count,
+.product-plans-count {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.product-description {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.module-tag {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.module-more {
+  background: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 :root {
   --temporal-accent: #f5f3ff;
   --temporal-glow: rgba(221, 214, 254, 0.3);
