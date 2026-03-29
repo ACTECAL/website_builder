@@ -7,7 +7,7 @@ export const ServicesForPartners: React.FC = () => {
       <section style={{ padding: '40px 24px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <h1 style={{ margin: 0 }}>Services for Partners</h1>
-          <p style={{ color: '#4a5568', marginTop: 10 }}>Enablement, co‑selling, and technical resources to help you win with BizSuite.</p>
+          <p style={{ color: '#4a5568', marginTop: 10 }}>Enablement, co‑selling, and technical resources to help you win with Nexora.</p>
         </div>
       </section>
       <section style={{ padding: '10px 24px 60px' }}>

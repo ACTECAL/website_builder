@@ -356,43 +356,52 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #e9edf4;
-  border: 2px solid #e9edf4;
+  background: rgba(233, 237, 244, 0.5);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 800;
   color: #94a3b8;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .setup-step-indicator .step-item.step-active .step-dot {
   background: #0f172a;
   border-color: #0f172a;
   color: #fff;
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2), 0 0 0 4px rgba(15, 23, 42, 0.05);
 }
 
 .setup-step-indicator .step-item.step-done .step-dot {
   background: #22c55e;
   border-color: #22c55e;
   color: #fff;
-  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
-  font-size: 0.7rem;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+  animation: dotSuccessPulse 2s infinite;
+}
+
+@keyframes dotSuccessPulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
 .setup-step-indicator .step-line {
   flex: 1;
-  height: 2px;
+  height: 1px;
   background: #e9edf4;
   margin: -20px 12px 0;
   min-width: 40px;
+  transition: background 0.6s;
 }
 
 .setup-step-indicator .step-done-line {
-  background: #22c55e;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(90deg, #22c55e, #10b981);
+  height: 2px;
 }
 
 /* Module Grid Elite++ */
@@ -556,13 +565,13 @@
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(226, 232, 240, 0.8);
   border-radius: 16px;
-  padding: 24px;
+  padding: 16px;
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   position: relative;
   overflow: hidden;
 }
@@ -596,14 +605,14 @@
 }
 
 .account-card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   background: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   color: #64748b;
   flex-shrink: 0;
   transition: background-color 0.4s, color 0.4s, box-shadow 0.4s;
@@ -638,12 +647,12 @@
 }
 
 .account-card-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
 }
 
 .account-card-desc {
-  font-size: 12px;
+  font-size: 11px;
   opacity: 0.7;
 }
 
@@ -863,7 +872,7 @@
   position: relative;
   width: 100%;
   padding: 18px;
-  background: #0f172a;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: white;
   border: none;
   border-radius: 16px;
@@ -871,32 +880,38 @@
   font-weight: 700;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-}
-
-.getstarted-btn-max:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
+  box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.2);
 }
 
 .getstarted-btn-max::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-  transform: translate(-100%, -100%);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.getstarted-btn-max:hover::after {
-  transform: translate(0, 0);
+.getstarted-btn-max:hover:not(:disabled)::after {
+  left: 100%;
+}
+
+.getstarted-btn-max:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.01);
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.4);
 }
 
 .getstarted-btn-max:disabled {

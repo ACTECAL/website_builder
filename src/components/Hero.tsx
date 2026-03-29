@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BizSuiteLogoExact } from './BizSuiteLogo';
+import { NexoraLogoExact } from './NexoraLogo';
 import { FloatingElement, FloatingElements } from './FloatingElements';
 import { CreativeCard } from './CreativeCard';
 import { AdvisorDropdown } from './AdvisorDropdown';
@@ -67,7 +67,7 @@ export const Hero: React.FC<Props> = ({ data }) => {
             }}
           >
             <FloatingElement direction="up" intensity="low" duration={4}>
-              <BizSuiteLogoExact className="hero-logo" />
+              <NexoraLogoExact className="hero-logo" />
             </FloatingElement>
           </div>
 

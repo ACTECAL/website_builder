@@ -34,7 +34,7 @@ export const Docs: React.FC = () => {
   return (
     <SupportLayout
       title="Documentation"
-      intro="Your definitive guide for configuring, extending, and launching BizSuite in production."
+      intro="Your definitive guide for configuring, extending, and launching Nexora in production."
     >
       <div style={{ display: 'grid', gap: 30 }}>
         <section style={sectionStyle}>
@@ -43,14 +43,14 @@ export const Docs: React.FC = () => {
             Install the SDK with your package manager and initialize the client with your workspace credentials.
           </p>
           <div style={codeBlockStyle}>
-            npm install @bizsuite/sdk
+            npm install @Nexora/sdk
 
             {`
-import { createClient } from '@bizsuite/sdk';
+import { createClient } from '@Nexora/sdk';
 
 const client = createClient({
-  baseUrl: 'https://api.bizsuite.com',
-  apiKey: process.env.BIZSUITE_KEY,
+  baseUrl: 'https://api.Nexora.com',
+  apiKey: process.env.Nexora_KEY,
 });
 
 await client.auth.verify();
@@ -102,10 +102,10 @@ await client.auth.verify();
               description: 'Recipes for embedding dashboards, syncing data, and orchestrating workflows.'
             },{
               title: 'CLI Reference',
-              description: 'Automate provisioning, migrations, and monitoring via the BizSuite CLI.'
+              description: 'Automate provisioning, migrations, and monitoring via the Nexora CLI.'
             },{
               title: 'Design Tokens',
-              description: 'Align the BizSuite UI kit with your brand using the Figma-ready token library.'
+              description: 'Align the Nexora UI kit with your brand using the Figma-ready token library.'
             }].map((resource) => (
               <div
                 key={resource.title}

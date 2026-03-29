@@ -8,7 +8,7 @@ export const Translations: React.FC = () => {
     <main>
       <PageHero
         title="Translations"
-        subtitle="Help localize BizSuite in your language and improve access worldwide."
+        subtitle="Help localize Nexora in your language and improve access worldwide."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

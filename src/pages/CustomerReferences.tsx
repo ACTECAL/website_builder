@@ -17,7 +17,7 @@ export const CustomerReferences: React.FC = () => {
     <main>
       <PageHero
         title="Customer References"
-        subtitle="See how teams use BizSuite to simplify operations and grow."
+        subtitle="See how teams use Nexora to simplify operations and grow."
         emphasize="none"
       />
       <section className="references-section">

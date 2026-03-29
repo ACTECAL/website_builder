@@ -7,7 +7,7 @@ export const RegisterYourAccountingFirm: React.FC = () => {
     <main>
       <PageHero
         title="Register your Accounting Firm"
-        subtitle="Join our directory to reach new clients and collaborate on BizSuite implementations."
+        subtitle="Join our directory to reach new clients and collaborate on Nexora implementations."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

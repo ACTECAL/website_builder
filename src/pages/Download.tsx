@@ -8,7 +8,7 @@ export const Download: React.FC = () => {
     <main>
       <PageHero
         title="Download"
-        subtitle="Get BizSuite for your platform. Choose the edition that fits your needs."
+        subtitle="Get Nexora for your platform. Choose the edition that fits your needs."
         emphasize="none"
       />
       <section className="download-section">

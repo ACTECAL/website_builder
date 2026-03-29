@@ -100,7 +100,7 @@ export const AppDirectory: React.FC<AppDirectoryProps> = ({ items = DEFAULT_APPS
           <span className="mock-toggle">
             <span className="mock-toggle-knob" />
           </span>
-          <span className="toggle-label">Imagine without bizsuite</span>
+          <span className="toggle-label">Imagine without Nexora</span>
         </div>
         <a href="/solutions" className="view-all-apps-link">
           View all Apps <span>→</span>

@@ -114,8 +114,8 @@ export const posts: Post[] = [
   },
   {
     slug: 'design-apps-teams-love',
-    title: 'Inside BizSuite: How We Design Apps Teams Love Using',
-    category: 'BizSuite Product & Community',
+    title: 'Inside Nexora: How We Design Apps Teams Love Using',
+    category: 'Nexora Product & Community',
     summary: 'A behind-the-scenes look at our design principles and customer feedback loops.',
     date: '2025-01-30',
     read: '6 min',

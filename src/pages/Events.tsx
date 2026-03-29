@@ -4,7 +4,7 @@ import { PageHero } from '../components/PageHero';
 
 export const Events: React.FC = () => {
   const items = [
-    { title: 'BizSuite Annual Conference 2025', date: 'Mar 15-17, 2025', location: 'San Francisco, CA', link: '/events/annual-conference' },
+    { title: 'Nexora Annual Conference 2025', date: 'Mar 15-17, 2025', location: 'San Francisco, CA', link: '/events/annual-conference' },
     { title: 'Community Meetup - New York', date: 'Nov 20, 2024', location: 'New York, NY', link: '/events/ny-meetup' },
     { title: 'Webinar: Accounting Automation', date: 'Dec 2, 2024', location: 'Online', link: '/events/accounting-webinar' },
   ];

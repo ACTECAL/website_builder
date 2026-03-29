@@ -6,10 +6,10 @@
   height: 64px;
   border-radius: 50%;
   border: none;
-  background: #030712;
+  background: var(--color-primary); /* Primary purple for high contrast */
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(113, 75, 103, 0.3);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -83,9 +83,9 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(180%);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -96,16 +96,19 @@
 .ai-panel {
   width: min(520px, 90vw);
   height: min(720px, 85vh);
-  background: rgba(3, 7, 18, 0.9);
-  border-radius: 28px;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  backdrop-filter: blur(32px) saturate(200%);
+  border-radius: 32px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   animation: aiPanelOpen 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  -webkit-backdrop-filter: blur(32px);
-  backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 @keyframes aiPanelOpen {
@@ -118,8 +121,8 @@
   display: flex;
   align-items: center;
   padding: 12px 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .ai-header-tabs .tab {
@@ -129,7 +132,7 @@
   padding: 16px;
   font-size: 14px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--color-muted);
   cursor: pointer;
   border-bottom: 2px solid transparent;
   display: flex;
@@ -146,16 +149,15 @@
 }
 
 .ai-header-tabs .tab.active {
-  color: #fff;
-  border-bottom-color: var(--aura-primary);
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
 .ai-close-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   font-size: 24px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-muted);
   cursor: pointer;
   padding: 0;
   width: 40px;
@@ -193,14 +195,13 @@
 .ai-input {
   width: 100%;
   padding: 14px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   font-size: 16px;
   outline: none;
-  background: rgba(255, 255, 255, 0.03);
-  color: #fff;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  color: var(--color-text);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .ai-input:focus {
@@ -221,27 +222,27 @@
   display: block;
   padding: 16px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .ai-result-item a:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(168, 85, 247, 0.3);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--color-primary);
   transform: translateX(10px);
 }
 
 .ai-result-item .title {
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text);
   font-size: 15px;
 }
 
 .ai-result-item .meta {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-muted);
   margin-top: 4px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -284,14 +285,14 @@
 
 .chat-welcome h3 {
   margin: 0 0 12px;
-  color: #fff;
+  color: var(--color-text);
   font-size: 22px;
   font-weight: 850;
   letter-spacing: -0.02em;
 }
 
 .chat-welcome p {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-muted);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -310,17 +311,17 @@
 }
 
 .message.user .bubble {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(56, 189, 248, 0.1) 100%);
+  background: var(--color-primary);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom-right-radius: 4px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(113, 75, 103, 0.2);
 }
 
 .message.model .bubble {
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--color-text);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom-left-radius: 4px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -346,22 +347,22 @@
 
 .chat-input-area {
   padding: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .chat-input {
   flex: 1;
   padding: 14px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   font-size: 15px;
   outline: none;
-  background: rgba(255, 255, 255, 0.03);
-  color: #fff;
+  background: #ffffff;
+  color: var(--color-text);
   transition: all 0.3s ease;
 }
 
@@ -379,14 +380,14 @@
 }
 
 .icon-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--color-muted);
 }
 
 .icon-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
 }
 
 .send-btn {
@@ -404,7 +405,7 @@
 
 /* API Key Config - Elite */
 .api-key-config {
-  background: rgba(3, 7, 18, 0.95);
+  background: rgba(255, 255, 255, 0.9);
   padding: 40px;
   position: absolute;
   top: 0;

@@ -7,7 +7,7 @@ export const ScaleUpBusinessGame: React.FC = () => {
     <main>
       <PageHero
         title="Scale Up! Business Game"
-        subtitle="A hands-on simulation to practice strategy, operations, and finance with BizSuite."
+        subtitle="A hands-on simulation to practice strategy, operations, and finance with Nexora."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

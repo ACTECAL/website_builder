@@ -210,7 +210,7 @@ const GhostCursor: React.FC = React.memo(() => {
 });
 
 const Home: React.FC = () => {
-  const [activeTab, setActiveTab ] = useState<"Dashboard" | "Analytics" | "Reports">("Dashboard");
+  // Removed unused activeTab state
   const [isIntegrated, setIsIntegrated] = useState(true);
   const [isCursorActive, setIsCursorActive] = useState(false);
   const [isCinematic, setIsCinematic] = useState(false);
@@ -584,7 +584,12 @@ const Home: React.FC = () => {
                   }}
                 >
                   <i
-                    className="fa-solid fa-cube"
+                    className={`fa-solid ${
+                      product.name === 'ERP' ? 'fa-shield-halved' :
+                      product.name === 'Exam' ? 'fa-graduation-cap' :
+                      product.name === 'Account' ? 'fa-calculator' :
+                      product.name === 'Website' ? 'fa-globe' : 'fa-cube'
+                    }`}
                     style={{
                       fontSize: "2.8rem",
                       color: "#10b981",

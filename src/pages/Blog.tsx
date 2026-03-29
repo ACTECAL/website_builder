@@ -8,7 +8,7 @@ export const Blog: React.FC = () => {
   return (
     <main>
       <PageHero
-        title="BizSuite Blog"
+        title="Nexora Blog"
         subtitle="Ideas on productivity, modular platforms, automation, and the future of work."
         imageUrl="https://images.unsplash.com/photo-1496302662116-35cc4f36df92?q=80&w=1200&auto=format&fit=crop"
       />

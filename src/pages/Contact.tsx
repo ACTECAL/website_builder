@@ -24,7 +24,7 @@ export const Contact: React.FC = () => {
 
     setIsError(false);
     setStatusMessage('Thank you for your feedback.');
-    window.location.href = `mailto:aarunim.nn.pant@gmail.com?subject=BizSuite%20Contact%20Request&body=${encodeURIComponent(`From: ${emailValue}`)}`;
+    window.location.href = `mailto:aarunim.nn.pant@gmail.com?subject=Nexora%20Contact%20Request&body=${encodeURIComponent(`From: ${emailValue}`)}`;
   };
 
   return (
@@ -84,7 +84,7 @@ export const Contact: React.FC = () => {
               {[
                 {
                   label: 'Email',
-                  value: 'hello@bizsuite.app'
+                  value: 'hello@Nexora.app'
                 },
                 {
                   label: 'Phone',

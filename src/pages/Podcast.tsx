@@ -6,7 +6,7 @@ export const Podcast: React.FC = () => {
   const episodes = [
     { title: 'Scaling ERP for SMBs', desc: 'Strategies to scale operations without complexity.', slug: 'scaling-erp-smbs' },
     { title: 'Automation in Accounting', desc: 'How to automate routine accounting tasks safely.', slug: 'automation-accounting' },
-    { title: 'Integrations 101', desc: 'Connecting BizSuite with your existing tools.', slug: 'integrations-101' },
+    { title: 'Integrations 101', desc: 'Connecting Nexora with your existing tools.', slug: 'integrations-101' },
   ];
   return (
     <main>

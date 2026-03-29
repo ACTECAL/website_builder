@@ -3,16 +3,16 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08),
-                0 1px 0 rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.95); /* High-luminosity glass */
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1),
+                0 1px 0 rgba(0, 0, 0, 0.02);
     padding: 36px 0 0;
     z-index: 999;
     cursor: default;
-    animation: menuDropIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: menuDropIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes menuDropIn {
@@ -97,8 +97,8 @@
 }
 
 .industries-mega-menu-footer {
-    border-top: 1px solid rgba(226, 232, 240, 0.7);
-    background: rgba(248, 250, 252, 0.8);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(249, 250, 251, 0.8);
     padding: 16px 32px;
     text-align: center;
     display: flex;

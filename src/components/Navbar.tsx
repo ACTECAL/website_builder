@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AppsMegaMenu } from './AppsMegaMenu';
 import { IndustriesMegaMenu } from './IndustriesMegaMenu';
+import { NexoraLogo } from './NexoraLogo';
 import '../styles/Navbar.css';
 
 const Navbar: React.FC = () => {
@@ -129,8 +130,7 @@ const Navbar: React.FC = () => {
     <nav className={`navbar ${isHidden ? 'hidden' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         {/* Brand */}
         <Link to="/" className="nav-logo">
-          <span>Nexora</span>
-          <div className="brand-dot" />
+          <NexoraLogo size={36} />
         </Link>
 
         {/* Desktop Links */}

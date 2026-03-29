@@ -7,7 +7,7 @@ export const VisitOdoo: React.FC = () => {
     <main>
       <PageHero
         title="Visit Odoo"
-        subtitle="Plan a visit to our campus. Meet the team, attend workshops, and explore BizSuite in action."
+        subtitle="Plan a visit to our campus. Meet the team, attend workshops, and explore Nexora in action."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

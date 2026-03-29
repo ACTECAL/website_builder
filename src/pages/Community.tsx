@@ -612,10 +612,10 @@ export const Community: React.FC = () => {
           </div>
           <div className="repos-grid reveal-content">
             {[
-              { name: 'bizsuite-core', desc: 'Core modules and utilities', url: 'https://github.com/example/bizsuite-core' },
-              { name: 'bizsuite-ui', desc: 'UI components and patterns', url: 'https://github.com/example/bizsuite-ui' },
-              { name: 'bizsuite-integrations', desc: 'Official integrations', url: 'https://github.com/example/bizsuite-integrations' },
-              { name: 'bizsuite-examples', desc: 'Starter projects and examples', url: 'https://github.com/example/bizsuite-examples' },
+              { name: 'Nexora-core', desc: 'Core modules and utilities', url: 'https://github.com/example/Nexora-core' },
+              { name: 'Nexora-ui', desc: 'UI components and patterns', url: 'https://github.com/example/Nexora-ui' },
+              { name: 'Nexora-integrations', desc: 'Official integrations', url: 'https://github.com/example/Nexora-integrations' },
+              { name: 'Nexora-examples', desc: 'Starter projects and examples', url: 'https://github.com/example/Nexora-examples' },
             ].map((repo) => (
               <a key={repo.name} href={repo.url} className="repo-card" target="_blank" rel="noreferrer" onMouseEnter={(e) => createSpark(e.clientX, e.clientY, '#22c55e')}>
                 <div className="specular-highlight"></div>

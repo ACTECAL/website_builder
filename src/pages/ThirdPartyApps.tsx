@@ -9,7 +9,7 @@ export const ThirdPartyApps: React.FC = () => {
         <main>
             <PageHero
                 title="Third Party Apps"
-                subtitle="Extend BizSuite with thousands of community-built integrations."
+                subtitle="Extend Nexora with thousands of community-built integrations."
                 emphasize="none"
             />
             <section className="platform-page-section">
@@ -23,7 +23,7 @@ export const ThirdPartyApps: React.FC = () => {
                         ]}
                     />
                     <p className="platform-page-benefit">
-                        <strong>Benefit:</strong> No need to change your existing tech stack. BizSuite adapts to you.
+                        <strong>Benefit:</strong> No need to change your existing tech stack. Nexora adapts to you.
                     </p>
 
                     <div className="platform-page-actions">

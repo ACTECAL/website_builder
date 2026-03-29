@@ -12,17 +12,17 @@ const cardStyle: React.CSSProperties = {
 const Press: React.FC = () => {
   const announcements = [
     {
-      title: 'BizSuite raises Series C to accelerate AI copilots',
+      title: 'Nexora raises Series C to accelerate AI copilots',
       date: 'May 8, 2025',
       summary: 'We secured $75M in funding led by Insight Partners to expand industry-specific automation models.'
     },
     {
-      title: 'Introducing BizSuite Manufacturing Cloud',
+      title: 'Introducing Nexora Manufacturing Cloud',
       date: 'April 22, 2025',
       summary: 'A dedicated package for factories and supply chain teams with digital twins and predictive maintenance.'
     },
     {
-      title: 'BizSuite earns ISO 27001 and SOC 2 Type II',
+      title: 'Nexora earns ISO 27001 and SOC 2 Type II',
       date: 'March 5, 2025',
       summary: 'Independent audits confirm our commitment to enterprise security and compliance.'
     }
@@ -39,7 +39,7 @@ const Press: React.FC = () => {
     },
     {
       title: 'Product screenshots',
-      description: 'High-resolution imagery of the BizSuite platform across mobile and desktop.'
+      description: 'High-resolution imagery of the Nexora platform across mobile and desktop.'
     }
   ];
 
@@ -47,7 +47,7 @@ const Press: React.FC = () => {
     <main>
       <PageHero
         title="Press & Media"
-        subtitle="Stay up to date with BizSuite news, download press assets, and get in touch with our communications team."
+        subtitle="Stay up to date with Nexora news, download press assets, and get in touch with our communications team."
         emphasize="none"
       />
 
@@ -67,7 +67,7 @@ const Press: React.FC = () => {
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center', marginBottom: 32 }}>
           <h3 style={{ fontSize: '1.8rem', marginBottom: 12 }}>Press toolkit</h3>
           <p style={{ color: '#4a5568', lineHeight: 1.7 }}>
-            We make it easy to cover BizSuite. Download assets or connect with our communications leads for media inquiries.
+            We make it easy to cover Nexora. Download assets or connect with our communications leads for media inquiries.
           </p>
         </div>
         <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gap: 24, gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
@@ -87,7 +87,7 @@ const Press: React.FC = () => {
             Reach our communications team for interviews, speaker requests, or data-driven stories about the future of business operations.
           </p>
           <a
-            href="mailto:press@bizsuite.app"
+            href="mailto:press@Nexora.app"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -101,7 +101,7 @@ const Press: React.FC = () => {
               boxShadow: '0 12px 28px rgba(255,107,0,0.25)'
             }}
           >
-            Email press@bizsuite.app →
+            Email press@Nexora.app →
           </a>
         </div>
       </section>

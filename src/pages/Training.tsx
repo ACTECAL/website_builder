@@ -7,7 +7,7 @@ export const Training: React.FC = () => {
     <main>
       <PageHero
         title="Training"
-        subtitle="Learn BizSuite with guided courses, workshops, and hands-on labs."
+        subtitle="Learn Nexora with guided courses, workshops, and hands-on labs."
         emphasize="none"
       />
 

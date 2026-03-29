@@ -2,10 +2,10 @@
 
 .features-page {
     min-height: 100vh;
-    background: #030712;
+    background: #ffffff;
     position: relative;
     overflow: hidden;
-    color: #fff;
+    color: var(--color-text);
 }
 
 /* Elite++ Triple Aurora System */
@@ -15,7 +15,7 @@
     height: 600px;
     border-radius: 50%;
     filter: blur(120px);
-    opacity: 0.15;
+    opacity: 0.08;
     pointer-events: none;
     z-index: 0;
 }
@@ -70,10 +70,10 @@
 .features-intro-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 900;
-    color: #fff;
+    color: var(--color-text);
     line-height: 1.1;
     letter-spacing: -0.04em;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .features-intro-title span {
@@ -85,8 +85,8 @@
 
 .features-intro-subtitle {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.6;
+    color: var(--color-muted);
+    line-height: 1.7;
     max-width: 720px;
     margin: 0 auto;
 }
@@ -119,22 +119,23 @@
 .feature-bento-card {
     position: relative;
     border-radius: 32px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
 .fsc-glass-depth {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(3, 7, 18, 0.4);
+    background: rgba(255, 255, 255, 0.6);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     backdrop-filter: blur(24px) saturate(180%);
     z-index: 0;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1);
 }
 
 .fsc-content {
@@ -233,9 +234,9 @@
 }
 
 .fsc-bullets li {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.4);
-    line-height: 1.5;
+    font-size: 1rem;
+    color: var(--color-muted);
+    line-height: 1.6;
     display: flex;
     align-items: flex-start;
     gap: 12px;
@@ -243,7 +244,7 @@
 
 .fsc-bullets li::before {
     content: '→';
-    color: var(--card-icon-color, #a855f7);
+    color: var(--color-primary);
     font-weight: 900;
 }
 
@@ -279,7 +280,7 @@
 .cta-glass-blur {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(3, 7, 18, 0.6);
+    background: rgba(255, 255, 255, 0.8);
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
     z-index: 0;
@@ -303,7 +304,7 @@
 .cta-title {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 950;
-    color: #fff;
+    color: var(--color-text);
     letter-spacing: -0.05em;
     margin-bottom: 24px;
     line-height: 1;
@@ -311,7 +312,7 @@
 
 .cta-subtitle {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-muted);
     max-width: 600px;
     margin: 0 auto 48px;
 }
@@ -324,13 +325,13 @@
 
 .cta-premium-btn {
     padding: 18px 36px;
-    background: #fff;
-    color: #030712;
+    background: var(--color-primary);
+    color: #fff;
     border-radius: 16px;
     font-weight: 800;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(113, 75, 103, 0.2);
 }
 
 .cta-premium-btn:hover {

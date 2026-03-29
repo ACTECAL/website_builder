@@ -34,7 +34,7 @@ export const HelpCenter: React.FC = () => {
     },
     {
       question: "How do I contact customer support?",
-      answer: "You can reach our support team through the contact form on our website, by emailing support@bizsuite.com, or through the live chat feature available on our dashboard during business hours."
+      answer: "You can reach our support team through the contact form on our website, by emailing support@Nexora.com, or through the live chat feature available on our dashboard during business hours."
     },
     {
       question: "Is my data secure?",
@@ -134,7 +134,7 @@ export const HelpCenter: React.FC = () => {
               Contact Support
             </Link>
             <a
-              href="mailto:support@bizsuite.com"
+              href="mailto:support@Nexora.com"
               className="help-btn-secondary"
             >
               Email Us
