@@ -203,7 +203,7 @@ export const GetStarted: React.FC = () => {
       };
 
       const [response] = await Promise.all([
-        fetch("https://api-dev.actecal.com/admin/erp/create", {
+        fetch("https://api-admindev.actecal.com/admin/erp/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
