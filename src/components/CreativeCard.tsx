@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 interface CreativeCardProps {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export const CreativeCard: React.FC<CreativeCardProps> = ({
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    
+
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -53,18 +53,18 @@ export const CreativeCard: React.FC<CreativeCardProps> = ({
           border: '1px solid rgba(255, 255, 255, 0.2)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
         };
-      
+
       case 'neon':
         return {
           ...baseStyles,
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           border: '2px solid transparent',
           backgroundClip: 'padding-box',
-          boxShadow: isHovered 
+          boxShadow: isHovered
             ? '0 0 20px rgba(102, 126, 234, 0.5), 0 0 40px rgba(102, 126, 234, 0.3)'
             : '0 4px 20px rgba(0, 0, 0, 0.1)'
         };
-      
+
       case 'gradient':
         return {
           ...baseStyles,
@@ -73,7 +73,7 @@ export const CreativeCard: React.FC<CreativeCardProps> = ({
           animation: isHovered ? 'gradientShift 2s ease infinite' : 'none',
           boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)'
         };
-      
+
       case 'minimal':
         return {
           ...baseStyles,
@@ -81,18 +81,18 @@ export const CreativeCard: React.FC<CreativeCardProps> = ({
           border: '1px solid #e2e8f0',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         };
-      
+
       case 'cyber':
         return {
           ...baseStyles,
           background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%)',
           border: '1px solid #00ffff',
-          boxShadow: isHovered 
+          boxShadow: isHovered
             ? '0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.1)'
             : '0 4px 20px rgba(0, 0, 0, 0.3)',
           color: '#00ffff'
         };
-      
+
       default:
         return baseStyles;
     }
@@ -107,31 +107,31 @@ export const CreativeCard: React.FC<CreativeCardProps> = ({
           transform: 'translateY(-8px)',
           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)'
         };
-      
+
       case 'glow':
         return {
           boxShadow: '0 0 30px rgba(102, 126, 234, 0.4)',
           transform: 'scale(1.02)'
         };
-      
+
       case 'rotate':
         return {
           transform: 'rotateY(5deg) rotateX(5deg)',
           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)'
         };
-      
+
       case 'scale':
         return {
           transform: 'scale(1.05)',
           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)'
         };
-      
+
       case 'slide':
         return {
           transform: 'translateX(10px)',
           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)'
         };
-      
+
       default:
         return {};
     }
@@ -180,9 +180,9 @@ export const CreativeCard: React.FC<CreativeCardProps> = ({
           animation: 'cyberScan 2s linear infinite'
         }} />
       )}
-      
+
       {children}
-      
+
       <style>{`
         @keyframes gradientShift {
           0% { background-position: 0% 50%; }

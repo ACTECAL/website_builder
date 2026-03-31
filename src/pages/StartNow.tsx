@@ -29,7 +29,6 @@ export const StartNow: React.FC = () => {
     interest: 'Use it in my company'
   });
   const [submitting, setSubmitting] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -75,31 +74,6 @@ export const StartNow: React.FC = () => {
 
   const qsSelected = selected.length ? `?selected=${encodeURIComponent(selected.join(','))}` : '';
 
-  if (saved) {
-    return (
-      <main>
-        <section className="section" style={{ background: 'var(--surface)' }}>
-          <div className="container" style={{ maxWidth: 720 }}>
-            <div style={{
-              background: '#fff',
-              border: '1px solid #e5e7eb',
-              borderRadius: 14,
-              padding: '22px 24px',
-              boxShadow: '0 14px 36px rgba(0,0,0,0.08)',
-              textAlign: 'center'
-            }}>
-              <h2 style={{ margin: '0 0 10px' }}>You're all set!</h2>
-              <p style={{ margin: 0, color: '#64748b' }}>We saved your details{` and `}{selected.length} {selected.length === 1 ? 'app' : 'apps'} selection.</p>
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
-                <Link to={`/apps${selected.length ? `?selected=${encodeURIComponent(selected.join(','))}` : ''}`} className="btn btn-primary">Go to Apps</Link>
-                <Link to="/" className="btn">Back to Home</Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    );
-  }
 
   return (
     <main>
@@ -134,6 +108,7 @@ export const StartNow: React.FC = () => {
             <input
               name="name"
               placeholder="First and Last Name"
+              aria-label="First and Last Name"
               value={form.name}
               onChange={onChange}
               style={fieldStyle}
@@ -142,6 +117,7 @@ export const StartNow: React.FC = () => {
             <input
               name="company"
               placeholder="Company Name"
+              aria-label="Company Name"
               value={form.company}
               onChange={onChange}
               style={fieldStyle}
@@ -152,6 +128,7 @@ export const StartNow: React.FC = () => {
                 name="email"
                 type="email"
                 placeholder="Email"
+                aria-label="Email"
                 value={form.email}
                 onChange={onChange}
                 style={fieldStyle}
@@ -161,31 +138,32 @@ export const StartNow: React.FC = () => {
                 name="phone"
                 type="tel"
                 placeholder="+91"
+                aria-label="Phone number"
                 value={form.phone}
                 onChange={onChange}
                 style={fieldStyle}
               />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <select name="country" value={form.country} onChange={onChange} style={fieldStyle}>
-                {['India','United States','United Kingdom','Germany','France','Spain','Australia','Canada'].map(c => (
+              <select name="country" aria-label="Country" value={form.country} onChange={onChange} style={fieldStyle}>
+                {['India', 'United States', 'United Kingdom', 'Germany', 'France', 'Spain', 'Australia', 'Canada'].map(c => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-              <select name="language" value={form.language} onChange={onChange} style={fieldStyle}>
-                {['English','Hindi','Spanish','French','German'].map(l => (
+              <select name="language" aria-label="Language" value={form.language} onChange={onChange} style={fieldStyle}>
+                {['English', 'Hindi', 'Spanish', 'French', 'German'].map(l => (
                   <option key={l} value={l}>{l}</option>
                 ))}
               </select>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <select name="size" value={form.size} onChange={onChange} style={fieldStyle}>
-                {['1 - 5 employees','6 - 25 employees','26 - 100 employees','100+ employees'].map(s => (
+              <select name="size" aria-label="Company size" value={form.size} onChange={onChange} style={fieldStyle}>
+                {['1 - 5 employees', '6 - 25 employees', '26 - 100 employees', '100+ employees'].map(s => (
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>
-              <select name="interest" value={form.interest} onChange={onChange} style={fieldStyle}>
-                {['Use it in my company','Evaluate for a client','Academic use','Other'].map(i => (
+              <select name="interest" aria-label="Interest" value={form.interest} onChange={onChange} style={fieldStyle}>
+                {['Use it in my company', 'Evaluate for a client', 'Academic use', 'Other'].map(i => (
                   <option key={i} value={i}>{i}</option>
                 ))}
               </select>

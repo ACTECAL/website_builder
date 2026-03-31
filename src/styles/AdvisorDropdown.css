@@ -1,0 +1,117 @@
+/* AdvisorDropdown - Nexora Elite Refined Styles */
+.advisor-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.advisor-btn {
+    padding: 18px 48px !important;
+    font-size: 1.15rem !important;
+    min-width: 240px !important;
+    justify-content: center !important;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1.5px solid #6c4b67;
+    color: #4a314d;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    text-decoration: none;
+    position: relative;
+    box-shadow: 0 0 0 3px rgba(108, 75, 103, 0.1);
+}
+
+/* The "Ring" / Outer border effect from screenshot */
+.advisor-btn::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid rgba(108, 75, 103, 0.3);
+    border-radius: 100px;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.advisor-btn:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 5px rgba(108, 75, 103, 0.15);
+}
+
+.advisor-btn:hover::before {
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-color: rgba(108, 75, 103, 0.5);
+}
+
+.advisor-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 0;
+    min-width: 320px;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 12px 0;
+    box-shadow:
+        0 30px 60px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(15px);
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.advisor-dropdown-menu.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.advisor-dropdown-item {
+    display: block;
+    padding: 16px 28px;
+    color: #1e293b;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.advisor-dropdown-item:hover {
+    background: rgba(108, 75, 103, 0.05);
+    color: #6c4b67;
+    padding-left: 32px;
+}
+
+.advisor-dropdown-item span {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* Secondary variant for Hero.tsx card wrapper */
+.advisor-dropdown-container.on-card .advisor-btn,
+.advisor-dropdown-container.on-card .advisor-btn::before {
+    border-radius: inherit;
+}
+
+.advisor-dropdown-container.on-card .advisor-btn {
+    padding: 12px 24px;
+}

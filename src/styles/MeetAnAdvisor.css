@@ -1,0 +1,430 @@
+/* MeetAnAdvisor - Nexora Scheduling Styles */
+
+.scheduler-page-root {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.scheduler-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1e293b;
+    position: relative;
+    z-index: 10;
+}
+
+.glass-morphism {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 32px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05) !important;
+}
+
+.scheduler-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+}
+
+.scheduler-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .scheduler-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .scheduler-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Section Labels */
+.section-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Calendar Styles */
+.calendar-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.calendar-card:hover {
+    background: #ffffff;
+    box-shadow: 0 12px 40px rgba(108, 75, 103, 0.08);
+    transform: translateY(-4px);
+}
+
+.calendar-header {
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+}
+
+.day-header {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    padding-bottom: 12px;
+}
+
+.calendar-day {
+    padding: 12px 0;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.calendar-day:hover:not(.empty) {
+    background: #f1f5f9;
+}
+
+.calendar-day.selected {
+    border-color: #6c4b67;
+    color: #6c4b67;
+    font-weight: 700;
+}
+
+.calendar-day.today {
+    color: #ef4444;
+}
+
+.calendar-day.empty {
+    cursor: default;
+}
+
+/* Time Slot Styles */
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.time-slot {
+    padding: 14px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.time-slot:hover {
+    border-color: #6c4b67;
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 75, 103, 0.1);
+}
+
+.time-slot.selected {
+    background: #6c4b67;
+    border-color: #6c4b67;
+    color: white;
+    box-shadow: 0 10px 25px rgba(108, 75, 103, 0.3);
+}
+
+/* Meeting Details Sidebar */
+.details-sidebar {
+    padding-left: 20px;
+}
+
+.meeting-meta {
+    margin-bottom: 32px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.description-box {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 32px;
+}
+
+.description-box h3 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+}
+
+.description-box p {
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 12px;
+}
+
+.description-list {
+    list-style: none;
+    padding: 0;
+}
+
+.description-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    color: #475569;
+}
+
+.description-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #1e293b;
+    font-weight: 900;
+}
+
+/* Timezone Settings */
+.timezone-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.timezone-select {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    color: #475569;
+    outline: none;
+}
+
+/* Next & Confirm Buttons */
+.next-button,
+.confirm-button,
+.back-home-button {
+    width: 100%;
+    margin-top: 32px;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(108, 75, 103, 0.2);
+}
+
+.animated-gradient {
+    background: linear-gradient(-45deg, #6c4b67, #a855f7, #6366f1, #4f46e5);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.next-button:hover,
+.confirm-button:hover,
+.back-home-button:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 15px 35px rgba(108, 75, 103, 0.4);
+}
+
+/* Details View */
+.details-view {
+    max-width: 800px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #1e293b;
+}
+
+.details-form-container {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #6c4b67;
+    box-shadow: 0 0 0 3px rgba(108, 75, 103, 0.1);
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+/* Confirmation View */
+.confirmation-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin-bottom: 24px;
+}
+
+.confirmation-text {
+    font-size: 1.25rem;
+    color: #1e293b;
+    max-width: 600px;
+    margin-bottom: 16px;
+}
+
+.confirmation-subtext {
+    color: #64748b;
+    margin-bottom: 40px;
+}
+
+.back-home-button {
+    max-width: 240px;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.back-home-button:hover {
+    background: #e2e8f0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+}

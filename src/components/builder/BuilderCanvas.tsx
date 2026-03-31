@@ -1,11 +1,15 @@
-import React from 'react';
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import React, { useState } from 'react';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useBuilder } from './BuilderContext';
 import { BuilderBlockItem } from './BuilderBlockItem';
+import { HolographicOverlay } from './HolographicOverlay';
+import { FluidGrid } from './FluidGrid';
+import './BuilderCanvas.css';
 
-export const BuilderCanvas: React.FC = () => {
+export const BuilderCanvas: React.FC = React.memo(() => {
     const { blocks, moveBlock, selectBlock, device, zoom } = useBuilder();
+    const [isDragging, setIsDragging] = useState(false);
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -14,7 +18,12 @@ export const BuilderCanvas: React.FC = () => {
         })
     );
 
+    const handleDragStart = (event: DragStartEvent) => {
+        setIsDragging(true);
+    };
+
     const handleDragEnd = (event: DragEndEvent) => {
+        setIsDragging(false);
         const { active, over } = event;
         if (active.id !== over?.id && over) {
             moveBlock(active.id as string, over.id as string);
@@ -30,52 +39,55 @@ export const BuilderCanvas: React.FC = () => {
     };
 
     return (
-        <div style={{
-            flex: 1,
-            background: '#eee',
-            padding: 40,
-            overflow: 'auto',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start'
-        }} onClick={() => selectBlock(null)}>
-            <div style={{
-                width: getWidth(),
-                maxWidth: '1200px',
-                minHeight: '80vh',
-                background: 'white',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                transform: `scale(${zoom})`,
-                transformOrigin: 'top center',
-                transition: 'width 0.3s ease, transform 0.3s ease',
-                paddingBottom: 40
-            }}>
+        <div className="canvas-root" onClick={() => selectBlock(null)}>
+            <div
+                className="canvas-surface"
+                style={{
+                    width: getWidth(),
+                    transform: `scale(${zoom})`
+                }}
+            >
                 <DndContext
                     sensors={sensors}
                     collisionDetection={closestCenter}
+                    onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
                 >
                     <SortableContext
                         items={blocks.map(b => b.id)}
                         strategy={verticalListSortingStrategy}
                     >
-                        {blocks.map((block) => (
-                            <BuilderBlockItem key={block.id} block={block} />
-                        ))}
-                        {blocks.length === 0 && (
-                            <div style={{
-                                padding: 40,
-                                textAlign: 'center',
-                                color: 'var(--color-muted)',
-                                border: '2px dashed var(--color-muted)',
-                                margin: 20
-                            }}>
-                                Drag blocks here or select a template to start
-                            </div>
-                        )}
+                        <FluidGrid>
+                            {blocks.map((block) => (
+                                <BuilderBlockItem key={block.id} block={block} />
+                            ))}
+                            {blocks.length === 0 && (
+                                <div className="empty-canvas-msg">
+                                    Drag blocks here or select a template to start
+                                </div>
+                            )}
+                        </FluidGrid>
                     </SortableContext>
+                    
+                    <HolographicOverlay />
                 </DndContext>
+                
+                {/* Magnetic Alignment Feedback (Phase 12) */}
+                {isDragging && (
+                    <div className="magnetic-overlay" />
+                )}
             </div>
+
+            {/* Global SVG Filters for Performance - Simplified */}
+            <svg className="refraction-svg" style={{ position: 'absolute', width: 0, height: 0 }}>
+                <defs>
+                    <filter id="refraction-filter" x="-10%" y="-10%" width="120%" height="120%">
+                        {/* Simplified glass effect without heavy turbulence */}
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+            </svg>
         </div>
     );
-};
+});

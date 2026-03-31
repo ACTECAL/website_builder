@@ -110,7 +110,7 @@ const financeModules: AppModuleMeta[] = [
     ['Google Drive', 'Box', 'DocuSign']
   ),
   createModule(
-    'spreadsheet-bi',
+    'spreadsheet-(bi)',
     'Spreadsheet (BI)',
     'Finance',
     'Build interactive dashboards and reports with spreadsheet-like formulas.',
@@ -283,7 +283,7 @@ const salesModules: AppModuleMeta[] = [
 
 const websiteModules: AppModuleMeta[] = [
   createModule(
-    'website',
+    'website-builder',
     'Website Builder',
     'Websites',
     'Design responsive sites with drag-and-drop blocks.',
@@ -353,6 +353,42 @@ const websiteModules: AppModuleMeta[] = [
       { label: 'Languages', value: '26' }
     ],
     ['Discourse Importer', 'Slack', 'Zendesk']
+  ),
+  createModule(
+    'live-chat',
+    'Live Chat',
+    'Websites',
+    'Engage website visitors in real-time and capture leads.',
+    'Increase conversion rates with real-time conversations, automated greetings, and chatbots.',
+    [
+      'Customizable chat rules',
+      'Canned responses and shortcuts',
+      'Chatbot builder'
+    ],
+    [
+      { label: 'Response time', value: '< 1 min' },
+      { label: 'Lead capture', value: '+24%' },
+      { label: 'Customer satisfaction', value: '98%' }
+    ],
+    ['Slack', 'Zendesk', 'Intercom']
+  ),
+  createModule(
+    'elearning',
+    'eLearning',
+    'Websites',
+    'Create and sell online courses.',
+    'Build beautiful courses inside your website, track progress, offer certifications, and monetize your content.',
+    [
+      'Drag & drop course builder',
+      'Quizzes and certifications',
+      'Gamification and leaderboards'
+    ],
+    [
+      { label: 'Completion rate', value: '76%' },
+      { label: 'Students enrolled', value: '2.5M+' },
+      { label: 'Certifications', value: 'Automated' }
+    ],
+    ['Stripe', 'YouTube', 'Vimeo']
   )
 ];
 
@@ -428,6 +464,42 @@ const supplyChainModules: AppModuleMeta[] = [
       { label: 'Audit readiness', value: 'Continuous' }
     ],
     ['Jira', 'Tableau', 'ServiceNow']
+  ),
+  createModule(
+    'plm',
+    'PLM',
+    'Supply Chain',
+    'Manage product lifecycles and engineering changes.',
+    'Track engineering changes, versions, and documentations seamlessly through your entire supply chain.',
+    [
+      'Engineering Change Orders (ECOs)',
+      'Version control and document management',
+      'BoM comparison'
+    ],
+    [
+      { label: 'Time to market', value: '-15%' },
+      { label: 'Change control', value: '100%' },
+      { label: 'Version conflicts', value: '0' }
+    ],
+    ['CAD', 'SolidWorks', 'AutoCAD']
+  ),
+  createModule(
+    'maintenance',
+    'Maintenance',
+    'Supply Chain',
+    'Keep your equipment running and avoid downtime.',
+    'Automate preventive maintenance, track MTBF and MTTR, and organize your maintenance teams effectively.',
+    [
+      'Preventive maintenance schedules',
+      'Equipment lifecycle tracking',
+      'Maintenance dashboard'
+    ],
+    [
+      { label: 'Downtime reduced', value: '-22%' },
+      { label: 'Equipment lifespan', value: '+15%' },
+      { label: 'Preventive coverage', value: '88%' }
+    ],
+    ['IoT sensors', 'ERP', 'MES']
   )
 ];
 
@@ -451,7 +523,7 @@ const hrModules: AppModuleMeta[] = [
     ['Greenhouse Import', 'Calendly', 'DocuSign']
   ),
   createModule(
-    'timeoff',
+    'time-off',
     'Time Off',
     'Human Resources',
     'Schedule vacations and approvals without spreadsheets.',
@@ -503,12 +575,66 @@ const hrModules: AppModuleMeta[] = [
       { label: 'Recognition increase', value: '+44%' }
     ],
     ['Lattice Import', 'Slack', 'PowerPoint Export']
+  ),
+  createModule(
+    'employees',
+    'Employees',
+    'Human Resources',
+    'Centralize all your HR information easily.',
+    'Manage employee profiles, org charts, contracts, and attendance in one beautiful dashboard.',
+    [
+      'Interactive org chart',
+      'Public and private employee directories',
+      'Contract management'
+    ],
+    [
+      { label: 'Admin time saved', value: '8 hrs/wk' },
+      { label: 'Directory access', value: 'Instant' },
+      { label: 'Data security', value: 'Role-based' }
+    ],
+    ['Google Workspace', 'Active Directory', 'Okta']
+  ),
+  createModule(
+    'referrals',
+    'Referrals',
+    'Human Resources',
+    'Gamify your employee referral program.',
+    'Boost your hiring by incentivizing your team to refer candidates and share jobs on social media.',
+    [
+      'Gamification with points and rewards',
+      'One-click social sharing',
+      'Leaderboards and tracking'
+    ],
+    [
+      { label: 'Referral hires', value: '+40%' },
+      { label: 'Time to hire', value: '-25%' },
+      { label: 'Employee engagement', value: '+30%' }
+    ],
+    ['LinkedIn', 'Twitter', 'Facebook']
+  ),
+  createModule(
+    'fleet',
+    'Fleet',
+    'Human Resources',
+    'Manage your vehicles, contracts, and costs.',
+    'Track vehicle assignments, fuel logs, maintenance, and contracts without the spreadsheets.',
+    [
+      'Vehicle lifecycle management',
+      'Fuel card integration',
+      'Odometer and maintenance tracking'
+    ],
+    [
+      { label: 'Cost reduction', value: '-12%' },
+      { label: 'Fleet visibility', value: '100%' },
+      { label: 'Contract tracking', value: 'Automated' }
+    ],
+    ['Fuel Cards', 'GPS Tracking', 'Accounting']
   )
 ];
 
 const marketingModules: AppModuleMeta[] = [
   createModule(
-    'email',
+    'email-marketing',
     'Email Marketing',
     'Marketing',
     'Create segmented email campaigns with drag-and-drop templates.',
@@ -526,7 +652,7 @@ const marketingModules: AppModuleMeta[] = [
     ['SendGrid', 'Amazon SES', 'HubSpot']
   ),
   createModule(
-    'sms',
+    'sms-marketing',
     'SMS Marketing',
     'Marketing',
     'Notify customers instantly with personalized SMS journeys.',
@@ -544,7 +670,7 @@ const marketingModules: AppModuleMeta[] = [
     ['Twilio', 'MessageBird', 'Klaviyo']
   ),
   createModule(
-    'automation',
+    'marketing-automation',
     'Marketing Automation',
     'Marketing',
     'Design lead nurturing flows with multi-step triggers.',
@@ -578,12 +704,48 @@ const marketingModules: AppModuleMeta[] = [
       { label: 'Sentiment accuracy', value: '92%' }
     ],
     ['Typeform Import', 'Zapier', 'Slack']
+  ),
+  createModule(
+    'social-marketing',
+    'Social Marketing',
+    'Marketing',
+    'Plan, schedule, and track social media.',
+    'Engage your audience across multiple social networks from a unified dashboard with integrated analytics.',
+    [
+      'Cross-platform post scheduler',
+      'Live social stream monitoring',
+      'Visitor engagement tracking'
+    ],
+    [
+      { label: 'Reach', value: '+45%' },
+      { label: 'Engagement rate', value: '+22%' },
+      { label: 'Time saved', value: '12 hrs/wk' }
+    ],
+    ['LinkedIn', 'Twitter', 'Facebook']
+  ),
+  createModule(
+    'events',
+    'Events',
+    'Marketing',
+    'Organize, publish, and sell tickets online.',
+    'Manage speakers, sponsors, attendees, and tickets for your in-person and digital events effortlessly.',
+    [
+      'Event website builder',
+      'Ticketing and registration',
+      'Sponsor and speaker management'
+    ],
+    [
+      { label: 'Attendees managed', value: '1.5M+' },
+      { label: 'Ticket sales', value: '+18%' },
+      { label: 'Event tracking', value: 'Real-time' }
+    ],
+    ['Stripe', 'Zoom', 'Mailchimp']
   )
 ];
 
 const servicesModules: AppModuleMeta[] = [
   createModule(
-    'projects',
+    'project',
     'Projects',
     'Services',
     'Plan tasks, milestones, and budgets with Gantt and Kanban.',
@@ -653,6 +815,42 @@ const servicesModules: AppModuleMeta[] = [
       { label: 'Payment capture', value: 'Optional' }
     ],
     ['Zoom', 'Calendly Import', 'Stripe']
+  ),
+  createModule(
+    'helpdesk',
+    'Helpdesk',
+    'Services',
+    'Provide exceptional customer service.',
+    'Organize tickets, automate routing, and delight your customers with SLAs and an integrated knowledge base.',
+    [
+      'Omnichannel ticketing (email, live chat, form)',
+      'SLA policies and alerts',
+      'Canned responses and automated routing'
+    ],
+    [
+      { label: 'Resolution time', value: '-35%' },
+      { label: 'Customer CSAT', value: '98%' },
+      { label: 'Ticket routing', value: 'Instant' }
+    ],
+    ['Email', 'Live Chat', 'Knowledge Base']
+  ),
+  createModule(
+    'planning',
+    'Planning',
+    'Services',
+    'Manage your resources and schedules effectively.',
+    'Schedule shifts, allocate resources, and keep everyone aligned with visual planning boards.',
+    [
+      'Drag & drop scheduling',
+      'Employee availability tracking',
+      'Role-based allocation'
+    ],
+    [
+      { label: 'Schedule conflicts', value: '-90%' },
+      { label: 'Planning speed', value: '3x faster' },
+      { label: 'Resource optimization', value: '+20%' }
+    ],
+    ['Calendar Sync', 'HR', 'Projects']
   )
 ];
 
@@ -728,6 +926,42 @@ const productivityModules: AppModuleMeta[] = [
       { label: 'Compliance', value: 'WhatsApp BSP' }
     ],
     ['Twilio', '360dialog', 'Zendesk']
+  ),
+  createModule(
+    'approvals',
+    'Approvals',
+    'Productivity',
+    'Centralize all your requests and sign-offs.',
+    'Automate your approval processes for expenses, documents, time off, and custom requests in one place.',
+    [
+      'Custom approval workflows',
+      'Manager delegation',
+      'Audit trails and tracking'
+    ],
+    [
+      { label: 'Approval speed', value: '4x faster' },
+      { label: 'Bottlenecks', value: 'Eliminated' },
+      { label: 'Compliance tracking', value: 'Automatic' }
+    ],
+    ['Email', 'Slack', 'HR']
+  ),
+  createModule(
+    'iot',
+    'IoT',
+    'Productivity',
+    'Connect your hardware to your business workflows.',
+    'Automatically trigger actions, alerts, and maintenance requests based on real-time hardware data.',
+    [
+      'Device fleet management',
+      'Custom rule engine',
+      'Real-time telemetry dashboards'
+    ],
+    [
+      { label: 'Data ingestion', value: '10M+ events/day' },
+      { label: 'Latency', value: '< 50ms' },
+      { label: 'Uptime', value: '99.99%' }
+    ],
+    ['MQTT', 'AWS IoT', 'Azure IoT']
   )
 ];
 

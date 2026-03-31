@@ -1,0 +1,89 @@
+﻿
+> client@0.1.0 lint
+> eslint src --ext .ts,.tsx
+
+
+C:\Actecal\erp-ui\src\App.tsx
+   1:17  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+   3:25  warning  'Link' is defined but never used      @typescript-eslint/no-unused-vars
+  68:10  warning  'Support' is defined but never used   @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\components\AnimatedBackground.tsx
+  14:9  warning  'canvasRef' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\components\CreativeBits.tsx
+  65:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+C:\Actecal\erp-ui\src\components\CreativeCard.tsx
+  1:35  warning  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\components\Footer.tsx
+  17:15  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  18:15  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  19:15  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  20:15  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+C:\Actecal\erp-ui\src\components\PricingSection.tsx
+  2:10  warning  'ScribbleUnderline' is defined but never used  @typescript-eslint/no-unused-vars
+  2:29  warning  'HighlightMarker' is defined but never used    @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\components\Scribbles.tsx
+  93:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+C:\Actecal\erp-ui\src\components\StatsSection.tsx
+   2:20  warning  'GothicH3' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  49:6   warning  React Hook useEffect has a missing dependency: 'animateCounters'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Actecal\erp-ui\src\components\builder\BuilderBlockItem.tsx
+  4:24  warning  'BlockType' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\components\builder\BuilderSidebar.tsx
+  7:5  warning  'TableProperties' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\data\siteIndex.ts
+  79:11  warning  'hay' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\pages\AppTemplate.tsx
+  12:9  warning  'backUrl' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\pages\Blog.tsx
+   3:10  warning  'HighlightMarker' is defined but never used                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  32:19  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+C:\Actecal\erp-ui\src\pages\Community.tsx
+  365:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  366:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  367:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  368:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  369:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  370:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  371:17  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+C:\Actecal\erp-ui\src\pages\GetStarted.tsx
+  1441:17  warning  'useEffect' is defined but never used                @typescript-eslint/no-unused-vars
+  1441:46  warning  'useCallback' is defined but never used              @typescript-eslint/no-unused-vars
+  1800:20  warning  'setShowForm' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  1801:23  warning  'setShowButtons' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  1969:9   warning  'scrollToForm' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\pages\LaunchPlan_clean.tsx
+   27:10  warning  'isPaletteOpen' is assigned a value but never used       @typescript-eslint/no-unused-vars
+   27:25  warning  'setIsPaletteOpen' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   28:10  warning  'isInspectorOpen' is assigned a value but never used     @typescript-eslint/no-unused-vars
+   28:27  warning  'setIsInspectorOpen' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   36:10  warning  'showCodeReview' is assigned a value but never used      @typescript-eslint/no-unused-vars
+   36:26  warning  'setShowCodeReview' is assigned a value but never used   @typescript-eslint/no-unused-vars
+   37:10  warning  'activeCodeTab' is assigned a value but never used       @typescript-eslint/no-unused-vars
+   37:25  warning  'setActiveCodeTab' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   68:9   warning  'updateBlock' is assigned a value but never used         @typescript-eslint/no-unused-vars
+   74:9   warning  'deleteBlock' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  199:9   warning  'selectedBlock' is assigned a value but never used       @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\pages\Partners.tsx
+  34:9  warning  'steps' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Actecal\erp-ui\src\pages\RegisterYourAccountingFirm.tsx
+  25:13  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+Γ£û 46 problems (0 errors, 46 warnings)
+

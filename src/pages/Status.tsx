@@ -147,7 +147,7 @@ export const Status: React.FC = () => {
   return (
     <SupportLayout
       title="System Status"
-      intro="Live view of service uptime, performance, and recent incident history across the BizSuite platform."
+      intro="Live view of service uptime, performance, and recent incident history across the Nexora platform."
     >
       <div style={{ display: 'grid', gap: 32 }}>
         <section style={summaryCardStyle}>
@@ -445,7 +445,7 @@ export const Status: React.FC = () => {
               Contact support
             </Link>
             <a
-              href="https://twitter.com/bizsuite"
+              href="https://twitter.com/Nexora"
               target="_blank"
               rel="noopener noreferrer"
               style={{

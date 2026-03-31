@@ -51,7 +51,7 @@ const Roadmap: React.FC = () => {
     <main>
       <PageHero
         title="Product Roadmap"
-        subtitle="See what the BizSuite team is building next. We release updates every week to keep your operations humming."
+        subtitle="See what the Nexora team is building next. We release updates every week to keep your operations humming."
         emphasize="none"
       />
 

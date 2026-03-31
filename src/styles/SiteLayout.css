@@ -1,0 +1,22 @@
+.site-layout-wrapper {
+    background: var(--surface);
+    min-height: 100vh;
+}
+
+.site-layout-wrapper.chrome-hidden {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.site-layout-wrapper.chrome-visible {
+    height: auto;
+    overflow: visible;
+}
+
+.site-content {
+    height: auto;
+}
+
+.site-content.chrome-hidden {
+    height: 100%;
+}

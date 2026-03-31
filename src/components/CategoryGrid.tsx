@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ScribbleUnderline } from './Scribbles';
+import ScribbleDecorations from './Scribbles';
 
 export type Category = {
   title: string;
@@ -65,7 +65,7 @@ export const CategoryGrid: React.FC<Props> = ({ categories, collapsible = false,
               {cat.iconUrl && (
                 <img src={cat.iconUrl} alt="" style={{ width: 18, height: 18 }} />
               )}
-              <ScribbleUnderline color={cat.color}>{cat.title.toUpperCase()}</ScribbleUnderline>
+              <ScribbleDecorations.Underline color={cat.color}>{cat.title.toUpperCase()}</ScribbleDecorations.Underline>
               {collapsible && (
                 <span style={{ color: '#64748b', fontSize: '0.9rem' }}>{open[idx] ? '▾' : '▸'}</span>
               )}

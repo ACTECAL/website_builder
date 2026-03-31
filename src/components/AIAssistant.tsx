@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { searchSite } from '../data/siteIndex';
 import { Link } from 'react-router-dom';
 import { GeminiService } from '../services/gemini';
@@ -98,8 +98,15 @@ export const AIAssistant: React.FC = () => {
 
   return (
     <>
-      <button className="ai-fab" aria-label="Open AI Assistant" onClick={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 0); }}>
-        <MessageSquare size={24} />
+      <button 
+        className={`ai-fab ${open ? 'active' : ''}`} 
+        aria-label="Open AI Assistant" 
+        onClick={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 0); }}
+      >
+        <div className="sentient-aura layer-1"></div>
+        <div className="sentient-aura layer-2"></div>
+        <div className="sentient-aura layer-3"></div>
+        <MessageSquare size={24} className="ai-fab-icon" />
       </button>
       {open && (
         <div className="ai-overlay" onClick={() => setOpen(false)}>
@@ -134,18 +141,24 @@ export const AIAssistant: React.FC = () => {
                     onChange={(e) => setQ(e.target.value)}
                   />
                   <div className="ai-results-list">
-                    {loading ? <div className="ai-loading">Searching...</div> : (
-                      <ul>
-                        {results.map((r, i) => (
-                          <li key={i} className="ai-result-item">
-                            <Link to={r.doc.path} reloadDocument onClick={() => setOpen(false)}>
-                              <div className="title">{r.doc.title}</div>
-                              <div className="meta">{r.doc.category}</div>
-                            </Link>
-                          </li>
-                        ))}
+                    {loading ? (
+                      <div className="ai-loading">Searching...</div>
+                    ) : (
+                      <>
+                        {results.length > 0 && (
+                          <ul>
+                            {results.map((r, i) => (
+                              <li key={i} className="ai-result-item">
+                                <Link to={r.doc.path} reloadDocument onClick={() => setOpen(false)}>
+                                  <div className="title">{r.doc.title}</div>
+                                  <div className="meta">{r.doc.category}</div>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                         {results.length === 0 && q && <div className="empty">No results found.</div>}
-                      </ul>
+                      </>
                     )}
                   </div>
                 </div>
@@ -181,7 +194,12 @@ export const AIAssistant: React.FC = () => {
                         </div>
                       </div>
                     ))}
-                    {loading && <div className="message model"><div className="bubble typing">...</div></div>}
+                    {loading && (
+                      <div className="message model">
+                        <div className="thought-ripple"></div>
+                        <div className="bubble typing">...</div>
+                      </div>
+                    )}
                     <div ref={chatEndRef} />
                   </div>
 
@@ -199,7 +217,7 @@ export const AIAssistant: React.FC = () => {
                       onChange={(e) => setQ(e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter') handleSendMessage(); }}
                     />
-                    <button className="send-btn" onClick={handleSendMessage} disabled={loading || !q.trim()}>
+                    <button className="send-btn" onClick={handleSendMessage} disabled={loading || !q.trim()} title="Send message">
                       <Send size={18} />
                     </button>
                   </div>
@@ -208,7 +226,7 @@ export const AIAssistant: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </div >
       )}
     </>
   );

@@ -1,3 +1,70 @@
+// export interface ProductModule {
+//   id: string;
+//   name: string;
+//   description: string;
+// }
+
+// export interface ProductPlan {
+//   id: string;
+//   name: string;
+//   description: string;
+//   price?: string;
+//   features?: string[];
+// }
+
+// export interface Product {
+//   name: string;
+//   modules: ProductModule[];
+//   favIcon?: string;
+//   icon?: string;
+//   plans: ProductPlan[];
+// }
+
+// export const PRODUCTS: Product[] = [
+//   {
+//     name: "erp",
+//     modules: [
+//       {
+//         id: "erp:sales",
+//         name: "Sales Management",
+//         description: "Manage your sales pipeline, customer relationships, and revenue tracking"
+//       },
+//       {
+//         id: "erp:ppc",
+//         name: "Production Management",
+//         description: "Control production planning, manufacturing processes, and quality control"
+//       },
+//       {
+//         id: "erp:material_management",
+//         name: "Material Management",
+//         description: "Handle inventory, procurement, and supply chain management"
+//       }
+//     ],
+//     plans: [
+//       {
+//         id: "basic",
+//         name: "Basic Plan",
+//         description: "Perfect for small businesses getting started with ERP"
+//       },
+//       {
+//         id: "standard",
+//         name: "Standard Plan",
+//         description: "Ideal for growing businesses needing advanced features"
+//       },
+//       {
+//         id: "premium",
+//         name: "Premium Plan",
+//         description: "Comprehensive solution for large enterprises"
+//       },
+//       {
+//         id: "enterprise",
+//         name: "Enterprise Plan",
+//         description: "Customized solution for enterprise-level operations"
+//       }
+//     ]
+//   }
+// ];
+
 // src/data/products.ts
 
 export interface Product {

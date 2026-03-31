@@ -7,7 +7,7 @@ export const EducationProgram: React.FC = () => {
     <main>
       <PageHero
         title="Education Program"
-        subtitle="Empowering students and educators with access to BizSuite resources and learning materials."
+        subtitle="Empowering students and educators with access to Nexora resources and learning materials."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

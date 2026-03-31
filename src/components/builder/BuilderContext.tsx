@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import { BuilderBlock, BlockType, DeviceType } from './types';
+import { BuilderBlock, BlockType, DeviceType, ChatMessage } from './types';
 import { v4 as uuidv4 } from "uuid";
 
 interface BuilderContextType {
@@ -16,17 +16,60 @@ interface BuilderContextType {
     zoom: number;
     setZoom: (z: number) => void;
     insertTemplate: (templateName: string) => void;
+    themeColor: string;
+    setThemeColor: (c: string) => void;
+    messages: ChatMessage[];
+    addMessage: (role: 'user' | 'model', text: string) => void;
+    clearMessages: () => void;
+    isPreviewMode: boolean;
+    setIsPreviewMode: (v: boolean) => void;
+    undo: () => void;
+    redo: () => void;
+    canUndo: boolean;
+    canRedo: boolean;
+    draftBlock: BuilderBlock | null;
+    setDraftBlock: (b: BuilderBlock | null) => void;
+    commitDraft: () => void;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
 
-export function useBuilder() {
+export const useBuilder = () => {
     const context = useContext(BuilderContext);
-    if (!context) {
-        throw new Error('useBuilder must be used within a BuilderProvider');
+    if (context === undefined) {
+        // Fallback for global use (e.g. in SiteLayout)
+        return {
+            blocks: [],
+            setBlocks: () => {}, // Added setBlocks to the default context
+            selectedId: null,
+            addBlock: () => {},
+            updateBlock: () => {},
+            removeBlock: () => {},
+            moveBlock: () => {},
+            selectBlock: () => {},
+            device: 'desktop' as DeviceType,
+            setDevice: () => {},
+            zoom: 1,
+            setZoom: () => {},
+            insertTemplate: () => {},
+            themeColor: '#6366f1',
+            setThemeColor: () => {},
+            messages: [],
+            addMessage: () => {},
+            clearMessages: () => {},
+            isPreviewMode: false,
+            setIsPreviewMode: () => {},
+            undo: () => {},
+            redo: () => {},
+            canUndo: false,
+            canRedo: false,
+            draftBlock: null,
+            setDraftBlock: () => {},
+            commitDraft: () => {}
+        };
     }
     return context;
-}
+};
 
 export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [blocks, setBlocks] = useState<BuilderBlock[]>(() => {
@@ -41,43 +84,130 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [device, setDevice] = useState<DeviceType>('desktop');
     const [zoom, setZoom] = useState(1);
+    const [themeColor, setThemeColor] = useState(() => {
+        return localStorage.getItem('lovable_builder_theme') || '#6366f1';
+    });
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [isPreviewMode, setIsPreviewMode] = useState(false);
+    const [draftBlock, setDraftBlock] = useState<BuilderBlock | null>(null);
+    const [history, setHistory] = useState<{ past: BuilderBlock[][], future: BuilderBlock[][] }>({
+        past: [],
+        future: []
+    });
 
-    // Auto-save
+    const undo = useCallback(() => {
+        setHistory(prev => {
+            if (prev.past.length === 0) return prev;
+            const previous = prev.past[prev.past.length - 1];
+            const newPast = prev.past.slice(0, prev.past.length - 1);
+            setBlocks(previous);
+            return {
+                past: newPast,
+                future: [blocks, ...prev.future]
+            };
+        });
+    }, [blocks]);
+
+    const redo = useCallback(() => {
+        setHistory(prev => {
+            if (prev.future.length === 0) return prev;
+            const next = prev.future[0];
+            const newFuture = prev.future.slice(1);
+            setBlocks(next);
+            return {
+                past: [...prev.past, blocks],
+                future: newFuture
+            };
+        });
+    }, [blocks]);
+
+    // Keyboard shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+                if (e.shiftKey) redo();
+                else undo();
+            } else if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
+                redo();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [undo, redo]);
+
+    // Helper to push to history before update
+    const pushHistory = useCallback((currentBlocks: BuilderBlock[]) => {
+        setHistory(prev => ({
+            past: [...prev.past, currentBlocks],
+            future: []
+        }));
+    }, []);
+
+    // Auto-save blocks
     useEffect(() => {
         localStorage.setItem('lovable_builder_blocks', JSON.stringify(blocks));
     }, [blocks]);
 
+    // Auto-save theme
+    useEffect(() => {
+        localStorage.setItem('lovable_builder_theme', themeColor);
+        document.documentElement.style.setProperty('--aura-primary', themeColor);
+        document.documentElement.style.setProperty('--aura-primary-transparent', `${themeColor}22`);
+    }, [themeColor]);
+
     const addBlock = useCallback((type: BlockType, content?: any) => {
+        const newId = uuidv4();
         const newBlock: BuilderBlock = {
-            id: uuidv4(),
+            id: newId,
             type,
             content: content || getDefaultContent(type),
             styles: getDefaultStyles(type),
         };
-        setBlocks(prev => [...prev, newBlock]);
-        setSelectedId(newBlock.id);
-    }, []);
+        setBlocks(prev => {
+            pushHistory(prev);
+            return [...prev, newBlock];
+        });
+        setSelectedId(newId);
+    }, [pushHistory]);
 
     const updateBlock = useCallback((id: string, updates: Partial<BuilderBlock>) => {
-        setBlocks(prev => prev.map(b => b.id === id ? { ...b, ...updates } : b));
-    }, []);
+        setBlocks(prev => {
+            pushHistory(prev);
+            return prev.map(b => b.id === id ? { ...b, ...updates } : b);
+        });
+    }, [pushHistory]);
 
     const removeBlock = useCallback((id: string) => {
-        setBlocks(prev => prev.filter(b => b.id !== id));
-        if (selectedId === id) setSelectedId(null);
-    }, [selectedId]);
+        setBlocks(prev => {
+            pushHistory(prev);
+            return prev.filter(b => b.id !== id);
+        });
+        setSelectedId(prev => prev === id ? null : prev);
+    }, [pushHistory]);
 
     const moveBlock = useCallback((activeId: string, overId: string) => {
         setBlocks((items) => {
+            pushHistory(items);
             const oldIndex = items.findIndex((item) => item.id === activeId);
             const newIndex = items.findIndex((item) => item.id === overId);
-            // Simple array move implementation without extra deps for now, or use array-move package if present
             const newItems = [...items];
             const [movedItem] = newItems.splice(oldIndex, 1);
             newItems.splice(newIndex, 0, movedItem);
             return newItems;
         });
-    }, []);
+    }, [pushHistory]);
+
+    const commitDraft = useCallback(() => {
+        setDraftBlock(draft => {
+            if (!draft) return draft;
+            setBlocks(prev => {
+                pushHistory(prev);
+                return [...prev, draft];
+            });
+            setSelectedId(draft.id);
+            return null;
+        });
+    }, [pushHistory]);
 
     const insertTemplate = useCallback((templateName: string) => {
         // Demo templates
@@ -88,26 +218,63 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 { id: uuidv4(), type: 'features', content: { items: [{ title: 'Fast', desc: 'Blazing fast performance' }, { title: 'Secure', desc: 'Enterprise grade security' }, { title: 'Easy', desc: 'Drag and drop interface' }] }, styles: { padding: 60, background: '#f8fafc' } },
                 { id: uuidv4(), type: 'footer', content: { text: '© 2024 Brand Inc.' }, styles: { background: '#1a202c', color: '#cbd5e0', padding: 40, textAlign: 'center' } }
             ];
-            setBlocks(prev => [...prev, ...newBlocks]);
+            setBlocks(prev => {
+                pushHistory(prev);
+                return [...prev, ...newBlocks];
+            });
         }
+    }, [pushHistory]);
+
+    const addMessage = useCallback((role: 'user' | 'model', text: string) => {
+        setMessages(prev => [...prev, {
+            id: uuidv4(),
+            role,
+            text,
+            timestamp: new Date()
+        }]);
     }, []);
 
+    const clearMessages = useCallback(() => {
+        setMessages([]);
+    }, []);
+
+    const contextValue = React.useMemo(() => ({
+        blocks,
+        setBlocks,
+        addBlock,
+        updateBlock,
+        removeBlock,
+        moveBlock,
+        insertTemplate,
+        selectedId,
+        selectBlock: setSelectedId,
+        themeColor,
+        setThemeColor,
+        device,
+        setDevice,
+        zoom,
+        setZoom,
+        messages,
+        addMessage,
+        clearMessages,
+        isPreviewMode,
+        setIsPreviewMode,
+        undo,
+        redo,
+        canUndo: history.past.length > 0,
+        canRedo: history.future.length > 0,
+        draftBlock,
+        setDraftBlock,
+        commitDraft
+    }), [
+        blocks, addBlock, updateBlock, removeBlock, moveBlock, insertTemplate, 
+        selectedId, themeColor, device, zoom, messages, addMessage, clearMessages, 
+        isPreviewMode, undo, redo, history.past.length, history.future.length, 
+        draftBlock, commitDraft
+    ]);
+
     return (
-        <BuilderContext.Provider value={{
-            blocks,
-            setBlocks,
-            addBlock,
-            updateBlock,
-            removeBlock,
-            moveBlock,
-            selectedId,
-            selectBlock: setSelectedId,
-            device,
-            setDevice,
-            zoom,
-            setZoom,
-            insertTemplate
-        }}>
+        <BuilderContext.Provider value={contextValue}>
             {children}
         </BuilderContext.Provider>
     );

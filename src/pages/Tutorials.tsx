@@ -1,63 +1,131 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
+import '../styles/Tutorials.css';
+
+const QUICK_STARTS = [
+  {
+    step: 'Quick Start 01',
+    icon: 'fa-solid fa-rocket',
+    title: 'Set up your first app',
+    desc: 'Install core modules and configure your workspace in minutes.',
+    link: '/solutions',
+    label: 'Explore Solutions',
+  },
+  {
+    step: 'Quick Start 02',
+    icon: 'fa-solid fa-plug',
+    title: 'Integrate via API',
+    desc: 'Authenticate and make your first API call with our REST interface.',
+    link: '/api-reference',
+    label: 'API Reference',
+  },
+  {
+    step: 'Quick Start 03',
+    icon: 'fa-solid fa-shield-halved',
+    title: 'Secure your workspace',
+    desc: 'Best practices for roles, SSO, and data protection at every level.',
+    link: '/security',
+    label: 'Read Security',
+  },
+];
+
+const FEATURED_TUTORIALS = [
+  {
+    step: 'Tutorial 01',
+    icon: 'fa-solid fa-clipboard-list',
+    title: 'Onboarding checklist',
+    desc: 'Invite your team, set permissions, and launch fast.',
+    link: '/help-center',
+    label: 'Open Guide',
+  },
+  {
+    step: 'Tutorial 02',
+    icon: 'fa-solid fa-link',
+    title: 'Connect integrations',
+    desc: 'Enable key integrations and automate workflows across your stack.',
+    link: '/integrations',
+    label: 'View Integrations',
+  },
+  {
+    step: 'Tutorial 03',
+    icon: 'fa-solid fa-gauge-high',
+    title: 'Track deployments',
+    desc: 'Monitor health and releases with the Nexora Status dashboard.',
+    link: '/status',
+    label: 'Check Status',
+  },
+];
 
 export const Tutorials: React.FC = () => {
   return (
     <main>
       <PageHero
         title="Tutorials"
-        subtitle="Step-by-step guides to help you set up, integrate, and ship faster with BizSuite."
+        subtitle="Step-by-step guides to help you set up, integrate, and ship faster with Nexora."
         emphasize="none"
       />
 
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
-          </div>
-          <h2 style={{ margin: '0 0 16px' }}>Quick starts</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-              <h4 style={{ margin: '0 0 8px' }}>Set up your first app</h4>
-              <p style={{ margin: '0 0 12px', color: '#4a5568' }}>Install core modules and configure your workspace.</p>
-              <Link to="/apps" className="btn btn-outline-primary" reloadDocument>Open Apps</Link>
-            </div>
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-              <h4 style={{ margin: '0 0 8px' }}>Integrate via API</h4>
-              <p style={{ margin: '0 0 12px', color: '#4a5568' }}>Authenticate and make your first API call.</p>
-              <Link to="/api-reference" className="btn btn-outline-primary" reloadDocument>API Reference</Link>
-            </div>
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-              <h4 style={{ margin: '0 0 8px' }}>Secure your workspace</h4>
-              <p style={{ margin: '0 0 12px', color: '#4a5568' }}>Best practices for roles, SSO, and data protection.</p>
-              <Link to="/security" className="btn btn-outline-primary" reloadDocument>Read Security</Link>
-            </div>
+      <section className="tutorials-section">
+        <div className="tutorials-container">
+
+          {/* Back Link */}
+          <div className="back-link-container">
+            <Link to="/community" className="back-link" reloadDocument>
+              <i className="fa-solid fa-arrow-left" /> Back to Community
+            </Link>
           </div>
 
-          <h2 style={{ margin: '24px 0 16px' }}>Featured tutorials</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
-            {[{
-              t: 'Onboarding checklist', d: 'Invite your team, set permissions, and launch fast.', link: '/help-center'
-            },{
-              t: 'Connect integrations', d: 'Enable key integrations and automate workflows.', link: '/integrations'
-            },{
-              t: 'Track deployments', d: 'Monitor health and releases with Status.', link: '/status'
-            }].map((it, i) => (
-              <div key={i} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ margin: '0 0 8px' }}>{it.t}</h4>
-                <p style={{ margin: '0 0 12px', color: '#4a5568' }}>{it.d}</p>
-                <Link to={it.link} className="btn btn-outline-primary" reloadDocument>Open</Link>
+          {/* Quick Starts */}
+          <h2 className="tutorials-heading">Quick starts</h2>
+          <div className="tutorials-grid">
+            {QUICK_STARTS.map((item) => (
+              <div key={item.title} className="tutorial-card">
+                <div className="tutorial-card-icon">
+                  <i className={item.icon} />
+                </div>
+                <div className="tutorial-card-step">{item.step}</div>
+                <h4 className="tutorial-card-title">{item.title}</h4>
+                <p className="tutorial-card-desc">{item.desc}</p>
+                <Link to={item.link} className="btn btn-outline-primary" reloadDocument>
+                  {item.label} <i className="fa-solid fa-arrow-right" />
+                </Link>
               </div>
             ))}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-            <Link to="/docs" className="btn btn-primary" reloadDocument>Browse all Docs</Link>
-            <Link to="/help-center" className="btn btn-outline-primary" reloadDocument>Get Help</Link>
+          {/* Featured Tutorials */}
+          <h2 className="featured-tutorials-heading">Featured tutorials</h2>
+          <div className="tutorials-grid">
+            {FEATURED_TUTORIALS.map((item) => (
+              <div key={item.title} className="tutorial-card">
+                <div className="tutorial-card-icon">
+                  <i className={item.icon} />
+                </div>
+                <div className="tutorial-card-step">{item.step}</div>
+                <h4 className="tutorial-card-title">{item.title}</h4>
+                <p className="tutorial-card-desc">{item.desc}</p>
+                <Link to={item.link} className="btn btn-outline-primary" reloadDocument>
+                  {item.label} <i className="fa-solid fa-arrow-right" />
+                </Link>
+              </div>
+            ))}
           </div>
+
+          {/* Footer */}
+          <div className="tutorials-footer">
+            <Link to="/docs" className="btn btn-primary" reloadDocument>
+              <i className="fa-solid fa-book" /> Browse all Docs
+            </Link>
+            <Link to="/help-center" className="btn btn-outline-primary" reloadDocument>
+              <i className="fa-solid fa-circle-question" /> Get Help
+            </Link>
+          </div>
+
         </div>
       </section>
     </main>
   );
 };
+
+export default Tutorials;

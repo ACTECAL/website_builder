@@ -13,7 +13,7 @@ export const FindAnAccountant: React.FC = () => {
       <section style={{ padding: '40px 24px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <h1 style={{ margin: 0 }}>Find an Accountant</h1>
-          <p style={{ color: '#4a5568', marginTop: 10 }}>Work with BizSuite‑ready accountants for bookkeeping, tax, and advisory.</p>
+          <p style={{ color: '#4a5568', marginTop: 10 }}>Work with Nexora‑ready accountants for bookkeeping, tax, and advisory.</p>
         </div>
       </section>
       <section style={{ padding: '10px 24px 60px' }}>

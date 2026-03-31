@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SupportLayout from '../components/SupportLayout';
+import '../styles/HelpCenter.css';
 
 export const HelpCenter: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,7 +34,7 @@ export const HelpCenter: React.FC = () => {
     },
     {
       question: "How do I contact customer support?",
-      answer: "You can reach our support team through the contact form on our website, by emailing support@bizsuite.com, or through the live chat feature available on our dashboard during business hours."
+      answer: "You can reach our support team through the contact form on our website, by emailing support@Nexora.com, or through the live chat feature available on our dashboard during business hours."
     },
     {
       question: "Is my data secure?",
@@ -52,148 +53,65 @@ export const HelpCenter: React.FC = () => {
       intro="Browse guides, troubleshoot issues, or reach out to our support squad whenever you need a hand."
     >
       <div style={{ display: 'grid', gap: 36 }}>
-        <section
-          style={{
-            display: 'grid',
-            gap: 18,
-            padding: '26px 30px',
-            borderRadius: 24,
-            border: '1px solid rgba(251, 146, 60, 0.35)',
-            background: 'linear-gradient(135deg, rgba(255, 247, 237, 0.95) 0%, rgba(255, 239, 224, 0.85) 100%)',
-            boxShadow: '0 25px 50px rgba(249, 115, 22, 0.12)'
-          }}
-        >
-          <div style={{ position: 'relative' }}>
+        <section className="help-center-search-section">
+          <div className="search-input-wrapper">
             <input
               type="text"
               placeholder="Search the knowledge base"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '16px 22px 16px 56px',
-                borderRadius: 16,
-                border: '1px solid rgba(251, 146, 60, 0.45)',
-                background: '#ffffff',
-                color: '#1f2937',
-                fontSize: '1rem',
-                outline: 'none',
-                transition: 'box-shadow 0.25s ease',
-                boxShadow: '0 10px 20px rgba(249, 115, 22, 0.06)'
-              }}
-              onFocus={(e) => (e.target.style.boxShadow = '0 12px 28px rgba(249, 115, 22, 0.15)')}
-              onBlur={(e) => (e.target.style.boxShadow = '0 10px 20px rgba(249, 115, 22, 0.06)')}
+              className="help-search-input"
             />
-            <span
-              style={{
-                position: 'absolute',
-                left: 22,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                fontSize: '1.1rem',
-                color: '#f97316'
-              }}
-            >
+            <span className="search-icon">
               <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             </span>
           </div>
-          <p style={{ margin: 0, color: '#6b7280', fontSize: '0.95rem' }}>
+          <p className="search-hint">
             Search across {faqs.length} FAQs and troubleshooting guides.
           </p>
         </section>
 
         <section style={{ display: 'grid', gap: 20 }}>
-          <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-            <h2
-              style={{
-                margin: 0,
-                fontSize: '1.9rem',
-                fontWeight: 700,
-                color: '#1f2937'
-              }}
-            >
+          <header className="faq-header">
+            <h2 className="faq-title">
               Frequently Asked Questions
             </h2>
-            <span style={{ fontSize: '0.95rem', color: '#f97316', fontWeight: 600 }}>
+            <span className="faq-update-badge">
               Updated weekly
             </span>
           </header>
 
           {filteredFAQs.length === 0 ? (
-            <div
-              style={{
-                padding: '26px 28px',
-                borderRadius: 20,
-                border: '1px solid rgba(251, 146, 60, 0.25)',
-                background: 'rgba(255, 240, 230, 0.85)',
-                textAlign: 'center',
-                color: '#f97316',
-                fontWeight: 600
-              }}
-            >
+            <div className="faq-no-results">
               No results for "{searchTerm}". Try a broader keyword.
             </div>
           ) : (
-            <div style={{ display: 'grid', gap: 16 }}>
+            <div className="faq-list">
               {filteredFAQs.map((faq, index) => {
                 const isOpen = expandedFAQ === index;
                 return (
                   <div
                     key={faq.question}
-                    style={{
-                      borderRadius: 22,
-                      border: '1px solid rgba(251, 146, 60, 0.3)',
-                      background: '#fff',
-                      boxShadow: '0 18px 40px rgba(249, 115, 22, 0.12)',
-                      overflow: 'hidden'
-                    }}
+                    className={`faq-item ${isOpen ? 'open' : ''}`}
                   >
                     <button
                       onClick={() => setExpandedFAQ(isOpen ? null : index)}
-                      style={{
-                        width: '100%',
-                        padding: '20px 24px',
-                        background: 'transparent',
-                        border: 'none',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        cursor: 'pointer'
-                      }}
+                      className="faq-question-btn"
                     >
-                      <span
-                        style={{
-                          fontWeight: 650,
-                          fontSize: '1.05rem',
-                          color: '#1f2937',
-                          textAlign: 'left'
-                        }}
-                      >
+                      <span className="faq-question-text">
                         {faq.question}
                       </span>
-                      <span
-                        style={{
-                          color: '#f97316',
-                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                          transition: 'transform 0.2s ease',
-                          fontSize: '1.1rem'
-                        }}
-                      >
+                      <span className="faq-chevron">
                         ▼
                       </span>
                     </button>
-                    {isOpen && (
-                      <div
-                        style={{
-                          padding: '0 24px 22px',
-                          borderTop: '1px solid rgba(251, 146, 60, 0.2)',
-                          color: '#4b5563',
-                          lineHeight: 1.7
-                        }}
-                      >
-                        {faq.answer}
+                    <div className="faq-answer-wrapper">
+                      <div className="faq-answer-inner">
+                        <div className="faq-answer-content">
+                          {faq.answer}
+                        </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
@@ -201,50 +119,23 @@ export const HelpCenter: React.FC = () => {
           )}
         </section>
 
-        <section
-          style={{
-            display: 'grid',
-            gap: 18,
-            padding: '32px 34px',
-            borderRadius: 26,
-            border: '1px solid rgba(249, 115, 22, 0.35)',
-            background: 'linear-gradient(135deg, #ffe7d1 0%, #ffe0c2 100%)',
-            textAlign: 'center',
-            boxShadow: '0 30px 60px rgba(249, 115, 22, 0.12)'
-          }}
-        >
-          <h3 style={{ margin: 0, fontSize: '1.6rem', color: '#1f2937', fontWeight: 700 }}>
+        <section className="help-connect-section">
+          <h3 className="help-connect-title">
             Still need help?
           </h3>
-          <p style={{ margin: 0, color: '#4b5563', fontSize: '1rem' }}>
+          <p className="help-connect-desc">
             Connect with our support engineers for tailored assistance.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <div className="help-connect-actions">
             <Link
               to="/contact"
-              style={{
-                padding: '12px 26px',
-                borderRadius: 999,
-                background: '#f97316',
-                color: '#fff',
-                textDecoration: 'none',
-                fontWeight: 700,
-                letterSpacing: '0.01em',
-                boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)'
-              }}
+              className="help-btn-primary"
             >
               Contact Support
             </Link>
             <a
-              href="mailto:support@bizsuite.com"
-              style={{
-                padding: '12px 26px',
-                borderRadius: 999,
-                border: '1px solid rgba(249, 115, 22, 0.45)',
-                color: '#f97316',
-                textDecoration: 'none',
-                fontWeight: 600
-              }}
+              href="mailto:support@Nexora.com"
+              className="help-btn-secondary"
             >
               Email Us
             </a>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { HighlightMarker, ScribbleUnderline } from './Scribbles';
 import { GothicH1 } from './GothicHeading';
+import '../styles/PageHero.css';
 
 type Props = {
   title: string;
@@ -12,32 +12,26 @@ type Props = {
 };
 
 export const PageHero: React.FC<Props> = ({ title, subtitle, imageUrl, icon, emphasize = 'marker', textColor = '#111111' }) => {
+  const hasMedia = !!(imageUrl || icon);
+
   const renderTitle = () => {
     if (emphasize === 'marker') {
       const [first, ...rest] = title.split(' ');
       return (
-        <div style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', margin: 0 }}>
-          <GothicH1 
+        <div className="page-hero-title-wrapper">
+          <GothicH1
             text={first}
             style={{ display: 'inline-block', marginRight: '0.5em', color: textColor }}
           />
-          <GothicH1 
+          <GothicH1
             text={rest.join(' ')}
             style={{ display: 'inline-block', color: textColor }}
           />
         </div>
       );
     }
-    if (emphasize === 'scribble') {
-      return (
-        <GothicH1 
-          text={title}
-          style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', margin: 0, color: textColor }}
-        />
-      );
-    }
     return (
-      <GothicH1 
+      <GothicH1
         text={title}
         style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', margin: 0, color: textColor }}
       />
@@ -45,24 +39,17 @@ export const PageHero: React.FC<Props> = ({ title, subtitle, imageUrl, icon, emp
   };
 
   return (
-    <section style={{ padding: '40px 24px' }}>
-      <div style={{
-        maxWidth: 1100,
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: (imageUrl || icon) ? '1.2fr 1fr' : '1fr',
-        gap: 24,
-        alignItems: 'start'
-      }}>
+    <section className="page-hero-section">
+      <div className={`page-hero-container ${hasMedia ? 'with-media' : 'no-media'}`}>
         <div>
           {renderTitle()}
           {subtitle && (
-            <p style={{ color: textColor, marginTop: 10, lineHeight: 1.7 }}>{subtitle}</p>
+            <p className="page-hero-subtitle" style={{ color: textColor }}>{subtitle}</p>
           )}
         </div>
-        {(imageUrl || icon) && (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {icon || <img src={imageUrl} alt="" style={{ width: '100%', borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }} />}
+        {hasMedia && (
+          <div className="page-hero-media-wrapper">
+            {icon || <img src={imageUrl} alt="" className="page-hero-img" />}
           </div>
         )}
       </div>

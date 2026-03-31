@@ -1,23 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { GeminiService } from '../../services/gemini';
-import { Sparkles, Send, Key } from 'lucide-react';
+import { Sparkles, Send, Key, Mic, MicOff } from 'lucide-react';
 import { useBuilder } from './BuilderContext';
 import './BuilderChatPanel.css';
 
-interface ChatMessage {
-    role: 'user' | 'model';
-    text: string;
-}
 
 export const BuilderChatPanel: React.FC = () => {
-    const { addBlock } = useBuilder();
+    const { addMessage, messages, setThemeColor, setDraftBlock, blocks } = useBuilder();
     const [q, setQ] = useState('');
     const [loading, setLoading] = useState(false);
-
-    // Chat State
     const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [showKeyInput, setShowKeyInput] = useState(false);
+    const [isListening, setIsListening] = useState(false);
 
     const chatEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +29,7 @@ export const BuilderChatPanel: React.FC = () => {
         }
 
         const userMsg = q;
-        setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
+        addMessage('user', userMsg);
         setQ('');
         setLoading(true);
 
@@ -48,24 +42,82 @@ export const BuilderChatPanel: React.FC = () => {
       - Create Hero Section
       - Add Features
       - Insert Text
+      - Change Theme Color (Return CSS color hex if they want a color change)
       
-      Provide a concise, helpful response. If you identify a clear intent to add a component, confirm it.`;
+      Provide a concise, helpful response. If you identify a clear intent to add a component or change color, confirm it.`;
 
             const response = await service.generateContent(prompt);
-            setMessages(prev => [...prev, { role: 'model', text: response }]);
+            addMessage('model', response);
 
             // Basic heuristic to add blocks
             const lowerMsg = userMsg.toLowerCase();
-            if (lowerMsg.includes('hero')) addBlock('hero');
-            else if (lowerMsg.includes('header')) addBlock('header');
-            else if (lowerMsg.includes('feature')) addBlock('features');
-            else if (lowerMsg.includes('footer')) addBlock('footer');
+            let type: any = null;
+            if (lowerMsg.includes('hero')) type = 'hero';
+            else if (lowerMsg.includes('header')) type = 'header';
+            else if (lowerMsg.includes('feature')) type = 'features';
+            else if (lowerMsg.includes('footer')) type = 'footer';
+
+            if (type) {
+                const newDraft = {
+                    id: Math.random().toString(36).substr(2, 9),
+                    type,
+                    content: {}, 
+                    styles: {}
+                };
+                setDraftBlock(newDraft as any);
+            }
+
+            // Structural Analysis
+            if (lowerMsg.includes('analyze') || lowerMsg.includes('structure') || lowerMsg.includes('group')) {
+                const analysis = await service.suggestGroupings(blocks);
+                addMessage('model', `Architect's Analysis: ${analysis}`);
+            }
+
+            // Aura color logic
+            if (lowerMsg.includes('color') || lowerMsg.includes('aura') || lowerMsg.includes('theme')) {
+                const hexMatch = response.match(/#[0-9A-Fa-f]{6}/);
+                if (hexMatch) {
+                    setThemeColor(hexMatch[0]);
+                }
+            }
 
         } catch (err: any) {
-            setMessages(prev => [...prev, { role: 'model', text: `Error: ${err.message}` }]);
+            addMessage('model', `Error: ${err.message}`);
         } finally {
             setLoading(false);
         }
+    };
+
+    const toggleVoice = () => {
+        if (!('webkitSpeechRecognition' in window)) {
+            addMessage('model', "Voice recognition is not supported in this browser.");
+            return;
+        }
+
+        const recognition = new (window as any).webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        if (isListening) {
+            recognition.stop();
+            setIsListening(false);
+            return;
+        }
+
+        recognition.onstart = () => setIsListening(true);
+        recognition.onend = () => setIsListening(false);
+        recognition.onerror = () => setIsListening(false);
+        recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setQ(transcript);
+            // Auto-send if it's a clear command
+            if (transcript.toLowerCase().includes('add') || transcript.toLowerCase().includes('change')) {
+                setTimeout(() => handleSendMessage(), 500);
+            }
+        };
+
+        recognition.start();
     };
 
     const handleKeySave = (key: string) => {
@@ -74,7 +126,7 @@ export const BuilderChatPanel: React.FC = () => {
         setShowKeyInput(false);
     };
 
-    const suggestions = ['Add a Hero section', 'Create a Features list', 'Add a Footer', 'Explain how to use this'];
+    const suggestions = ['Add a Hero section', 'Create a Features list', 'Analyze structure', 'Explain how to use this'];
 
     return (
         <div className="builder-chat-panel">
@@ -84,7 +136,7 @@ export const BuilderChatPanel: React.FC = () => {
                 <div className="chat-logo-icon">
                     <Sparkles size={18} />
                 </div>
-                <div className="chat-title">AI Builder</div>
+                <div className="chat-title">Nexora AI Architect</div>
             </div>
 
             {/* Chat Area */}
@@ -116,8 +168,8 @@ export const BuilderChatPanel: React.FC = () => {
                     </div>
                 )}
 
-                {messages.map((m, i) => (
-                    <div key={i} className={`chat-message-row ${m.role}`}>
+                {messages.map((m) => (
+                    <div key={m.id} className={`chat-message-row ${m.role}`}>
                         <div className={`chat-avatar avatar-${m.role}`}>
                             {m.role === 'user' ? 'You' : <Sparkles size={14} />}
                         </div>
@@ -146,19 +198,28 @@ export const BuilderChatPanel: React.FC = () => {
                     <button className="action-btn" onClick={() => setShowKeyInput(true)} title="API Key">
                         <Key size={16} />
                     </button>
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        className="chat-input-field"
-                        placeholder="Ask AI to build..."
-                        value={q}
-                        onChange={(e) => setQ(e.target.value)}
-                        onKeyDown={(e) => { if (e.key === 'Enter') handleSendMessage(); }}
-                        disabled={loading}
-                    />
-                    <button className="action-btn send-btn" onClick={handleSendMessage} disabled={loading || !q.trim()}>
-                        {loading ? <div className="dot" style={{ background: 'white' }} /> : <Send size={16} />}
-                    </button>
+                    <div className="chat-input-area">
+                        <button
+                            className={`icon-btn mic-btn ${isListening ? 'listening' : ''}`}
+                            onClick={toggleVoice}
+                            title="Voice Command"
+                        >
+                            {isListening ? <Mic size={18} /> : <MicOff size={18} />}
+                        </button>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            className="chat-input"
+                            placeholder="Ask Gemini or use voice..."
+                            value={q}
+                            onChange={(e) => setQ(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handleSendMessage(); }}
+                            disabled={loading}
+                        />
+                        <button className="send-btn" onClick={handleSendMessage} disabled={loading || !q.trim()} title="Send message">
+                            {loading ? <div className="typing-dot-white" /> : <Send size={18} />}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

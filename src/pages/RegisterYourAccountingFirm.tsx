@@ -7,7 +7,7 @@ export const RegisterYourAccountingFirm: React.FC = () => {
     <main>
       <PageHero
         title="Register your Accounting Firm"
-        subtitle="Join our directory to reach new clients and collaborate on BizSuite implementations."
+        subtitle="Join our directory to reach new clients and collaborate on Nexora implementations."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>
@@ -22,7 +22,7 @@ export const RegisterYourAccountingFirm: React.FC = () => {
             <li>Get listed in the directory and receive client leads.</li>
           </ol>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
-            <a href="#" className="btn btn-primary">Start registration</a>
+            <Link to="/signup?type=accounting" className="btn btn-primary">Start registration</Link>
             <Link to="/become-a-partner" className="btn btn-outline-primary" reloadDocument>Partner program</Link>
           </div>
         </div>

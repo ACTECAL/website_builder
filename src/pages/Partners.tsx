@@ -13,15 +13,15 @@ const Partners: React.FC = () => {
   const partnerTypes = [
     {
       title: 'Solution partners',
-      description: 'Consultancies and systems integrators who implement BizSuite for mid-market and enterprise clients.'
+      description: 'Consultancies and systems integrators who implement Nexora for mid-market and enterprise clients.'
     },
     {
       title: 'Technology partners',
-      description: 'ISVs who build native integrations, marketplace apps, and custom modules on the BizSuite platform.'
+      description: 'ISVs who build native integrations, marketplace apps, and custom modules on the Nexora platform.'
     },
     {
       title: 'Referral partners',
-      description: 'Advisors and agencies who recommend BizSuite and earn recurring revenue for successful customers.'
+      description: 'Advisors and agencies who recommend Nexora and earn recurring revenue for successful customers.'
     }
   ];
 
@@ -31,17 +31,11 @@ const Partners: React.FC = () => {
     'Sandbox environments, technical training, and certification badges'
   ];
 
-  const steps = [
-    'Apply with your company details and customer focus.',
-    'Meet with the partner team to design a joint success plan.',
-    'Launch with enablement assets, training, and co-branded marketing.'
-  ];
-
   return (
     <main>
       <PageHero
-        title="BizSuite Partner Network"
-        subtitle="Join a global ecosystem helping organizations modernize operations with BizSuite applications and integrations."
+        title="Nexora Partner Network"
+        subtitle="Join a global ecosystem helping organizations modernize operations with Nexora applications and integrations."
         emphasize="none"
       />
 
@@ -69,13 +63,13 @@ const Partners: React.FC = () => {
           <div style={cardStyle}>
             <h3 style={{ margin: '0 0 16px', fontSize: '1.3rem' }}>Customer impact</h3>
             <p style={{ margin: 0, color: '#4a5568', lineHeight: 1.6 }}>
-              Our partners collectively support thousands of BizSuite customers through implementation, strategy, and managed services. Together, we drive adoption and measurable ROI.
+              Our partners collectively support thousands of Nexora customers through implementation, strategy, and managed services. Together, we drive adoption and measurable ROI.
             </p>
           </div>
           <div style={cardStyle}>
             <h3 style={{ margin: '0 0 16px', fontSize: '1.3rem' }}>Partner spotlight</h3>
             <p style={{ margin: 0, color: '#4a5568', lineHeight: 1.6 }}>
-              Learn how Acme Consulting reduced onboarding time by 45% for a global retail chain using BizSuite automation and custom modules.
+              Learn how Acme Consulting reduced onboarding time by 45% for a global retail chain using Nexora automation and custom modules.
             </p>
           </div>
         </div>
@@ -85,7 +79,7 @@ const Partners: React.FC = () => {
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
           <h3 style={{ fontSize: '1.7rem', marginBottom: 16 }}>Become a partner</h3>
           <p style={{ color: '#4a5568', lineHeight: 1.7, marginBottom: 24 }}>
-            Ready to transform businesses with BizSuite? Apply below and our partner team will reach out within two business days.
+            Ready to transform businesses with Nexora? Apply below and our partner team will reach out within two business days.
           </p>
           <a
             href="/contact"

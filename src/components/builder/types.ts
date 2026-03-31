@@ -11,12 +11,20 @@ export type BlockType =
     | "columns"
     | "pricing"
     | "stats"
-    | "testimonials";
+    | "testimonials"
+    | "spacer";
+
+export interface ChatMessage {
+    id: string;
+    role: 'user' | 'model';
+    text: string;
+    timestamp: Date;
+}
 
 export interface BuilderBlock {
     id: string;
     type: BlockType;
-    content: any; // Flexible content structure
+    content: any;
     styles?: {
         padding?: number;
         margin?: number;
@@ -25,6 +33,9 @@ export interface BuilderBlock {
         fontSize?: number;
         textAlign?: 'left' | 'center' | 'right';
         borderRadius?: number;
+        boxShadow?: string;
+        backdropFilter?: string;
+        animation?: string;
         [key: string]: any;
     };
 }

@@ -7,7 +7,7 @@ export const Certifications: React.FC = () => {
     <main>
       <PageHero
         title="Certifications"
-        subtitle="Validate your BizSuite skills with industry-recognized credentials."
+        subtitle="Validate your Nexora skills with industry-recognized credentials."
         emphasize="none"
       />
 

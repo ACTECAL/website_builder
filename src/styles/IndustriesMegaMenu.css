@@ -1,0 +1,203 @@
+.industries-mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95); /* High-luminosity glass */
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1),
+                0 1px 0 rgba(0, 0, 0, 0.02);
+    padding: 36px 0 0;
+    z-index: 999;
+    cursor: default;
+    animation: menuDropIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes menuDropIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.industries-mega-menu-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.industries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 32px;
+    row-gap: 36px;
+    margin-bottom: 28px;
+}
+
+.industry-category {
+    display: flex;
+    flex-direction: column;
+}
+
+.industry-category-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0 0 14px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.industry-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.industry-item-link {
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.industry-item-link::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.industry-item-link:hover {
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.04);
+    transform: translateX(4px);
+}
+
+.industry-item-link:hover::before {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+.industries-mega-menu-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(249, 250, 251, 0.8);
+    padding: 16px 32px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.browse-all-industries-link {
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.browse-all-industries-link:hover {
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.05);
+}
+
+.browse-all-industries-link::after {
+    content: '→';
+    transition: transform 0.2s ease;
+}
+
+.browse-all-industries-link:hover::after {
+    transform: translateX(4px);
+}
+
+.industries-mega-menu-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.industries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 48px;
+    row-gap: 40px;
+    margin-bottom: 32px;
+}
+
+.industry-category {
+    display: flex;
+    flex-direction: column;
+}
+
+.industry-category-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+}
+
+
+.industry-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.industry-item-link {
+    text-decoration: none;
+    color: #4B5563;
+    font-size: 0.85rem;
+    transition: color 0.15s ease;
+}
+
+.industry-item-link:hover {
+    color: #111827;
+}
+
+.industries-mega-menu-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    background-color: #fdfdfd;
+    padding: 16px 24px;
+    text-align: center;
+}
+
+.browse-all-industries-link {
+    text-decoration: none;
+    color: #4B5563;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.browse-all-industries-link:hover {
+    color: #111827;
+}

@@ -1,0 +1,60 @@
+.download-section {
+    padding: 10px 24px 60px;
+}
+
+.download-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.back-link-wrapper {
+    margin-bottom: 12px;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #667eea;
+}
+
+.section-title {
+    margin: 0 0 16px;
+}
+
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.platform-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.platform-name {
+    margin: 0;
+}
+
+.btn-download {
+    margin-top: 10px;
+}
+
+.secondary-title {
+    margin: 24px 0 16px;
+}
+
+.info-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #4a5568;
+}
+
+.download-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}

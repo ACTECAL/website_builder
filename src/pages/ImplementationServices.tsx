@@ -7,7 +7,7 @@ export const ImplementationServices: React.FC = () => {
     <main>
       <PageHero
         title="Implementation Services"
-        subtitle="From discovery to deployment, our experts help you launch BizSuite smoothly."
+        subtitle="From discovery to deployment, our experts help you launch Nexora smoothly."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

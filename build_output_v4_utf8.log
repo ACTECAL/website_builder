@@ -1,0 +1,80 @@
+﻿
+> client@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+node.exe : 
+Browserslist: browsers 
+data (caniuse-lite) is 
+7 months old. Please 
+run:
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Browserslist:   
+  b...ld. Please ru    
+n::String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  npx update-browsersli
+st-db@latest
+  Why you should do it 
+regularly: https://gith
+ub.com/browserslist/upd
+ate-db#readme
+Browserslist: browsers 
+data (caniuse-lite) is 
+7 months old. Please 
+run:
+  npx update-browsersli
+st-db@latest
+  Why you should do it 
+regularly: https://gith
+ub.com/browserslist/upd
+ate-db#readme
+Compiled with warnings.
+
+[eslint] 
+src\pages\Community.tsx
+  Line 156:10:  'scrollVelocity' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src\pages\Home.tsx
+  Line 157:9:  'handleMouseMove' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+static/css/main.e2282444.css from Css Minimizer plugin
+postcss-calc:: Cannot divide by zero webpack://./src/styles/Home.css:472:2
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  175.82 kB  build\static\js\main.5b2817ca.js
+  26.43 kB   build\static\css\main.1fdb8666.css
+  1.76 kB    build\static\js\453.a3c1d153.chunk.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+

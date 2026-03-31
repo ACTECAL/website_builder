@@ -8,7 +8,8 @@
 .apps-navbar {
   background-color: #ffffff;
   border-bottom: 1px solid #e5e7eb;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -82,7 +83,7 @@
 /* Category Tabs */
 .category-tabs {
   background-color: transparent;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   padding: 1.5rem 2rem 0;
 }
 
@@ -107,7 +108,9 @@
   transition: all 0.2s;
 }
 
-.category-tab:hover { color: var(--color-text); }
+.category-tab:hover {
+  color: var(--color-text);
+}
 
 .category-tab.active {
   color: var(--color-primary);
@@ -118,7 +121,7 @@
 .apps-content {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 1.5rem 2rem;
 }
 
 .apps-grid-container {
@@ -132,7 +135,7 @@
   text-decoration: none;
   padding: 1rem 1.125rem;
   background: var(--surface-alt);
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   color: var(--color-text);
@@ -141,7 +144,11 @@
   transition: transform .15s ease, box-shadow .2s ease, color .2s ease;
 }
 
-.app-link:hover { color: var(--color-primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.app-link:hover {
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
 
 /* Footer Links */
 .apps-footer-links {

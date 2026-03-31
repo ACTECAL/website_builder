@@ -12,7 +12,7 @@ export const Releases: React.FC = () => {
     <main>
       <PageHero
         title="Releases"
-        subtitle="See what’s new in every BizSuite release."
+        subtitle="See what’s new in every Nexora release."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

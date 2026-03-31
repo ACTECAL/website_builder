@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { GothicH2, GothicH3 } from './GothicHeading';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { GothicH2 } from './GothicHeading';
 import { DrippingText } from './DrippingText';
+import '../styles/StatsSection.css';
 
 type Stat = {
   value: number;
   label: string;
   suffix?: string;
   prefix?: string;
-  icon?: string;
+  icon?: React.ReactNode;
   color?: string;
 };
 
@@ -15,18 +16,44 @@ type Props = {
   stats: Stat[];
   title?: string;
   subtitle?: string;
-  background?: string;
 };
 
-export const StatsSection: React.FC<Props> = ({ 
-  stats, 
+export const StatsSection: React.FC<Props> = React.memo(({
+  stats,
   title = "our impact in numbers",
-  subtitle = "see how we're helping teams around the world succeed",
-  background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+  subtitle = "measured by the success of our global partners"
 }) => {
   const [animatedStats, setAnimatedStats] = useState<Stat[]>(stats.map(s => ({ ...s, value: 0 })));
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number | undefined>(undefined);
+
+  const animateCounters = useCallback(() => {
+    const duration = 2500; // 2.5s for more perceived "Elite" weight
+    const startTime = performance.now();
+
+    const update = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function: Cubic Out for a smooth finish
+      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+      const easedProgress = easeOutCubic(progress);
+
+      setAnimatedStats(stats.map(stat => ({
+        ...stat,
+        value: Math.floor(stat.value * easedProgress)
+      })));
+
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(update);
+      } else {
+        setAnimatedStats(stats);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(update);
+  }, [stats]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,192 +65,63 @@ export const StatsSection: React.FC<Props> = ({
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
-  const animateCounters = () => {
-    const duration = 2000; // 2 seconds
-    const steps = 60;
-    const stepDuration = duration / steps;
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-
-      setAnimatedStats(stats.map(stat => ({
-        ...stat,
-        value: Math.floor(stat.value * progress)
-      })));
-
-      if (currentStep >= steps) {
-        clearInterval(interval);
-        setAnimatedStats(stats);
-      }
-    }, stepDuration);
-  };
+    return () => {
+      observer.disconnect();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [hasAnimated, animateCounters]);
 
   return (
-    <section 
-      ref={sectionRef}
-      style={{ 
-        padding: '80px 24px', 
-        background,
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      {/* Background decoration */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'url("data:image/svg+xml,%3Csvg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M60 60c0-33.137 26.863-60 60-60v120c-33.137 0-60-26.863-60-60z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-        opacity: 0.3
-      }} />
+    <section ref={sectionRef} className="stats-section">
+      {/* Elite++ Aurora System */}
+      <div className="stats-aurora-glow stats-aurora-purple"></div>
+      <div className="stats-aurora-glow stats-aurora-cyan"></div>
+      <div className="stats-aurora-glow stats-aurora-indigo"></div>
       
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 80 }}>
-          <GothicH2 
-            text={title}
-            style={{ 
-              fontSize: 'clamp(2rem, 4vw, 3rem)', 
-              margin: '0 0 20px',
-              textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              color: '#FFFFFF'
-            }}
-          />
-          <DrippingText 
-            text={subtitle}
-            style={{ 
-              fontSize: '1.2rem', 
-              maxWidth: 600,
-              margin: '0 auto',
-              lineHeight: 1.6,
-              color: 'rgba(255,255,255,0.9)'
-            }}
-          />
+      <div className="stats-content-wrapper">
+        <div className="stats-header">
+          <GothicH2 text={title} className="stats-title" />
+          <DrippingText text={subtitle} className="stats-subtitle" />
         </div>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: 40 
-        }}>
+        <div className="stats-grid">
           {animatedStats.map((stat, idx) => (
-            <div key={idx} style={{ 
-              textAlign: 'center',
-              padding: '32px 24px',
-              background: 'rgba(255,255,255,0.1)',
-              borderRadius: 20,
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              transition: 'all 0.3s ease'
-            }} onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
-            }} onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-            }}>
-              
-              {stat.icon && (
-                <div style={{
-                  fontSize: '3rem',
-                  marginBottom: 20,
-                  display: 'flex',
-                  justifyContent: 'center'
-                }}>
-                  {stat.icon}
-                </div>
-              )}
+            <div key={idx} className="stat-card">
+              <div className="stat-card-inner">
+                {stat.icon && (
+                  <div className="stat-icon-aura">
+                    <div className="icon-glow" style={{ background: stat.color || 'var(--aura-primary)' }}></div>
+                    <div className="stat-icon-symbol">{stat.icon}</div>
+                  </div>
+                )}
 
-              <div style={{
-                fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-                fontWeight: 800,
-                marginBottom: 12,
-                textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                color: stat.color || 'white'
-              }}>
-                {stat.prefix || ''}{stat.value.toLocaleString()}{stat.suffix || ''}
+                <div className="stat-number-wrapper">
+                  <span className="stat-number-text" style={{ color: stat.color || 'white' }}>
+                    {stat.prefix}{stat.value.toLocaleString()}{stat.suffix}
+                  </span>
+                </div>
+
+                <div className="stat-label-box">
+                  <div className="stat-label-separator"></div>
+                  <span className="stat-label-name">{stat.label}</span>
+                </div>
               </div>
               
-              <div style={{
-                fontSize: '1.1rem',
-                color: 'rgba(255,255,255,0.9)',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
-              }}>
-                {stat.label}
-              </div>
+              {/* Card visual depth */}
+              <div className="stat-card-border-glow"></div>
             </div>
           ))}
-        </div>
-
-        {/* Additional info section */}
-        <div style={{
-          marginTop: 80,
-          textAlign: 'center',
-          padding: '40px',
-          background: 'rgba(255,255,255,0.1)',
-          borderRadius: 20,
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
-          <GothicH3 
-            text="trusted by industry leaders"
-            style={{
-              fontSize: '1.5rem',
-              margin: '0 0 16px',
-              color: '#FFFFFF'
-            }}
-          />
-          <DrippingText 
-            text="join thousands of companies that have transformed their business with our platform"
-            style={{
-              fontSize: '1rem',
-              margin: '0 0 32px',
-              maxWidth: 600,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              color: 'rgba(255,255,255,0.8)'
-            }}
-          />
-          
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 40,
-            flexWrap: 'wrap',
-            opacity: 0.8
-          }}>
-            {['fortune 500', 'startups', 'enterprise', 'smbs', 'remote teams', 'global'].map((type, idx) => (
-              <div key={idx} style={{
-                background: 'rgba(255,255,255,0.2)',
-                padding: '8px 16px',
-                borderRadius: 20,
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                border: '1px solid rgba(255,255,255,0.3)'
-              }}>
-                {type}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
   );
-};
+});
+
+export default StatsSection;

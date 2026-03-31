@@ -1,0 +1,104 @@
+/* Testimonials.css - Elite++ Light Aesthetic */
+.testimonials-section {
+    padding: 120px 24px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    color: var(--color-text);
+}
+
+.testimonials-aurora {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(113, 75, 103, 0.05) 0%, transparent 70%);
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.testimonials-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 32px;
+}
+
+.testimonial-card {
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    background: #ffffff;
+    box-shadow: 0 30px 60px rgba(113, 75, 103, 0.1);
+    border-color: rgba(113, 75, 103, 0.2);
+}
+
+.testimonial-quote {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin-bottom: 32px;
+    font-style: italic;
+    position: relative;
+}
+
+.testimonial-quote::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-size: 4rem;
+    color: var(--color-primary);
+    opacity: 0.1;
+}
+
+.testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.testimonial-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: white;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-info h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-text);
+}
+
+.testimonial-info p {
+    margin: 2px 0 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}

@@ -7,7 +7,7 @@ export const BecomeAPartner: React.FC = () => {
     <main>
       <PageHero
         title="Become a Partner"
-        subtitle="Grow with BizSuite. Get access to resources, enablement, and leads."
+        subtitle="Grow with Nexora. Get access to resources, enablement, and leads."
         emphasize="none"
       />
       <section style={{ padding: '10px 24px 60px' }}>

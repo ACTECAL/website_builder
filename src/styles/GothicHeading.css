@@ -1,0 +1,37 @@
+.gothic-heading {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+/* Base colors - can be overridden by inline styles if needed */
+.gothic-heading {
+    color: #111111;
+}
+
+/* Responsive font sizes */
+.gothic-h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.gothic-h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.gothic-h3 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.gothic-h4 {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+.gothic-h5 {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+.gothic-h6 {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+}

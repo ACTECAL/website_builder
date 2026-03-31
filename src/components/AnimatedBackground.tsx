@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 interface AnimatedBackgroundProps {
   children: React.ReactNode;
@@ -6,18 +6,18 @@ interface AnimatedBackgroundProps {
   intensity?: 'low' | 'medium' | 'high';
 }
 
-export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ 
-  children, 
+export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
+  children,
   variant = 'gradient',
-  intensity = 'medium' 
+  intensity = 'medium'
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Disable all background animations (particles, gradient shifting, etc.)
   useEffect(() => {
     // no-op: animations removed per request
   }, [variant, intensity]);
 
+  // Animations are intentionally disabled to focus on the static elite background styles.
   const getBackgroundStyle = () => {
     switch (variant) {
       case 'gradient':
@@ -44,7 +44,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   return (
     <div style={{ position: 'relative', ...getBackgroundStyle() }}>
       {/* Particles animation removed */}
-      
+
       {variant === 'geometric' && (
         <div style={{
           position: 'absolute',
