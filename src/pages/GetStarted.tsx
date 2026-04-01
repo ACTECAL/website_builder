@@ -598,57 +598,76 @@ export const GetStarted: React.FC = () => {
                     </div>
 
                     <div className="module-grid-elite">
-                      {AVAILABLE_MODULES.map((mod, index) => {
-                        const isSel = formData.modules.includes(mod.value);
-                        return (
-                          <div
-                            key={mod.value}
-                            className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
-                            style={{ animationDelay: `${0.7 + index * 0.1}s` }}
-                            onClick={() => {
-                              const newModules = isSel
-                                ? formData.modules.filter(
-                                    (v) => v !== mod.value,
-                                  )
-                                : [...formData.modules, mod.value];
-                              handleInputChange("modules", newModules);
-                            }}
-                          >
-                            <div className="module-tile-shimmer"></div>
-                            <div className="module-icon-wrapper">
-                              <div
-                                className="module-icon-glow"
-                                style={{
-                                  backgroundColor: isSel
-                                    ? mod.color
-                                    : "transparent",
-                                }}
-                              ></div>
-                              <div
-                                className="module-icon"
-                                style={{
-                                  borderColor: isSel ? mod.color : "#e2e8f0",
-                                }}
-                              >
-                                <i
-                                  className={mod.icon}
-                                  style={{ color: mod.color }}
-                                  aria-hidden="true"
-                                ></i>
+                      {(selectedProduct?.modules || AVAILABLE_MODULES).map(
+                        (mod: any, index) => {
+                          const isSel = formData.modules.includes(
+                            mod.id || mod.value,
+                          );
+                          return (
+                            <div
+                              key={mod.id || mod.value}
+                              className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
+                              style={{
+                                animationDelay: `${0.7 + index * 0.1}s`,
+                              }}
+                              onClick={() => {
+                                const newModules = isSel
+                                  ? formData.modules.filter(
+                                      (v) => v !== (mod.id || mod.value),
+                                    )
+                                  : [...formData.modules, mod.id || mod.value];
+                                handleInputChange("modules", newModules);
+                              }}
+                            >
+                              <div className="module-tile-shimmer"></div>
+                              <div className="module-icon-wrapper">
+                                <div
+                                  className="module-icon-glow"
+                                  style={{
+                                    backgroundColor: isSel
+                                      ? selectedProduct?.color || mod.color
+                                      : "transparent",
+                                  }}
+                                ></div>
+                                <div
+                                  className="module-icon"
+                                  style={{
+                                    borderColor: isSel
+                                      ? selectedProduct?.color || mod.color
+                                      : "#e2e8f0",
+                                  }}
+                                >
+                                  <i
+                                    className="fa-solid fa-cube"
+                                    style={{
+                                      color:
+                                        selectedProduct?.color || mod.color,
+                                    }}
+                                    aria-hidden="true"
+                                  ></i>
+                                </div>
                               </div>
+                              <div className="module-label">
+                                {mod.name || mod.label}
+                              </div>
+                              <div className="module-description">
+                                {mod.description}
+                              </div>
+                              {isSel && (
+                                <div
+                                  className="module-selection-badge"
+                                  style={{
+                                    backgroundColor:
+                                      selectedProduct?.color || mod.color,
+                                  }}
+                                >
+                                  <i className="fa-solid fa-check"></i>
+                                </div>
+                              )}
                             </div>
-                            <div className="module-label">{mod.label}</div>
-                            {isSel && (
-                              <div
-                                className="module-selection-badge"
-                                style={{ backgroundColor: mod.color }}
-                              >
-                                <i className="fa-solid fa-check"></i>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
+                          );
+                        },
+                      )}
                     </div>
                   </div>
                 </div>
