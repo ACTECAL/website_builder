@@ -17,7 +17,7 @@ export const GetStarted: React.FC = () => {
 
   // Find selected product from URL
   const selectedProduct = PRODUCTS.find(
-    (p) => p.name.toLowerCase() === selectedProductParam?.toLowerCase()
+    (p) => p.name.toLowerCase() === selectedProductParam?.toLowerCase(),
   );
 
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ export const GetStarted: React.FC = () => {
     selectedApps: [] as string[],
     name: "",
     accountType: "demo" as "demo" | "paid",
-    subscription: "starter" as "basic" | "standard" | "premium" | "enterprise",
+    subscription: "basic" as "basic" | "standard" | "premium" | "enterprise",
     modules: initialModules,
     selectedProduct: selectedProductParam || "",
   });
@@ -495,11 +495,16 @@ export const GetStarted: React.FC = () => {
                           </option>
                         ))}
                       </select>
-                      <label htmlFor="selectedProduct" className="auth-label-max">
+                      <label
+                        htmlFor="selectedProduct"
+                        className="auth-label-max"
+                      >
                         Select Product *
                       </label>
                       {getFieldError("selectedProduct") && (
-                        <div className="field-error">{getFieldError("selectedProduct")}</div>
+                        <div className="field-error">
+                          {getFieldError("selectedProduct")}
+                        </div>
                       )}
                     </div>
 
