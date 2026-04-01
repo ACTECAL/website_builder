@@ -214,6 +214,7 @@ export const GetStarted: React.FC = () => {
       ]);
 
       const result = await response.json();
+      console.log("result", result);
 
       if (!response.ok) {
         throw new Error(result.message || "Something went wrong");
@@ -223,15 +224,29 @@ export const GetStarted: React.FC = () => {
       setStatusMessage("System Ready!");
       setShowSuccessState(true);
 
+      // Open domain in new tab after successful creation
+      const newTab = window.open("", "_blank");
+
+      if (newTab) {
+        newTab.location.href = `https://${result.data.domain}`;
+      }
+
+      // Update success message with domain info
       setTimeout(() => {
-        setIsSubmitting(false);
-        setIsCreatingAccount(false);
-        setShowProcessingPopup(false);
-        setShowSuccessState(false);
-        setProcessingProgress(0);
-        // After success, navigate to the dashboard or clear
-        navigate("/dashboard");
-      }, 2500);
+        setStatusMessage(
+          `Your ERP is ready! Check your email for login details. Domain: ${result.data.domain}`,
+        );
+      }, 5000);
+
+      // setTimeout(() => {
+      //   setIsSubmitting(false);
+      //   setIsCreatingAccount(false);
+      //   setShowProcessingPopup(false);
+      //   setShowSuccessState(false);
+      //   setProcessingProgress(0);
+      //   // After success, navigate to the dashboard or clear
+      //   // navigate("/dashboard");
+      // }, 2500);
     } catch (err: any) {
       setApiError(err.message || "Server error, please try again");
       setIsSubmitting(false);
