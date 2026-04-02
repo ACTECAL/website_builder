@@ -1131,3 +1131,222 @@
   .choose-grid { grid-template-columns: 1fr; }
   .choose-aside { width: calc(100% - 32px); right: 16px; bottom: 16px; }
 }
+
+/* ================================================================
+   Product Dropdown
+================================================================ */
+.choose-product-selector-wrapper {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 50;
+}
+
+.product-dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.product-dropdown-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.product-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.product-dropdown-trigger:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.product-dropdown-trigger.active {
+  border-color: #0f172a;
+  box-shadow: 0 4px 24px rgba(15,23,42,0.08);
+}
+
+.product-dropdown-selected {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-dropdown-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.product-dropdown-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dropdown-chevron {
+  color: #94a3b8;
+  transition: transform 0.3s;
+}
+
+.dropdown-chevron.open {
+  transform: rotate(180deg);
+}
+
+.product-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 20px 40px -8px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.product-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.product-dropdown-item:hover {
+  background: #f8fafc;
+}
+
+.product-dropdown-item.selected {
+  background: #f1f5f9;
+}
+
+.dropdown-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-right: 12px;
+}
+
+.dropdown-item-details {
+  flex: 1;
+}
+
+.dropdown-item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dropdown-item-modules {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.dropdown-item-check {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.animate-slide-up-dropdown {
+  animation: slideUpDrop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top center;
+}
+
+@keyframes slideUpDrop {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Module grid specifics */
+.module-grid-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 500;
+  animation: authFadeIn 0.3s forwards;
+}
+
+.module-spinner {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.animate-scale-in {
+  animation: scaleInTile 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes scaleInTile {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Empty prompt styling */
+.choose-empty-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 40px;
+  background: rgba(248, 250, 252, 0.4);
+  border: 2px dashed #e2e8f0;
+  border-radius: 32px;
+  margin-top: 20px;
+  animation: authFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.empty-prompt-icon {
+  width: 80px;
+  height: 80px;
+  background: #f1f5f9;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+}
+
+.choose-empty-prompt h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.choose-empty-prompt p {
+  font-size: 1rem;
+  color: #64748b;
+  max-width: 400px;
+  line-height: 1.6;
+}

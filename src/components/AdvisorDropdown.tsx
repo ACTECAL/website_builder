@@ -40,14 +40,14 @@ export const AdvisorDropdown: React.FC<AdvisorDropdownProps> = ({ variant = 'def
 
             <div className={`advisor-dropdown-menu ${isOpen ? 'is-open' : ''}`}>
                 <Link
-                    to="/meet-an-advisor?type=demo"
+                    to="/meet-an-advisor"
                     className="advisor-dropdown-item"
                     onClick={() => setIsOpen(false)}
                 >
                     Demo with an Expert <span>(1-250 employees)</span>
                 </Link>
                 <Link
-                    to="/meet-an-advisor?type=assessment"
+                    to="/implementation-services"
                     className="advisor-dropdown-item"
                     onClick={() => setIsOpen(false)}
                 >

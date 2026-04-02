@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Package, PenTool, Cloud } from 'lucide-react';
+import { Package, PenTool, Cloud, DollarSign, TrendingUp, Globe, Users, Megaphone, Briefcase, Zap, Boxes } from 'lucide-react';
 import { appCategories } from '../data/appModules';
 import '../styles/AppsMegaMenu.css';
 
@@ -11,16 +11,17 @@ export const AppsMegaMenu: React.FC<{
 }> = ({ isOpen, onMouseEnter, onMouseLeave }) => {
     if (!isOpen) return null;
 
-    // Map category titles to their respective colors
-    const categoryColors: Record<string, string> = {
-        'Finance': '#017e84',
-        'Sales': '#e85a4f',
-        'Websites': '#4d6c8b',
-        'Supply Chain': '#75628b',
-        'Human Resources': '#65738f',
-        'Marketing': '#eb6b45',
-        'Services': '#e66244',
-        'Productivity': '#8b566b',
+    // Categories are styled purely via CSS mapped by title.
+
+    const categoryIcons: Record<string, React.ReactNode> = {
+        'Finance': <DollarSign size={16} strokeWidth={2.5} />,
+        'Sales': <TrendingUp size={16} strokeWidth={2.5} />,
+        'Websites': <Globe size={16} strokeWidth={2.5} />,
+        'Supply Chain': <Boxes size={16} strokeWidth={2.5} />,
+        'Human Resources': <Users size={16} strokeWidth={2.5} />,
+        'Marketing': <Megaphone size={16} strokeWidth={2.5} />,
+        'Services': <Briefcase size={16} strokeWidth={2.5} />,
+        'Productivity': <Zap size={16} strokeWidth={2.5} />,
     };
 
     return (
@@ -31,14 +32,14 @@ export const AppsMegaMenu: React.FC<{
         >
             <div className="apps-mega-menu-content">
                 <div className="apps-grid">
-                    {appCategories.map((category) => {
-                        const color = categoryColors[category.title] || '#6366f1';
+                    {appCategories.map((category, idx) => {
+                        const styleClass = `category-theme-${category.title.toLowerCase().replace(' ', '-')}`;
                         return (
-                            <div key={category.title} className="apps-category">
-                                <h4 className="apps-category-title" style={{
-                                    color: color,
-                                    borderBottomColor: `${color}33`
-                                }}>
+                            <div key={category.title} className={`apps-category delay-${idx}`}>
+                                <h4 className={`apps-category-title ${styleClass}`}>
+                                    <span className={`category-title-icon ${styleClass}-icon`}>
+                                        {categoryIcons[category.title]}
+                                    </span>
                                     {category.title}
                                 </h4>
                                 <ul className="apps-items-list">

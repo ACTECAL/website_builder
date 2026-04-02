@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/GetStarted.css";
 import { PRODUCTS } from "../data/products";
+import { industryCategories } from "../data/industries";
 
 // App selection logic refined for Elite++ grid
 
@@ -35,44 +36,10 @@ export const GetStarted: React.FC = () => {
     selectedProduct: selectedProductParam || "",
   });
 
-  const AVAILABLE_MODULES = [
-    {
-      value: "Inventory",
-      label: "Inventory Management",
-      icon: "fa-solid fa-box",
-      color: "#a855f7",
-    },
-    {
-      value: "Sales",
-      label: "Sales & CRM",
-      icon: "fa-solid fa-chart-line",
-      color: "#14b8a6",
-    },
-    {
-      value: "Purchase",
-      label: "Purchase & Procurement",
-      icon: "fa-solid fa-cart-shopping",
-      color: "#22c55e",
-    },
-    {
-      value: "Accounting",
-      label: "Financial Accounting",
-      icon: "fa-solid fa-coins",
-      color: "#10b981",
-    },
-    {
-      value: "HRM",
-      label: "HR & Payroll",
-      icon: "fa-solid fa-user-group",
-      color: "#ef4444",
-    },
-    {
-      value: "Manufacturing",
-      label: "Manufacturing / MRP",
-      icon: "fa-solid fa-industry",
-      color: "#f97316",
-    },
-  ];
+  // Derive available modules from the selected product, fallback to a default set if none
+  const currentAvailableModules = selectedProduct?.modules || [];
+  const productIcon = selectedProduct?.icon || "fa-solid fa-cube";
+  const productColor = selectedProduct?.color || "#6366f1";
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [showProcessingPopup, setShowProcessingPopup] = useState(false);
@@ -100,6 +67,7 @@ export const GetStarted: React.FC = () => {
         "companyName",
         "name",
         "contactEmail",
+        "industry",
         "contactPhone",
       ].includes(name)
     ) {
@@ -197,6 +165,8 @@ export const GetStarted: React.FC = () => {
         company_name: formData.companyName,
         domain: formData.domain,
         industry: formData.industry || null,
+        contact_phone: formData.contactPhone,
+        project_description: formData.projectDescription,
         account_type: formData.accountType,
         subscription: formData.subscription,
         modules: formData.modules,
@@ -471,6 +441,73 @@ export const GetStarted: React.FC = () => {
                     </label>
                   </div>
 
+                  <div
+                    className="auth-input-group animate-slide-up"
+                    style={{ animationDelay: "0.35s" }}
+                    onMouseMove={handleInputMouseMove}
+                  >
+                    <i className="fa-solid fa-globe auth-input-icon"></i>
+                    <input
+                      id="domain"
+                      className="auth-input-max with-icon"
+                      placeholder=" "
+                      value={formData.domain}
+                      onChange={(e) =>
+                        handleInputChange("domain", e.target.value)
+                      }
+                    />
+                    <label htmlFor="domain" className="auth-label-max">
+                      Website / Domain
+                    </label>
+                  </div>
+
+                  <div className="form-row">
+                    <div
+                      className="auth-input-group animate-slide-up"
+                      style={{ animationDelay: "0.4s" }}
+                      onMouseMove={handleInputMouseMove}
+                    >
+                      <i className="fa-solid fa-phone auth-input-icon"></i>
+                      <input
+                        id="contactPhone"
+                        className="auth-input-max with-icon"
+                        placeholder=" "
+                        value={formData.contactPhone}
+                        onChange={(e) =>
+                          handleInputChange("contactPhone", e.target.value)
+                        }
+                      />
+                      <label htmlFor="contactPhone" className="auth-label-max">
+                        Phone Number
+                      </label>
+                    </div>
+
+                    <div
+                      className="auth-input-group animate-slide-up"
+                      style={{ animationDelay: "0.45s" }}
+                      onMouseMove={handleInputMouseMove}
+                    >
+                      <i className="fa-solid fa-briefcase auth-input-icon"></i>
+                      <select
+                        id="industry"
+                        title="Select Industry"
+                        className="auth-input-max field-select with-icon"
+                        value={formData.industry}
+                        onChange={(e) =>
+                          handleInputChange("industry", e.target.value)
+                        }
+                      >
+                        <option value="">Select Industry</option>
+                        {industryCategories.flatMap(cat => cat.industries).map(ind => (
+                          <option key={ind.slug} value={ind.name}>{ind.name}</option>
+                        ))}
+                      </select>
+                      <label htmlFor="industry" className="auth-label-max">
+                        Industry
+                      </label>
+                    </div>
+                  </div>
+
                   <div className="form-row">
                     <div
                       className="auth-input-group animate-slide-up"
@@ -530,6 +567,27 @@ export const GetStarted: React.FC = () => {
                         Choose Plan
                       </label>
                     </div>
+                  </div>
+
+                  <div
+                    className="auth-input-group animate-slide-up textarea-group"
+                    style={{ animationDelay: "0.55s" }}
+                    onMouseMove={handleInputMouseMove}
+                  >
+                    <i className="fa-regular fa-message auth-input-icon"></i>
+                    <textarea
+                      id="projectDescription"
+                      className="auth-input-max with-icon auth-textarea"
+                      placeholder=" "
+                      rows={3}
+                      value={formData.projectDescription}
+                      onChange={(e) =>
+                        handleInputChange("projectDescription", e.target.value)
+                      }
+                    />
+                    <label htmlFor="projectDescription" className="auth-label-max">
+                      Tell us about your project
+                    </label>
                   </div>
 
                   <div
@@ -593,19 +651,19 @@ export const GetStarted: React.FC = () => {
                     </div>
 
                     <div className="module-grid-elite">
-                      {AVAILABLE_MODULES.map((mod, index) => {
-                        const isSel = formData.modules.includes(mod.value);
+                      {currentAvailableModules.map((mod, index) => {
+                        const isSel = formData.modules.includes(mod.id);
                         return (
                           <div
-                            key={mod.value}
+                            key={mod.id}
                             className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
-                            style={{ animationDelay: `${0.7 + index * 0.1}s` }}
+                            style={{ animationDelay: `${0.7 + index * 0.05}s` }}
                             onClick={() => {
                               const newModules = isSel
                                 ? formData.modules.filter(
-                                    (v) => v !== mod.value,
+                                    (v) => v !== mod.id,
                                   )
-                                : [...formData.modules, mod.value];
+                                : [...formData.modules, mod.id];
                               handleInputChange("modules", newModules);
                             }}
                           >
@@ -615,28 +673,28 @@ export const GetStarted: React.FC = () => {
                                 className="module-icon-glow"
                                 style={{
                                   backgroundColor: isSel
-                                    ? mod.color
+                                    ? productColor
                                     : "transparent",
                                 }}
                               ></div>
                               <div
                                 className="module-icon"
                                 style={{
-                                  borderColor: isSel ? mod.color : "#e2e8f0",
+                                  borderColor: isSel ? productColor : "#e2e8f0",
                                 }}
                               >
                                 <i
-                                  className={mod.icon}
-                                  style={{ color: mod.color }}
+                                  className={productIcon}
+                                  style={{ color: productColor }}
                                   aria-hidden="true"
                                 ></i>
                               </div>
                             </div>
-                            <div className="module-label">{mod.label}</div>
+                            <div className="module-label">{mod.name}</div>
                             {isSel && (
                               <div
                                 className="module-selection-badge"
-                                style={{ backgroundColor: mod.color }}
+                                style={{ backgroundColor: productColor }}
                               >
                                 <i className="fa-solid fa-check"></i>
                               </div>
