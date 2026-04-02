@@ -31,7 +31,7 @@
 //       },
 //       {
 //         id: "erp:ppc",
-//         name: "Production Management", 
+//         name: "Production Management",
 //         description: "Control production planning, manufacturing processes, and quality control"
 //       },
 //       {
@@ -47,13 +47,13 @@
 //         description: "Perfect for small businesses getting started with ERP"
 //       },
 //       {
-//         id: "standard", 
+//         id: "standard",
 //         name: "Standard Plan",
 //         description: "Ideal for growing businesses needing advanced features"
 //       },
 //       {
 //         id: "premium",
-//         name: "Premium Plan", 
+//         name: "Premium Plan",
 //         description: "Comprehensive solution for large enterprises"
 //       },
 //       {
@@ -64,7 +64,6 @@
 //     ]
 //   }
 // ];
-
 
 // src/data/products.ts
 

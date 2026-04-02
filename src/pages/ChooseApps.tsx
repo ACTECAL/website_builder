@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../styles/ChooseApps.css";
-import ProductDropdown from "../components/ProductDropdown";
 import ModuleGrid from "../components/ModuleGrid";
 import PRODUCTS, { Product } from "../data/products";
 
@@ -11,7 +10,7 @@ export const ChooseApps: React.FC = () => {
   
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [isSwitchingProduct, setIsSwitchingProduct] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const v = searchParams.get("selected");
@@ -20,31 +19,19 @@ export const ChooseApps: React.FC = () => {
     }
   }, [searchParams]);
 
-  const handleProductSelect = (product: Product) => {
-    if (product.name !== selectedProduct?.name) {
-      setIsSwitchingProduct(true);
-      setSelectedProduct(product);
-      // Wait for animation
-      setTimeout(() => {
-        setIsSwitchingProduct(false);
-      }, 400);
-    }
-  };
-
   const handleToggle = (id: string) => {
     setSelectedIds((prev) => 
       prev.includes(id) ? prev.filter((k) => k !== id) : [...prev, id]
     );
   };
 
-  const handleToggleAll = (selectAll: boolean) => {
-    if (!selectedProduct) return;
-    if (selectAll) {
-      const moduleIds = selectedProduct.modules.map(m => m.id);
-      setSelectedIds(prev => Array.from(new Set([...prev, ...moduleIds])));
-    } else {
-      const moduleIds = selectedProduct.modules.map(m => m.id);
+  const handleToggleAll = (product: Product) => {
+    const moduleIds = product.modules.map(m => m.id);
+    const allSelected = moduleIds.length > 0 && moduleIds.every(id => selectedIds.includes(id));
+    if (allSelected) {
       setSelectedIds(prev => prev.filter(k => !moduleIds.includes(k)));
+    } else {
+      setSelectedIds(prev => Array.from(new Set([...prev, ...moduleIds])));
     }
   };
 
@@ -53,11 +40,27 @@ export const ChooseApps: React.FC = () => {
     navigate(`/get-started${qs}`);
   };
 
+  const filteredProducts = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return selectedProduct ? [selectedProduct] : [];
+    }
+    const lower = searchTerm.toLowerCase();
+    return PRODUCTS.map((prod) => ({
+      ...prod,
+      modules: prod.modules.filter(
+        (mod) =>
+          mod.name.toLowerCase().includes(lower) ||
+          mod.description.toLowerCase().includes(lower) ||
+          mod.id.toLowerCase().includes(lower)
+      ),
+    })).filter((prod) => prod.modules.length > 0);
+  }, [selectedProduct, searchTerm]);
+
   const count = selectedIds.length;
 
   return (
     <div className="choose-apps-page auth-page">
-      {/* Sidebar - Retaining original styling context */}
+      {/* Sidebar */}
       <div className="auth-sidebar">
         <div className="auth-sidebar-content">
           <div className="auth-glass-badge">
@@ -116,7 +119,7 @@ export const ChooseApps: React.FC = () => {
       {/* Main Content */}
       <div className="auth-form-container choose-apps-content-wrapper">
         <div className="auth-form-box choose-apps-form-box">
-          {/* Step indicator */}
+          
           <div className="choose-step-indicator stagger-0">
             <div className="step-item step-done"><div className="step-dot"><i className="fa-solid fa-check"></i></div><span>Account</span></div>
             <div className="step-line"></div>
@@ -141,40 +144,93 @@ export const ChooseApps: React.FC = () => {
             </div>
           </header>
 
-          <div className="choose-product-selector-wrapper stagger-1">
-            <ProductDropdown 
-               products={PRODUCTS} 
-               selectedProduct={selectedProduct} 
-               onSelect={handleProductSelect} 
-            />
+          <div className="choose-search-container stagger-1">
+            <div className="choose-search-wrapper">
+              <i className="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                placeholder="Search apps by name or feature..."
+                className="choose-search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <button className="search-clear-btn" onClick={() => setSearchTerm("")} title="Clear">
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="choose-layout stagger-2">
+          <div className="choose-tabs-wrapper stagger-2">
+            <div className="choose-tabs">
+              {PRODUCTS.map((prod) => {
+                const prodSelectedCount = prod.modules.filter(m => selectedIds.includes(m.id)).length;
+                return (
+                  <button
+                    key={prod.name}
+                    className={`choose-tab ${selectedProduct?.name === prod.name && !searchTerm ? "tab-active" : ""}`}
+                    onClick={() => { setSelectedProduct(prod); setSearchTerm(""); }}
+                  >
+                    <i className={`${prod.icon} tab-icon`}></i>
+                    {prod.name}
+                    {prodSelectedCount > 0 && <span className="tab-count">{prodSelectedCount}</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="choose-layout stagger-3">
             <div className="choose-main">
-              {selectedProduct ? (
-                <ModuleGrid 
-                  modules={selectedProduct.modules}
-                  selectedIds={selectedIds}
-                  onToggle={handleToggle}
-                  onToggleAll={handleToggleAll}
-                  accentColor={selectedProduct.color}
-                  icon={selectedProduct.icon}
-                  isSwitching={isSwitchingProduct}
-                />
+              {searchTerm && (
+                <div className="search-count-bar">
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                  {filteredProducts.reduce((acc, p) => acc + p.modules.length, 0)} results for "<strong>{searchTerm}</strong>"
+                </div>
+              )}
+
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((prod) => (
+                  <div key={prod.name} style={{ marginBottom: searchTerm ? '40px' : '0' }}>
+                    <ModuleGrid 
+                      modules={prod.modules}
+                      selectedIds={selectedIds}
+                      onToggle={handleToggle}
+                      onToggleAll={() => handleToggleAll(prod)}
+                      accentColor={prod.color}
+                      icon={prod.icon}
+                      isSwitching={false}
+                      titleOverride={searchTerm ? `${prod.name} (${prod.modules.length})` : undefined}
+                    />
+                  </div>
+                ))
+              ) : searchTerm ? (
+                <div className="no-results">
+                  <div className="no-results-icon">
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </div>
+                  <p>
+                    No apps matching "<strong>{searchTerm}</strong>"
+                  </p>
+                  <button className="clear-search-link" onClick={() => setSearchTerm("")}>
+                    Clear search
+                  </button>
+                </div>
               ) : (
                 <div className="choose-empty-prompt animate-fade-in">
                   <div className="empty-prompt-icon">
                     <i className="fa-solid fa-layer-group"></i>
                   </div>
                   <h3>Select a workspace to get started</h3>
-                  <p>Choose an industry category above to view and select the modules you need for your business.</p>
+                  <p>Choose a category above to view and select the modules you need for your business.</p>
                 </div>
               )}
             </div>
           </div>
 
         {/* Floating Selection Panel remains mostly the same, tailored to IDs instead of Tiles */}
-        {selectedProduct && count > 0 && (
+        {count > 0 && (
           <aside className="choose-aside">
             <div className="choose-selected-header">
               <div className="aside-header-left">

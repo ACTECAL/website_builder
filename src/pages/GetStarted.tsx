@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/GetStarted.css";
-import { PRODUCTS } from "../data/products";
+import "../styles/ChooseApps.css";
+import PRODUCTS, { Product } from "../data/products";
 import { industryCategories } from "../data/industries";
-
-// App selection logic refined for Elite++ grid
+import ModuleGrid from "../components/ModuleGrid";
 
 export const GetStarted: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Parse query params for pre-selected modules and product
+  // URL parsing for initial state if they somehow land here with URL params
   const searchParams = new URLSearchParams(location.search);
   const selectedAppsParam = searchParams.get("selected");
-  const selectedProductParam = searchParams.get("product");
   const initialModules = selectedAppsParam ? selectedAppsParam.split(",") : [];
 
-  // Find selected product from URL
-  const selectedProduct = PRODUCTS.find(
-    (p) => p.name.toLowerCase() === selectedProductParam?.toLowerCase()
-  );
+  // ============================================
+  // STEPPER STATE
+  // 1 = App Selection (Pipeline Step 1)
+  // 2 = Company Data (Pipeline Step 2)
+  // 3 = Provisioning / Success
+  // ============================================
+  const [currentStep, setCurrentStep] = useState(1);
+  const [direction, setDirection] = useState("forward");
+
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>(initialModules);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [formData, setFormData] = useState({
     domain: "",
@@ -28,78 +35,84 @@ export const GetStarted: React.FC = () => {
     contactEmail: "",
     contactPhone: "",
     projectDescription: "",
-    selectedApps: [] as string[],
     name: "",
-    accountType: "demo" as "demo" | "paid",
-    subscription: "starter" as "basic" | "standard" | "premium" | "enterprise",
-    modules: initialModules,
-    selectedProduct: selectedProductParam || "",
+    accountType: "paid" as "demo" | "paid",
+    subscription: "premium" as "basic" | "standard" | "premium" | "enterprise",
   });
-
-  // Derive available modules from the selected product, fallback to a default set if none
-  const currentAvailableModules = selectedProduct?.modules || [];
-  const productIcon = selectedProduct?.icon || "fa-solid fa-cube";
-  const productColor = selectedProduct?.color || "#6366f1";
-
-  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
-  const [showProcessingPopup, setShowProcessingPopup] = useState(false);
-  const [processingProgress, setProcessingProgress] = useState(0);
-  const [statusMessage, setStatusMessage] = useState(
-    "Initializing Configuration...",
-  );
-  const [showSuccessState, setShowSuccessState] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-  // API Loading States
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const [processingProgress, setProcessingProgress] = useState(0);
+  const [statusMessage, setStatusMessage] = useState("Initializing Configuration...");
+  const [showSuccessState, setShowSuccessState] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
-  const [currentStep] = useState(1);
+  // Scroll to top on step change seamlessly
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
 
-  // Validation
+  // ============================================
+  // APP TICKING LOGIC (Step 1)
+  // ============================================
+  const filteredProducts = useMemo(() => {
+    if (!searchTerm.trim()) return selectedProduct ? [selectedProduct] : [];
+    const lower = searchTerm.toLowerCase();
+    return PRODUCTS.map((prod) => ({
+      ...prod,
+      modules: prod.modules.filter(
+        (mod) =>
+          mod.name.toLowerCase().includes(lower) ||
+          mod.description.toLowerCase().includes(lower) ||
+          mod.id.toLowerCase().includes(lower)
+      ),
+    })).filter((prod) => prod.modules.length > 0);
+  }, [selectedProduct, searchTerm]);
+
+  const handleToggleModule = (id: string) => {
+    setSelectedIds((prev) => prev.includes(id) ? prev.filter((k) => k !== id) : [...prev, id]);
+  };
+
+  const handleToggleAllModules = (product: Product) => {
+    const moduleIds = product.modules.map(m => m.id);
+    const allSelected = moduleIds.length > 0 && moduleIds.every(id => selectedIds.includes(id));
+    if (allSelected) {
+      setSelectedIds(prev => prev.filter(k => !moduleIds.includes(k)));
+    } else {
+      setSelectedIds(prev => Array.from(new Set([...prev, ...moduleIds])));
+    }
+  };
+
+  const count = selectedIds.length;
+
+  const goToForm = () => {
+    if (count > 0) {
+      setDirection("forward");
+      setCurrentStep(2);
+    }
+  };
+
+  const goBackToApps = () => {
+    setDirection("backward");
+    setCurrentStep(1);
+  };
+
+  // ============================================
+  // FORM VALIDATION LOGIC (Step 2)
+  // ============================================
   const validateField = (name: string, value: any) => {
     const newErrors = { ...errors };
-    if (
-      [
-        "domain",
-        "companyName",
-        "name",
-        "contactEmail",
-        "industry",
-        "contactPhone",
-      ].includes(name)
-    ) {
+    if (["domain", "companyName", "name", "contactEmail", "industry"].includes(name)) {
       if (!value || (typeof value === "string" && !value.trim())) {
         newErrors[name] = "This field is required";
-      } else if (
-        name === "contactEmail" &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-      ) {
+      } else if (name === "contactEmail" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
         newErrors[name] = "Invalid email";
       } else {
         delete newErrors[name];
       }
     }
-    // Product validation
-    if (name === "selectedProduct") {
-      if (!value) {
-        newErrors[name] = "Please select a product";
-      } else {
-        delete newErrors[name];
-      }
-    }
-
-    // Modules validation
-    if (name === "modules") {
-      if (!Array.isArray(value) || value.length === 0) {
-        newErrors[name] = "Please select at least one module";
-      } else {
-        delete newErrors[name];
-      }
-    }
-
     setErrors(newErrors);
   };
 
@@ -121,32 +134,33 @@ export const GetStarted: React.FC = () => {
     e.currentTarget.style.setProperty("--mouse-y", `${y}%`);
   };
 
-  // Step 1 Validation
-  const isStep1Valid = () => {
+  const isFormValid = () => {
     return (
       formData.name.trim() &&
       formData.companyName.trim() &&
-      formData.selectedProduct &&
-      formData.modules.length > 0 &&
-      !errors.name &&
-      !errors.companyName &&
-      !errors.selectedProduct &&
-      !errors.modules
+      formData.contactEmail.trim() &&
+      formData.domain.trim() &&
+      formData.industry.trim() &&
+      Object.keys(errors).length === 0
     );
   };
 
-  const handleStep1Next = async () => {
-    if (!isStep1Valid()) return;
+  const getFieldError = (fieldName: string) => touched[fieldName] && errors[fieldName] ? errors[fieldName] : "";
 
+  // ============================================
+  // SUBMISSION LOGIC (Step 3)
+  // ============================================
+  const handleFinalSubmit = async () => {
+    if (!isFormValid() || count === 0) return;
+
+    setDirection("forward");
+    setCurrentStep(3);
     setIsCreatingAccount(true);
-    setIsSubmitting(true);
-    setShowProcessingPopup(true);
     setProcessingProgress(15);
     setStatusMessage("Initializing Configuration...");
     setApiError(null);
 
     try {
-      // Simulate multi-stage progress while waiting for API
       const progressSimulation = async () => {
         await new Promise((r) => setTimeout(r, 800));
         setProcessingProgress(35);
@@ -161,23 +175,21 @@ export const GetStarted: React.FC = () => {
 
       const payload = {
         name: formData.name,
-        email: formData.contactEmail || null,
+        email: formData.contactEmail,
         company_name: formData.companyName,
         domain: formData.domain,
-        industry: formData.industry || null,
+        industry: formData.industry,
         contact_phone: formData.contactPhone,
         project_description: formData.projectDescription,
         account_type: formData.accountType,
         subscription: formData.subscription,
-        modules: formData.modules,
+        modules: selectedIds,
       };
 
       const [response] = await Promise.all([
-        fetch("http://127.0.0.1:4001/erp/create", {
+        fetch("https://api-admindev.actecal.com/admin/erp/create", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         }),
         progressSimulation(),
@@ -193,599 +205,441 @@ export const GetStarted: React.FC = () => {
       setStatusMessage("System Ready!");
       setShowSuccessState(true);
 
+      const newTab = window.open("", "_blank");
+      if (newTab) newTab.location.href = `https://${result.data.domain}`;
+
       setTimeout(() => {
-        setIsSubmitting(false);
-        setIsCreatingAccount(false);
-        setShowProcessingPopup(false);
-        setShowSuccessState(false);
-        setProcessingProgress(0);
-        // After success, navigate to the dashboard or clear
-        navigate("/dashboard");
-      }, 2500);
+        setStatusMessage(`Your ERP is ready! Check your email for login details. Domain: ${result.data.domain}`);
+      }, 5000);
+
     } catch (err: any) {
       setApiError(err.message || "Server error, please try again");
-      setIsSubmitting(false);
       setIsCreatingAccount(false);
-      setShowProcessingPopup(false);
       setProcessingProgress(0);
+      setCurrentStep(2); // Jump back to form naturally
     }
   };
 
-  const getFieldError = (fieldName: string) => {
-    return touched[fieldName] && errors[fieldName] ? errors[fieldName] : "";
-  };
-
-  // getSelectedAppsCount and other app selection functions removed as they are no longer used in the new module grid logic
-
-  return (
-    <main className="getstarted-fullpage">
-      {isCreatingAccount && (
+  // FULL SCREEN LOADING OVERLAY (Step 3)
+  if (isCreatingAccount) {
+    return (
+      <main className="getstarted-fullpage">
         <div className="full-screen-loading">
           <div className="loading-card">
             <div className="spinner">
               <i className="fas fa-cog fa-spin fa-3x"></i>
             </div>
-            <h2>Please waitâ€¦</h2>
-            <p className="loading-title">Weâ€™re preparing your workspaceâ€¦</p>
-            <p className="loading-subtitle">
-              This process may take 2â€“3 minutes.
-            </p>
+            {showSuccessState ? (
+              <>
+                <div className="success-icon-wrapper animate-bounce">
+                  <i className="fas fa-check-circle fa-4x text-green-400"></i>
+                </div>
+                <h2>Setup Complete!</h2>
+              </>
+            ) : (
+              <>
+                <h2>Please wait…</h2>
+                <p className="loading-title">We’re preparing your workspace…</p>
+                <p className="loading-subtitle">This process may take 2–3 minutes.</p>
+              </>
+            )}
+            
             <div className="progress-bar-small">
-              <div className="progress-fill-small"></div>
+              <div className="progress-fill-small" style={{ width: `${processingProgress}%` }}></div>
             </div>
-          </div>
-        </div>
-      )}
-
-      <div className="getstarted-page auth-page">
-        {/* Sidebar Section - Replicating Login aesthetic exactly */}
-        <div className="auth-sidebar">
-          <div className="auth-sidebar-content">
-            <div className="auth-glass-badge">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m5 12 5 5L20 7" />
-              </svg>
-              <span>Actyx Enterprise</span>
-            </div>
-
-            {/* Ambient Background Elements */}
-            <div className="auth-ambient-blob blob-1"></div>
-            <div className="auth-ambient-blob blob-2"></div>
-            <div className="auth-ambient-blob blob-3"></div>
-
-            {/* Cinematic Light Streaks */}
-            <div className="auth-light-streaks">
-              <div className="light-streak streak-1"></div>
-              <div className="light-streak streak-2"></div>
-              <div className="light-streak streak-3"></div>
-            </div>
-
-            {/* Floating Particle System */}
-            <div className="auth-particles">
-              {[...Array(40)].map((_, i) => (
-                <div
-                  key={i}
-                  className={`particle p-${i % 5}`}
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    opacity: 0.1 + Math.random() * 0.4,
-                    transform: `scale(${0.5 + Math.random()})`,
-                  }}
-                ></div>
-              ))}
-            </div>
-
-            <h2 className="auth-sidebar-title">
-              The foundation of your digital ecosystem.
-            </h2>
-
-            <div className="auth-feature-list">
-              <div className="auth-feature-item">
-                <div className="auth-feature-icon-wrapper">
-                  <i className="fas fa-rocket"></i>
-                </div>
-                <div className="auth-feature-text">
-                  Rapid Deployment Architecture
-                </div>
+            
+            <div className="status-terminal">
+              <div className="terminal-header">
+                <div className="mac-dot r"></div>
+                <div className="mac-dot y"></div>
+                <div className="mac-dot g"></div>
+                <span className="terminal-title">system_init</span>
               </div>
-
-              <div className="auth-feature-item">
-                <div className="auth-feature-icon-wrapper">
-                  <i className="fas fa-shield-alt"></i>
-                </div>
-                <div className="auth-feature-text">
-                  Bank-Grade Infrastructure
-                </div>
-              </div>
-
-              <div className="auth-feature-item">
-                <div className="auth-feature-icon-wrapper">
-                  <i className="fas fa-sync"></i>
-                </div>
-                <div className="auth-feature-text">
-                  Real-time Data Synchronization
+              <div className="terminal-body">
+                <div className="terminal-line">
+                  <span className="cmd"></span> {statusMessage}
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </main>
+    );
+  }
 
-        {/* Form Section - Aligning with Login.tsx structure */}
-        <div className="auth-form-container getstarted-content-wrapper">
-          <div className="auth-form-box getstarted-form-box">
-            {/* Step indicator */}
-            <div
-              className="setup-step-indicator animate-slide-up"
-              style={{ animationDelay: "0.05s" }}
-            >
-              <div className="step-item step-done">
-                <div className="step-dot">
-                  <i className="fa-solid fa-check"></i>
-                </div>
-                <span>Account</span>
-              </div>
-              <div className="step-line step-done-line"></div>
-              <div className="step-item step-done">
-                <div className="step-dot">
-                  <i className="fa-solid fa-check"></i>
-                </div>
-                <span>Choose Apps</span>
-              </div>
-              <div className="step-line step-done-line"></div>
-              <div className="step-item step-active">
-                <div className="step-dot">
-                  <span>3</span>
-                </div>
-                <span>Setup</span>
-              </div>
+  return (
+    <div className="choose-apps-page auth-page">
+      {/* LEFT SIDEBAR ALWAYS VISIBLE */}
+      <div className="auth-sidebar">
+        <div className="auth-sidebar-content">
+          <div className="auth-glass-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>
+            <span>Actyx Enterprise</span>
+          </div>
+
+          <div className="auth-ambient-blob blob-1"></div>
+          <div className="auth-ambient-blob blob-2"></div>
+          <div className="auth-ambient-blob blob-3"></div>
+
+          <div className="auth-particles">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className={`particle p-${i % 5}`} style={{
+                left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`, opacity: 0.1 + Math.random() * 0.3
+              }}></div>
+            ))}
+          </div>
+
+          <h2 className="auth-sidebar-title">
+            {currentStep === 1 ? "Build your perfect business stack." : "The foundation of your digital ecosystem."}
+          </h2>
+          <p className="auth-sidebar-subtitle">
+            {currentStep === 1 ? "Choose the tools that fit your workflow — all connected out of the box." : "A few final details and your private workspace architecture will be provisioned."}
+          </p>
+
+          <div className="auth-feature-list">
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper"><i className="fas fa-rocket"></i></div>
+              <div className="auth-feature-text">Rapid Deployment Architecture</div>
             </div>
-
-            <header
-              className="form-header-full animate-slide-up"
-              style={{ animationDelay: "0.1s" }}
-            >
-              <div className="auth-title-wrapper">
-                <h1 className="auth-title text-shimmer">
-                  Complete your <span className="auth-title-accent">setup</span>
-                </h1>
-                <div className="title-glass-accent"></div>
-              </div>
-              <p className="auth-subtitle">
-                Just a few more details to customize your workspace.
-              </p>
-              {apiError && (
-                <div className="auth-api-error">
-                  <i className="fas fa-exclamation-circle"></i> {apiError}
-                </div>
-              )}
-            </header>
-
-            <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
-              {/* STEP 1 - Company Details */}
-              {currentStep === 1 && (
-                <div className="step-fields animate-fade-in">
-                  <div className="form-row">
-                    <div
-                      className="auth-input-group animate-slide-up"
-                      style={{ animationDelay: "0.1s" }}
-                      onMouseMove={handleInputMouseMove}
-                    >
-                      <i className="fa-regular fa-user auth-input-icon"></i>
-                      <input
-                        id="name"
-                        className={`auth-input-max with-icon ${touched.name && !formData.name ? "error" : ""}`}
-                        placeholder=" "
-                        value={formData.name}
-                        onChange={(e) =>
-                          handleInputChange("name", e.target.value)
-                        }
-                        onBlur={() => handleBlur("name")}
-                      />
-                      <label htmlFor="name" className="auth-label-max">
-                        Your Name *
-                      </label>
-                    </div>
-
-                    <div
-                      className="auth-input-group animate-slide-up"
-                      style={{ animationDelay: "0.2s" }}
-                      onMouseMove={handleInputMouseMove}
-                    >
-                      <i className="fa-regular fa-envelope auth-input-icon"></i>
-                      <input
-                        id="contactEmail"
-                        type="email"
-                        className={`auth-input-max with-icon ${getFieldError("contactEmail") ? "error" : ""}`}
-                        placeholder=" "
-                        value={formData.contactEmail}
-                        onChange={(e) =>
-                          handleInputChange("contactEmail", e.target.value)
-                        }
-                        onBlur={() => handleBlur("contactEmail")}
-                      />
-                      <label htmlFor="contactEmail" className="auth-label-max">
-                        Company Email
-                      </label>
-                    </div>
-                  </div>
-
-                  <div
-                    className="auth-input-group animate-slide-up"
-                    style={{ animationDelay: "0.3s" }}
-                    onMouseMove={handleInputMouseMove}
-                  >
-                    <i className="fa-regular fa-building auth-input-icon"></i>
-                    <input
-                      id="companyName"
-                      className={`auth-input-max with-icon ${touched.companyName && !formData.companyName ? "error" : ""}`}
-                      placeholder=" "
-                      value={formData.companyName}
-                      onChange={(e) =>
-                        handleInputChange("companyName", e.target.value)
-                      }
-                      onBlur={() => handleBlur("companyName")}
-                    />
-                    <label htmlFor="companyName" className="auth-label-max">
-                      Company / Godown Name *
-                    </label>
-                  </div>
-
-                  <div
-                    className="auth-input-group animate-slide-up"
-                    style={{ animationDelay: "0.35s" }}
-                    onMouseMove={handleInputMouseMove}
-                  >
-                    <i className="fa-solid fa-globe auth-input-icon"></i>
-                    <input
-                      id="domain"
-                      className="auth-input-max with-icon"
-                      placeholder=" "
-                      value={formData.domain}
-                      onChange={(e) =>
-                        handleInputChange("domain", e.target.value)
-                      }
-                    />
-                    <label htmlFor="domain" className="auth-label-max">
-                      Website / Domain
-                    </label>
-                  </div>
-
-                  <div className="form-row">
-                    <div
-                      className="auth-input-group animate-slide-up"
-                      style={{ animationDelay: "0.4s" }}
-                      onMouseMove={handleInputMouseMove}
-                    >
-                      <i className="fa-solid fa-phone auth-input-icon"></i>
-                      <input
-                        id="contactPhone"
-                        className="auth-input-max with-icon"
-                        placeholder=" "
-                        value={formData.contactPhone}
-                        onChange={(e) =>
-                          handleInputChange("contactPhone", e.target.value)
-                        }
-                      />
-                      <label htmlFor="contactPhone" className="auth-label-max">
-                        Phone Number
-                      </label>
-                    </div>
-
-                    <div
-                      className="auth-input-group animate-slide-up"
-                      style={{ animationDelay: "0.45s" }}
-                      onMouseMove={handleInputMouseMove}
-                    >
-                      <i className="fa-solid fa-briefcase auth-input-icon"></i>
-                      <select
-                        id="industry"
-                        title="Select Industry"
-                        className="auth-input-max field-select with-icon"
-                        value={formData.industry}
-                        onChange={(e) =>
-                          handleInputChange("industry", e.target.value)
-                        }
-                      >
-                        <option value="">Select Industry</option>
-                        {industryCategories.flatMap(cat => cat.industries).map(ind => (
-                          <option key={ind.slug} value={ind.name}>{ind.name}</option>
-                        ))}
-                      </select>
-                      <label htmlFor="industry" className="auth-label-max">
-                        Industry
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="form-row">
-                    <div
-                      className="auth-input-group animate-slide-up"
-                      style={{ animationDelay: "0.4s" }}
-                      onMouseMove={handleInputMouseMove}
-                    >
-                      <i className="fa-solid fa-industry auth-input-icon"></i>
-                      <select
-                        id="selectedProduct"
-                        title="Select Product"
-                        className={`auth-input-max field-select with-icon ${getFieldError("selectedProduct") ? "error" : ""}`}
-                        value={formData.selectedProduct}
-                        onChange={(e) =>
-                          handleInputChange("selectedProduct", e.target.value)
-                        }
-                        onBlur={() => handleBlur("selectedProduct")}
-                      >
-                        <option value="">Select Product</option>
-                        {PRODUCTS.map((product) => (
-                          <option key={product.name} value={product.name}>
-                            {product.name.toUpperCase()}
-                          </option>
-                        ))}
-                      </select>
-                      <label htmlFor="selectedProduct" className="auth-label-max">
-                        Select Product *
-                      </label>
-                      {getFieldError("selectedProduct") && (
-                        <div className="field-error">{getFieldError("selectedProduct")}</div>
-                      )}
-                    </div>
-
-                    <div
-                      className="auth-input-group animate-slide-up"
-                      style={{ animationDelay: "0.5s" }}
-                      onMouseMove={handleInputMouseMove}
-                    >
-                      <i className="fa-regular fa-credit-card auth-input-icon"></i>
-                      <select
-                        id="subscription"
-                        title="Choose Subscription Plan"
-                        className="auth-input-max field-select with-icon"
-                        value={formData.subscription}
-                        onChange={(e) =>
-                          handleInputChange(
-                            "subscription",
-                            e.target.value as any,
-                          )
-                        }
-                      >
-                        <option value="basic">Basic</option>
-                        <option value="standard">Standard</option>
-                        <option value="premium">Premium</option>
-                        <option value="enterprise">Enterprise</option>
-                      </select>
-                      <label htmlFor="subscription" className="auth-label-max">
-                        Choose Plan
-                      </label>
-                    </div>
-                  </div>
-
-                  <div
-                    className="auth-input-group animate-slide-up textarea-group"
-                    style={{ animationDelay: "0.55s" }}
-                    onMouseMove={handleInputMouseMove}
-                  >
-                    <i className="fa-regular fa-message auth-input-icon"></i>
-                    <textarea
-                      id="projectDescription"
-                      className="auth-input-max with-icon auth-textarea"
-                      placeholder=" "
-                      rows={3}
-                      value={formData.projectDescription}
-                      onChange={(e) =>
-                        handleInputChange("projectDescription", e.target.value)
-                      }
-                    />
-                    <label htmlFor="projectDescription" className="auth-label-max">
-                      Tell us about your project
-                    </label>
-                  </div>
-
-                  <div
-                    className="field-group-full animate-slide-up"
-                    style={{ animationDelay: "0.6s" }}
-                  >
-                    <label className="field-label-full">Account Type</label>
-                    <div className="account-type-grid">
-                      <div
-                        className={`account-card-max ${formData.accountType === "demo" ? "active" : ""}`}
-                        onClick={() => handleInputChange("accountType", "demo")}
-                      >
-                        <div className="card-glow"></div>
-                        <div className="account-card-icon">
-                          <i className="fa-solid fa-flask"></i>
-                        </div>
-                        <div className="account-card-content">
-                          <div className="account-card-title">
-                            14-Day Free Demo
-                          </div>
-                          <div className="account-card-desc">
-                            Try all features with sample data. No credit card
-                            required.
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`account-card-max ${formData.accountType === "paid" ? "active" : ""}`}
-                        onClick={() => handleInputChange("accountType", "paid")}
-                      >
-                        <div className="card-glow"></div>
-                        <div className="account-card-icon">
-                          <i className="fa-solid fa-building-shield"></i>
-                        </div>
-                        <div className="account-card-content">
-                          <div className="account-card-title">Paid Account</div>
-                          <div className="account-card-desc">
-                            Create your official production environment.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="field-group-full module-selection-group">
-                    <div
-                      className="module-header-max animate-slide-up"
-                      style={{ animationDelay: "0.65s" }}
-                    >
-                      <div className="module-header-title-row">
-                        <h3 className="module-title-max">Select Modules</h3>
-                        {formData.modules.length > 0 && (
-                          <span className="module-badge-max">
-                            {formData.modules.length}
-                          </span>
-                        )}
-                      </div>
-                      <p className="module-subtitle-max">
-                        Tailor your workspace by enabling core business modules.
-                      </p>
-                    </div>
-
-                    <div className="module-grid-elite">
-                      {currentAvailableModules.map((mod, index) => {
-                        const isSel = formData.modules.includes(mod.id);
-                        return (
-                          <div
-                            key={mod.id}
-                            className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
-                            style={{ animationDelay: `${0.7 + index * 0.05}s` }}
-                            onClick={() => {
-                              const newModules = isSel
-                                ? formData.modules.filter(
-                                    (v) => v !== mod.id,
-                                  )
-                                : [...formData.modules, mod.id];
-                              handleInputChange("modules", newModules);
-                            }}
-                          >
-                            <div className="module-tile-shimmer"></div>
-                            <div className="module-icon-wrapper">
-                              <div
-                                className="module-icon-glow"
-                                style={{
-                                  backgroundColor: isSel
-                                    ? productColor
-                                    : "transparent",
-                                }}
-                              ></div>
-                              <div
-                                className="module-icon"
-                                style={{
-                                  borderColor: isSel ? productColor : "#e2e8f0",
-                                }}
-                              >
-                                <i
-                                  className={productIcon}
-                                  style={{ color: productColor }}
-                                  aria-hidden="true"
-                                ></i>
-                              </div>
-                            </div>
-                            <div className="module-label">{mod.name}</div>
-                            {isSel && (
-                              <div
-                                className="module-selection-badge"
-                                style={{ backgroundColor: productColor }}
-                              >
-                                <i className="fa-solid fa-check"></i>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Navigation Buttons */}
-              <div
-                className="form-actions-full animate-slide-up"
-                style={{ animationDelay: "0.7s" }}
-              >
-                {currentStep === 1 && (
-                  <button
-                    type="button"
-                    className="getstarted-btn-max"
-                    onClick={handleStep1Next}
-                    disabled={!isStep1Valid() || isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        Processing Your Setup{" "}
-                        <i className="fas fa-spinner fa-spin"></i>
-                      </>
-                    ) : (
-                      <>
-                        Complete Setup{" "}
-                        <i className="fa-solid fa-check-circle"></i>
-                      </>
-                    )}
-                  </button>
-                )}
-              </div>
-            </form>
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper"><i className="fas fa-shield-alt"></i></div>
+              <div className="auth-feature-text">Bank-Grade Infrastructure</div>
+            </div>
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon-wrapper"><i className="fas fa-sync"></i></div>
+              <div className="auth-feature-text">Real-time Data Synchronization</div>
+            </div>
           </div>
         </div>
       </div>
 
-      {showProcessingPopup && (
-        <div className="processing-modal-overlay">
-          <div className="processing-modal-content">
-            {!showSuccessState ? (
-              <>
-                <div className="processing-spinner"></div>
-                <h2 className="processing-text">Wait for few minutes</h2>
-                <div className="processing-progress-container">
-                  <div className="processing-progress-bar">
-                    <div
-                      className="processing-progress-fill"
-                      style={{ width: `${processingProgress}%` }}
-                    ></div>
-                  </div>
-                  <p className="processing-status-text">{statusMessage}</p>
-                </div>
-              </>
-            ) : (
-              <div className="success-state">
-                <div className="success-checkmark-container">
-                  <svg
-                    className="checkmark"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 52 52"
-                  >
-                    <circle
-                      className="checkmark-circle"
-                      cx="26"
-                      cy="26"
-                      r="25"
-                      fill="none"
-                    />
-                    <path
-                      className="checkmark-check"
-                      fill="none"
-                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
-                    />
-                  </svg>
-                </div>
-                <h2 className="success-title">Success!</h2>
-                <p className="success-subtitle">{statusMessage}</p>
-              </div>
-            )}
+      {/* RIGHT MAIN CONTENT */}
+      <div className="auth-form-container choose-apps-content-wrapper">
+        <div className="auth-form-box choose-apps-form-box" style={{ maxWidth: currentStep === 2 ? '650px' : '100%' }}>
+          
+          <div className="choose-step-indicator stagger-0">
+            <div className={`step-item ${currentStep > 1 ? 'step-done' : 'step-active'}`}>
+              <div className="step-dot">{currentStep > 1 ? <i className="fa-solid fa-check"></i> : <span>1</span>}</div>
+              <span>Choose Apps</span>
+            </div>
+            <div className={`step-line ${currentStep > 1 ? 'step-done-line' : ''}`}></div>
+            <div className={`step-item ${currentStep === 2 ? 'step-active' : ''}`}>
+              <div className="step-dot"><span>2</span></div>
+              <span>Setup</span>
+            </div>
+            <div className="step-line"></div>
+            <div className="step-item"><div className="step-dot"><span>3</span></div><span>Launch</span></div>
           </div>
+
+          {/* ======================= PIPELINE STEP 1: CHOOSE APPS ======================= */}
+          {currentStep === 1 && (
+            <div className="step-fields animate-fade-slide-in">
+              <header className="choose-head stagger-0" style={{ paddingBottom: '20px' }}>
+                <h1 className="auth-title">Choose your apps</h1>
+                <p className="auth-subtitle">Pick the tools you need — everything connects automatically.</p>
+              </header>
+
+              <div className="choose-search-container stagger-1">
+                <div className="choose-search-wrapper">
+                  <i className="fa-solid fa-magnifying-glass search-icon"></i>
+                  <input
+                    type="text"
+                    placeholder="Search apps by name or feature..."
+                    className="choose-search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  {searchTerm && (
+                    <button className="search-clear-btn" onClick={() => setSearchTerm("")} title="Clear">
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="choose-tabs-wrapper stagger-2">
+                <div className="choose-tabs">
+                  {PRODUCTS.map((prod) => {
+                    const prodSelectedCount = prod.modules.filter(m => selectedIds.includes(m.id)).length;
+                    return (
+                      <button
+                        key={prod.name}
+                        className={`choose-tab ${selectedProduct?.name === prod.name && !searchTerm ? "tab-active" : ""}`}
+                        onClick={() => { setSelectedProduct(prod); setSearchTerm(""); }}
+                      >
+                        <i className={`${prod.icon} tab-icon`}></i>
+                        {prod.name}
+                        {prodSelectedCount > 0 && <span className="tab-count">{prodSelectedCount}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="choose-layout stagger-3">
+                <div className="choose-main">
+                  {searchTerm && (
+                    <div className="search-count-bar">
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                      {filteredProducts.reduce((acc, p) => acc + p.modules.length, 0)} results for "<strong>{searchTerm}</strong>"
+                    </div>
+                  )}
+
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map((prod) => (
+                      <div key={prod.name} style={{ marginBottom: searchTerm ? '40px' : '0' }}>
+                        <ModuleGrid 
+                          modules={prod.modules}
+                          selectedIds={selectedIds}
+                          onToggle={handleToggleModule}
+                          onToggleAll={() => handleToggleAllModules(prod)}
+                          accentColor={prod.color}
+                          icon={prod.icon}
+                          isSwitching={false}
+                          titleOverride={searchTerm ? `${prod.name} (${prod.modules.length})` : undefined}
+                        />
+                      </div>
+                    ))
+                  ) : searchTerm ? (
+                    <div className="no-results">
+                      <div className="no-results-icon"><i className="fa-solid fa-magnifying-glass"></i></div>
+                      <p>No apps matching "<strong>{searchTerm}</strong>"</p>
+                      <button className="clear-search-link" onClick={() => setSearchTerm("")}>Clear search</button>
+                    </div>
+                  ) : (
+                    <div className="choose-empty-prompt animate-fade-in">
+                      <div className="empty-prompt-icon"><i className="fa-solid fa-layer-group"></i></div>
+                      <h3>Select a workspace category</h3>
+                      <p>Click on ERP, Exam, Website, or Accounting above to view the available enterprise apps.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ======================= PIPELINE STEP 2: FORM DETAILS ======================= */}
+          {currentStep === 2 && (
+            <div className="step-fields animate-fade-slide-in">
+              <header className="form-header-full stagger-0" style={{ paddingBottom: '24px' }}>
+                <div className="auth-title-wrapper" style={{ justifyContent: 'flex-start', marginBottom: '8px' }}>
+                  <h1 className="auth-title text-shimmer">
+                    Complete your <span className="auth-title-accent">setup</span>
+                  </h1>
+                </div>
+                <p className="auth-subtitle">Just a few company details to build your private cloud.</p>
+                {apiError && (
+                  <div className="auth-api-error">
+                    <i className="fas fa-exclamation-circle"></i> {apiError}
+                  </div>
+                )}
+              </header>
+
+              <form className="auth-form stagger-1" onSubmit={(e) => e.preventDefault()}>
+                <div className="form-row">
+                  <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                    <i className="fa-regular fa-user auth-input-icon"></i>
+                    <input
+                      id="name"
+                      className={`auth-input-max with-icon ${touched.name && !formData.name ? "error" : ""}`}
+                      placeholder=" "
+                      value={formData.name}
+                      onChange={(e) => handleInputChange("name", e.target.value)}
+                      onBlur={() => handleBlur("name")}
+                    />
+                    <label htmlFor="name" className="auth-label-max">Your Name *</label>
+                  </div>
+                  <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                    <i className="fa-regular fa-envelope auth-input-icon"></i>
+                    <input
+                      id="contactEmail" type="email"
+                      className={`auth-input-max with-icon ${getFieldError("contactEmail") ? "error" : ""}`}
+                      placeholder=" "
+                      value={formData.contactEmail}
+                      onChange={(e) => handleInputChange("contactEmail", e.target.value)}
+                      onBlur={() => handleBlur("contactEmail")}
+                    />
+                    <label htmlFor="contactEmail" className="auth-label-max">Company Email *</label>
+                  </div>
+                </div>
+
+                <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                  <i className="fa-regular fa-building auth-input-icon"></i>
+                  <input
+                    id="companyName"
+                    className={`auth-input-max with-icon ${touched.companyName && !formData.companyName ? "error" : ""}`}
+                    placeholder=" "
+                    value={formData.companyName}
+                    onChange={(e) => handleInputChange("companyName", e.target.value)}
+                    onBlur={() => handleBlur("companyName")}
+                  />
+                  <label htmlFor="companyName" className="auth-label-max">Company / Organization *</label>
+                </div>
+
+                <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                  <i className="fa-solid fa-globe auth-input-icon"></i>
+                  <input
+                    id="domain"
+                    className={`auth-input-max with-icon ${touched.domain && !formData.domain ? "error" : ""}`}
+                    placeholder=" "
+                    value={formData.domain}
+                    onChange={(e) => handleInputChange("domain", e.target.value)}
+                    onBlur={() => handleBlur("domain")}
+                  />
+                  <label htmlFor="domain" className="auth-label-max">Subdomain Identifier * (e.g. yourcompany)</label>
+                </div>
+
+                <div className="form-row">
+                  <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                    <i className="fa-solid fa-phone auth-input-icon"></i>
+                    <input
+                      id="contactPhone"
+                      className="auth-input-max with-icon"
+                      placeholder=" "
+                      value={formData.contactPhone}
+                      onChange={(e) => handleInputChange("contactPhone", e.target.value)}
+                    />
+                    <label htmlFor="contactPhone" className="auth-label-max">Phone Number</label>
+                  </div>
+                  <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                    <i className="fa-solid fa-briefcase auth-input-icon"></i>
+                    <select
+                      id="industry"
+                      className={`auth-input-max field-select with-icon ${touched.industry && !formData.industry ? "error" : ""}`}
+                      value={formData.industry}
+                      onChange={(e) => handleInputChange("industry", e.target.value)}
+                      onBlur={() => handleBlur("industry")}
+                    >
+                      <option value="">Select Industry *</option>
+                      {industryCategories.flatMap(cat => cat.industries).map(ind => (
+                        <option key={ind.slug} value={ind.name}>{ind.name}</option>
+                      ))}
+                    </select>
+                    <label htmlFor="industry" className="auth-label-max">Industry *</label>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                    <i className="fa-solid fa-server auth-input-icon"></i>
+                    <select
+                      id="accountType"
+                      className="auth-input-max field-select with-icon"
+                      value={formData.accountType}
+                      onChange={(e) => handleInputChange("accountType", e.target.value as any)}
+                    >
+                      <option value="demo">Demo Cluster</option>
+                      <option value="paid">Production Cluster</option>
+                    </select>
+                    <label htmlFor="accountType" className="auth-label-max">Cluster Type</label>
+                  </div>
+
+                  <div className="auth-input-group" onMouseMove={handleInputMouseMove}>
+                    <i className="fa-regular fa-credit-card auth-input-icon"></i>
+                    <select
+                      id="subscription"
+                      className="auth-input-max field-select with-icon"
+                      value={formData.subscription}
+                      onChange={(e) => handleInputChange("subscription", e.target.value as any)}
+                    >
+                      <option value="basic">Basic Tier</option>
+                      <option value="standard">Standard Tier</option>
+                      <option value="premium">Premium Tier</option>
+                      <option value="enterprise">Enterprise Tier</option>
+                    </select>
+                    <label htmlFor="subscription" className="auth-label-max">Subscription Plan</label>
+                  </div>
+                </div>
+
+                <div className="auth-input-group textarea-group" onMouseMove={handleInputMouseMove}>
+                  <i className="fa-regular fa-message auth-input-icon"></i>
+                  <textarea
+                    id="projectDescription"
+                    className="auth-input-max with-icon auth-textarea"
+                    placeholder=" "
+                    value={formData.projectDescription}
+                    onChange={(e) => handleInputChange("projectDescription", e.target.value)}
+                  />
+                  <label htmlFor="projectDescription" className="auth-label-max">Notes / Custom Requirements</label>
+                </div>
+              </form>
+            </div>
+          )}
+
         </div>
-      )}
-    </main>
+
+        {/* ======================= ASIDE NAVIGATION CART ======================= */}
+        {count > 0 && (
+          <aside className="choose-aside" style={{ right: '16px' }}>
+            <div className="choose-selected-header">
+              <div className="aside-header-left">
+                <div className="aside-count-circle">{count}</div>
+                <div>
+                  <div className="aside-title">{count === 1 ? "App" : "Apps"} selected</div>
+                  <div className="aside-subtitle">Cart Value</div>
+                </div>
+              </div>
+              <button className="aside-clear-btn" onClick={() => { setSelectedIds([]); setCurrentStep(1); }} title="Clear all">
+                Clear all
+              </button>
+            </div>
+
+            <div className="choose-selected-list" style={{ maxHeight: currentStep === 2 ? '250px' : '400px' }}>
+              {selectedIds.map((key) => {
+                let foundModule = null;
+                let foundProduct = null;
+                for (let p of PRODUCTS) {
+                  const m = p.modules.find(mod => mod.id === key);
+                  if (m) {
+                    foundModule = m;
+                    foundProduct = p;
+                    break;
+                  }
+                }
+                if (!foundModule || !foundProduct) return null;
+                return (
+                  <div key={key} className="choose-selected-item">
+                    <div className="choose-selected-icon-wrap" style={{ backgroundColor: `${foundProduct.color}22` }}>
+                      <i className={foundProduct.icon} style={{ color: foundProduct.color }} aria-hidden="true"></i>
+                    </div>
+                    <div className="choose-selected-label">{foundModule.name}</div>
+                    <button className="choose-selected-remove" onClick={() => handleToggleModule(key)} title={`Remove ${foundModule.name}`}>
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="choose-info">
+              <i className="fa-solid fa-bolt"></i>
+              <span>{currentStep === 1 ? "Next: Configure Workspace Details" : "Ready for Instance Provisioning"}</span>
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
+              {currentStep === 2 && (
+                <button className="continue-btn" style={{ flex: '0 0 auto', background: '#f1f5f9', color: '#64748b', border: '1px solid #e2e8f0' }} onClick={goBackToApps}>
+                  <i className="fa-solid fa-arrow-left"></i>
+                </button>
+              )}
+              {currentStep === 1 && (
+                <button className="continue-btn" style={{ flex: '1' }} onClick={goToForm}>
+                  <span>Continue</span>
+                  <i className="fa-solid fa-arrow-right"></i>
+                </button>
+              )}
+              {currentStep === 2 && (
+                <button className="continue-btn" style={{ flex: '1', background: '#10b981' }} onClick={handleFinalSubmit} disabled={!isFormValid()}>
+                  <span>Launch Workspace</span>
+                  <i className="fa-solid fa-rocket"></i>
+                </button>
+              )}
+            </div>
+          </aside>
+        )}
+
+      </div>
+    </div>
   );
 };
-
-export default GetStarted;

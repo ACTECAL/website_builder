@@ -15,6 +15,7 @@ interface ModuleGridProps {
   accentColor: string;
   icon: string;
   isSwitching: boolean;
+  titleOverride?: string;
 }
 
 export const ModuleGrid: React.FC<ModuleGridProps> = ({
@@ -25,6 +26,7 @@ export const ModuleGrid: React.FC<ModuleGridProps> = ({
   accentColor,
   icon,
   isSwitching,
+  titleOverride,
 }) => {
   if (isSwitching) {
     return (
@@ -53,7 +55,7 @@ export const ModuleGrid: React.FC<ModuleGridProps> = ({
     <div className="module-grid-container">
       <div className="search-result-category-header">
         <h3 className="search-result-category">
-          <i className={icon} style={{ color: accentColor }}></i> Available Modules
+          <i className={icon} style={{ color: accentColor }}></i> {titleOverride || "Available Modules"}
         </h3>
         <button className="cat-select-all-btn" onClick={toggleAll}>
           {allSelected ? "Deselect all" : "Select all"}
