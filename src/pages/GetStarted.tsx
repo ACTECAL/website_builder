@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../styles/GetStarted.css";
 import "../styles/ChooseApps.css";
 import PRODUCTS, { Product } from "../data/products";
@@ -7,7 +7,6 @@ import { industryCategories } from "../data/industries";
 import ModuleGrid from "../components/ModuleGrid";
 
 export const GetStarted: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   // URL parsing for initial state if they somehow land here with URL params
@@ -22,7 +21,6 @@ export const GetStarted: React.FC = () => {
   // 3 = Provisioning / Success
   // ============================================
   const [currentStep, setCurrentStep] = useState(1);
-  const [direction, setDirection] = useState("forward");
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>(initialModules);
@@ -89,13 +87,11 @@ export const GetStarted: React.FC = () => {
 
   const goToForm = () => {
     if (count > 0) {
-      setDirection("forward");
       setCurrentStep(2);
     }
   };
 
   const goBackToApps = () => {
-    setDirection("backward");
     setCurrentStep(1);
   };
 
@@ -153,7 +149,6 @@ export const GetStarted: React.FC = () => {
   const handleFinalSubmit = async () => {
     if (!isFormValid() || count === 0) return;
 
-    setDirection("forward");
     setCurrentStep(3);
     setIsCreatingAccount(true);
     setProcessingProgress(15);
