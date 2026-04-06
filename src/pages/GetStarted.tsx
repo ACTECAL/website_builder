@@ -15,11 +15,6 @@ export const GetStarted: React.FC = () => {
   const selectedProductParam = searchParams.get("product");
   const initialModules = selectedAppsParam ? selectedAppsParam.split(",") : [];
 
-  // Find selected product from URL
-  const selectedProduct = PRODUCTS.find(
-    (p) => p.name.toLowerCase() === selectedProductParam?.toLowerCase(),
-  );
-
   const [formData, setFormData] = useState({
     domain: "",
     companyName: "",
@@ -35,44 +30,12 @@ export const GetStarted: React.FC = () => {
     selectedProduct: selectedProductParam || "",
   });
 
-  const AVAILABLE_MODULES = [
-    {
-      value: "Inventory",
-      label: "Inventory Management",
-      icon: "fa-solid fa-box",
-      color: "#a855f7",
-    },
-    {
-      value: "Sales",
-      label: "Sales & CRM",
-      icon: "fa-solid fa-chart-line",
-      color: "#14b8a6",
-    },
-    {
-      value: "Purchase",
-      label: "Purchase & Procurement",
-      icon: "fa-solid fa-cart-shopping",
-      color: "#22c55e",
-    },
-    {
-      value: "Accounting",
-      label: "Financial Accounting",
-      icon: "fa-solid fa-coins",
-      color: "#10b981",
-    },
-    {
-      value: "HRM",
-      label: "HR & Payroll",
-      icon: "fa-solid fa-user-group",
-      color: "#ef4444",
-    },
-    {
-      value: "Manufacturing",
-      label: "Manufacturing / MRP",
-      icon: "fa-solid fa-industry",
-      color: "#f97316",
-    },
-  ];
+  // Find selected product from form state (reactive)
+  const selectedProduct = PRODUCTS.find(
+    (p) => p.name.toLowerCase() === formData.selectedProduct?.toLowerCase(),
+  );
+
+  // Remove AVAILABLE_MODULES - use only from products.ts
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [showProcessingPopup, setShowProcessingPopup] = useState(false);
@@ -167,92 +130,232 @@ export const GetStarted: React.FC = () => {
     );
   };
 
+  // const handleStep1Next = async () => {
+  //   if (!isStep1Valid()) return;
+
+  //   setIsCreatingAccount(true);
+  //   setIsSubmitting(true);
+  //   setShowProcessingPopup(true);
+  //   setProcessingProgress(15);
+  //   setStatusMessage("Initializing Configuration...");
+  //   setApiError(null);
+
+  //   try {
+  //     // Simulate multi-stage progress while waiting for API
+  //     const progressSimulation = async () => {
+  //       await new Promise((r) => setTimeout(r, 800));
+  //       setProcessingProgress(35);
+  //       setStatusMessage("Provisioning ERP Instance...");
+  //       await new Promise((r) => setTimeout(r, 1200));
+  //       setProcessingProgress(65);
+  //       setStatusMessage("Configuring Selected Modules...");
+  //       await new Promise((r) => setTimeout(r, 1000));
+  //       setProcessingProgress(90);
+  //       setStatusMessage("Finalizing Setup...");
+  //     };
+
+  //     const payload = {
+  //       name: formData.name,
+  //       email: formData.contactEmail || null,
+  //       company_name: formData.companyName,
+  //       domain: formData.domain,
+  //       industry: formData.industry || null,
+  //       account_type: formData.accountType,
+  //       subscription: formData.subscription,
+  //       modules: formData.modules,
+  //     };
+
+  //     const response: Response = await fetch(
+  //       "http://localhost:4000/admin/erp/create",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(payload),
+  //       },
+  //     );
+
+  //     await progressSimulation();
+
+  //     const result = await response.json();
+
+  //     if (!response.ok) {
+  //       // Handle existing user error
+  //       if (result.alreadyExists && result.data?.domain) {
+  //         setApiError(
+  //           "Account already exists! Redirecting to your existing ERP...",
+  //         );
+  //         setTimeout(() => {
+  //           window.open(`https://${result.data.domain}`, "_blank");
+  //           navigate("/dashboard");
+  //         }, 2000);
+  //         return;
+  //       }
+  //       // Handle other errors - show in UI
+  //       setApiError(result.error || result.message || "Something went wrong");
+  //       setIsSubmitting(false);
+  //       setIsCreatingAccount(false);
+  //       setShowProcessingPopup(false);
+  //       setProcessingProgress(0);
+  //       return;
+  //     }
+
+  //     setProcessingProgress(100);
+  //     setStatusMessage("System Ready!");
+  //     setShowSuccessState(true);
+
+  //     // Open domain in new tab after successful creation
+  //     const newTab = window.open("", "_blank");
+
+  //     if (newTab) {
+  //       newTab.location.href = `https://${result.data.domain}`;
+  //     }
+
+  //     // Update success message with domain info
+  //     setTimeout(() => {
+  //       setStatusMessage(
+  //         `Your ERP is ready! Check your email for login details. Domain: ${result.data.domain}`,
+  //       );
+  //     }, 1000);
+
+  //     // setTimeout(() => {
+  //     //   setIsSubmitting(false);
+  //     //   setIsCreatingAccount(false);
+  //     //   setShowProcessingPopup(false);
+  //     //   setShowSuccessState(false);
+  //     //   setProcessingProgress(0);
+  //     //   // After success, navigate to the dashboard or clear
+  //     //   // navigate("/dashboard");
+  //     // }, 2500);
+  //   } catch (err: any) {
+  //     setApiError(err.message || "Server error, please try again");
+  //     setIsSubmitting(false);
+  //     setIsCreatingAccount(false);
+  //     setShowProcessingPopup(false);
+  //     setProcessingProgress(0);
+  //   }
+  // };
+
   const handleStep1Next = async () => {
     if (!isStep1Valid()) return;
 
-    setIsCreatingAccount(true);
+    // Reset previous errors
+    setApiError(null);
     setIsSubmitting(true);
+    setIsCreatingAccount(true);
     setShowProcessingPopup(true);
     setProcessingProgress(15);
     setStatusMessage("Initializing Configuration...");
-    setApiError(null);
+    setShowSuccessState(false);
 
     try {
-      // Simulate multi-stage progress while waiting for API
-      const progressSimulation = async () => {
-        await new Promise((r) => setTimeout(r, 800));
-        setProcessingProgress(35);
-        setStatusMessage("Provisioning ERP Instance...");
-        await new Promise((r) => setTimeout(r, 1200));
-        setProcessingProgress(65);
-        setStatusMessage("Configuring Selected Modules...");
-        await new Promise((r) => setTimeout(r, 1000));
-        setProcessingProgress(90);
-        setStatusMessage("Finalizing Setup...");
-      };
-
       const payload = {
-        name: formData.name,
-        email: formData.contactEmail || null,
-        company_name: formData.companyName,
-        domain: formData.domain,
-        industry: formData.industry || null,
+        name: formData.name.trim(),
+        email: formData.contactEmail?.trim() || null,
+        company_name: formData.companyName.trim(),
+        // domain: formData.domain || undefined,     // agar backend domain generate kar raha hai toh bhejo mat
+        industry: formData.industry?.trim() || "Others",
         account_type: formData.accountType,
         subscription: formData.subscription,
         modules: formData.modules,
       };
 
-      const [response] = await Promise.all([
-        fetch("https://api-admindev.actecal.com/admin/erp/create", {
+      const response =
+        // await fetch("http://localhost:4000/admin/erp/create", {
+        await fetch("https://api-admindev.actecal.com/admin/erp/create", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-        }),
-        progressSimulation(),
-      ]);
+        });
+
+      // Simulate realistic progress
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      setProcessingProgress(40);
+      setStatusMessage("Creating Database & Domain...");
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setProcessingProgress(70);
+      setStatusMessage("Setting up Modules & Admin Account...");
+
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      setProcessingProgress(95);
+      setStatusMessage("Finalizing Configuration...");
 
       const result = await response.json();
-      console.log("result", result);
 
       if (!response.ok) {
-        throw new Error(result.message || "Something went wrong");
+        // ==================== ERROR HANDLING ====================
+        let errorMsg = result.error || result.message || "Failed to create ERP";
+
+        // Special case: Domain already taken
+        if (
+          result.error?.includes("Domain already taken") &&
+          result.suggestions
+        ) {
+          errorMsg = `Domain already taken. Suggestions: ${result.suggestions.join(", ")}`;
+        }
+
+        setApiError(errorMsg);
+
+        // Close processing modal after small delay so user can see error
+        setTimeout(() => {
+          setShowProcessingPopup(false);
+          setIsSubmitting(false);
+          setIsCreatingAccount(false);
+          setProcessingProgress(0);
+        }, 1200);
+
+        return;
       }
 
+      // ==================== SUCCESS CASE ====================
       setProcessingProgress(100);
-      setStatusMessage("System Ready!");
+      setStatusMessage("ERP Created Successfully!");
       setShowSuccessState(true);
 
-      // Open domain in new tab after successful creation
-      const newTab = window.open("", "_blank");
+      const domain = result.data?.domain;
 
-      if (newTab) {
-        newTab.location.href = `https://${result.data.domain}`;
+      // Open ERP in new tab
+      if (domain) {
+        setTimeout(() => {
+          window.open(`https://${domain}`, "_blank");
+        }, 1500);
       }
 
-      // Update success message with domain info
+      // Show success message with email instruction
       setTimeout(() => {
         setStatusMessage(
-          `Your ERP is ready! Check your email for login details. Domain: ${result.data.domain}`,
+          `Your ERP is ready! 🎉\nCheck your email (${formData.contactEmail}) for login details.`,
         );
-      }, 5000);
+      }, 800);
 
-      // setTimeout(() => {
-      //   setIsSubmitting(false);
-      //   setIsCreatingAccount(false);
-      //   setShowProcessingPopup(false);
-      //   setShowSuccessState(false);
-      //   setProcessingProgress(0);
-      //   // After success, navigate to the dashboard or clear
-      //   // navigate("/dashboard");
-      // }, 2500);
+      // Auto close modal after 4 seconds and reset
+      setTimeout(() => {
+        setShowProcessingPopup(false);
+        setIsSubmitting(false);
+        setIsCreatingAccount(false);
+        setShowSuccessState(false);
+        setProcessingProgress(0);
+
+        // Optional: Navigate to dashboard or success page
+        // navigate("/success");   // agar success page bana hai toh
+      }, 4500);
     } catch (err: any) {
-      setApiError(err.message || "Server error, please try again");
-      setIsSubmitting(false);
-      setIsCreatingAccount(false);
-      setShowProcessingPopup(false);
-      setProcessingProgress(0);
+      console.error("Create ERP Error:", err);
+
+      const errorMessage =
+        err.message ||
+        "Network error. Please check your connection and try again.";
+
+      setApiError(errorMessage);
+
+      setTimeout(() => {
+        setShowProcessingPopup(false);
+        setIsSubmitting(false);
+        setIsCreatingAccount(false);
+        setProcessingProgress(0);
+      }, 1500);
     }
   };
 
@@ -613,75 +716,76 @@ export const GetStarted: React.FC = () => {
                     </div>
 
                     <div className="module-grid-elite">
-                      {(selectedProduct?.modules || AVAILABLE_MODULES).map(
-                        (mod: any, index) => {
-                          const isSel = formData.modules.includes(
-                            mod.id || mod.value,
-                          );
-                          return (
-                            <div
-                              key={mod.id || mod.value}
-                              className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
-                              style={{
-                                animationDelay: `${0.7 + index * 0.1}s`,
-                              }}
-                              onClick={() => {
-                                const newModules = isSel
-                                  ? formData.modules.filter(
-                                      (v) => v !== (mod.id || mod.value),
-                                    )
-                                  : [...formData.modules, mod.id || mod.value];
-                                handleInputChange("modules", newModules);
-                              }}
-                            >
-                              <div className="module-tile-shimmer"></div>
-                              <div className="module-icon-wrapper">
-                                <div
-                                  className="module-icon-glow"
-                                  style={{
-                                    backgroundColor: isSel
-                                      ? selectedProduct?.color || mod.color
-                                      : "transparent",
-                                  }}
-                                ></div>
-                                <div
-                                  className="module-icon"
-                                  style={{
-                                    borderColor: isSel
-                                      ? selectedProduct?.color || mod.color
-                                      : "#e2e8f0",
-                                  }}
-                                >
-                                  <i
-                                    className="fa-solid fa-cube"
+                      {selectedProduct?.modules ? (
+                        selectedProduct.modules.map(
+                          (mod: any, index: number) => {
+                            const isSel = formData.modules.includes(mod.id);
+                            return (
+                              <div
+                                key={mod.id}
+                                className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
+                                style={{
+                                  animationDelay: `${0.7 + index * 0.1}s`,
+                                }}
+                                onClick={() => {
+                                  const newModules = isSel
+                                    ? formData.modules.filter(
+                                        (v) => v !== mod.id,
+                                      )
+                                    : [...formData.modules, mod.id];
+                                  handleInputChange("modules", newModules);
+                                }}
+                              >
+                                <div className="module-tile-shimmer"></div>
+                                <div className="module-icon-wrapper">
+                                  <div
+                                    className="module-icon-glow"
                                     style={{
-                                      color:
-                                        selectedProduct?.color || mod.color,
+                                      backgroundColor: isSel
+                                        ? selectedProduct?.color
+                                        : "transparent",
                                     }}
-                                    aria-hidden="true"
-                                  ></i>
+                                  ></div>
+                                  <div
+                                    className="module-icon"
+                                    style={{
+                                      borderColor: isSel
+                                        ? selectedProduct?.color
+                                        : "#e2e8f0",
+                                    }}
+                                  >
+                                    <i
+                                      className="fa-solid fa-cube"
+                                      style={{ color: selectedProduct?.color }}
+                                      aria-hidden="true"
+                                    ></i>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="module-label">
-                                {mod.name || mod.label}
-                              </div>
-                              <div className="module-description">
-                                {mod.description}
-                              </div>
-                              {isSel && (
-                                <div
-                                  className="module-selection-badge"
-                                  style={{
-                                    backgroundColor:
-                                      selectedProduct?.color || mod.color,
-                                  }}
-                                >
-                                  <i className="fa-solid fa-check"></i>
+                                <div className="module-label">{mod.name}</div>
+                                <div className="module-description">
+                                  {mod.description}
                                 </div>
-                              )}
-                            </div>
-                          );
-                        },
+                                {isSel && (
+                                  <div
+                                    className="module-selection-badge"
+                                    style={{
+                                      backgroundColor: selectedProduct?.color,
+                                    }}
+                                  >
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          },
+                        )
+                      ) : (
+                        <div className="no-modules-message">
+                          <p>
+                            Please select a product first to see available
+                            modules
+                          </p>
+                        </div>
                       )}
                     </div>
                   </div>
