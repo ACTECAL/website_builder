@@ -35,7 +35,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
       className={`choose-tile animate-scale-in ${isSelected ? "tile-selected" : ""} ${staggerClass}`}
       role="button"
       tabIndex={0}
-      aria-pressed={isSelected}
+      aria-pressed={isSelected ? "true" : "false"}
       onClick={() => onToggle(id)}
       onKeyDown={onKeyToggle}
       style={{

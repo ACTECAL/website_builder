@@ -414,18 +414,18 @@ const Home: React.FC = () => {
 
   // Icon mapping for featured apps
   const iconMap: Record<string, React.ReactNode> = {
-    'accounting': <Activity size={28} />,
-    'crm': <Users size={28} />,
-    'sales': <TrendingUp size={28} />,
-    'inventory': <Box size={28} />,
-    'manufacturing': <Cpu size={28} />,
-    'website-builder': <Monitor size={28} />,
-    'ecommerce': <ShoppingCart size={28} />,
-    'project': <Layers size={28} />,
-    'timesheets': <MousePointer2 size={28} />,
-    'helpdesk': <ShieldCheck size={28} />,
-    'hr': <Users size={28} />,
-    'marketing-automation': <Mail size={28} />
+    'accounting': <Activity size={22} />,
+    'crm': <Users size={22} />,
+    'sales': <TrendingUp size={22} />,
+    'inventory': <Box size={22} />,
+    'manufacturing': <Cpu size={22} />,
+    'website-builder': <Monitor size={22} />,
+    'ecommerce': <ShoppingCart size={22} />,
+    'project': <Layers size={22} />,
+    'timesheets': <MousePointer2 size={22} />,
+    'helpdesk': <ShieldCheck size={22} />,
+    'hr': <Users size={22} />,
+    'marketing-automation': <Mail size={22} />
   };
 
   const featuredAppSlugs = [
@@ -556,9 +556,6 @@ const Home: React.FC = () => {
 
           </div>
         </div>
-        <svg className="section-divider-organic" viewBox="0 0 1440 120">
-          <path d="M0,120 L1440,120 L1440,0 C1100,80 340,80 0,0 Z" />
-        </svg>
       </section>
 
       {/* Products Grid Section */}
@@ -591,7 +588,7 @@ const Home: React.FC = () => {
                       product.name === 'Website' ? 'fa-globe' : 'fa-cube'
                     }`}
                     style={{
-                      fontSize: "2.8rem",
+                      fontSize: "2rem",
                       color: "#10b981",
                     }}
                   />
@@ -652,9 +649,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        <svg className="section-divider-organic" viewBox="0 0 1440 120">
-          <path d="M0,120 L1440,120 L1440,0 C1100,80 340,80 0,0 Z" />
-        </svg>
       </section>
 
       {/* Comparison: Integrated vs Fragmented */}
@@ -702,9 +696,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        <svg className="section-divider-organic flipped" viewBox="0 0 1440 120">
-          <path d="M0,120 L1440,120 L1440,0 C1100,80 340,80 0,0 Z" />
-        </svg>
       </section>
 
       {/* Value Prop: Integrated Section */}
@@ -729,9 +720,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        <svg className="section-divider-organic" viewBox="0 0 1440 120">
-          <path d="M0,120 L1440,120 L1440,0 C1100,80 340,80 0,0 Z" />
-        </svg>
       </section>
 
       {/* Final CTA */}
@@ -760,9 +748,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        <svg className="section-divider-organic flipped" viewBox="0 0 1440 120">
-          <path d="M0,120 L1440,120 L1440,0 C1100,80 340,80 0,0 Z" />
-        </svg>
       </section>
 
     </div>

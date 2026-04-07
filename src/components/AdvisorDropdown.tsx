@@ -32,7 +32,7 @@ export const AdvisorDropdown: React.FC<AdvisorDropdownProps> = ({ variant = 'def
             <button
                 className="advisor-btn"
                 onClick={toggleDropdown}
-                aria-expanded={isOpen}
+                aria-expanded={isOpen ? "true" : "false"}
             >
                 Meet an advisor
                 {variant === 'default' && <ChevronDown size={20} />}

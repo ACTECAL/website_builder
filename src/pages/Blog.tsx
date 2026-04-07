@@ -19,7 +19,7 @@ export const Blog: React.FC = () => {
               <article key={idx} className="blog-card">
                 <div className="blog-category">{post.category}</div>
                 <div className="blog-title-wrapper">
-                  <a href={`/blog/${post.slug}`} className="blog-title-link">
+                  <a href={`/blog/${post.slug}`} className="blog-title-link" aria-label={post.title}>
                     <GothicH3 text={post.title} className="blog-title" />
                   </a>
                 </div>

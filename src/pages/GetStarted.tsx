@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../styles/GetStarted.css";
 import { PRODUCTS } from "../data/products";
 
@@ -7,7 +7,6 @@ import { PRODUCTS } from "../data/products";
 
 export const GetStarted: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Parse query params for pre-selected modules and product
   const searchParams = new URLSearchParams(location.search);
