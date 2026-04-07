@@ -139,7 +139,48 @@ export const PRODUCTS: Product[] = [
       },
     ],
   },
-
+  {
+    name: "HMS",
+    color: "#00B894",
+    modules: [
+      {
+        id: "erp:hms",
+        name: "HMS Core",
+        description:
+          "Manage patients, appointments, billing, and hospital operations",
+      },
+      {
+        id: "erp:hmsai",
+        name: "HMS AI",
+        description:
+          "AI-powered insights, reports, and smart hospital automation",
+      },
+    ],
+    "fav-icon": "/icons/hms-favicon.png",
+    icon: "fa-solid fa-hospital",
+    plans: [
+      {
+        id: "basic",
+        name: "Basic Plan",
+        description: "Core HMS features for small clinics",
+      },
+      {
+        id: "standard",
+        name: "Standard Plan",
+        description: "Advanced management with reports and staff handling",
+      },
+      {
+        id: "premium",
+        name: "Premium Plan",
+        description: "Full HMS with analytics and automation",
+      },
+      {
+        id: "enterprise",
+        name: "Enterprise Plan",
+        description: "Multi-branch setup with custom integrations",
+      },
+    ],
+  },
   {
     name: "Exam",
     color: "#0984E3",
@@ -290,6 +331,7 @@ export const PRODUCTS: Product[] = [
         name: "Basic Plan",
         description: "5 pages + blog + contact form + basic hosting",
       },
+
       {
         id: "standard",
         name: "Standard Plan",
