@@ -129,113 +129,6 @@ export const GetStarted: React.FC = () => {
     );
   };
 
-  // const handleStep1Next = async () => {
-  //   if (!isStep1Valid()) return;
-
-  //   setIsCreatingAccount(true);
-  //   setIsSubmitting(true);
-  //   setShowProcessingPopup(true);
-  //   setProcessingProgress(15);
-  //   setStatusMessage("Initializing Configuration...");
-  //   setApiError(null);
-
-  //   try {
-  //     // Simulate multi-stage progress while waiting for API
-  //     const progressSimulation = async () => {
-  //       await new Promise((r) => setTimeout(r, 800));
-  //       setProcessingProgress(35);
-  //       setStatusMessage("Provisioning ERP Instance...");
-  //       await new Promise((r) => setTimeout(r, 1200));
-  //       setProcessingProgress(65);
-  //       setStatusMessage("Configuring Selected Modules...");
-  //       await new Promise((r) => setTimeout(r, 1000));
-  //       setProcessingProgress(90);
-  //       setStatusMessage("Finalizing Setup...");
-  //     };
-
-  //     const payload = {
-  //       name: formData.name,
-  //       email: formData.contactEmail || null,
-  //       company_name: formData.companyName,
-  //       domain: formData.domain,
-  //       industry: formData.industry || null,
-  //       account_type: formData.accountType,
-  //       subscription: formData.subscription,
-  //       modules: formData.modules,
-  //     };
-
-  //     const response: Response = await fetch(
-  //       "http://localhost:4000/admin/erp/create",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(payload),
-  //       },
-  //     );
-
-  //     await progressSimulation();
-
-  //     const result = await response.json();
-
-  //     if (!response.ok) {
-  //       // Handle existing user error
-  //       if (result.alreadyExists && result.data?.domain) {
-  //         setApiError(
-  //           "Account already exists! Redirecting to your existing ERP...",
-  //         );
-  //         setTimeout(() => {
-  //           window.open(`https://${result.data.domain}`, "_blank");
-  //           navigate("/dashboard");
-  //         }, 2000);
-  //         return;
-  //       }
-  //       // Handle other errors - show in UI
-  //       setApiError(result.error || result.message || "Something went wrong");
-  //       setIsSubmitting(false);
-  //       setIsCreatingAccount(false);
-  //       setShowProcessingPopup(false);
-  //       setProcessingProgress(0);
-  //       return;
-  //     }
-
-  //     setProcessingProgress(100);
-  //     setStatusMessage("System Ready!");
-  //     setShowSuccessState(true);
-
-  //     // Open domain in new tab after successful creation
-  //     const newTab = window.open("", "_blank");
-
-  //     if (newTab) {
-  //       newTab.location.href = `https://${result.data.domain}`;
-  //     }
-
-  //     // Update success message with domain info
-  //     setTimeout(() => {
-  //       setStatusMessage(
-  //         `Your ERP is ready! Check your email for login details. Domain: ${result.data.domain}`,
-  //       );
-  //     }, 1000);
-
-  //     // setTimeout(() => {
-  //     //   setIsSubmitting(false);
-  //     //   setIsCreatingAccount(false);
-  //     //   setShowProcessingPopup(false);
-  //     //   setShowSuccessState(false);
-  //     //   setProcessingProgress(0);
-  //     //   // After success, navigate to the dashboard or clear
-  //     //   // navigate("/dashboard");
-  //     // }, 2500);
-  //   } catch (err: any) {
-  //     setApiError(err.message || "Server error, please try again");
-  //     setIsSubmitting(false);
-  //     setIsCreatingAccount(false);
-  //     setShowProcessingPopup(false);
-  //     setProcessingProgress(0);
-  //   }
-  // };
-
   const handleStep1Next = async () => {
     if (!isStep1Valid()) return;
 
@@ -356,6 +249,45 @@ export const GetStarted: React.FC = () => {
         setProcessingProgress(0);
       }, 1500);
     }
+  };
+
+  // Icon mapping helper for modules
+  const getModuleIcon = (id: string, name: string) => {
+    const n = name.toLowerCase();
+    const i = id.toLowerCase();
+    
+    if (n.includes('finance') || n.includes('accounting') || n.includes('ledger')) return 'fa-calculator';
+    if (n.includes('hr') || n.includes('employee') || n.includes('payroll')) return 'fa-users-gears';
+    if (n.includes('inventory') || n.includes('stock')) return 'fa-boxes-stacked';
+    if (n.includes('sales')) return 'fa-chart-line';
+    if (n.includes('crm') || n.includes('customer')) return 'fa-user-tie';
+    if (n.includes('procurement') || n.includes('purchase')) return 'fa-cart-shopping';
+    if (n.includes('manufacturing') || n.includes('production') || i.includes('mrp')) return 'fa-industry';
+    if (n.includes('supply chain') || n.includes('logistics')) return 'fa-truck-fast';
+    if (n.includes('warehouse')) return 'fa-warehouse';
+    if (n.includes('project')) return 'fa-list-check';
+    if (n.includes('asset')) return 'fa-tags';
+    if (n.includes('quality')) return 'fa-clipboard-check';
+    if (n.includes('maintenance')) return 'fa-screwdriver-wrench';
+    if (n.includes('document')) return 'fa-file-invoice';
+    if (n.includes('bi') || n.includes('intelligence') || n.includes('analytics')) return 'fa-magnifying-glass-chart';
+    if (n.includes('reporting') || n.includes('dashboard')) return 'fa-gauge-high';
+    if (n.includes('workflow') || n.includes('automation')) return 'fa-bolt-lightning';
+    if (n.includes('compliance') || n.includes('risk')) return 'fa-shield-halved';
+    if (n.includes('pos')) return 'fa-cash-register';
+    if (n.includes('ecommerce') || n.includes('market')) return 'fa-shop';
+    
+    // Exam specific
+    if (n.includes('exam') || n.includes('grading')) return 'fa-graduation-cap';
+    if (n.includes('qbank') || n.includes('question')) return 'fa-file-lines';
+    if (n.includes('proctor')) return 'fa-eye';
+    
+    // Website specific
+    if (n.includes('website') || n.includes('landing')) return 'fa-globe';
+    if (n.includes('auth')) return 'fa-lock';
+    if (n.includes('seo')) return 'fa-rocket';
+
+    return 'fa-cube'; // Fallback
   };
 
   const getFieldError = (fieldName: string) => {
@@ -724,8 +656,9 @@ export const GetStarted: React.FC = () => {
                                 key={mod.id}
                                 className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
                                 style={{
-                                  animationDelay: `${0.7 + index * 0.1}s`,
-                                }}
+                                  animationDelay: `${0.7 + index * 0.05}s`,
+                                  "--product-color": selectedProduct?.color || "#0f172a"
+                                } as React.CSSProperties}
                                 onClick={() => {
                                   const newModules = isSel
                                     ? formData.modules.filter(
@@ -736,6 +669,8 @@ export const GetStarted: React.FC = () => {
                                 }}
                               >
                                 <div className="module-tile-shimmer"></div>
+                                <div className="module-tile-background-glow"></div>
+                                
                                 <div className="module-icon-wrapper">
                                   <div
                                     className="module-icon-glow"
@@ -750,20 +685,23 @@ export const GetStarted: React.FC = () => {
                                     style={{
                                       borderColor: isSel
                                         ? selectedProduct?.color
-                                        : "#e2e8f0",
+                                        : "rgba(226, 232, 240, 0.8)",
                                     }}
                                   >
                                     <i
-                                      className="fa-solid fa-cube"
-                                      style={{ color: selectedProduct?.color }}
+                                      className={`fa-solid ${getModuleIcon(mod.id, mod.name)}`}
+                                      style={{ color: isSel ? selectedProduct?.color : '#64748b' }}
                                       aria-hidden="true"
                                     ></i>
                                   </div>
                                 </div>
-                                <div className="module-label">{mod.name}</div>
-                                <div className="module-description">
-                                  {mod.description}
+                                <div className="module-info-stack">
+                                  <div className="module-label">{mod.name}</div>
+                                  <div className="module-description">
+                                    {mod.description}
+                                  </div>
                                 </div>
+                                
                                 {isSel && (
                                   <div
                                     className="module-selection-badge"
@@ -774,6 +712,8 @@ export const GetStarted: React.FC = () => {
                                     <i className="fa-solid fa-check"></i>
                                   </div>
                                 )}
+                                
+                                <div className="module-tile-border-highlight"></div>
                               </div>
                             );
                           },

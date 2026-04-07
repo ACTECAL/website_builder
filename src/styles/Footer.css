@@ -55,7 +55,7 @@
 .footer-main {
   position: relative;
   z-index: 1;
-  padding: 9rem 0 6rem; /* More breathing room for Elite look */
+  padding: 4rem 0 3rem; 
 }
 
 .footer-main-container {
@@ -231,8 +231,8 @@
 }
 
 .footer-bottom {
-  margin-top: 5rem;
-  padding: 4rem 0;
+  margin-top: 2rem;
+  padding: 2rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.4);
   -webkit-backdrop-filter: blur(20px);
