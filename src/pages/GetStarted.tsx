@@ -290,6 +290,43 @@ export const GetStarted: React.FC = () => {
     return 'fa-cube'; // Fallback
   };
 
+  const getModuleCategoryColor = (id: string) => {
+    const i = id.toLowerCase();
+    if (i.includes('finance') || i.includes('accounting') || i.includes('budget') || i.includes('ledger') || i.includes('bi')) return '#EAB308'; // Gold
+    if (i.includes('hr') || i.includes('employee') || i.includes('payroll')) return '#22C55E'; // Green
+    if (i.includes('sales') || i.includes('crm') || i.includes('pos')) return '#3B82F6'; // Blue
+    if (i.includes('inventory') || i.includes('warehouse') || i.includes('stock') || i.includes('material')) return '#F97316'; // Orange
+    if (i.includes('manufactur') || i.includes('product') || i.includes('supply')) return '#EF4444'; // Red
+    if (i.includes('project') || i.includes('asset') || i.includes('maintenance')) return '#8B5CF6'; // Purple
+    if (i.includes('exam') || i.includes('school') || i.includes('grad')) return '#06B6D4'; // Cyan
+    if (i.includes('website') || i.includes('blog') || i.includes('seo')) return '#EC4899'; // Pink
+    return '#64748B'; // Default Slate
+  };
+
+  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Normalizing coordinates for tilt
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (centerY - y) / 10;
+    const rotateY = (x - centerX) / 10;
+    
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
+  };
+
   const getFieldError = (fieldName: string) => {
     return touched[fieldName] && errors[fieldName] ? errors[fieldName] : "";
   };
@@ -648,82 +685,86 @@ export const GetStarted: React.FC = () => {
 
                     <div className="module-grid-elite">
                       {selectedProduct?.modules ? (
-                        selectedProduct.modules.map(
-                          (mod: any, index: number) => {
-                            const isSel = formData.modules.includes(mod.id);
-                            return (
-                              <div
-                                key={mod.id}
-                                className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
-                                style={{
+                        selectedProduct.modules.map((mod: any, index: number) => {
+                          const isSel = formData.modules.includes(mod.id);
+                          return (
+                            <div
+                              key={mod.id}
+                              className={`module-tile-elite ${isSel ? "tile-selected" : ""} animate-scale-in`}
+                              style={
+                                {
                                   animationDelay: `${0.7 + index * 0.05}s`,
-                                  "--product-color": selectedProduct?.color || "#0f172a"
-                                } as React.CSSProperties}
-                                onClick={() => {
-                                  const newModules = isSel
-                                    ? formData.modules.filter(
-                                        (v) => v !== mod.id,
-                                      )
-                                    : [...formData.modules, mod.id];
-                                  handleInputChange("modules", newModules);
-                                }}
-                              >
-                                <div className="module-tile-shimmer"></div>
-                                <div className="module-tile-background-glow"></div>
-                                
-                                <div className="module-icon-wrapper">
-                                  <div
-                                    className="module-icon-glow"
+                                  "--module-accent": getModuleCategoryColor(mod.id),
+                                  "--product-color": selectedProduct?.color || "#0f172a",
+                                } as React.CSSProperties
+                              }
+                              onClick={() => {
+                                const newModules = isSel
+                                  ? formData.modules.filter((v) => v !== mod.id)
+                                  : [...formData.modules, mod.id];
+                                handleInputChange("modules", newModules);
+                              }}
+                              onMouseMove={handleCardMouseMove}
+                              onMouseLeave={handleCardMouseLeave}
+                            >
+                              <div className="module-tile-gloss"></div>
+                              <div className="module-tile-shimmer"></div>
+                              <div className="module-tile-interactive-glow"></div>
+                              <div className="module-tile-background-glow"></div>
+
+                              <div className="module-icon-wrapper">
+                                <div
+                                  className="module-icon-glow"
+                                  style={{
+                                    backgroundColor: isSel
+                                      ? getModuleCategoryColor(mod.id)
+                                      : "transparent",
+                                  }}
+                                ></div>
+                                <div
+                                  className="module-icon"
+                                  style={{
+                                    borderColor: isSel
+                                      ? getModuleCategoryColor(mod.id)
+                                      : "rgba(226, 232, 240, 0.8)",
+                                  }}
+                                >
+                                  <i
+                                    className={`fa-solid ${getModuleIcon(mod.id, mod.name)}`}
                                     style={{
-                                      backgroundColor: isSel
-                                        ? selectedProduct?.color
-                                        : "transparent",
+                                      color: isSel
+                                        ? getModuleCategoryColor(mod.id)
+                                        : "#64748b",
                                     }}
-                                  ></div>
-                                  <div
-                                    className="module-icon"
-                                    style={{
-                                      borderColor: isSel
-                                        ? selectedProduct?.color
-                                        : "rgba(226, 232, 240, 0.8)",
-                                    }}
-                                  >
-                                    <i
-                                      className={`fa-solid ${getModuleIcon(mod.id, mod.name)}`}
-                                      style={{ color: isSel ? selectedProduct?.color : '#64748b' }}
-                                      aria-hidden="true"
-                                    ></i>
-                                  </div>
+                                    aria-hidden="true"
+                                  ></i>
                                 </div>
-                                <div className="module-info-stack">
-                                  <div className="module-label">{mod.name}</div>
-                                  <div className="module-description">
-                                    {mod.description}
-                                  </div>
-                                </div>
-                                
-                                {isSel && (
+                              </div>
+                              <div className="module-info-stack">
+                                <div className="module-label">{mod.name}</div>
+                              </div>
+
+                              {isSel && (
+                                <>
+                                  <div className="module-holographic-sweep"></div>
                                   <div
                                     className="module-selection-badge"
                                     style={{
-                                      backgroundColor: selectedProduct?.color,
+                                      backgroundColor: getModuleCategoryColor(mod.id),
                                     }}
                                   >
                                     <i className="fa-solid fa-check"></i>
                                   </div>
-                                )}
-                                
-                                <div className="module-tile-border-highlight"></div>
-                              </div>
-                            );
-                          },
-                        )
+                                </>
+                              )}
+
+                              <div className="module-tile-border-highlight"></div>
+                            </div>
+                          );
+                        })
                       ) : (
                         <div className="no-modules-message">
-                          <p>
-                            Please select a product first to see available
-                            modules
-                          </p>
+                          <p>Please select a product first to see available modules</p>
                         </div>
                       )}
                     </div>

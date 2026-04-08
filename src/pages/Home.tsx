@@ -601,7 +601,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* App Grid Section */}
-      <section className="apps-grid-section reveal-on-scroll">
+      {/* <section className="apps-grid-section reveal-on-scroll">
         <div className="container">
           <div className="section-header-lite">
             <div className="badge-alt">The Complete Suite</div>
@@ -649,7 +649,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Comparison: Integrated vs Fragmented */}
       <section className="comparison-section reveal-on-scroll">
