@@ -147,7 +147,7 @@ export const GetStarted: React.FC = () => {
         email: formData.contactEmail?.trim() || null,
         company_name: formData.companyName.trim(),
         // domain: formData.domain || undefined,     // agar backend domain generate kar raha hai toh bhejo mat
-        industry: formData.industry?.trim() || "Others",
+        industry: formData.selectedProduct?.trim() || "Others",
         account_type: formData.accountType,
         subscription: formData.subscription,
         modules: formData.modules,
