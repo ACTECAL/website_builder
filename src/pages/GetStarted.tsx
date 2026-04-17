@@ -129,129 +129,242 @@ export const GetStarted: React.FC = () => {
     );
   };
 
-  const handleStep1Next = async () => {
-    if (!isStep1Valid()) return;
+  // const handleStep1Next = async () => {
+  //   if (!isStep1Valid()) return;
 
-    // Reset previous errors
-    setApiError(null);
-    setIsSubmitting(true);
-    setIsCreatingAccount(true);
-    setShowProcessingPopup(true);
-    setProcessingProgress(15);
-    setStatusMessage("Initializing Configuration...");
-    setShowSuccessState(false);
+  //   // Reset previous errors
+  //   setApiError(null);
+  //   setIsSubmitting(true);
+  //   setIsCreatingAccount(true);
+  //   setShowProcessingPopup(true);
+  //   setProcessingProgress(15);
+  //   setStatusMessage("Initializing Configuration...");
+  //   setShowSuccessState(false);
 
-    try {
-      const payload = {
-        name: formData.name.trim(),
-        email: formData.contactEmail?.trim() || null,
-        company_name: formData.companyName.trim(),
-        // domain: formData.domain || undefined,     // agar backend domain generate kar raha hai toh bhejo mat
-        industry: formData.selectedProduct?.trim() || "Others",
-        account_type: formData.accountType,
-        subscription: formData.subscription,
-        modules: formData.modules,
-      };
+  //   try {
+  //     const payload = {
+  //       name: formData.name.trim(),
+  //       email: formData.contactEmail?.trim() || null,
+  //       company_name: formData.companyName.trim(),
+  //       // domain: formData.domain || undefined,     // agar backend domain generate kar raha hai toh bhejo mat
+  //       industry: formData.selectedProduct?.trim() || "Others",
+        
+  //       account_type: formData.accountType,
+  //       subscription: formData.subscription,
+  //       modules: formData.modules,
+  //     };
 
-      const response =
-        // await fetch("http://localhost:4000/admin/erp/create", {
-        await fetch("https://api-admindev.actecal.com/admin/erp/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+  //     const response =
+  //       // await fetch("http://localhost:4000/admin/erp/create", {
+  //       await fetch("https://api-admindev.actecal.com/admin/erp/create", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify(payload),
+  //       });
 
-      // Simulate realistic progress
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setProcessingProgress(40);
-      setStatusMessage("Creating Database & Domain...");
+  //     // Simulate realistic progress
+  //     await new Promise((resolve) => setTimeout(resolve, 800));
+  //     setProcessingProgress(40);
+  //     setStatusMessage("Creating Database & Domain...");
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setProcessingProgress(70);
-      setStatusMessage("Setting up Modules & Admin Account...");
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     setProcessingProgress(70);
+  //     setStatusMessage("Setting up Modules & Admin Account...");
 
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setProcessingProgress(95);
-      setStatusMessage("Finalizing Configuration...");
+  //     await new Promise((resolve) => setTimeout(resolve, 800));
+  //     setProcessingProgress(95);
+  //     setStatusMessage("Finalizing Configuration...");
 
-      const result = await response.json();
+  //     const result = await response.json();
 
-      if (!response.ok) {
-        // ==================== ERROR HANDLING ====================
-        let errorMsg = result.error || result.message || "Failed to create ERP";
+  //     if (!response.ok) {
+  //       // ==================== ERROR HANDLING ====================
+  //       let errorMsg = result.error || result.message || "Failed to create ERP";
 
-        // Special case: Domain already taken
-        if (
-          result.error?.includes("Domain already taken") &&
-          result.suggestions
-        ) {
-          errorMsg = `Domain already taken. Suggestions: ${result.suggestions.join(", ")}`;
-        }
+  //       // Special case: Domain already taken
+  //       if (
+  //         result.error?.includes("Domain already taken") &&
+  //         result.suggestions
+  //       ) {
+  //         errorMsg = `Domain already taken. Suggestions: ${result.suggestions.join(", ")}`;
+  //       }
 
-        setApiError(errorMsg);
+  //       setApiError(errorMsg);
 
-        // Close processing modal after small delay so user can see error
-        setTimeout(() => {
-          setShowProcessingPopup(false);
-          setIsSubmitting(false);
-          setIsCreatingAccount(false);
-          setProcessingProgress(0);
-        }, 1200);
+  //       // Close processing modal after small delay so user can see error
+  //       setTimeout(() => {
+  //         setShowProcessingPopup(false);
+  //         setIsSubmitting(false);
+  //         setIsCreatingAccount(false);
+  //         setProcessingProgress(0);
+  //       }, 1200);
 
-        return;
-      }
+  //       return;
+  //     }
 
-      // ==================== SUCCESS CASE ====================
-      setProcessingProgress(100);
-      setStatusMessage("ERP Created Successfully!");
-      setShowSuccessState(true);
+  //     // ==================== SUCCESS CASE ====================
+  //     setProcessingProgress(100);
+  //     setStatusMessage("ERP Created Successfully!");
+  //     setShowSuccessState(true);
 
-      const domain = result.data?.domain;
+  //     const domain = result.data?.domain;
 
-      // Open ERP in new tab
-      if (domain) {
-        setTimeout(() => {
-          window.open(`https://${domain}`, "_blank");
-        }, 1500);
-      }
+  //     // Open ERP in new tab
+  //     if (domain) {
+  //       setTimeout(() => {
+  //         window.open(`https://${domain}`, "_blank");
+  //       }, 1500);
+  //     }
 
-      // Show success message with email instruction
-      setTimeout(() => {
-        setStatusMessage(
-          `Your ERP is ready! 🎉\nCheck your email (${formData.contactEmail}) for login details.`,
-        );
-      }, 800);
+  //     // Show success message with email instruction
+  //     setTimeout(() => {
+  //       setStatusMessage(
+  //         `Your ERP is ready! 🎉\nCheck your email (${formData.contactEmail}) for login details.`,
+  //       );
+  //     }, 800);
 
-      // Auto close modal after 4 seconds and reset
-      setTimeout(() => {
-        setShowProcessingPopup(false);
-        setIsSubmitting(false);
-        setIsCreatingAccount(false);
-        setShowSuccessState(false);
-        setProcessingProgress(0);
+  //     // Auto close modal after 4 seconds and reset
+  //     setTimeout(() => {
+  //       setShowProcessingPopup(false);
+  //       setIsSubmitting(false);
+  //       setIsCreatingAccount(false);
+  //       setShowSuccessState(false);
+  //       setProcessingProgress(0);
 
-        // Optional: Navigate to dashboard or success page
-        // navigate("/success");   // agar success page bana hai toh
-      }, 4500);
-    } catch (err: any) {
-      console.error("Create ERP Error:", err);
+  //       // Optional: Navigate to dashboard or success page
+  //       // navigate("/success");   // agar success page bana hai toh
+  //     }, 4500);
+  //   } catch (err: any) {
+  //     console.error("Create ERP Error:", err);
 
-      const errorMessage =
-        err.message ||
-        "Network error. Please check your connection and try again.";
+  //     const errorMessage =
+  //       err.message ||
+  //       "Network error. Please check your connection and try again.";
 
-      setApiError(errorMessage);
+  //     setApiError(errorMessage);
 
-      setTimeout(() => {
-        setShowProcessingPopup(false);
-        setIsSubmitting(false);
-        setIsCreatingAccount(false);
-        setProcessingProgress(0);
-      }, 1500);
-    }
-  };
+  //     setTimeout(() => {
+  //       setShowProcessingPopup(false);
+  //       setIsSubmitting(false);
+  //       setIsCreatingAccount(false);
+  //       setProcessingProgress(0);
+  //     }, 1500);
+  //   }
+  // };
 
   // Icon mapping helper for modules
+  
+  const handleStep1Next = async () => {
+  if (!isStep1Valid()) return;
+
+  setApiError(null);
+  setIsSubmitting(true);
+  setIsCreatingAccount(true);
+  setShowProcessingPopup(true);
+  setProcessingProgress(15);
+  setStatusMessage("Initializing Configuration...");
+  setShowSuccessState(false);
+
+  try {
+    // Ensure selectedProduct is properly taken
+    const selectedProductName = formData.selectedProduct?.trim();
+
+    if (!selectedProductName) {
+      setApiError("Please select a product");
+      setTimeout(() => setShowProcessingPopup(false), 1000);
+      setIsSubmitting(false);
+      setIsCreatingAccount(false);
+      return;
+    }
+
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.contactEmail?.trim() || null,
+      company_name: formData.companyName.trim(),
+      industry: selectedProductName,           // ← Direct aur safe
+      product: selectedProductName,            // ← Extra safety (agar backend product field maangta hai)
+      account_type: formData.accountType,
+      subscription: formData.subscription,
+      modules: formData.modules,
+    };
+
+    console.log("🚀 Final Payload being sent:", payload);   // ← Ye line zaroori hai debugging ke liye
+
+    const response = await fetch(
+      "https://api-admindev.actecal.com/admin/erp/create",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    // Progress simulation
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    setProcessingProgress(40);
+    setStatusMessage("Creating Database & Domain...");
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setProcessingProgress(70);
+    setStatusMessage("Setting up Modules & Admin Account...");
+
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    setProcessingProgress(95);
+    setStatusMessage("Finalizing Configuration...");
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      let errorMsg = result.error || result.message || "Failed to create ERP";
+
+      if (result.error?.includes("Domain already taken") && result.suggestions) {
+        errorMsg = `Domain already taken. Suggestions: ${result.suggestions.join(", ")}`;
+      }
+
+      setApiError(errorMsg);
+      setTimeout(() => {
+        setShowProcessingPopup(false);
+        setIsSubmitting(false);
+        setIsCreatingAccount(false);
+      }, 1500);
+      return;
+    }
+
+    // Success
+    setProcessingProgress(100);
+    setStatusMessage("ERP Created Successfully!");
+    setShowSuccessState(true);
+
+    const domain = result.data?.domain;
+    if (domain) {
+      setTimeout(() => window.open(`https://${domain}`, "_blank"), 1500);
+    }
+
+    setTimeout(() => {
+      setStatusMessage(
+        `Your ERP is ready! 🎉 Check your email (${formData.contactEmail}) for login details.`
+      );
+    }, 1000);
+
+    setTimeout(() => {
+      setShowProcessingPopup(false);
+      setIsSubmitting(false);
+      setIsCreatingAccount(false);
+      setShowSuccessState(false);
+    }, 4500);
+
+  } catch (err: any) {
+    console.error("Create ERP Error:", err);
+    setApiError(err.message || "Network error. Please try again.");
+    
+    setTimeout(() => {
+      setShowProcessingPopup(false);
+      setIsSubmitting(false);
+      setIsCreatingAccount(false);
+    }, 1500);
+  }
+};
+  
   const getModuleIcon = (id: string, name: string) => {
     const n = name.toLowerCase();
     const i = id.toLowerCase();
