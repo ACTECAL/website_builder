@@ -698,7 +698,7 @@ export const GetStarted: React.FC = () => {
                       onBlur={() => handleBlur("companyName")}
                     />
                     <label htmlFor="companyName" className="auth-label-max">
-                      Company / Godown Name *
+                      Company Name *
                     </label>
                   </div>
 
