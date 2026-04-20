@@ -363,27 +363,88 @@ export const GetStarted: React.FC = () => {
     }
 
     // Success
+    // setProcessingProgress(100);
+    // setStatusMessage("ERP Created Successfully!");
+    // setShowSuccessState(true);
+
+    // const domain = result.data?.domain;
+    // if (domain) {
+    //   setTimeout(() => window.open(`https://${domain}`, "_blank"), 1500);
+    // }
+
+    // setTimeout(() => {
+    //   setStatusMessage(
+    //     `Your ERP is ready! 🎉 Check your email (${formData.contactEmail}) for login details.`
+    //   );
+    // }, 1000);
+
+    // setTimeout(() => {
+    //   setShowProcessingPopup(false);
+    //   setIsSubmitting(false);
+    //   setIsCreatingAccount(false);
+    //   setShowSuccessState(false);
+    //   setFormData({
+
+    //   domain: "",
+    // companyName: "",
+    // industry: "",
+    // contactEmail: "",
+    // contactPhone: "",
+    // projectDescription: "",
+    // selectedApps: [] as string[],
+    // name: "",
+    // accountType: "demo" as "demo" | "paid",
+    // subscription: "basic" as "basic" | "standard" | "premium" | "enterprise",
+    // modules: initialModules,
+    // selectedProduct: selectedProductParam || "",
+    //   })
+    // }, 4500);
+
+
     setProcessingProgress(100);
-    setStatusMessage("ERP Created Successfully!");
-    setShowSuccessState(true);
+setStatusMessage("ERP Created Successfully!");
+setShowSuccessState(true);
 
-    const domain = result.data?.domain;
-    if (domain) {
-      setTimeout(() => window.open(`https://${domain}`, "_blank"), 1500);
-    }
+// 🔥 Open tab immediately
+const domain = result.data?.domain;
+const newTab = window.open("", "_blank");
 
-    setTimeout(() => {
-      setStatusMessage(
-        `Your ERP is ready! 🎉 Check your email (${formData.contactEmail}) for login details.`
-      );
-    }, 1000);
+if (domain && newTab) {
+  newTab.location.href = `https://${domain}`;
+}
 
-    setTimeout(() => {
-      setShowProcessingPopup(false);
-      setIsSubmitting(false);
-      setIsCreatingAccount(false);
-      setShowSuccessState(false);
-    }, 4500);
+// ✅ Show success message
+setTimeout(() => {
+  setStatusMessage(
+    `Your ERP is ready! 🎉 Check your email (${formData.contactEmail})`
+  );
+}, 800);
+
+// ✅ Keep popup visible for some time
+setTimeout(() => {
+  setShowProcessingPopup(false);
+  setIsSubmitting(false);
+  setIsCreatingAccount(false);
+  setShowSuccessState(false);
+  setProcessingProgress(0);
+
+  // reset form
+  setFormData({
+    domain: "",
+    companyName: "",
+    industry: "",
+    contactEmail: "",
+    contactPhone: "",
+    projectDescription: "",
+    selectedApps: [],
+    name: "",
+    accountType: "demo",
+    subscription: "basic",
+    modules: initialModules,
+    selectedProduct: selectedProductParam || "",
+  });
+
+}, 5000);
 
   } catch (err: any) {
     console.error("Create ERP Error:", err);
@@ -971,27 +1032,11 @@ export const GetStarted: React.FC = () => {
               </>
             ) : (
               <div className="success-state">
+
                 <div className="success-checkmark-container">
-                  <svg
-                    className="checkmark"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 52 52"
-                  >
-                    <circle
-                      className="checkmark-circle"
-                      cx="26"
-                      cy="26"
-                      r="25"
-                      fill="none"
-                    />
-                    <path
-                      className="checkmark-check"
-                      fill="none"
-                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
-                    />
-                  </svg>
+               <i className="fa-solid fa-circle-check success-icon"></i>
                 </div>
-                <h2 className="success-title">Success!</h2>
+                <h2 className="success-title">ERP Created Successfully!</h2>
                 <p className="success-subtitle">{statusMessage}</p>
               </div>
             )}
