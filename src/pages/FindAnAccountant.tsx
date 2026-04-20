@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommunitySubpage.css';
 import { Link } from 'react-router-dom';
 
 export const FindAnAccountant: React.FC = () => {
@@ -11,15 +12,15 @@ export const FindAnAccountant: React.FC = () => {
   return (
     <main>
       <section style={{ padding: '40px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <h1 style={{ margin: 0 }}>Find an Accountant</h1>
+        <div className="community-subpage-container">
+          <h1 className="community-card-title-nomargin">Find an Accountant</h1>
           <p style={{ color: '#4a5568', marginTop: 10 }}>Work with Nexora‑ready accountants for bookkeeping, tax, and advisory.</p>
         </div>
       </section>
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+      <section className="community-subpage-section">
+        <div className="community-subpage-container">
+          <div className="community-subpage-mb">
+            <Link to="/community" className="community-back-link" reloadDocument>← Back to Community</Link>
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
             {['All','Bookkeeping','Tax','Audit','Automation','Advisory','Payroll'].map((tag) => (
@@ -35,9 +36,9 @@ export const FindAnAccountant: React.FC = () => {
             {accountants
               .filter((a) => filter==='All' || a.specialties.includes(filter))
               .map((a) => (
-              <div key={a.name} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
+              <div key={a.name} className="community-subpage-card">
                 <h4 style={{ margin: '0 0 6px' }}>{a.name}</h4>
-                <p style={{ margin: 0, color: '#4a5568' }}>{a.city}</p>
+                <p className="community-card-desc">{a.city}</p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
                   {a.specialties.map((s) => (
                     <span key={s} style={{ border: '1px solid #e2e8f0', borderRadius: 999, padding: '4px 8px', fontSize: 12 }}>{s}</span>
@@ -47,7 +48,7 @@ export const FindAnAccountant: React.FC = () => {
               </div>
             ))}
           </div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
+          <div className="community-flex-group">
             <Link to="/find-a-partner" className="btn btn-outline-primary" reloadDocument>Browse Partners</Link>
             <Link to="/support" className="btn btn-outline-primary" reloadDocument>Need help?</Link>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommunitySubpage.css';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 
@@ -10,26 +11,26 @@ export const BecomeAPartner: React.FC = () => {
         subtitle="Grow with Nexora. Get access to resources, enablement, and leads."
         emphasize="none"
       />
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+      <section className="community-subpage-section">
+        <div className="community-subpage-container">
+          <div className="community-subpage-mb">
+            <Link to="/community" className="community-back-link" reloadDocument>← Back to Community</Link>
           </div>
-          <h2 style={{ margin: '0 0 16px' }}>Why partner with us</h2>
+          <h2 className="community-subpage-title">Why partner with us</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 24 }}>
             {[{t:'Enablement', d:'Training, certifications, and solution playbooks.'}, {t:'Marketing', d:'Co-marketing and directory listings.'}, {t:'Support', d:'Priority partner support and success managers.'}].map((it, i) => (
-              <div key={i} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ margin: 0 }}>{it.t}</h4>
-                <p style={{ margin: '8px 0 0', color: '#4a5568' }}>{it.d}</p>
+              <div key={i} className="community-subpage-card">
+                <h4 className="community-card-title-nomargin">{it.t}</h4>
+                <p className="community-card-desc-mt">{it.d}</p>
               </div>
             ))}
           </div>
-          <h2 style={{ margin: '24px 0 16px' }}>Program tiers</h2>
+          <h2 className="community-subpage-title-mt">Program tiers</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
             {[{t:'Registered', p:'Listing + enablement starter.'}, {t:'Silver', p:'Lead sharing + advanced benefits.'}, {t:'Gold', p:'Highest benefits and co-selling.'}].map((it, i) => (
-              <div key={i} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ margin: 0 }}>{it.t}</h4>
-                <p style={{ margin: '8px 0 0', color: '#4a5568' }}>{it.p}</p>
+              <div key={i} className="community-subpage-card">
+                <h4 className="community-card-title-nomargin">{it.t}</h4>
+                <p className="community-card-desc-mt">{it.p}</p>
               </div>
             ))}
           </div>

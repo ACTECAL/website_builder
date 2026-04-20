@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommunitySubpage.css';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 
@@ -10,16 +11,16 @@ export const Github: React.FC = () => {
         subtitle="Explore the source, contribute, and track development."
         emphasize="none"
       />
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+      <section className="community-subpage-section">
+        <div className="community-subpage-container">
+          <div className="community-subpage-mb">
+            <Link to="/community" className="community-back-link" reloadDocument>← Back to Community</Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
             {[{t:'Repository', d:'Browse code, branches, and tags.'}, {t:'Issues', d:'Report bugs or request features.'}, {t:'Pull Requests', d:'Contribute improvements.'}].map((it, i) => (
-              <div key={i} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ margin: '0 0 8px' }}>{it.t}</h4>
-                <p style={{ margin: 0, color: '#4a5568' }}>{it.d}</p>
+              <div key={i} className="community-subpage-card">
+                <h4 className="community-card-title">{it.t}</h4>
+                <p className="community-card-desc">{it.d}</p>
               </div>
             ))}
           </div>
@@ -35,7 +36,7 @@ export const Github: React.FC = () => {
             <li>Create a branch (feature/fix)</li>
             <li>Open a PR with context and screenshots</li>
           </ol>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
+          <div className="community-flex-group">
             <Link to="/docs" className="btn btn-outline-primary" reloadDocument>Contributing Guide</Link>
             <Link to="/releases" className="btn btn-outline-primary" reloadDocument>Release notes</Link>
           </div>

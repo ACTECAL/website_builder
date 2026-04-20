@@ -104,7 +104,7 @@ export const PricingSection: React.FC<Props> = ({ tiers }) => {
 
                   {isAnnual && (
                     <div className="save-badge-wrapper">
-                      <ScribbleDecorations.Note text={`Save 20% → ${yearlyDisplay}/yr`} style={{ position: 'absolute', right: -20, top: -20 }} />
+                      <ScribbleDecorations.Note text={`Save 20% → ${yearlyDisplay}/yr`} className="note-position" />
                     </div>
                   )}
 

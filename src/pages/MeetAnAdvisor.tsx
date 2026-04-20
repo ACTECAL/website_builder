@@ -6,7 +6,9 @@ import '../styles/MeetAnAdvisor.css';
 
 export const MeetAnAdvisor: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const type = searchParams.get('type') || 'demo';
+  const location = window.location;
+  const isAssessmentRoute = location.pathname === '/project-assessment';
+  const type = isAssessmentRoute ? 'assessment' : (searchParams.get('type') || 'demo');
 
   const [selectedDate, setSelectedDate] = useState(9);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
@@ -103,7 +105,7 @@ export const MeetAnAdvisor: React.FC = () => {
           <div className="form-group full-width">
             <label>Specific topics you'd like to discuss?</label>
             <textarea
-              placeholder="e.g. I want to learn more about Odoo's CRM and Inventory modules."
+              placeholder="e.g. I want to learn more about Nexora's CRM and Inventory modules."
               rows={4}
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -204,7 +206,7 @@ export const MeetAnAdvisor: React.FC = () => {
               <h2 className="section-label">Description</h2>
               {isAssessment ? (
                 <p>
-                  Meet an Odoo expert to discuss your RFP, get a planning, a budget or a tailored demonstration.
+                  Meet a Nexora expert to discuss your RFP, get a planning, a budget or a tailored demonstration.
                 </p>
               ) : (
                 <>
@@ -212,7 +214,7 @@ export const MeetAnAdvisor: React.FC = () => {
                   <ul className="description-list">
                     <li>a tailored demonstration</li>
                     <li>recommendations based on your needs</li>
-                    <li>answers to your questions about Odoo</li>
+                    <li>answers to your questions about Nexora</li>
                     <li>information about pricing & methodology</li>
                   </ul>
                 </>

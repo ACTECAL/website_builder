@@ -126,6 +126,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    background: var(--stat-color, var(--aura-primary));
     filter: blur(20px);
     opacity: 0.2;
     transition: all 0.5s ease;
@@ -154,7 +155,7 @@
     font-weight: 950;
     letter-spacing: -0.04em;
     line-height: 1;
-    color: var(--color-text);
+    color: var(--stat-color, var(--color-text));
     transition: all 0.4s ease;
 }
 

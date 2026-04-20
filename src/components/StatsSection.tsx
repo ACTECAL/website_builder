@@ -97,13 +97,13 @@ export const StatsSection: React.FC<Props> = React.memo(({
               <div className="stat-card-inner">
                 {stat.icon && (
                   <div className="stat-icon-aura">
-                    <div className="icon-glow" style={{ background: stat.color || 'var(--aura-primary)' }}></div>
+                    <div className="icon-glow" style={{ '--stat-color': stat.color || 'var(--aura-primary)' } as React.CSSProperties}></div>
                     <div className="stat-icon-symbol">{stat.icon}</div>
                   </div>
                 )}
 
                 <div className="stat-number-wrapper">
-                  <span className="stat-number-text" style={{ color: stat.color || 'white' }}>
+                  <span className="stat-number-text" style={{ '--stat-color': stat.color || 'white' } as React.CSSProperties}>
                     {stat.prefix}{stat.value.toLocaleString()}{stat.suffix}
                   </span>
                 </div>

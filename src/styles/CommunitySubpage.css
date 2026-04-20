@@ -1,0 +1,18 @@
+/* Community Subpage Global Styles */
+.community-subpage-section { padding: 10px 24px 60px; }
+.community-subpage-container { max-width: 1100px; margin: 0 auto; }
+.community-subpage-mb { margin-bottom: 12px; }
+.community-back-link { text-decoration: none; color: #667eea; }
+.community-subpage-title { margin: 0 0 16px; }
+.community-subpage-title-mt { margin: 24px 0 16px; }
+.community-subpage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.community-subpage-grid-sm { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.community-subpage-card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; }
+.community-subpage-card-sm { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+.community-card-title { margin: 0 0 8px; }
+.community-card-title-nomargin { margin: 0; }
+.community-card-desc { margin: 0; color: #4a5568; }
+.community-card-desc-mt { margin: 8px 0 0; color: #4a5568; }
+.community-card-desc-mb { margin: 0 0 12px; color: #4a5568; }
+.community-flex-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.community-flex-group-nomargin { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }

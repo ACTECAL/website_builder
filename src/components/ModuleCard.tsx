@@ -40,7 +40,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
       onKeyDown={onKeyToggle}
       style={{
         "--accent-color": accentColor,
-        animationDelay: `${0.1 + delayIndex * 0.05}s`,
+        "--delay": `${0.1 + delayIndex * 0.05}s`
       } as React.CSSProperties}
     >
       <div className="choose-tile-shimmer"></div>
@@ -50,7 +50,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
         <div className="choose-icon">
           <i
             className={icon}
-            style={{ color: accentColor }}
+            style={{ color: "var(--accent-color)" }}
             aria-hidden="true"
           ></i>
         </div>
@@ -65,10 +65,6 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
 
       <div
         className={`choose-check ${isSelected ? "check-active" : ""}`}
-        style={{
-          backgroundColor: isSelected ? "var(--accent-color)" : "transparent",
-          borderColor: isSelected ? "var(--accent-color)" : "#dde3ed",
-        }}
       >
         {isSelected && <i className="fa-solid fa-check"></i>}
       </div>

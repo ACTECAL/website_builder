@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommunitySubpage.css';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 
@@ -18,10 +19,10 @@ export const CompareEditions: React.FC = () => {
         subtitle="Choose the plan that fits your team and growth."
         emphasize="none"
       />
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+      <section className="community-subpage-section">
+        <div className="community-subpage-container">
+          <div className="community-subpage-mb">
+            <Link to="/community" className="community-back-link" reloadDocument>← Back to Community</Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 0, border: '1px solid #e2e8f0', borderRadius: 10, overflow: 'hidden' }}>
             <div style={{ padding: 12, background: '#f7fafc', fontWeight: 700 }}>Feature</div>
@@ -36,7 +37,7 @@ export const CompareEditions: React.FC = () => {
             ))}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
+          <div className="community-flex-group">
             <Link to="/pricing" className="btn btn-primary" reloadDocument>View Pricing</Link>
             <Link to="/download" className="btn btn-outline-primary" reloadDocument>Download</Link>
           </div>

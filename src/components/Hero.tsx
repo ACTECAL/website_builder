@@ -36,13 +36,7 @@ export const Hero: React.FC<Props> = ({ data }) => {
         <div className="hero-content">
           {/* Animated badges */}
           {data.badges && (
-            <div
-              className="hero-badges"
-              style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'translateY(0)' : 'translateY(20px)'
-              }}
-            >
+            <div className={`hero-badges ${isVisible ? 'revealed' : ''}`}>
               {data.badges.map((badge, idx) => (
                 <FloatingElement
                   key={idx}
@@ -59,57 +53,27 @@ export const Hero: React.FC<Props> = ({ data }) => {
           )}
 
           {/* Animated logo */}
-          <div
-            className="hero-logo-wrapper"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.9)'
-            }}
-          >
+          <div className={`hero-logo-wrapper ${isVisible ? 'revealed' : ''}`}>
             <FloatingElement direction="up" intensity="low" duration={4}>
               <NexoraLogoExact className="hero-logo" />
             </FloatingElement>
           </div>
 
           {/* Animated heading */}
-          <h1
-            className="hero-heading"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(30px)'
-            }}
-          >
+          <h1 className={`hero-heading ${isVisible ? 'revealed' : ''}`}>
             {data.heading}
           </h1>
 
           {/* Animated subheading */}
-          <p
-            className="hero-subheading"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(30px)'
-            }}
-          >
+          <p className={`hero-subheading ${isVisible ? 'revealed' : ''}`}>
             {data.subheading}
           </p>
 
           {/* Animated divider */}
-          <div
-            className="hero-divider"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'scaleX(1)' : 'scaleX(0)'
-            }}
-          />
+          <div className={`hero-divider ${isVisible ? 'revealed' : ''}`} />
 
           {/* Animated CTA buttons */}
-          <div
-            className="hero-cta"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(30px)'
-            }}
-          >
+          <div className={`hero-cta ${isVisible ? 'revealed' : ''}`}>
             <CreativeCard
               variant="glass"
               hoverEffect="glow"
@@ -133,13 +97,7 @@ export const Hero: React.FC<Props> = ({ data }) => {
 
           {/* Animated statistics */}
           {data.stats && (
-            <div
-              className="hero-stats"
-              style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'translateY(0)' : 'translateY(30px)'
-              }}
-            >
+            <div className={`hero-stats ${isVisible ? 'revealed' : ''}`}>
               {data.stats.map((stat, idx) => (
                 <FloatingElement
                   key={idx}

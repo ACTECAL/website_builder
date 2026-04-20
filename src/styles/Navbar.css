@@ -19,10 +19,29 @@
 }
 
 .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.9);
-    height: 72px;
-    border-bottom: 1px solid rgba(113, 75, 103, 0.15); /* Soft purple/grey accent when scrolled */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.85);
+    height: 64px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.05),
+      0 1px 0 rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    backdrop-filter: blur(24px) saturate(200%);
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.navbar.scrolled::before {
+    opacity: 1;
 }
 
 .navbar.hidden {
@@ -111,22 +130,30 @@
 
 .btn-nav-cta {
     text-decoration: none;
-    background: #111827; /* Dark base for contrast on light header */
+    background: rgba(17, 24, 39, 0.85);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(180%);
     color: #fff;
     font-weight: 800;
     padding: 12px 32px;
     border-radius: 16px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 4px 20px rgba(255, 255, 255, 0.05);
+    border: none;
     position: relative;
     overflow: hidden;
 }
 
 .btn-nav-cta:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    background: #030712;
+    box-shadow: 
+      0 12px 32px rgba(0, 0, 0, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+      inset 0 0 20px rgba(168, 85, 247, 0.3);
+    background: rgba(17, 24, 39, 0.95);
 }
 
 .btn-nav-cta::before {
@@ -136,9 +163,16 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
-    animation: rotate-glow 4s linear infinite;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: glass-sweep 4s linear infinite;
     pointer-events: none;
+}
+
+@keyframes glass-sweep {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    50% { transform: translateX(100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
 }
 
 @keyframes rotate-glow {

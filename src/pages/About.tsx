@@ -11,18 +11,17 @@ import '../styles/About.css';
 export const About: React.FC = () => {
   return (
     <main>
-      <AnimatedBackground variant="gradient" intensity="medium">
+      <div className="neural-aura-container">
+        <AnimatedBackground variant="neural" intensity="high" />
         <PageHero
-          title="About Nexora"
-          subtitle="we build modern, modular business apps so teams can move faster and work as one."
-          imageUrl="https://assets-persist.lovart.ai/agent_images/b25bca6b-06e7-40a8-88a2-64c1d4826334.jpg"
-          emphasize="scribble"
-          textColor="#ffffff"
+          title="The Distributed Brain"
+          subtitle="Building the neural layer for global industrial scale."
+          emphasize="none"
+          textColor="#0f172a"
         />
-      </AnimatedBackground>
+      </div>
 
-      <AnimatedBackground variant="particles" intensity="low">
-        <section className="about-section">
+      <section className="about-section">
           <div className="about-container">
             <FloatingElement direction="up" intensity="low" delay={0.2}>
               <CreativeCard
@@ -183,7 +182,6 @@ export const About: React.FC = () => {
             </FloatingElement>
           </div>
         </section>
-      </AnimatedBackground>
     </main>
   );
 };

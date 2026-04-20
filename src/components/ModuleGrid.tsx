@@ -31,7 +31,7 @@ export const ModuleGrid: React.FC<ModuleGridProps> = ({
   if (isSwitching) {
     return (
       <div className="module-grid-loading">
-        <i className="fa-solid fa-circle-notch fa-spin module-spinner" style={{ color: accentColor }}></i>
+        <i className="fa-solid fa-circle-notch fa-spin module-spinner" style={{ '--accent-color': accentColor } as React.CSSProperties}></i>
         <p>Loading modules...</p>
       </div>
     );
@@ -55,7 +55,7 @@ export const ModuleGrid: React.FC<ModuleGridProps> = ({
     <div className="module-grid-container">
       <div className="search-result-category-header">
         <h3 className="search-result-category">
-          <i className={icon} style={{ color: accentColor }}></i> {titleOverride || "Available Modules"}
+          <i className={icon} style={{ '--accent-color': accentColor } as React.CSSProperties}></i> {titleOverride || "Available Modules"}
         </h3>
         <button className="cat-select-all-btn" onClick={toggleAll}>
           {allSelected ? "Deselect all" : "Select all"}

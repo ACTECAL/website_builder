@@ -249,7 +249,7 @@ export const IndustryTemplate: React.FC<IndustryTemplateProps> = ({ industry, is
             <div className="relative z-10 animate-fade-in-up">
               <h2 className="display-3 fw-black mb-8">Ready to deploy?</h2>
               <p className="fs-3 text-white/50 mb-12 max-w-2xl mx-auto fw-light">
-                Join 50k+ companies operating on the Actyx distributed kernel.
+                Join 50k+ companies operating on the Nexora distributed kernel.
               </p>
               <div className="d-flex justify-content-center flex-wrap gap-4">
                 <Link to="/get-started" className="btn btn-primary px-12 py-4 fw-black rounded-pill shadow-xl hover-scale transition-all" style={{ background: primaryColor, borderColor: primaryColor }}>

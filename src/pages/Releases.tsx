@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommunitySubpage.css';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 
@@ -15,10 +16,10 @@ export const Releases: React.FC = () => {
         subtitle="See what’s new in every Nexora release."
         emphasize="none"
       />
-      <section style={{ padding: '10px 24px 60px' }}>
+      <section className="community-subpage-section">
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+          <div className="community-subpage-mb">
+            <Link to="/community" className="community-back-link" reloadDocument>← Back to Community</Link>
           </div>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {releases.map((r) => (
@@ -30,11 +31,11 @@ export const Releases: React.FC = () => {
                   </div>
                   <Link to="/docs" className="btn btn-outline-primary" reloadDocument>Notes</Link>
                 </div>
-                <p style={{ margin: '8px 0 0', color: '#4a5568' }}>{r.notes}</p>
+                <p className="community-card-desc-mt">{r.notes}</p>
               </li>
             ))}
           </ul>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
+          <div className="community-flex-group">
             <Link to="/upgrades" className="btn btn-outline-primary" reloadDocument>Plan an upgrade</Link>
             <Link to="/security" className="btn btn-outline-primary" reloadDocument>Review security</Link>
           </div>

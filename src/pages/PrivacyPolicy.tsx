@@ -37,27 +37,27 @@ export const PrivacyPolicy: React.FC = () => {
   return (
     <main className="legal-page-container">
       <div className="legal-content-wrapper">
-        <h1 style={{ textAlign: 'center', margin: '60px 0 20px', fontSize: '3.5rem', fontWeight: 800, background: 'linear-gradient(to right, #f8fafc, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.03em' }}>
+        <h1 className="legal-page-title">
           Privacy Policy
         </h1>
-        <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '1.2rem', marginBottom: '60px' }}>
+        <p className="legal-page-subtitle">
           We're highly committed to protecting your privacy and being fully transparent about our data practices.
         </p>
 
-        <div className="legal-glass-card legal-intro-card" style={{ animationDelay: '0.1s' }}>
-          <p className="legal-text" style={{ fontSize: '1.15rem' }}>
+        <div className="legal-glass-card legal-intro-card legal-anim-d1">
+          <p className="legal-text legal-intro-text">
             Your privacy is of utmost importance to us. This Privacy Policy explains how Nexora collects, uses, and protects your personal information when you interface with our world-class services.
           </p>
         </div>
 
         {sections.map((section, index) => (
-          <div key={index} className="legal-glass-card" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
+          <div key={index} className={`legal-glass-card legal-anim-d${index + 2}`}>
             <h3 className="legal-primary-heading">{section.title}</h3>
             <p className="legal-text">{section.content}</p>
           </div>
         ))}
 
-        <div style={{ textAlign: 'center', marginTop: '60px', animation: 'fade-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both', animationDelay: '0.8s' }}>
+        <div className="legal-footer-center">
           <Link to="/" className="legal-back-btn">
             ← Return to Dashboard
           </Link>

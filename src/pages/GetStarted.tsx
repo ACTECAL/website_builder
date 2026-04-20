@@ -312,13 +312,15 @@ export const GetStarted: React.FC = () => {
     // Normalizing coordinates for tilt
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = (centerY - y) / 10;
-    const rotateY = (x - centerX) / 10;
+    // Lower divisor = more intense tilt
+    const rotateX = (centerY - y) / 8;
+    const rotateY = (x - centerX) / 8;
     
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
     card.style.setProperty('--rotate-x', `${rotateX}deg`);
     card.style.setProperty('--rotate-y', `${rotateY}deg`);
+    card.style.setProperty('--pop-z', '25px');
   };
 
   const handleCardMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -370,7 +372,7 @@ export const GetStarted: React.FC = () => {
               >
                 <path d="m5 12 5 5L20 7" />
               </svg>
-              <span>Actyx Enterprise</span>
+              <span>Nexora Enterprise</span>
             </div>
 
             {/* Ambient Background Elements */}
@@ -666,11 +668,12 @@ export const GetStarted: React.FC = () => {
                   </div>
 
                   <div className="field-group-full module-selection-group">
-                    <div
-                      className="module-header-max animate-slide-up"
-                      style={{ animationDelay: "0.65s" }}
-                    >
+                    <div className="module-header-max animate-slide-up" style={{ animationDelay: "0.65s" }}>
                       <div className="module-header-title-row">
+                        <div className="system-trace-label">
+                          <span className="trace-pulse"></span>
+                          TELEMETRY_LINK_ESTABLISHED // MODULE_QUERY_ACTIVE
+                        </div>
                         <h3 className="module-title-max">Select Modules</h3>
                         {formData.modules.length > 0 && (
                           <span className="module-badge-max">

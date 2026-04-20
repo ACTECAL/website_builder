@@ -60,7 +60,7 @@ export const Login: React.FC = () => {
 				<div className="auth-sidebar-content">
 					<div className="auth-glass-badge">
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>
-						<span>Actyx Enterprise</span>
+						<span>Nexora Enterprise</span>
 					</div>
 
 					<h2 className="auth-sidebar-title">
@@ -96,11 +96,11 @@ export const Login: React.FC = () => {
 			<div className="auth-form-container">
 				<div className="auth-form-box">
 					<h1 className="auth-title">Welcome back</h1>
-					<p className="auth-subtitle" style={{ '--delay': '100ms' } as any}>Enter your credentials to access your account</p>
+					<p className="auth-subtitle anim-delay-100">Enter your credentials to access your account</p>
 
 					{error && <div className="auth-error">{error}</div>}
 
-					<form onSubmit={onSubmit} className="auth-form" style={{ '--delay': '200ms' } as any}>
+					<form onSubmit={onSubmit} className="auth-form anim-delay-200">
 						<div className="auth-input-group">
 							<input
 								type="email"
@@ -136,26 +136,26 @@ export const Login: React.FC = () => {
 						</button>
 					</form>
 
-					<div className="auth-divider" style={{ '--delay': '300ms' } as any}>
+					<div className="auth-divider anim-delay-300">
 						<span>or</span>
 					</div>
 
-					<div className="auth-social-list" style={{ '--delay': '400ms' } as any}>
+					<div className="auth-social-list anim-delay-400">
 						<button className="auth-social-btn" onClick={() => handleSocialLogin('Google')}>
-							<i className="fa-brands fa-google" style={{ color: '#EA4335' }}></i>
+							<i className="fa-brands fa-google google-brand-color"></i>
 							Google
 						</button>
 						<button className="auth-social-btn" onClick={() => handleSocialLogin('Apple')}>
-							<i className="fa-brands fa-apple" style={{ fontSize: 20 }}></i>
+							<i className="fa-brands fa-apple fs-large"></i>
 							Apple
 						</button>
 						<button className="auth-social-btn" onClick={() => handleSocialLogin('Twitter')}>
-							<i className="fa-brands fa-x-twitter" style={{ fontSize: 18 }}></i>
+							<i className="fa-brands fa-x-twitter fs-medium"></i>
 							Twitter
 						</button>
 					</div>
 
-					<div className="auth-switch" style={{ '--delay': '500ms' } as any}>
+					<div className="auth-switch anim-delay-500">
 						Already have an account? <Link to="/signup">Sign up</Link>
 					</div>
 

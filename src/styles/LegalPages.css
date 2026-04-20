@@ -180,3 +180,47 @@
 .legal-cta-desc { color: #94a3b8; line-height: 1.7; margin-bottom: 32px; font-size: 1.1rem; }
 .legal-contact-btn.pink { background: #ec4899; border: none; }
 .legal-contact-btn.blue { background: #38bdf8; color: #0f172a; border: none; }
+
+/* =========================================
+   Legal Page Title
+   ========================================= */
+.legal-page-title {
+    text-align: center;
+    margin: 60px 0 20px;
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #f8fafc, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+}
+
+.legal-page-subtitle {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    margin-bottom: 60px;
+}
+
+.legal-intro-text {
+    font-size: 1.15rem;
+}
+
+/* Animation delay utilities */
+.legal-anim-d1 { animation-delay: 0.1s; }
+.legal-anim-d2 { animation-delay: 0.2s; }
+.legal-anim-d3 { animation-delay: 0.3s; }
+.legal-anim-d4 { animation-delay: 0.4s; }
+.legal-anim-d5 { animation-delay: 0.5s; }
+.legal-anim-d6 { animation-delay: 0.6s; }
+.legal-anim-d7 { animation-delay: 0.7s; }
+.legal-anim-d8 { animation-delay: 0.8s; }
+.legal-anim-d9 { animation-delay: 0.9s; }
+
+.legal-footer-center {
+    text-align: center;
+    margin-top: 60px;
+    animation: fade-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.9s;
+}

@@ -71,8 +71,11 @@
   overflow-x: hidden !important;
   background: #f8fafc;
   position: relative;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* Modern browsers: thin scrollbar */
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
+  /* Webkit fallback defined below via ::-webkit-scrollbar */
   z-index: 1;
 }
 
@@ -138,6 +141,7 @@
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
   transform-style: preserve-3d;
+  animation-delay: var(--delay, 0s);
 }
 
 .choose-tile:hover {
@@ -581,7 +585,9 @@
   display: flex;
   gap: 2px;
   overflow-x: auto;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE/Edge */
+  /* Hide scrollbar for all browsers */
+  scrollbar-width: none; /* Firefox */
 }
 
 .choose-tabs::-webkit-scrollbar { display: none; }
@@ -806,6 +812,8 @@
 }
 
 .choose-check.check-active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
   animation: checkPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -881,6 +889,7 @@
   cursor: pointer;
   font-size: 0.875rem;
   text-decoration: underline;
+  /* text-underline-offset supported in Safari 12.2+ */
   text-underline-offset: 3px;
 }
 
@@ -970,8 +979,11 @@
   gap: 5px;
   overflow-y: auto;
   max-height: 200px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* Modern browsers: thin scrollbar */
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.12) transparent;
+  /* Webkit fallback defined below via ::-webkit-scrollbar */
 }
 
 .choose-selected-list::-webkit-scrollbar { width: 3px; }
@@ -1297,6 +1309,11 @@
 .module-spinner {
   font-size: 32px;
   margin-bottom: 16px;
+  color: var(--accent-color, var(--color-primary));
+}
+
+.search-result-category i {
+  color: var(--accent-color, var(--color-primary));
 }
 
 .animate-scale-in {

@@ -1,0 +1,98 @@
+/* ================================================================
+   CreativeBits Component Styles
+   ================================================================ */
+
+.sticker-button-inner {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--sticker-color, #ffcc47), #f5a623);
+    font-weight: 900;
+    color: #111827;
+    box-shadow: 
+      4px 8px 0 rgba(17, 24, 39, 0.9),
+      inset 0 2px 0 rgba(255,255,255,0.4);
+    transform: rotate(-3deg);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    border: 2px solid #111827;
+}
+
+.sticker-button-inner:hover {
+    transform: rotate(0deg) translateY(-4px) scale(1.05);
+    box-shadow: 
+      8px 12px 0 rgba(17, 24, 39, 0.9),
+      inset 0 2px 0 rgba(255,255,255,0.6);
+}
+
+.sticker-button-link {
+    text-decoration: none;
+}
+
+.doodle-bg-root {
+    position: relative;
+}
+
+.doodle-bg-svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.08;
+}
+
+.doodle-bg-content {
+    position: relative;
+}
+
+.hand-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hand-bullets-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #334155;
+}
+
+.hand-bullets-star {
+    font-size: 1.2rem;
+}
+
+/* ================================================================
+   NexoraLogo Component Styles
+   ================================================================ */
+
+.nexora-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nexora-icon-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3));
+}
+
+.nexora-icon-wrapper {
+    position: relative;
+}
+
+.nexora-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    background: linear-gradient(135deg, var(--nexora-color, #0f172a) 0%, #64748b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}

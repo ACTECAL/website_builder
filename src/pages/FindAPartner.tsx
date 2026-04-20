@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommunitySubpage.css';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 
@@ -20,10 +21,10 @@ export const FindAPartner: React.FC = () => {
         subtitle="Work with certified partners for implementation, training, and support."
         emphasize="none"
       />
-      <section style={{ padding: '10px 24px 60px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link to="/community" style={{ textDecoration: 'none', color: '#667eea' }} reloadDocument>← Back to Community</Link>
+      <section className="community-subpage-section">
+        <div className="community-subpage-container">
+          <div className="community-subpage-mb">
+            <Link to="/community" className="community-back-link" reloadDocument>← Back to Community</Link>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 12 }}>
             <div>
@@ -49,9 +50,9 @@ export const FindAPartner: React.FC = () => {
             {partners
               .filter((p) => (tier === 'All' || p.tier === tier) && (svc === 'All' || p.services.includes(svc)))
               .map((p) => (
-              <div key={p.name} style={{ border: '1px solid #e2e8f0', borderRadius: 10, padding: 18 }}>
+              <div key={p.name} className="community-subpage-card">
                 <h4 style={{ margin: '0 0 6px' }}>{p.name}</h4>
-                <p style={{ margin: 0, color: '#4a5568' }}>{p.city}</p>
+                <p className="community-card-desc">{p.city}</p>
                 <p style={{ margin: '6px 0 10px', color: '#4a5568' }}><strong>Tier:</strong> {p.tier}</p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
                   {p.services.map((s) => (
@@ -62,7 +63,7 @@ export const FindAPartner: React.FC = () => {
               </div>
             ))}
           </div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
+          <div className="community-flex-group">
             <Link to="/become-a-partner" className="btn btn-outline-primary" reloadDocument>Become a Partner</Link>
             <Link to="/services-for-partners" className="btn btn-outline-primary" reloadDocument>Partner Services</Link>
           </div>

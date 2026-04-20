@@ -101,7 +101,7 @@ const PropertyManagementPage = React.lazy(() => import('./pages/industries/Prope
 const GardeningPage = React.lazy(() => import('./pages/industries/Gardening').then(m => ({ default: m.GardeningPage })));
 const PropertyOwnerAssociationPage = React.lazy(() => import('./pages/industries/PropertyOwnerAssociation').then(m => ({ default: m.PropertyOwnerAssociationPage })));
 const AccountingFirmPage = React.lazy(() => import('./pages/industries/AccountingFirm').then(m => ({ default: m.AccountingFirmPage })));
-const OdooPartnerPage = React.lazy(() => import('./pages/industries/OdooPartner').then(m => ({ default: m.OdooPartnerPage })));
+const NexoraPartnerPage = React.lazy(() => import('./pages/industries/NexoraPartner').then(m => ({ default: m.NexoraPartnerPage })));
 const MarketingAgencyPage = React.lazy(() => import('./pages/industries/MarketingAgency').then(m => ({ default: m.MarketingAgencyPage })));
 const LawFirmPage = React.lazy(() => import('./pages/industries/LawFirm').then(m => ({ default: m.LawFirmPage })));
 const TalentAcquisitionPage = React.lazy(() => import('./pages/industries/TalentAcquisition').then(m => ({ default: m.TalentAcquisitionPage })));
@@ -139,7 +139,7 @@ const Training = React.lazy(() => import('./pages/Training').then(m => ({ defaul
 const Podcast = React.lazy(() => import('./pages/Podcast').then(m => ({ default: m.Podcast })));
 const EducationProgram = React.lazy(() => import('./pages/EducationProgram').then(m => ({ default: m.EducationProgram })));
 const ScaleUpBusinessGame = React.lazy(() => import('./pages/ScaleUpBusinessGame').then(m => ({ default: m.ScaleUpBusinessGame })));
-const VisitOdoo = React.lazy(() => import('./pages/VisitOdoo').then(m => ({ default: m.VisitOdoo })));
+const VisitNexora = React.lazy(() => import('./pages/VisitNexora').then(m => ({ default: m.VisitNexora })));
 const Download = React.lazy(() => import('./pages/Download').then(m => ({ default: m.Download })));
 const CompareEditions = React.lazy(() => import('./pages/CompareEditions').then(m => ({ default: m.CompareEditions })));
 const Releases = React.lazy(() => import('./pages/Releases').then(m => ({ default: m.Releases })));
@@ -280,7 +280,7 @@ function App() {
           <Route path="/industries/gardening" element={<GardeningPage />} />
           <Route path="/industries/property-owner-association" element={<PropertyOwnerAssociationPage />} />
           <Route path="/industries/accounting-firm" element={<AccountingFirmPage />} />
-          <Route path="/industries/odoo-partner" element={<OdooPartnerPage />} />
+          <Route path="/industries/nexora-partner" element={<NexoraPartnerPage />} />
           <Route path="/industries/marketing-agency" element={<MarketingAgencyPage />} />
           <Route path="/industries/law-firm" element={<LawFirmPage />} />
           <Route path="/industries/talent-acquisition" element={<TalentAcquisitionPage />} />
@@ -316,7 +316,7 @@ function App() {
           <Route path="/podcast" element={<Podcast />} />
           <Route path="/education-program" element={<EducationProgram />} />
           <Route path="/scale-up!-business-game" element={<ScaleUpBusinessGame />} />
-          <Route path="/visit-odoo" element={<VisitOdoo />} />
+          <Route path="/visit-nexora" element={<VisitNexora />} />
           <Route path="/download" element={<Download />} />
           <Route path="/compare-editions" element={<CompareEditions />} />
           <Route path="/releases" element={<Releases />} />
@@ -332,6 +332,7 @@ function App() {
           <Route path="/find-a-partner" element={<FindAPartner />} />
           <Route path="/find-an-accountant" element={<FindAnAccountant />} />
           <Route path="/meet-an-advisor" element={<MeetAnAdvisor />} />
+          <Route path="/project-assessment" element={<MeetAnAdvisor />} />
           <Route path="/implementation-services" element={<ImplementationServices />} />
           <Route path="/customer-references" element={<CustomerReferences />} />
           <Route path="/upgrades" element={<Upgrades />} />

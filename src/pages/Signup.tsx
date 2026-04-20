@@ -104,11 +104,11 @@ export const Signup: React.FC = () => {
     return (
       <div className="auth-page">
         <div className="auth-form-container">
-          <div className="auth-form-box" style={{ textAlign: 'center' }}>
+          <div className="auth-form-box text-center">
             <h1 className="auth-title">Success!</h1>
-            <p style={{ color: '#64748b', marginBottom: 24 }}>Registration Successful!</p>
-            <p style={{ color: '#64748b', marginBottom: 32 }}>Thank you for signing up. You are now logged in.</p>
-            <button onClick={() => navigate('/')} className="auth-primary-btn" style={{ width: '100%' }}>
+            <p className="text-muted mb-6">Registration Successful!</p>
+            <p className="text-muted mb-8">Thank you for signing up. You are now logged in.</p>
+            <button onClick={() => navigate('/')} className="auth-primary-btn w-full">
               Go to Home
             </button>
           </div>
@@ -124,11 +124,11 @@ export const Signup: React.FC = () => {
         <div className="auth-sidebar-content">
           <div className="auth-glass-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m13 2-2 10h9L7 22l2-10H1L13 2z" /></svg>
-            <span>Join Actyx</span>
+            <span>Join Nexora</span>
           </div>
 
           <h2 className="auth-sidebar-title">
-            Start scaling your business with Actyx.
+            Start scaling your business with Nexora.
           </h2>
 
           <div className="auth-feature-list">
@@ -160,11 +160,11 @@ export const Signup: React.FC = () => {
       <div className="auth-form-container">
         <div className="auth-form-box">
           <h1 className="auth-title">Create account</h1>
-          <p className="auth-subtitle" style={{ '--delay': '100ms' } as any}>Join thousands of businesses managing with Actyx</p>
+          <p className="auth-subtitle anim-delay-100">Join thousands of businesses managing with Nexora</p>
 
           {errors.form && <div className="auth-error">{errors.form}</div>}
 
-          <form onSubmit={handleSubmit} className="auth-form" style={{ '--delay': '200ms' } as any}>
+          <form onSubmit={handleSubmit} className="auth-form anim-delay-200">
             <div className="auth-input-group">
               <input
                 type="text"
@@ -177,7 +177,7 @@ export const Signup: React.FC = () => {
                 onChange={handleChange}
                 autoFocus
               />
-              {errors.name && <small style={{ color: '#c53030', marginTop: 4, display: 'block' }}>{errors.name}</small>}
+              {errors.name && <small className="text-danger mt-1 block">{errors.name}</small>}
             </div>
 
             <div className="auth-input-group">
@@ -191,7 +191,7 @@ export const Signup: React.FC = () => {
                 value={formData.email}
                 onChange={handleChange}
               />
-              {errors.email && <small style={{ color: '#c53030', marginTop: 4, display: 'block' }}>{errors.email}</small>}
+              {errors.email && <small className="text-danger mt-1 block">{errors.email}</small>}
             </div>
 
             <div className="auth-input-group">
@@ -205,11 +205,11 @@ export const Signup: React.FC = () => {
                 value={formData.companyName}
                 onChange={handleChange}
               />
-              {errors.companyName && <small style={{ color: '#c53030', marginTop: 4, display: 'block' }}>{errors.companyName}</small>}
+              {errors.companyName && <small className="text-danger mt-1 block">{errors.companyName}</small>}
             </div>
 
             <div className="auth-input-group">
-              <label style={{ fontSize: 13, color: '#64748b', fontWeight: 600, marginBottom: 8, display: 'block' }}>Company Logo (Optional)</label>
+              <label className="fs-small text-muted fw-semibold mb-2 block">Company Logo (Optional)</label>
               <input
                 id="file-upload"
                 type="file"
@@ -220,7 +220,7 @@ export const Signup: React.FC = () => {
                 accept="image/*"
                 aria-label="Company logo"
               />
-              {formData.logo && <small style={{ color: '#64748b', marginTop: 4, display: 'block' }}>{formData.logo.name}</small>}
+              {formData.logo && <small className="text-muted mt-1 block">{formData.logo.name}</small>}
             </div>
 
             <button type="submit" className="auth-primary-btn" disabled={isSubmitting}>
@@ -228,33 +228,33 @@ export const Signup: React.FC = () => {
             </button>
           </form>
 
-          <div className="auth-divider" style={{ '--delay': '300ms' } as any}>
+          <div className="auth-divider anim-delay-300">
             <span>or</span>
           </div>
 
-          <div className="auth-social-list" style={{ '--delay': '400ms' } as any}>
+          <div className="auth-social-list anim-delay-400">
             <button className="auth-social-btn" onClick={() => handleSocialLogin('Google')}>
-              <i className="fa-brands fa-google" style={{ color: '#EA4335' }}></i>
+              <i className="fa-brands fa-google google-brand-color"></i>
               Google
             </button>
             <button className="auth-social-btn" onClick={() => handleSocialLogin('Apple')}>
-              <i className="fa-brands fa-apple" style={{ fontSize: 20 }}></i>
+              <i className="fa-brands fa-apple fs-large"></i>
               Apple
             </button>
             <button className="auth-social-btn" onClick={() => handleSocialLogin('Twitter')}>
-              <i className="fa-brands fa-x-twitter" style={{ fontSize: 18 }}></i>
+              <i className="fa-brands fa-x-twitter fs-medium"></i>
               Twitter
             </button>
           </div>
 
-          <div className="auth-switch" style={{ '--delay': '500ms' } as any}>
+          <div className="auth-switch anim-delay-500">
             Already have an account? <Link to="/login">Sign in</Link>
           </div>
 
 
 
-          <p style={{ marginTop: 32, textAlign: 'center', fontSize: 13, color: '#64748b', lineHeight: 1.5 }}>
-            By signing up, you agree to our <Link to="/terms" style={{ color: '#0f172a', fontWeight: 700 }}>Terms</Link> and <Link to="/privacy" style={{ color: '#0f172a', fontWeight: 700 }}>Privacy Policy</Link>.
+          <p className="mt-8 text-center fs-small text-muted">
+            By signing up, you agree to our <Link to="/terms" className="auth-legal-link">Terms</Link> and <Link to="/privacy" className="auth-legal-link">Privacy Policy</Link>.
           </p>
         </div>
       </div>

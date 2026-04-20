@@ -1,0 +1,110 @@
+.partners-card-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.partners-section-surface {
+    padding: 32px 24px;
+    background: var(--surface, #f8fafc);
+}
+
+.partners-section-benefits {
+    padding: 48px 24px;
+}
+
+.partners-section-cta {
+    padding: 48px 24px;
+    background: #fff;
+}
+
+.partners-benefits-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.partners-cta-center {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.partners-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.6) 100%);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 16px 36px rgba(26, 26, 26, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.partners-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 30px 60px rgba(113, 75, 103, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 0 20px rgba(255, 255, 255, 0.6);
+    border-color: rgba(168, 85, 247, 0.4);
+}
+
+.partners-card-title {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+}
+
+.partners-card-text {
+    margin: 0;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.partners-card-title-lg {
+    margin: 0 0 16px;
+    font-size: 1.3rem;
+}
+
+.partners-benefits-list {
+    margin: 0;
+    padding-left: 20px;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.partners-cta-title {
+    font-size: 1.7rem;
+    margin-bottom: 16px;
+}
+
+.partners-cta-text {
+    color: #4a5568;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.partners-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 9999px;
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(255, 107, 0, 0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.partners-apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(255, 107, 0, 0.3);
+}

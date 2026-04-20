@@ -29,14 +29,12 @@ export const AdvisorDropdown: React.FC<AdvisorDropdownProps> = ({ variant = 'def
 
     return (
         <div className={`advisor-dropdown-container ${variant === 'on-card' ? 'on-card' : ''}`} ref={dropdownRef}>
-            <button
-                className="advisor-btn"
-                onClick={toggleDropdown}
-                aria-expanded={isOpen ? "true" : "false"}
-            >
+            <button className="advisor-btn" onClick={toggleDropdown} aria-expanded={isOpen ? "true" : "false"}>
                 Meet an advisor
                 {variant === 'default' && <ChevronDown size={20} />}
             </button>
+
+          <div></div>
 
             <div className={`advisor-dropdown-menu ${isOpen ? 'is-open' : ''}`}>
                 <Link
@@ -47,7 +45,7 @@ export const AdvisorDropdown: React.FC<AdvisorDropdownProps> = ({ variant = 'def
                     Demo with an Expert <span>(1-250 employees)</span>
                 </Link>
                 <Link
-                    to="/implementation-services"
+                    to="/project-assessment"
                     className="advisor-dropdown-item"
                     onClick={() => setIsOpen(false)}
                 >

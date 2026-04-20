@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CreativeBits.css';
 
 interface NexoraLogoProps {
   className?: string;
@@ -16,19 +17,14 @@ export const NexoraLogo: React.FC<NexoraLogoProps> = ({
   return (
     <div 
       className={`nexora-logo-container ${className}`}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '10px',
-        ...style
-      }}
+      style={{ '--nexora-color': color, ...style } as React.CSSProperties}
     >
-      <div className="nexora-icon-wrapper" style={{ position: 'relative', width: size, height: size }}>
+      <div className="nexora-icon-wrapper" style={{ width: size, height: size }}>
         <svg 
           viewBox="0 0 100 100" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
-          style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3))' }}
+          className="nexora-icon-svg"
         >
           <defs>
             <linearGradient id="nexoraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -60,19 +56,7 @@ export const NexoraLogo: React.FC<NexoraLogoProps> = ({
           <circle cx="50" cy="50" r="5" fill="white" opacity="0.8" />
         </svg>
       </div>
-      <div 
-        className="nexora-text"
-        style={{
-          fontFamily: 'Inter, system-ui, sans-serif',
-          fontSize: '1.4rem',
-          fontWeight: 800,
-          background: `linear-gradient(135deg, ${color} 0%, #64748b 100%)`,
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          letterSpacing: '-0.02em',
-          textTransform: 'none'
-        }}
-      >
+      <div className="nexora-text">
         Nexora
       </div>
     </div>

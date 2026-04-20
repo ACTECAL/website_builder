@@ -1,0 +1,17 @@
+/* ================================================================
+   NotFound Options Styles
+   ================================================================ */
+
+.notfound-main {
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.notfound-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.notfound-link {
+    color: #6e56cf;
+}

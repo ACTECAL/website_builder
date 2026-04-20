@@ -46,6 +46,21 @@
     box-shadow: 0 0 0 5px rgba(108, 75, 103, 0.15);
 }
 
+.advisor-btn::after {
+    content: "";
+    position: absolute;
+    top: -100%; left: -100%; width: 300%; height: 300%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.8s;
+    transform: rotate(35deg);
+    pointer-events: none;
+}
+
+.advisor-btn:hover::after {
+    left: 100%;
+    top: 100%;
+}
+
 .advisor-btn:hover::before {
     top: -6px;
     left: -6px;

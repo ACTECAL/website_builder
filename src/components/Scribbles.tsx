@@ -4,11 +4,12 @@ import '../styles/Scribbles.css';
 type ScribbleUnderlineProps = {
   children: React.ReactNode;
   color?: string;
+  className?: string;
 };
 
-export const ScribbleUnderline: React.FC<ScribbleUnderlineProps> = ({ children, color = '#46b3ff' }) => {
+export const ScribbleUnderline: React.FC<ScribbleUnderlineProps> = ({ children, color = '#46b3ff', className = '' }) => {
   return (
-    <span className="scribble-underline-wrapper">
+    <span className={`scribble-underline-wrapper ${className}`}>
       <span>{children}</span>
       <svg
         aria-hidden="true"
@@ -59,12 +60,13 @@ export const HighlightMarker: React.FC<HighlightMarkerProps> = ({ children, colo
 type ArrowNoteProps = {
   text: string;
   color?: string;
+  className?: string;
   style?: React.CSSProperties;
 };
 
-export const ArrowNote: React.FC<ArrowNoteProps> = ({ text, color = '#7b5aa6', style }) => {
+export const ArrowNote: React.FC<ArrowNoteProps> = ({ text, color = '#7b5aa6', className = '', style }) => {
   return (
-    <div className="arrow-note-wrapper" style={style}>
+    <div className={`arrow-note-wrapper ${className}`} style={style}>
       <svg width="60" height="50" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg" className="arrow-svg">
         <path d="M2 35 C 20 20, 40 20, 58 10" stroke={color} strokeWidth={4} strokeLinecap="round" fill="none" />
         <path d="M44 8 L58 10 L50 22" stroke={color} strokeWidth={4} fill="none" strokeLinecap="round" />

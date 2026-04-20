@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { industryCategories } from '../data/industries';
 import { Search, ChevronRight, ArrowUpRight, Box, Cpu, Activity, Database, Zap } from 'lucide-react';
+import '../styles/AllIndustries.css';
 
 // Specialized Component for 3D Tilt Card with Data Overlay
 const IndustryCard3D: React.FC<{ industry: any }> = ({ industry }) => {
@@ -79,7 +80,7 @@ const IndustryCard3D: React.FC<{ industry: any }> = ({ industry }) => {
                 {industry.description}
               </p>
               <div className="d-flex gap-2 flex-wrap">
-                {['Actyx v4.2', 'Real-time'].map(tag => (
+                {['Nexora v4.2', 'Real-time'].map(tag => (
                   <span key={tag} className="px-2 py-1 rounded bg-light text-muted smaller fw-bold text-uppercase tracking-wider">
                     {tag}
                   </span>
@@ -295,7 +296,7 @@ export const AllIndustries: React.FC = () => {
           <div className="row align-items-center g-5">
             <div className="col-lg-6">
               <h2 className="display-4 fw-black mb-8">Synchronized at the speed of light.</h2>
-              <p className="fs-4 text-secondary mb-10 fw-light">Actyx Kernel uses a peer-to-peer event log to ensure every industrial node is perfectly synced across any vertical.</p>
+              <p className="fs-4 text-secondary mb-10 fw-light">Nexora Kernel uses a peer-to-peer event log to ensure every industrial node is perfectly synced across any vertical.</p>
               <div className="d-flex gap-4">
                 <button className="btn btn-primary btn-lg px-10 py-4 fw-black rounded-pill">LEARN ARCHITECTURE</button>
                 <button className="btn btn-outline-dark btn-lg px-10 py-4 fw-black rounded-pill">VIEW NODES</button>
@@ -327,69 +328,6 @@ export const AllIndustries: React.FC = () => {
         </div>
       </section>
 
-      <style>{`
-                .fw-black { font-weight: 950 !important; }
-                .text-gradient-premium {
-                    background: linear-gradient(135deg, #714B67 0%, #017E84 50%, #4A90E2 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                }
-                .smaller { font-size: 0.65rem; }
-                .x-small { font-size: 0.75rem; }
-                .tracking-widest { letter-spacing: 0.2em !important; }
-                
-                .sticky-sidebar {
-                    position: sticky;
-                    top: 100px;
-                    max-height: calc(100vh - 120px);
-                }
-
-                .technical-card {
-                    transform-style: preserve-3d;
-                }
-
-                .grid-dots {
-                    background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-                    background-size: 30px 30px;
-                }
-
-                /* Data Packet Animation */
-                .data-stream-container { position: relative; }
-                .data-packet {
-                    position: absolute;
-                    width: 2px;
-                    height: 40px;
-                    background: linear-gradient(to bottom, transparent, var(--bs-primary), transparent);
-                    top: -40px;
-                    animation: data-fall linear infinite;
-                }
-                @keyframes data-fall {
-                    to { transform: translateY(100vh); }
-                }
-
-                .animate-blob {
-                    position: absolute;
-                    animation: blob 10s infinite;
-                }
-                @keyframes blob {
-                    0% { transform: scale(1) translate(0, 0); }
-                    33% { transform: scale(1.1) translate(30px, -50px); }
-                    66% { transform: scale(0.9) translate(-20px, 20px); }
-                    100% { transform: scale(1) translate(0, 0); }
-                }
-
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(30px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fade-in-up {
-                    animation: fadeInUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both;
-                }
-                .stagger-item {
-                    opacity: 0;
-                    animation: fadeInUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
-                }
-            `}</style>
-    </div>
+      </div>
   );
 };

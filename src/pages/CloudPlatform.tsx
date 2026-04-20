@@ -8,7 +8,7 @@ export const CloudPlatform: React.FC = () => {
     return (
         <main>
             <PageHero
-                title="Odoo Cloud Platform"
+                title="Nexora Cloud Platform"
                 subtitle="Enterprise-grade hosting, security, and performance for your business."
                 emphasize="none"
             />

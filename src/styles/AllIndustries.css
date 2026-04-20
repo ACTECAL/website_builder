@@ -1,0 +1,132 @@
+/* AllIndustries.css - Elite++ Vertical Ecosystem Matrix */
+
+.all-industries-page {
+    background: #ffffff;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ================================================================
+   Hero HUD Section
+   ================================================================ */
+.industries-hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 10;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Elite HUD Search */
+.glass-search {
+    background: rgba(15, 23, 42, 0.03);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-search:focus-within {
+    border-color: #a855f7;
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.1);
+}
+
+/* ================================================================
+   Industry Grid & Cards
+   ================================================================ */
+.technical-card {
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transform-style: preserve-3d;
+}
+
+.technical-card:hover {
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+}
+
+/* Data Overlay HUD */
+.absolute.inset-0.bg-dark\/95 {
+    background: rgba(15, 23, 42, 0.95) !important;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.stagger-item {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Side Navigation Progress */
+.sticky-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+}
+
+.btn.border-0.text-start {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.btn.border-0.text-start.bg-white {
+    color: #a855f7 !important;
+    background: rgba(168, 85, 247, 0.05) !important;
+    border: 1px solid rgba(168, 85, 247, 0.1) !important;
+}
+
+/* Matrix Background Effects */
+.grid-dots {
+    background-image: radial-gradient(rgba(168, 85, 247, 0.2) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.data-packet {
+    position: absolute;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #a855f7, transparent);
+    top: -60px;
+    animation: data-fall linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes data-fall {
+    to { transform: translateY(100vh); }
+}
+
+/* Company DNA Profile */
+.company-dna-section {
+    position: relative;
+    padding: 100px 0;
+    overflow: hidden;
+}

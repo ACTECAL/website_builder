@@ -1,12 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-
-const fieldStyle: React.CSSProperties = {
-  padding: '12px 14px',
-  border: '1px solid #e5e7eb',
-  borderRadius: 10,
-  width: '100%'
-};
+import '../styles/StartNow.css';
 
 export const StartNow: React.FC = () => {
   const [search] = useSearchParams();
@@ -76,42 +70,32 @@ export const StartNow: React.FC = () => {
 
 
   return (
-    <main>
-      <section className="section" style={{ background: 'var(--surface)' }}>
-        <div className="container" style={{ maxWidth: 900 }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            background: '#fff',
-            border: '1px solid #e5e7eb',
-            borderRadius: 12,
-            padding: '14px 16px',
-            marginBottom: 18,
-            boxShadow: '0 6px 16px rgba(0,0,0,0.06)'
-          }}>
-            <div style={{ fontWeight: 800, color: '#111827' }}>
+    <main className="start-now-main">
+      <section className="start-now-section">
+        <div className="container start-now-container">
+          <div className="start-now-header">
+            <div className="start-now-count">
               {selected.length} {selected.length === 1 ? 'app' : 'apps'} selected
             </div>
-            <Link to={`/choose-apps${qsSelected}`} className="btn" style={{ border: '1px solid #e5e7eb', background: '#fff' }}>
+            <Link to={`/choose-apps${qsSelected}`} className="start-now-change-btn">
               Change apps selection
             </Link>
           </div>
 
           {error && (
-            <div style={{ background: '#fee2e2', color: '#991b1b', border: '1px solid #fecaca', borderRadius: 10, padding: '10px 12px', marginBottom: 10 }}>
+            <div className="start-now-error">
               {error}
             </div>
           )}
 
-          <form onSubmit={onSubmit} style={{ display: 'grid', gap: 14 }}>
+          <form onSubmit={onSubmit} className="start-now-form">
             <input
               name="name"
               placeholder="First and Last Name"
               aria-label="First and Last Name"
               value={form.name}
               onChange={onChange}
-              style={fieldStyle}
+              className="start-now-field"
               required
             />
             <input
@@ -120,10 +104,10 @@ export const StartNow: React.FC = () => {
               aria-label="Company Name"
               value={form.company}
               onChange={onChange}
-              style={fieldStyle}
+              className="start-now-field"
               required
             />
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="start-now-row-2">
               <input
                 name="email"
                 type="email"
@@ -131,7 +115,7 @@ export const StartNow: React.FC = () => {
                 aria-label="Email"
                 value={form.email}
                 onChange={onChange}
-                style={fieldStyle}
+                className="start-now-field"
                 required
               />
               <input
@@ -141,47 +125,40 @@ export const StartNow: React.FC = () => {
                 aria-label="Phone number"
                 value={form.phone}
                 onChange={onChange}
-                style={fieldStyle}
+                className="start-now-field"
               />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <select name="country" aria-label="Country" value={form.country} onChange={onChange} style={fieldStyle}>
+            <div className="start-now-row-2">
+              <select name="country" aria-label="Country" value={form.country} onChange={onChange} className="start-now-field">
                 {['India', 'United States', 'United Kingdom', 'Germany', 'France', 'Spain', 'Australia', 'Canada'].map(c => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-              <select name="language" aria-label="Language" value={form.language} onChange={onChange} style={fieldStyle}>
+              <select name="language" aria-label="Language" value={form.language} onChange={onChange} className="start-now-field">
                 {['English', 'Hindi', 'Spanish', 'French', 'German'].map(l => (
                   <option key={l} value={l}>{l}</option>
                 ))}
               </select>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <select name="size" aria-label="Company size" value={form.size} onChange={onChange} style={fieldStyle}>
+            <div className="start-now-row-2">
+              <select name="size" aria-label="Company size" value={form.size} onChange={onChange} className="start-now-field">
                 {['1 - 5 employees', '6 - 25 employees', '26 - 100 employees', '100+ employees'].map(s => (
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>
-              <select name="interest" aria-label="Interest" value={form.interest} onChange={onChange} style={fieldStyle}>
+              <select name="interest" aria-label="Interest" value={form.interest} onChange={onChange} className="start-now-field">
                 {['Use it in my company', 'Evaluate for a client', 'Academic use', 'Other'].map(i => (
                   <option key={i} value={i}>{i}</option>
                 ))}
               </select>
             </div>
 
-            <div style={{ textAlign: 'center', color: '#6b7280', fontSize: '.95rem', marginTop: 6 }}>
+            <div className="start-now-footer-text">
               By clicking on <strong>Start Now</strong>, you accept our <Link to="/terms">Subscription Agreement</Link> and <Link to="/privacy">Privacy Policy</Link>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button type="submit" className="btn btn-primary" disabled={submitting} style={{
-                background: 'var(--color-primary)',
-                color: '#fff',
-                fontWeight: 800,
-                padding: '14px 28px',
-                borderRadius: 12,
-                boxShadow: '0 14px 28px rgba(108, 92, 231, 0.25)'
-              }}>
+            <div className="start-now-submit-row">
+              <button type="submit" className="start-now-submit-btn" disabled={submitting}>
                 {submitting ? 'Processing…' : 'Start Now'}
               </button>
             </div>

@@ -82,6 +82,12 @@
     display: inline-block;
 }
 
+.note-position {
+    position: absolute;
+    right: -20px;
+    top: -20px;
+}
+
 .feature-item-text {
     font-size: 0.95rem;
 }
