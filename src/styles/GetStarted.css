@@ -241,7 +241,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 60px 60px 120px;
+  padding: 0px 60px 120px;
   background: radial-gradient(circle at top left, rgba(74, 222, 128, 0.05), transparent 40%),
     radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.05), transparent 40%),
     rgba(255, 255, 255, 0.7);
@@ -265,7 +265,7 @@
 .auth-title-wrapper {
   position: relative;
   display: inline-block;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
 }
 
 .auth-title-accent {
@@ -324,7 +324,13 @@
   display: flex;
   align-items: center;
   gap: 0;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
+}
+.form-row{
+  display:  flex;
+  flex-direction: column;
+  gap: 10px ;
+
 }
 
 .setup-step-indicator .step-item {
@@ -906,7 +912,7 @@
 /* Max Floating Label System */
 .auth-input-group {
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
   width: 100%;
 }
 
@@ -1161,6 +1167,12 @@
   resize: none;
   padding-top: 18px !important;
   line-height: 1.6;
+}
+.form-row{
+  
+  flex-direction: row;
+
+
 }
 
 .auth-input-group.textarea-group .auth-input-icon {

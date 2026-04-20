@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/GetStarted.css";
-import { PRODUCTS } from "../data/products";
+import { getProducts, Product } from "../data/products";
+import { productsApi } from "../services/productsApi";
 
 // App selection logic refined for Elite++ grid
 
@@ -14,6 +15,8 @@ export const GetStarted: React.FC = () => {
   const selectedProductParam = searchParams.get("product");
   const initialModules = selectedAppsParam ? selectedAppsParam.split(",") : [];
 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
   const [formData, setFormData] = useState({
     domain: "",
     companyName: "",
@@ -29,8 +32,9 @@ export const GetStarted: React.FC = () => {
     selectedProduct: selectedProductParam || "",
   });
 
+  
   // Find selected product from form state (reactive)
-  const selectedProduct = PRODUCTS.find(
+  const selectedProduct = products.find(
     (p) => p.name.toLowerCase() === formData.selectedProduct?.toLowerCase(),
   );
 
@@ -52,6 +56,34 @@ export const GetStarted: React.FC = () => {
   const [apiError, setApiError] = useState<string | null>(null);
 
   const [currentStep] = useState(1);
+  // Fetch products on component mount
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setProductsLoading(true);
+        const fetchedProducts = await productsApi.getCachedProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      } finally {
+        setProductsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  // Auto-select modules when product is selected from URL
+  useEffect(() => {
+    if (selectedProduct && selectedProduct.modules && formData.modules.length === 0) {
+      // Auto-select all modules for the selected product
+      const moduleIds = selectedProduct.modules.map(module => module.id);
+      setFormData(prev => ({
+        ...prev,
+        modules: moduleIds
+      }));
+    }
+  }, [selectedProduct, formData.modules.length]);
 
   // Validation
   const validateField = (name: string, value: any) => {
@@ -585,9 +617,9 @@ export const GetStarted: React.FC = () => {
               style={{ animationDelay: "0.1s" }}
             >
               <div className="auth-title-wrapper">
-                <h1 className="auth-title text-shimmer">
+                <h3 className="auth-title text-shimmer">
                   Complete your <span className="auth-title-accent">setup</span>
-                </h1>
+                </h3>
                 <div className="title-glass-accent"></div>
               </div>
               <p className="auth-subtitle">
@@ -688,11 +720,15 @@ export const GetStarted: React.FC = () => {
                         onBlur={() => handleBlur("selectedProduct")}
                       >
                         <option value="">Select Product</option>
-                        {PRODUCTS.map((product) => (
-                          <option key={product.name} value={product.name}>
-                            {product.name.toUpperCase()}
-                          </option>
-                        ))}
+                        {productsLoading ? (
+                          <option value="" disabled>Loading products...</option>
+                        ) : (
+                          products.map((product) => (
+                            <option key={product.name} value={product.name}>
+                              {product.name.toUpperCase()}
+                            </option>
+                          ))
+                        )}
                       </select>
                       <label
                         htmlFor="selectedProduct"

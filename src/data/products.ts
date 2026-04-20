@@ -467,7 +467,8 @@ export interface Product {
   plans: Array<{ id: string; name: string; description: string }>;
 }
 
-export const PRODUCTS: Product[] = [
+// Static fallback data - used only when API is unavailable
+const FALLBACK_PRODUCTS: Product[] = [
   {
     name: "ERP",
     color: "#0984E3",
@@ -492,17 +493,7 @@ export const PRODUCTS: Product[] = [
         id: "erp:inventory",
         name: "Inventory",
         description: "Stock tracking, Multi-warehouse, Serial/Lot numbers",
-      },
-      {
-        id: "erp:accounting",
-        name: "Accounting",
-        description: "Journal entries, Multi-currency, Bank reconciliation",
-      },
-      {
-        id: "erp:hr",
-        name: "HR & Payroll",
-        description: "Employee management, Attendance, Payroll & expenses",
-      },
+      }
     ],
     "fav-icon": "/icons/erp-favicon.png",
     icon: "fa-solid fa-industry",
@@ -577,29 +568,9 @@ export const PRODUCTS: Product[] = [
     color: "#0984E3",
     modules: [
       {
-        id: "exam:question_bank",
-        name: "Question Bank",
+        id: "exam:all",
+        name: "Exam",
         description: "Create & manage MCQ, subjective, true/false questions",
-      },
-      {
-        id: "exam:exam_builder",
-        name: "Exam Builder",
-        description: "Create online/offline exams with timer & randomization",
-      },
-      {
-        id: "exam:result_analysis",
-        name: "Result Analysis",
-        description: "Performance reports, rank list, graphical analysis",
-      },
-      {
-        id: "exam:student_portal",
-        name: "Student Portal",
-        description: "Online exam giving, view results & certificates",
-      },
-      {
-        id: "exam:proctoring",
-        name: "AI Proctoring",
-        description: "Live monitoring, face detection & cheating prevention",
       },
     ],
     "fav-icon": "/icons/exam-favicon.png",
@@ -627,7 +598,6 @@ export const PRODUCTS: Product[] = [
       },
     ],
   },
-
   {
     name: "Account",
     color: "#0984E3",
@@ -683,63 +653,33 @@ export const PRODUCTS: Product[] = [
       },
     ],
   },
-
-  {
-    name: "Website",
-    color: "#0984E3",
-    modules: [
-      {
-        id: "website:builder",
-        name: "Drag & Drop Builder",
-        description: "No-code page builder with templates & sections",
-      },
-      {
-        id: "website:blog",
-        name: "Blog & CMS",
-        description: "Create & manage blog posts, categories & SEO",
-      },
-      {
-        id: "website:ecommerce",
-        name: "E-commerce Store",
-        description: "Product catalog, cart, payment gateway integration",
-      },
-      {
-        id: "website:forms",
-        name: "Forms & Leads",
-        description: "Contact forms, lead capture & email notifications",
-      },
-      {
-        id: "website:seo",
-        name: "SEO & Analytics",
-        description: "Meta tags, sitemap, Google Analytics integration",
-      },
-    ],
-    "fav-icon": "/icons/website-favicon.png",
-    icon: "fa-solid fa-globe",
-    plans: [
-      {
-        id: "basic",
-        name: "Basic Plan",
-        description: "5 pages + blog + contact form + basic hosting",
-      },
-
-      {
-        id: "standard",
-        name: "Standard Plan",
-        description: "Unlimited pages + e-commerce + SEO tools",
-      },
-      {
-        id: "premium",
-        name: "Premium Plan",
-        description: "Custom domain + analytics + priority support",
-      },
-      {
-        id: "enterprise",
-        name: "Enterprise Plan",
-        description: "Multi-language + team access + custom development",
-      },
-    ],
-  },
 ];
 
-export default PRODUCTS;
+// Export products that will be fetched from API
+// For backward compatibility, we export a function that returns products
+let cachedProducts: Product[] | null = null;
+
+export const getProducts = async (): Promise<Product[]> => {
+  if (cachedProducts) {
+    return cachedProducts;
+  }
+  
+  try {
+    const { productsApi } = await import('../services/productsApi');
+    cachedProducts = await productsApi.getCachedProducts();
+    console.log("cachedProducts",cachedProducts)
+    return cachedProducts;
+  } catch (error) {
+    console.error('Failed to fetch products from API, using fallback:', error);
+    cachedProducts = FALLBACK_PRODUCTS;
+    return cachedProducts;
+  }
+};
+
+// For backward compatibility, export PRODUCTS as a Promise-based getter
+export const PRODUCTS = FALLBACK_PRODUCTS; // Fallback for direct imports
+
+// Export the fallback data for emergency use
+export { FALLBACK_PRODUCTS };
+
+export default getProducts;

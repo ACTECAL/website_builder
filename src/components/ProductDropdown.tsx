@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Product } from "../data/products";
+import { productsApi } from "../services/productsApi";
 
 interface ProductDropdownProps {
   products: Product[];

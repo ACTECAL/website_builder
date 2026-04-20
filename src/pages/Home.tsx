@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import { appModules } from "../data/appModules";
-import { PRODUCTS } from "../data/products";
+import { Product } from "../data/products";
+import { productsApi } from "../services/productsApi";
 import { AdvisorDropdown } from '../components/AdvisorDropdown';
 import {
   Cpu,
@@ -217,6 +218,8 @@ const Home: React.FC = () => {
   const [isLowPower, setIsLowPower] = useState(false);
   const [tooltipText, setTooltipText] = useState("Elevate your business");
   const [celestialParticles, setCelestialParticles] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
 
   const scrollYRef = React.useRef(0);
   const mousePosRef = React.useRef({ x: 0, y: 0 });
@@ -412,6 +415,24 @@ const Home: React.FC = () => {
     };
   }, []);
 
+  // Fetch products on component mount
+  React.useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setProductsLoading(true);
+        const fetchedProducts = await productsApi.getCachedProducts();
+        console.log(fetchedProducts)
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      } finally {
+        setProductsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   // Icon mapping for featured apps
   const iconMap: Record<string, React.ReactNode> = {
     'accounting': <Activity size={22} />,
@@ -566,36 +587,40 @@ const Home: React.FC = () => {
             <p>Choose the right solution for your business</p>
           </div>
           <div className="apps-grid">
-            {PRODUCTS.map((product: any) => (
-              <Link
-                key={product.name}
-                to={`/get-started?product=${encodeURIComponent(product.name)}`}
-                className="app-card"
-                style={{ textDecoration: "none" }}
-              >
-                <div
-                  className="app-icon-wrapper"
-                  style={{
-                    background: `rgba(16, 185, 129, 0.1)`,
-                    border: "2px solid #10b981",
-                  }}
+            {productsLoading ? (
+              <div className="loading-products">Loading products...</div>
+            ) : (
+              products.map((product: any) => (
+                <Link
+                  key={product.name}
+                  to={`/get-started?product=${encodeURIComponent(product.name)}`}
+                  className="app-card"
+                  style={{ textDecoration: "none" }}
                 >
-                  <i
-                    className={`fa-solid ${
-                      product.name === 'ERP' ? 'fa-shield-halved' :
-                      product.name === 'Exam' ? 'fa-graduation-cap' :
-                      product.name === 'Account' ? 'fa-calculator' :
-                      product.name === 'Website' ? 'fa-globe' : 'fa-cube'
-                    }`}
+                  <div
+                    className="app-icon-wrapper"
                     style={{
-                      fontSize: "2rem",
-                      color: "#10b981",
+                      background: `rgba(16, 185, 129, 0.1)`,
+                      border: "2px solid #10b981",
                     }}
-                  />
-                </div>
-                <h3 className="app-name">{product.name}</h3>
-              </Link>
-            ))}
+                  >
+                    <i
+                      className={`fa-solid ${
+                        product.name === 'ERP' ? 'fa-shield-halved' :
+                        product.name === 'Exam' ? 'fa-graduation-cap' :
+                        product.name === 'Account' ? 'fa-calculator' :
+                        product.name === 'Website' ? 'fa-globe' : 'fa-cube'
+                      }`}
+                      style={{
+                        fontSize: "1.5rem",
+                        color: "#10b981",
+                      }}
+                    />
+                  </div>
+                  <h3 className="app-name">{product.name}</h3>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </section>
