@@ -1,0 +1,348 @@
+/* ═══════════════════════════════════════════════════
+   SECURITY.CSS  –  Acteal Security Page (Light Theme)
+   All classes prefixed "sec-" to avoid conflicts
+═══════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Reset ─────────────────────────────────────── */
+.sec-page * { box-sizing: border-box; margin: 0; padding: 0; }
+.sec-page {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #0f172a; background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+.sec-page a { text-decoration: none; }
+.sec-page ul { list-style: none; }
+
+/* ── Container ─────────────────────────────────── */
+.sec-container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Shared section headers ────────────────────── */
+.sec-section-hdr  { text-align: center; margin-bottom: 52px; }
+.sec-section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #2563eb; margin-bottom: 10px; display: block;
+}
+.sec-section-title {
+  font-size: clamp(26px, 4vw, 38px); font-weight: 800;
+  color: #0f172a; line-height: 1.15; margin-bottom: 12px;
+}
+.sec-section-sub {
+  font-size: 15px; color: #64748b;
+  max-width: 540px; margin: 0 auto; line-height: 1.65;
+}
+
+/* ── Shared buttons ────────────────────────────── */
+.sec-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600;
+  padding: 13px 24px; border-radius: 10px;
+  cursor: pointer; border: none; font-family: inherit;
+  text-decoration: none; transition: all .2s;
+}
+.sec-btn-blue {
+  background: #2563eb; color: #fff;
+  box-shadow: 0 4px 20px rgba(37,99,235,.25);
+}
+.sec-btn-blue:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(37,99,235,.35); }
+.sec-btn-ghost {
+  background: #fff; color: #0f172a;
+  border: 1.5px solid #e2e8f0;
+}
+.sec-btn-ghost:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+.sec-hero {
+  padding: 88px 0 72px; background: #fff;
+  text-align: center; position: relative; overflow: hidden;
+}
+.sec-hero::before {
+  content: '';
+  position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 700px;
+  background: radial-gradient(circle, rgba(37,99,235,.055) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.sec-hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 600; color: #2563eb;
+  background: #eff6ff; border: 1px solid #bfdbfe;
+  border-radius: 100px; padding: 5px 14px; margin-bottom: 28px;
+  animation: secFadeUp .5s ease both;
+}
+
+.sec-hero-title {
+  font-size: clamp(34px, 5.5vw, 58px); font-weight: 900;
+  line-height: 1.08; letter-spacing: -.025em; color: #0f172a;
+  animation: secFadeUp .5s .1s ease both;
+}
+.sec-hero-blue { color: #2563eb; }
+
+.sec-hero-sub {
+  margin-top: 20px; font-size: 17px; color: #64748b;
+  max-width: 540px; margin-left: auto; margin-right: auto;
+  line-height: 1.7; animation: secFadeUp .5s .2s ease both;
+}
+
+.sec-hero-actions {
+  display: flex; gap: 12px; justify-content: center;
+  margin-top: 36px; animation: secFadeUp .5s .3s ease both;
+}
+
+/* Stats bar */
+.sec-stats-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-top: 52px;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 16px; padding: 24px 40px;
+  animation: secFadeUp .5s .4s ease both;
+  flex-wrap: wrap;
+}
+.sec-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 28px; }
+.sec-stat-num { font-size: 22px; font-weight: 800; color: #0f172a; line-height: 1; }
+.sec-stat-lbl { font-size: 12px; color: #64748b; font-weight: 500; }
+.sec-stat-div { width: 1px; height: 36px; background: #e2e8f0; }
+
+/* ═══════════════════════════════════════════════
+   ARCHITECTURE
+═══════════════════════════════════════════════ */
+.sec-arch { padding: 80px 0; background: #f8fafc; }
+
+/* Diagram */
+.sec-diagram { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+/* Entry nodes */
+.sec-diag-entry {
+  display: flex; gap: 32px; align-items: flex-end; margin-bottom: 16px;
+}
+.sec-entry-node { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sec-entry-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: #fff; border: 1px solid #e2e8f0;
+  display: flex; align-items: center; justify-content: center;
+  color: #64748b; box-shadow: var(--sec-shadow-sm, 0 1px 4px rgba(0,0,0,.06));
+}
+.sec-entry-lbl { font-size: 12px; font-weight: 500; color: #64748b; }
+
+.sec-arrow-down {
+  font-size: 20px; color: #94a3b8; margin: 4px 0; line-height: 1;
+}
+
+/* Gateway */
+.sec-gateway {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  background: #fff; border: 2px solid #2563eb;
+  border-radius: 14px; padding: 16px 28px;
+  box-shadow: 0 4px 20px rgba(37,99,235,.12);
+  margin-bottom: 16px; max-width: 520px; width: 100%;
+}
+.sec-gateway-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: #2563eb; color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.sec-gateway-name { font-size: 15px; font-weight: 700; color: #0f172a; }
+.sec-gateway-url  { font-size: 12px; color: #2563eb; font-weight: 500; }
+.sec-gateway-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.sec-gtag {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: 100px; background: #eff6ff; color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+/* Routes label */
+.sec-routes-label {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: #94a3b8; margin: 16px 0;
+  width: 100%; max-width: 860px;
+}
+.sec-routes-line { flex: 1; height: 1px; background: #e2e8f0; }
+
+/* Customer row */
+.sec-customers-row {
+  display: flex; gap: 14px; align-items: flex-start;
+  flex-wrap: wrap; justify-content: center; width: 100%;
+}
+
+/* Customer card */
+.sec-customer-card {
+  border-radius: 14px; padding: 20px 18px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; width: 180px; text-align: center;
+  transition: box-shadow .2s, transform .2s;
+}
+.sec-customer-card:hover { transform: translateY(-3px); }
+
+.sec-customer-ent {
+  background: #fff; border: 1.5px solid #2563eb;
+  box-shadow: 0 4px 16px rgba(37,99,235,.10);
+}
+.sec-customer-free {
+  background: #fff; border: 1.5px dashed #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.sec-cust-badge {
+  font-size: 10px; font-weight: 700; padding: 3px 10px;
+  border-radius: 100px; background: #2563eb; color: #fff;
+  letter-spacing: .04em;
+}
+.sec-cust-badge-free { background: #f1f5f9; color: #64748b; }
+
+.sec-cust-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: #eff6ff; color: #2563eb;
+  display: flex; align-items: center; justify-content: center;
+  margin: 4px 0;
+}
+.sec-cust-icon-free { background: #f8fafc; color: #94a3b8; }
+
+.sec-cust-name { font-size: 13px; font-weight: 700; color: #0f172a; }
+.sec-cust-url  { font-size: 11px; color: #2563eb; font-weight: 500; }
+.sec-cust-url-lbl { font-size: 10px; color: #94a3b8; }
+
+.sec-cust-items {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-top: 8px; width: 100%;
+}
+.sec-cust-items li {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: #64748b; font-weight: 500;
+}
+.sec-cust-items li svg { color: #22c55e; flex-shrink: 0; }
+
+.sec-cust-items-free li svg { color: #94a3b8; }
+
+/* VS separator */
+.sec-vs {
+  font-size: 13px; font-weight: 700; color: #94a3b8;
+  padding: 8px 6px; align-self: center;
+}
+
+/* Legend */
+.sec-legend {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  justify-content: center; margin-top: 28px;
+}
+.sec-legend-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; color: #64748b; font-weight: 500;
+}
+.sec-leg-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.sec-leg-blue  { background: #2563eb; }
+.sec-leg-grey  { background: #94a3b8; }
+.sec-leg-green { background: #22c55e; }
+
+/* ═══════════════════════════════════════════════
+   SECURITY FEATURES GRID
+═══════════════════════════════════════════════ */
+.sec-features { padding: 80px 0; background: #fff; }
+
+.sec-feat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+}
+
+.sec-feat-card {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 16px; padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: all .2s;
+}
+.sec-feat-card:hover {
+  border-color: #bfdbfe; box-shadow: 0 8px 28px rgba(37,99,235,.08);
+  transform: translateY(-2px);
+}
+
+.sec-feat-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sec-feat-title { font-size: 16px; font-weight: 700; color: #0f172a; }
+.sec-feat-desc  { font-size: 14px; color: #64748b; line-height: 1.65; flex: 1; }
+
+.sec-feat-points {
+  display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+}
+.sec-feat-points li {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: #334155; font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════
+   CTA
+═══════════════════════════════════════════════ */
+.sec-cta { padding: 0 0 80px; background: #fff; }
+
+.sec-cta-card {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  border-radius: 20px; padding: 48px 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 32px; flex-wrap: wrap;
+  box-shadow: 0 16px 48px rgba(37,99,235,.28);
+  position: relative; overflow: hidden;
+}
+.sec-cta-card::before {
+  content: '';
+  position: absolute; top: -40%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.sec-cta-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.sec-cta-sub   { font-size: 15px; color: rgba(255,255,255,.82); line-height: 1.6; max-width: 420px; }
+
+.sec-cta-actions { display: flex; gap: 12px; flex-shrink: 0; }
+
+.sec-btn-cta-w {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; padding: 13px 24px;
+  border-radius: 10px; background: #fff; color: #2563eb;
+  border: none; cursor: pointer; font-family: inherit;
+  text-decoration: none; transition: all .2s;
+}
+.sec-btn-cta-w:hover { background: #eff6ff; transform: translateY(-1px); }
+
+.sec-btn-cta-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; padding: 13px 24px;
+  border-radius: 10px; background: rgba(255,255,255,.12); color: #fff;
+  border: 1.5px solid rgba(255,255,255,.25);
+  cursor: pointer; font-family: inherit; text-decoration: none; transition: all .2s;
+}
+.sec-btn-cta-ghost:hover { background: rgba(255,255,255,.2); }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes secFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .sec-feat-grid { grid-template-columns: repeat(2, 1fr); }
+  .sec-cta-card  { flex-direction: column; text-align: center; padding: 36px 28px; }
+  .sec-cta-actions { justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .sec-hero-actions  { flex-direction: column; align-items: center; }
+  .sec-feat-grid     { grid-template-columns: 1fr; }
+  .sec-stats-bar     { gap: 16px; padding: 20px; }
+  .sec-stat          { padding: 0 16px; }
+  .sec-customers-row { flex-direction: column; align-items: center; }
+  .sec-customer-card { width: 100%; max-width: 300px; }
+  .sec-vs            { transform: rotate(90deg); }
+  .sec-legend        { flex-direction: column; align-items: center; }
+  .sec-cta-actions   { flex-direction: column; width: 100%; }
+  .sec-cta-actions a { width: 100%; justify-content: center; }
+}

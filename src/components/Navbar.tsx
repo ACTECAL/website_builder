@@ -143,13 +143,16 @@ const Navbar: React.FC = () => {
             >
               Applications
             </div>
-            <div
+            {/* <div
               onMouseEnter={handleIndustriesMouseEnter}
               onMouseLeave={handleIndustriesMouseLeave}
               className={`nav-link-item ${isIndustriesMenuOpen ? 'active' : ''}`}
             >
               Industries
-            </div>
+            </div> */}
+               <NavLink to="/security" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
+              Security
+            </NavLink>
             <NavLink to="/community" className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}>
               Community
             </NavLink>

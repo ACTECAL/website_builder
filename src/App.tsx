@@ -7,6 +7,7 @@ import { RequireAuth } from './auth/RequireAuth';
 import SiteLayout from './components/SiteLayout';
 import Home from './pages/Home';
 import Footer from './components/Footer';
+import Security from './pages/Security';
 
 const AccountingPage = React.lazy(() => import('./pages/apps/Accounting').then(m => ({ default: m.AccountingPage })));
 const InvoicingPage = React.lazy(() => import('./pages/apps/Invoicing').then(m => ({ default: m.InvoicingPage })));
@@ -335,6 +336,7 @@ function App() {
           <Route path="/implementation-services" element={<ImplementationServices />} />
           <Route path="/customer-references" element={<CustomerReferences />} />
           <Route path="/upgrades" element={<Upgrades />} />
+          <Route path="/security" element={<Security />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </React.Suspense>
