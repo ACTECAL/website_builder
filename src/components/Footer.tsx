@@ -1,180 +1,117 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Twitter, Facebook, Linkedin, Instagram, ArrowUpRight } from 'lucide-react';
+import { Linkedin, Github, HelpCircle, Mail, ArrowUp } from 'lucide-react';
 import '../styles/Footer.css';
-import {
-  Cpu,
-  ShoppingCart,
-  Users,
-  Activity,
-  ArrowRight,
-  MousePointer2,
-  Mail,
-  CheckCircle2,
-  XCircle,
-  ShieldCheck,
-  Zap,
-  Layers,
-  TrendingUp,
-  Monitor,
-  Box,
-  Headphones
-} from "lucide-react";
+
 const Footer: React.FC = () => {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
   return (
-    // <footer className="footer">
-    //   {/* Decorative Aurora Backgrounds */}
-    //   <div className="footer-aurora-glow" />
-    //   <div className="footer-aurora-glow-secondary" />
-    //   <div className="footer-aurora-glow-tertiary" />
+    <footer className="ft-footer">
+      {/* ── MAIN ─────────────────────────────────────────────── */}
+      <div className="ft-main">
+        <div className="ft-container">
 
-    //   {/* Main Footer Links */}
-    //   <section className="footer-main">
-    //     <div className="footer-main-container">
-    //       <div className="footer-brand">
-    //         <div className="footer-brand-title">Nexora</div>
-    //         <p className="footer-brand-description">
-    //           The world's easiest all-in-one management software. Autonomic, resilient, and engineered for the next generation of global enterprise.
-    //         </p>
-    //         <div className="footer-social-links">
-    //           <a href="#!" className="footer-social-link" aria-label="Twitter"><Twitter size={18} /></a>
-    //           <a href="#!" className="footer-social-link" aria-label="Facebook"><Facebook size={18} /></a>
-    //           <a href="#!" className="footer-social-link" aria-label="LinkedIn"><Linkedin size={18} /></a>
-    //           <a href="#!" className="footer-social-link" aria-label="Instagram"><Instagram size={18} /></a>
-    //         </div>
-    //       </div>
-
-    //       <div className="footer-links-group neural-cluster">
-    //         <h4 className="footer-links-title">Ecosystem</h4>
-    //         <Link to="/apps/crm" className="footer-link">Customer CRM <span className="status-dot green"></span> <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/apps/sales" className="footer-link">Global Sales <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/apps/accounting" className="footer-link">Ledger Sync <span className="status-dot blue"></span> <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/apps/inventory" className="footer-link">Stock Intelligence <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //       </div>
-
-    //       <div className="footer-links-group neural-cluster">
-    //         <h4 className="footer-links-title">Resources Cluster</h4>
-    //         <Link to="/community" className="footer-link">Neural Forum <span className="status-dot purple"></span> <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/docs" className="footer-link">Core Docs <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/pricing" className="footer-link">Scaling Plans <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //       </div>
-
-    //       <div className="footer-links-group neural-cluster">
-    //         <h4 className="footer-links-title">Connect</h4>
-    //         <Link to="/contact" className="footer-link">Direct Line <span className="status-dot green"></span> <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/meet-an-advisor" className="footer-link">Expert Consult <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //         <Link to="/legal" className="footer-link">Governance <ArrowUpRight size={14} className="link-arrow" /></Link>
-    //       </div>
-    //     </div>
-    //   </section>
-
-    //   {/* Footer Bottom */}
-    //   <section className="footer-bottom">
-    //     <div className="footer-bottom-container">
-    //       <p className="footer-copyright">© 2026 Nexora Inc. All rights reserved.</p>
-    //       <div className="footer-bottom-links">
-    //         <Link to="/privacy" className="footer-bottom-link">Privacy Policy</Link>
-    //         <Link to="/terms" className="footer-bottom-link">Terms of Service</Link>
-    //         <Link to="/legal" className="footer-bottom-link">Legal</Link>
-    //       </div>
-    //     </div>
-    //   </section>
-    // </footer>
-
-       <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-content">
-            <div className="footer-grid">
-              {/* Company Column */}
-              <div className="footer-column">
-                <div className="footer-logo">
-                  <img src="https://actecal.com/assets/logo.png" alt="Actecal" className="footer-logo-img" />
-                </div>
-                <p className="footer-description">
-                  Complete business management platform that adapts to your needs. Streamline operations, boost efficiency, and drive growth.
-                </p>
-                <div className="footer-social">
-                  <a href="#" className="social-link">
-                    <Mail size={20} />
-                  </a>
-                  <a href="#" className="social-link">
-                    <Users size={20} />
-                  </a>
-                  <a href="#" className="social-link">
-                    <Monitor size={20} />
-                  </a>
-                </div>
+          {/* LEFT – brand */}
+          <div className="ft-brand">
+            <div className="ft-logo">
+              <div className="ft-logo-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M13 2L4 14h8l-1 8 9-12h-8l1-8z" fill="white" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                </svg>
               </div>
-
-              {/* Products Column */}
-              <div className="footer-column">
-                <h3 className="footer-title">Products</h3>
-                <ul className="footer-links">
-                  <li><a href="#">ERP System</a></li>
-                  <li><a href="#">CRM Software</a></li>
-                  <li><a href="#">HR Management</a></li>
-                  <li><a href="#">Inventory Control</a></li>
-                  <li><a href="#">E-commerce Platform</a></li>
-                  <li><a href="#">Analytics Dashboard</a></li>
-                </ul>
-              </div>
-
-              {/* Solutions Column */}
-              <div className="footer-column">
-                <h3 className="footer-title">Solutions</h3>
-                <ul className="footer-links">
-                  <li><a href="#">Small Business</a></li>
-                  <li><a href="#">Enterprise</a></li>
-                  <li><a href="#">Startups</a></li>
-                  <li><a href="#">Non-profits</a></li>
-                  <li><a href="#">Education</a></li>
-                  <li><a href="#">Healthcare</a></li>
-                </ul>
-              </div>
-
-              {/* Resources Column */}
-              <div className="footer-column">
-                <h3 className="footer-title">Resources</h3>
-                <ul className="footer-links">
-                  <li><a href="#">Documentation</a></li>
-                  <li><a href="#">API Reference</a></li>
-                  <li><a href="#">Tutorials</a></li>
-                  <li><a href="#">Blog</a></li>
-                  <li><a href="#">Community</a></li>
-                  <li><a href="#">Support Center</a></li>
-                </ul>
-              </div>
-
-              {/* Company Column */}
-              <div className="footer-column">
-                <h3 className="footer-title">Company</h3>
-                <ul className="footer-links">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Careers</a></li>
-                  <li><a href="#">Partners</a></li>
-                  <li><a href="#">Press</a></li>
-                  <li><a href="#">Contact</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                </ul>
-              </div>
+              <span className="ft-logo-name">Acteal</span>
             </div>
-
-            {/* Footer Bottom */}
-            <div className="footer-bottom">
-              <div className="footer-bottom-content">
-                <p className="copyright">
-                  © 2024 Actecal. All rights reserved.
-                </p>
-                <div className="footer-bottom-links">
-                  <a href="#">Terms of Service</a>
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Cookie Policy</a>
-                </div>
-              </div>
+            <p className="ft-brand-desc">
+              The modern scheduling and calendar platform built for fast-moving teams.
+              Simplify coordination, boost productivity.
+            </p>
+            <div className="ft-socials">
+              <a href="#" className="ft-social-btn" aria-label="Help">
+                <HelpCircle size={16} />
+              </a>
+              <a href="#" className="ft-social-btn" aria-label="LinkedIn">
+                <Linkedin size={16} />
+              </a>
+              <a href="#" className="ft-social-btn" aria-label="GitHub">
+                <Github size={16} />
+              </a>
             </div>
           </div>
+
+          {/* RIGHT – link columns */}
+          <div className="ft-cols">
+
+            {/* PRODUCT */}
+            <div className="ft-col">
+              <h4 className="ft-col-title">PRODUCT</h4>
+              <ul className="ft-col-links">
+                <li><Link to="/features">Features</Link></li>
+                <li><Link to="/pricing">Pricing</Link></li>
+                <li><Link to="/security">Security</Link></li>
+                <li><Link to="/roadmap">Roadmap</Link></li>
+                <li>
+                  <Link to="/changelog">
+                    Changelog <span className="ft-badge ft-badge-new">New</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* COMPANY */}
+            <div className="ft-col">
+              <h4 className="ft-col-title">COMPANY</h4>
+              <ul className="ft-col-links">
+                <li><Link to="/about">About Us</Link></li>
+                <li>
+                  <Link to="/careers">
+                    Careers <span className="ft-badge ft-badge-hiring">Hiring</span>
+                  </Link>
+                </li>
+                <li><Link to="/blog">Blog</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/partners">Partners</Link></li>
+              </ul>
+            </div>
+
+            {/* LEGAL */}
+            <div className="ft-col">
+              <h4 className="ft-col-title">LEGAL</h4>
+              <ul className="ft-col-links">
+                <li><Link to="/privacy">Privacy Policy</Link></li>
+                <li><Link to="/terms">Terms of Service</Link></li>
+                <li><Link to="/cookies">Cookie Policy</Link></li>
+                <li><Link to="/gdpr">GDPR</Link></li>
+              </ul>
+            </div>
+
+          </div>
         </div>
-      </footer>
+      </div>
+
+      {/* ── BOTTOM BAR ───────────────────────────────────────── */}
+      <div className="ft-bottom">
+        <div className="ft-container ft-bottom-inner">
+          {/* left */}
+          <span className="ft-copy">© 2025 Acteal, Inc. All rights reserved.</span>
+
+          {/* email */}
+          <a href="mailto:info@acteal.com" className="ft-email">
+            <Mail size={13} /> info@acteal.com
+          </a>
+
+          {/* right */}
+          <div className="ft-bottom-right">
+            <span className="ft-status">
+              <span className="ft-status-dot" /> All systems operational
+            </span>
+            <button className="ft-back-top" onClick={scrollToTop}>
+              <ArrowUp size={13} /> Back to top
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 
