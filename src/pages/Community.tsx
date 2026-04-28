@@ -1,205 +1,166 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PageHero } from '../components/PageHero';
 import '../styles/Community.css';
 import { posts } from './blogData';
+import {
+  Search, X, BookOpen, Download, Users, Wrench,
+  GraduationCap, ArrowRight, Github, Youtube,
+  Twitter, Linkedin, Instagram, Facebook,
+  Calendar, MapPin, ChevronUp, ExternalLink,
+  Zap, MessageSquare, Star, CheckCircle2
+} from 'lucide-react';
 
+/* ─── Types ─────────────────────────────────────── */
 type CommunitySection = {
   title: string;
   links: string[];
   color: string;
+  iconColor: string;
+  iconBg: string;
 };
 
+/* ─── Data ──────────────────────────────────────── */
 const communitySections: CommunitySection[] = [
   {
     title: 'Learn',
+    color: '#2563eb', iconColor: '#2563eb', iconBg: '#eff6ff',
     links: ['Tutorials', 'Documentation', 'Certifications', 'Training', 'Blog', 'Podcast', 'Help Center', 'API Reference', 'Status'],
-    color: '#E97326',
   },
   {
     title: 'Empower Education',
+    color: '#f97316', iconColor: '#f97316', iconBg: '#fff7ed',
     links: ['Education Program', 'Scale Up! Business Game', 'Student Certifications'],
-    color: '#E97326',
   },
   {
     title: 'Get the Software',
+    color: '#10b981', iconColor: '#10b981', iconBg: '#f0fdf4',
     links: ['Download', 'Compare Editions', 'Releases', 'Security'],
-    color: '#00A09D',
   },
   {
     title: 'Collaborate',
+    color: '#8b5cf6', iconColor: '#8b5cf6', iconBg: '#faf5ff',
     links: ['Github', 'Forum', 'Events', 'Translations', 'Become a Partner', 'Services for Partners', 'Register your Accounting Firm'],
-    color: '#6B5B95',
   },
   {
     title: 'Get Services',
+    color: '#14b8a6', iconColor: '#14b8a6', iconBg: '#f0fdfa',
     links: ['Find a Partner', 'Find an Accountant', 'Meet an advisor', 'Implementation Services', 'Customer References', 'Support', 'Upgrades', 'Contact Sales'],
-    color: '#007A87',
   },
 ];
 
 const pathOverrides: Record<string, string> = {
-  'Tutorials': '/tutorials',
-  'Documentation': '/docs',
-  'Certifications': '/certifications',
-  'Training': '/training',
-  'Find a Partner': '/find-a-partner',
-  'Find an Accountant': '/find-an-accountant',
-  'Meet an advisor': '/meet-an-advisor',
-  'Implementation Services': '/implementation-services',
-  'Customer References': '/customer-references',
-  'Support': '/support',
-  'Upgrades': '/upgrades',
-  'Blog': '/blog',
-  'Podcast': '/podcast',
-  'Help Center': '/help-center',
-  'API Reference': '/api-reference',
-  'Status': '/status',
-  'Security': '/security',
-  'Contact Sales': '/contact-sales',
-  'Student Certifications': '/certifications',
+  'Tutorials': '/tutorials', 'Documentation': '/docs', 'Certifications': '/certifications',
+  'Training': '/training', 'Find a Partner': '/find-a-partner', 'Find an Accountant': '/find-an-accountant',
+  'Meet an advisor': '/meet-an-advisor', 'Implementation Services': '/implementation-services',
+  'Customer References': '/customer-references', 'Support': '/support', 'Upgrades': '/upgrades',
+  'Blog': '/blog', 'Podcast': '/podcast', 'Help Center': '/help-center',
+  'API Reference': '/api-reference', 'Status': '/status', 'Security': '/security',
+  'Contact Sales': '/contact-sales', 'Student Certifications': '/certifications',
 };
 
 const featuredEvents = [
-  {
-    title: 'Nexora Annual Conference 2025',
-    date: 'March 15-17, 2025',
-    location: 'San Francisco, CA',
-    description: 'Join us for three days of workshops, networking, and keynote speeches from industry leaders.',
-    link: '/events/annual-conference',
-  },
-  {
-    title: 'Community Meetup - New York',
-    date: 'November 20, 2024',
-    location: 'New York, NY',
-    description: 'A casual meetup to connect with local Nexora users and share best practices.',
-    link: '/events/ny-meetup',
-  },
-  {
-    title: 'Webinar: Inventory Optimization',
-    date: 'December 2, 2024',
-    location: 'Online',
-    description: 'Practical strategies to reduce stockouts and excess inventory using Nexora.',
-    link: '/events/inventory-webinar',
-  },
-  {
-    title: 'Partner Summit Europe 2025',
-    date: 'May 9, 2025',
-    location: 'Berlin, Germany',
-    description: 'A full-day deep dive into partner solutions, roadmap, and co-selling strategies.',
-    link: '/events/partner-summit-eu',
-  },
+  { title: 'Acteal Annual Conference 2025', date: 'March 15–17, 2025', location: 'San Francisco, CA', description: 'Three days of workshops, networking, and keynote speeches from industry leaders.', link: '/events/annual-conference' },
+  { title: 'Community Meetup — New York', date: 'November 20, 2024', location: 'New York, NY', description: 'A casual meetup to connect with local Acteal users and share best practices.', link: '/events/ny-meetup' },
+  { title: 'Webinar: Inventory Optimization', date: 'December 2, 2024', location: 'Online', description: 'Practical strategies to reduce stockouts and excess inventory using Acteal.', link: '/events/inventory-webinar' },
+  { title: 'Partner Summit Europe 2025', date: 'May 9, 2025', location: 'Berlin, Germany', description: 'A full-day deep dive into partner solutions, roadmap, and co-selling strategies.', link: '/events/partner-summit-eu' },
 ];
-
+/* ─── Testimonials ──────────────────────────────────────── */
 const testimonials = [
   {
-    quote: 'Joining the Nexora community has transformed the way I run my business. The support and resources are invaluable.',
+    initials: 'JD',
+    quote: 'Joining the Acteal community has transformed the way I run my business. The support and resources are invaluable.',
     author: 'Jane Doe',
     company: 'SmallBiz Solutions',
+    stars: 5
   },
   {
-    quote: 'The forums and events have helped me solve complex issues and learn from others’ experiences.',
+    initials: 'JS',
+    quote: 'The forums and events have helped me solve complex issues and learn from others.',
     author: 'John Smith',
     company: 'TechStart Inc.',
+    stars: 5
   },
   {
+    initials: 'SP',
     quote: 'Our implementation finished 30% faster thanks to the training tracks and partner guidance.',
     author: 'Sofia Patel',
     company: 'BluePeak Manufacturing',
+    stars: 5
   },
   {
+    initials: 'ML',
     quote: 'Documentation and API examples made integration straightforward for our dev team.',
     author: 'Marcus Lee',
     company: 'Finlytics',
+    stars: 4
   },
 ];
-
-const getSectionIcon = (title: string) => {
-  const common = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2 } as const;
-  switch (title.toLowerCase()) {
-    case 'learn':
-      return (
-        <svg {...common} aria-hidden="true"><path d="M4 19.5V6.8a1 1 0 0 1 .6-.9l6.7-3a1 1 0 0 1 .8 0l6.7 3a1 1 0 0 1 .6.9V19.5" /><path d="M12 22V7" /></svg>
-      );
-    case 'get the software':
-      return (
-        <svg {...common} aria-hidden="true"><path d="M12 3v12" /><path d="M8 11l4 4 4-4" /><path d="M20 21H4" /></svg>
-      );
-    case 'collaborate':
-      return (
-        <svg {...common} aria-hidden="true"><circle cx="9" cy="7" r="3" /><circle cx="17" cy="7" r="3" /><path d="M2 21a7 7 0 0 1 14 0" /><path d="M10 21a7 7 0 0 1 12 0" /></svg>
-      );
-    case 'get services':
-      return (
-        <svg {...common} aria-hidden="true"><path d="M12 1v6" /><path d="M5.22 6.22l4.24 4.24" /><path d="M1 12h6" /><path d="M6.22 18.78l4.24-4.24" /><path d="M12 23v-6" /><path d="M18.78 17.78l-4.24-4.24" /><path d="M23 12h-6" /><path d="M17.78 6.22l-4.24 4.24" /></svg>
-      );
-    case 'empower education':
-    default:
-      return (
-        <svg {...common} aria-hidden="true"><path d="M22 12l-10 7L2 12l10-7 10 7z" /><path d="M6 15v3a10 10 0 0 0 12 0v-3" /></svg>
-      );
-  }
-};
-
 const statsValues = [12000, 3500, 120, 85];
 
-export const Community: React.FC = () => {
-  const [query, setQuery] = useState('');
-  const searchRef = useRef<HTMLInputElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<SVGCircleElement>(null);
-  const backToTopRef = useRef<HTMLButtonElement>(null);
-  const cursorPosRef = useRef({ x: 0, y: 0 });
-  const [counts, setCounts] = useState([0, 0, 0, 0]);
-  const [sparks, setSparks] = useState<{ id: number, x: number, y: number, tx: number, ty: number, color: string }[]>([]);
-  const lastScrollY = useRef(0);
-  const sparkIdCounter = useRef(0);
-  const currentlyHoveredRef = useRef<HTMLElement | null>(null);
+const getSectionIcon = (title: string) => {
+  const t = title.toLowerCase();
+  if (t === 'learn')               return <BookOpen size={20} />;
+  if (t === 'get the software')    return <Download size={20} />;
+  if (t === 'collaborate')         return <Users size={20} />;
+  if (t === 'get services')        return <Wrench size={20} />;
+  return <GraduationCap size={20} />;
+};
 
+/* ══════════════════════════════════════════════════
+   COMPONENT
+══════════════════════════════════════════════════ */
+export const Community: React.FC = () => {
+  const [query, setQuery]       = useState('');
+  const [openFaq, setOpenFaq]   = useState<number | null>(null);
+  const [counts, setCounts]     = useState([0, 0, 0, 0]);
+  const [backVisible, setBackVisible] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  /* search filter */
   const filteredSections = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return communitySections;
     return communitySections
-      .map((sec) => ({ ...sec, links: sec.links.filter((l) => l.toLowerCase().includes(q)) }))
-      .filter((sec) => sec.links.length > 0);
+      .map(s => ({ ...s, links: s.links.filter(l => l.toLowerCase().includes(q)) }))
+      .filter(s => s.links.length > 0);
   }, [query]);
-
-  const highlight = (text: string) => {
-    const q = query.trim();
-    if (!q) return text;
-    const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const parts = text.split(new RegExp(`(${esc})`, 'ig'));
-    return parts.map((p, i) => (p.toLowerCase() === q.toLowerCase() ? <mark key={i}>{p}</mark> : <span key={i}>{p}</span>));
-  };
 
   const resultsCount = useMemo(
     () => filteredSections.reduce((sum, s) => sum + s.links.length, 0),
     [filteredSections]
   );
 
+  const highlight = (text: string) => {
+    const q = query.trim();
+    if (!q) return text;
+    const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parts = text.split(new RegExp(`(${esc})`, 'ig'));
+    return parts.map((p, i) =>
+      p.toLowerCase() === q.toLowerCase()
+        ? <mark key={i} className="cm-mark">{p}</mark>
+        : <span key={i}>{p}</span>
+    );
+  };
+
+  /* keyboard shortcut */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || tag === 'select' || (e as any).isComposing) return;
-      if (e.key === '/') {
-        e.preventDefault();
-        searchRef.current?.focus();
-      }
+      if (tag === 'input' || tag === 'textarea') return;
+      if (e.key === '/') { e.preventDefault(); searchRef.current?.focus(); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  /* animated counters */
   useEffect(() => {
     const intervals = statsValues.map((target, i) => {
       const step = Math.ceil(target / 50);
       return setInterval(() => {
         setCounts(prev => {
           const next = [...prev];
-          if (next[i] < target) {
-            next[i] = Math.min(next[i] + step, target);
-          }
+          if (next[i] < target) next[i] = Math.min(next[i] + step, target);
           return next;
         });
       }, 30);
@@ -207,343 +168,110 @@ export const Community: React.FC = () => {
     return () => intervals.forEach(clearInterval);
   }, []);
 
+  /* scroll → back to top */
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, { threshold: 0.15 });
-
-    const elements = document.querySelectorAll('.reveal-text, .reveal-content');
-    elements.forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, [filteredSections]);
-
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const velocity = currentScrollY - lastScrollY.current;
-      lastScrollY.current = currentScrollY;
-
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = totalHeight > 0 ? (currentScrollY / totalHeight) * 176 : 0;
-          
-          if (progressBarRef.current) {
-            progressBarRef.current.style.strokeDashoffset = String(176 - progress);
-          }
-          
-          if (backToTopRef.current) {
-            if (currentScrollY > 300) {
-              backToTopRef.current.classList.add('visible');
-            } else {
-              backToTopRef.current.classList.remove('visible');
-            }
-          }
-
-          // Apply kinetic skew to headers
-          const headers = document.querySelectorAll('.section-title');
-          const skew = Math.max(Math.min(velocity * 0.1, 10), -10);
-          headers.forEach(h => {
-             (h as HTMLElement).style.transform = `skewY(${skew}deg)`;
-             setTimeout(() => {
-                (h as HTMLElement).style.transform = `skewY(0deg)`;
-             }, 100);
-          });
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setBackVisible(window.scrollY > 300);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  // Network Aura Canvas logic
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let particles: { x: number, y: number, vx: number, vy: number }[] = [];
-    const particleCount = 60;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    const createParticles = () => {
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5
-        });
-      }
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'rgba(168, 85, 247, 0.15)';
-      ctx.lineWidth = 0.5;
-
-      particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        particles.slice(i + 1).forEach(p2 => {
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        });
-
-        // Mouse connection
-        const cx = cursorPosRef.current.x;
-        const cy = cursorPosRef.current.y - window.scrollY;
-        
-        const mdx = p.x - cx;
-        const mdy = p.y - cy;
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-        if (mdist < 200) {
-            ctx.strokeStyle = `rgba(168, 85, 247, ${1 - mdist/200})`;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(cx, cy);
-            ctx.stroke();
-            ctx.strokeStyle = 'rgba(168, 85, 247, 0.15)';
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    window.addEventListener('resize', resize);
-    resize();
-    createParticles();
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  const createSpark = (x: number, y: number, color: string = '#a855f7') => {
-    const numSparks = 5;
-    const newSparks: { id: number, x: number, y: number, tx: number, ty: number, color: string }[] = [];
-    for (let i = 0; i < numSparks; i++) {
-        const tx = (Math.random() - 0.5) * 200;
-        const ty = (Math.random() - 0.5) * 200;
-        newSparks.push({
-            id: ++sparkIdCounter.current,
-            x: x - 2,
-            y: y - 2,
-            tx,
-            ty,
-            color
-        });
-    }
-    setSparks(prev => [...prev, ...newSparks]);
-    setTimeout(() => {
-        setSparks(prev => prev.filter(s => !newSparks.find(ns => ns.id === s.id)));
-    }, 1500);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    cursorPosRef.current = { x: e.clientX, y: e.clientY + window.scrollY };
-    
-    if (cursorRef.current) {
-        cursorRef.current.style.left = `${e.clientX}px`;
-        cursorRef.current.style.top = `${e.clientY}px`;
-    }
-
-    const target = (e.target as HTMLElement).closest('.community-section, .event-card, .repo-card, .testimonial-card, .magnetic-btn, .blog-card') as HTMLElement;
-    
-    // Reset previous hovered item if it changed
-    if (currentlyHoveredRef.current && currentlyHoveredRef.current !== target) {
-        currentlyHoveredRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translate(0px, 0px)`;
-        if (cursorRef.current) cursorRef.current.classList.remove('hovering');
-    }
-
-    if (target) {
-        if (cursorRef.current) cursorRef.current.classList.add('hovering');
-        currentlyHoveredRef.current = target;
-        
-        const rect = target.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        target.style.setProperty('--mouse-x', `${x}%`);
-        target.style.setProperty('--mouse-y', `${y}%`);
-
-        if (!target.classList.contains('magnetic-btn')) {
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const rotateX = (centerY - e.clientY) / 30;
-            const rotateY = (e.clientX - centerX) / 30;
-            target.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            target.style.setProperty('--glow-x', `${(e.clientX - centerX) * 0.1}px`);
-            target.style.setProperty('--glow-y', `${(e.clientY - centerY) * 0.1}px`);
-        } else {
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const deltaX = (e.clientX - centerX) * 0.35;
-            const deltaY = (e.clientY - centerY) * 0.35;
-            target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-        }
-    } else {
-        currentlyHoveredRef.current = null;
-        if (cursorRef.current) cursorRef.current.classList.remove('hovering');
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (currentlyHoveredRef.current) {
-        currentlyHoveredRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translate(0px, 0px)`;
-        currentlyHoveredRef.current = null;
-    }
-    if (cursorRef.current) cursorRef.current.classList.remove('hovering');
-  };
 
   return (
-    <main className="community-page" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-      <canvas ref={canvasRef} className="network-aura-canvas" />
-      <div 
-        ref={cursorRef}
-        className="custom-cursor" 
-      ></div>
+    <div className="cm-page">
 
-      <div className="community-ambient-blob blob-com-1"></div>
-      <div className="community-ambient-blob blob-com-2"></div>
-      <div className="community-ambient-blob blob-com-3"></div>
-      <div className="community-ambient-blob blob-com-4"></div>
-
-      <div className="particle-trail">
-          {sparks.map(s => (
-              <div key={s.id} className="spark" style={{
-                  left: s.x,
-                  top: s.y,
-                  '--tx': `${s.tx}px`,
-                  '--ty': `${s.ty}px`,
-                  '--spark-color': s.color
-              } as any}></div>
-          ))}
-      </div>
-
-      <div className="auth-particles">
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className={`particle p-${i % 4}`} style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            opacity: 0.1 + Math.random() * 0.4
-          } as any}></div>
-        ))}
-      </div>
-
-      <div className="hero-orbit-container">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="orbiting-avatar" style={{
-            '--orbit-speed': `${20 + i * 5}s`,
-            animationDelay: `-${i * 4}s`,
-            opacity: 0.2 + (i * 0.1)
-          } as any}>
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="12" cy="8" r="5" />
-              <path d="M3 21v-2a7 7 0 0 1 14 0v2" />
-            </svg>
+      {/* ── HERO ────────────────────────────────────── */}
+      <section className="cm-hero">
+        <div className="cm-container">
+          <div className="cm-hero-badge">
+            <Users size={13} /> Community
           </div>
-        ))}
-      </div>
-
-      <PageHero
-        title="Join Our Community"
-        subtitle="Connect with other Nexora users, get help, and share your ideas. Explore our resources to learn, collaborate, and get the most out of our software."
-        emphasize='none'
-      />
-      
-      <div className="energy-beam-container eb-pos-1">
-        <div className="energy-beam"></div>
-      </div>
-
-      <section className="community-page-section">
-        <div className="community-container">
-          <div className="reveal-text">
-            <h2 className="section-title center stagger-0 kinetic-header">Explore Our Community Resources</h2>
+          <h1 className="cm-hero-title">
+            Join Our<br />
+            <span className="cm-hero-blue">Community</span>
+          </h1>
+          <p className="cm-hero-sub">
+            Connect with other Acteal users, get help, and share your ideas.
+            Explore resources to learn, collaborate, and get the most out of our platform.
+          </p>
+          <div className="cm-hero-actions">
+            <Link to="/get-started" className="cm-btn cm-btn-blue"><Zap size={15} /> Get Started Free</Link>
+            <Link to="/docs"        className="cm-btn cm-btn-ghost"><BookOpen size={15} /> Read the Docs</Link>
           </div>
-          
-          <div className="community-search stagger-1 reveal-content">
-            <input
-              type="search"
-              placeholder="Search tutorials, docs, events..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              aria-label="Search community resources"
-              ref={searchRef}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  const first = filteredSections[0]?.links?.[0];
-                  if (first) {
-                    const path = pathOverrides[first] ?? `/${first.toLowerCase().replace(/\s+/g, '-')}`;
-                    window.location.assign(path);
-                  }
-                }
-              }}
-            />
+          {/* mini stats */}
+          <div className="cm-hero-stats">
+            {[
+              { num: '12K+', lbl: 'Members' },
+              { num: '3.5K+', lbl: 'Forum posts' },
+              { num: '120+', lbl: 'Repos' },
+              { num: '85+', lbl: 'Events/year' },
+            ].map((s, i) => (
+              <React.Fragment key={s.lbl}>
+                <div className="cm-hero-stat">
+                  <span className="cm-hero-stat-num">{s.num}</span>
+                  <span className="cm-hero-stat-lbl">{s.lbl}</span>
+                </div>
+                {i < 3 && <div className="cm-hero-stat-div" />}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── RESOURCES ───────────────────────────────── */}
+      <section className="cm-section cm-resources">
+        <div className="cm-container">
+          <div className="cm-section-hdr">
+            <p className="cm-section-label">EXPLORE</p>
+            <h2 className="cm-section-title">Community Resources</h2>
+            <p className="cm-section-sub">Everything you need in one place — from docs to partner services.</p>
+          </div>
+
+          {/* Search */}
+          <div className="cm-search-wrap">
+            <div className="cm-search-box">
+              <Search size={16} className="cm-search-icon" />
+              <input
+                ref={searchRef}
+                type="search"
+                placeholder='Search tutorials, docs, events… (press "/")'
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                aria-label="Search community resources"
+                className="cm-search-input"
+              />
+              {query && (
+                <button className="cm-search-clear" onClick={() => setQuery('')} aria-label="Clear">
+                  <X size={14} />
+                </button>
+              )}
+            </div>
             {query && (
-              <button type="button" className="clear-btn" onClick={() => setQuery('')} aria-label="Clear search">Clear</button>
+              <p className="cm-results-meta" aria-live="polite">
+                {resultsCount} result{resultsCount !== 1 ? 's' : ''} in {filteredSections.length} section{filteredSections.length !== 1 ? 's' : ''}
+              </p>
             )}
           </div>
 
-          <div className="community-controls stagger-1 reveal-content">
-            <div className="results-meta" aria-live="polite">
-              {resultsCount} result{resultsCount === 1 ? '' : 's'} in {filteredSections.length} section{filteredSections.length === 1 ? '' : 's'}
-            </div>
-          </div>
-          
-          <div className="community-grid stagger-2 reveal-content">
-            {filteredSections.map((section: CommunitySection) => (
-              <div
-                key={section.title}
-                className="community-section"
-                style={{ '--accent-color': section.color } as React.CSSProperties}
-                onMouseEnter={(e) => createSpark(e.clientX, e.clientY, section.color)}
-              >
-                <div className="specular-highlight"></div>
-                <div className="card-glow-aura"></div>
-                <h4 className="community-section-title">
-                  <span className="section-icon">{getSectionIcon(section.title)}</span>
-                  <span className="title-text">{highlight(section.title)}</span>
-                </h4>
-                <div className="community-links">
-                  {section.links.map((link: string) => (
+          {/* Grid */}
+          <div className="cm-res-grid">
+            {filteredSections.map(sec => (
+              <div key={sec.title} className="cm-res-card" style={{ '--cm-accent': sec.color } as React.CSSProperties}>
+                <div className="cm-res-card-top" style={{ borderColor: sec.color }} />
+                <div className="cm-res-card-hdr">
+                  <div className="cm-res-icon" style={{ background: sec.iconBg, color: sec.iconColor }}>
+                    {getSectionIcon(sec.title)}
+                  </div>
+                  <h3 className="cm-res-title">{highlight(sec.title)}</h3>
+                </div>
+                <div className="cm-res-links">
+                  {sec.links.map(link => (
                     <Link
                       key={link}
                       to={pathOverrides[link] ?? `/${link.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="community-link"
-                      reloadDocument
+                      className="cm-res-link"
+                      style={{ '--cm-accent': sec.color } as React.CSSProperties}
                     >
                       {highlight(link)}
+                      <ArrowRight size={13} className="cm-res-link-arrow" />
                     </Link>
                   ))}
                 </div>
@@ -553,162 +281,192 @@ export const Community: React.FC = () => {
         </div>
       </section>
 
-      <div className="energy-beam-container eb-pos-2">
-        <div className="energy-beam" style={{ animationDelay: '-2s' }}></div>
-      </div>
-
-      <section className="events-section stagger-3">
-        <div className="community-container">
-          <div className="reveal-text">
-            <h2 className="section-title center text-shimmer kinetic-header">Upcoming Community Events</h2>
+      {/* ── EVENTS ──────────────────────────────────── */}
+      <section className="cm-section cm-events-section">
+        <div className="cm-container">
+          <div className="cm-section-hdr">
+            <p className="cm-section-label">EVENTS</p>
+            <h2 className="cm-section-title">Upcoming Community Events</h2>
+            <p className="cm-section-sub">Connect in person or online — workshops, meetups, and webinars.</p>
           </div>
-          <div className="events-grid reveal-content">
-            {featuredEvents.map((event) => (
-              <div key={event.title} className="event-card" onMouseEnter={(e) => createSpark(e.clientX, e.clientY, '#a855f7')}>
-                <div className="specular-highlight"></div>
-                <div className="card-glow-aura"></div>
-                <h3 style={{ position: 'relative', zIndex: 1 }}>{event.title}</h3>
-                <p><strong>Date:</strong> {event.date}</p>
-                <p><strong>Location:</strong> {event.location}</p>
-                <p>{event.description}</p>
-                <Link to={event.link} className="btn magnetic-btn" reloadDocument>Learn More</Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="stats-section">
-        <div className="community-container">
-          <div className="reveal-text">
-            <h2 className="section-title center kinetic-header">Community at a Glance</h2>
-          </div>
-          <div className="stats-grid reveal-content">
-            {[
-              { value: counts[0], suffix: 'k+', label: 'Members' },
-              { value: counts[1], suffix: 'k+', label: 'Forum posts' },
-              { value: counts[2], suffix: '+', label: 'Open-source repos' },
-              { value: counts[3], suffix: '+', label: 'Events / year' },
-            ].map((s) => (
-              <div key={s.label} className="stat-card">
-                <div className="stat-value">
-                  {s.value >= 1000 ? (s.value / 1000).toFixed(1) : s.value}{s.suffix}
+          <div className="cm-events-grid">
+            {featuredEvents.map(ev => (
+              <div key={ev.title} className="cm-event-card">
+                <div className="cm-event-body">
+                  <h3 className="cm-event-title">{ev.title}</h3>
+                  <div className="cm-event-meta">
+                    <span><Calendar size={13} /> {ev.date}</span>
+                    <span><MapPin size={13} /> {ev.location}</span>
+                  </div>
+                  <p className="cm-event-desc">{ev.description}</p>
                 </div>
-                <div className="stat-label">{s.label}</div>
+                <Link to={ev.link} className="cm-event-link">Learn More <ArrowRight size={13} /></Link>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <div className="energy-beam-container eb-pos-3">
-        <div className="energy-beam" style={{ animationDelay: '-1s' }}></div>
-      </div>
-
-      <section className="repos-section">
-        <div className="community-container">
-          <div className="reveal-text">
-            <h2 className="section-title center kinetic-header">Featured Repositories</h2>
+      {/* ── STATS ───────────────────────────────────── */}
+      <section className="cm-section cm-stats-section">
+        <div className="cm-container">
+          <div className="cm-section-hdr">
+            <p className="cm-section-label">BY THE NUMBERS</p>
+            <h2 className="cm-section-title">Community at a Glance</h2>
           </div>
-          <div className="repos-grid reveal-content">
+          <div className="cm-stats-grid">
             {[
-              { name: 'Nexora-core', desc: 'Core modules and utilities', url: 'https://github.com/example/Nexora-core' },
-              { name: 'Nexora-ui', desc: 'UI components and patterns', url: 'https://github.com/example/Nexora-ui' },
-              { name: 'Nexora-integrations', desc: 'Official integrations', url: 'https://github.com/example/Nexora-integrations' },
-              { name: 'Nexora-examples', desc: 'Starter projects and examples', url: 'https://github.com/example/Nexora-examples' },
-            ].map((repo) => (
-              <a key={repo.name} href={repo.url} className="repo-card" target="_blank" rel="noreferrer" onMouseEnter={(e) => createSpark(e.clientX, e.clientY, '#22c55e')}>
-                <div className="specular-highlight"></div>
-                <div className="card-glow-aura"></div>
-                <h3 className="repo-name">
-                  <span className="pulse-indicator"></span>
-                  {repo.name}
-                </h3>
-                <p className="repo-desc">{repo.desc}</p>
+              { raw: counts[0], suffix: 'k+', label: 'Members',        icon: <Users size={26} /> },
+              { raw: counts[1], suffix: 'k+', label: 'Forum Posts',    icon: <MessageSquare size={26} /> },
+              { raw: counts[2], suffix: '+',  label: 'Open-source Repos', icon: <Github size={26} /> },
+              { raw: counts[3], suffix: '+',  label: 'Events / Year',  icon: <Calendar size={26} /> },
+            ].map(s => (
+              <div key={s.label} className="cm-stat-card">
+                <div className="cm-stat-icon">{s.icon}</div>
+                <div className="cm-stat-num">
+                  {s.raw >= 1000 ? `${(s.raw / 1000).toFixed(1)}${s.suffix}` : `${s.raw}${s.suffix}`}
+                </div>
+                <div className="cm-stat-lbl">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── REPOS ───────────────────────────────────── */}
+      <section className="cm-section cm-repos-section">
+        <div className="cm-container">
+          <div className="cm-section-hdr">
+            <p className="cm-section-label">OPEN SOURCE</p>
+            <h2 className="cm-section-title">Featured Repositories</h2>
+            <p className="cm-section-sub">Explore our open-source ecosystem and contribute to the platform.</p>
+          </div>
+          <div className="cm-repos-grid">
+            {[
+              { name: 'acteal-core',         desc: 'Core modules and utilities',         url: 'https://github.com/example/acteal-core' },
+              { name: 'acteal-ui',           desc: 'UI components and design system',    url: 'https://github.com/example/acteal-ui' },
+              { name: 'acteal-integrations', desc: 'Official third-party integrations',  url: 'https://github.com/example/acteal-integrations' },
+              { name: 'acteal-examples',     desc: 'Starter projects and code examples', url: 'https://github.com/example/acteal-examples' },
+            ].map(r => (
+              <a key={r.name} href={r.url} target="_blank" rel="noreferrer" className="cm-repo-card">
+                <div className="cm-repo-top">
+                  <div className="cm-repo-dot" />
+                  <ExternalLink size={14} className="cm-repo-ext" />
+                </div>
+                <h3 className="cm-repo-name">{r.name}</h3>
+                <p className="cm-repo-desc">{r.desc}</p>
               </a>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="blog-section">
-        <div className="community-container">
-          <div className="energy-beam-container eb-pos-blog">
-            <div className="energy-beam" style={{ animationDelay: '-3s' }}></div>
+      {/* ── BLOG ────────────────────────────────────── */}
+      <section className="cm-section cm-blog-section">
+        <div className="cm-container">
+          <div className="cm-section-hdr">
+            <p className="cm-section-label">BLOG</p>
+            <h2 className="cm-section-title">From the Blog</h2>
+            <p className="cm-section-sub">Insights, tutorials, and news from the Acteal team.</p>
           </div>
-          <div className="reveal-text">
-            <h2 className="section-title center kinetic-header">From the Blog</h2>
-          </div>
-          <div className="blog-grid reveal-content">
-            {posts.slice(0, 3).map((post) => (
-              <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card" reloadDocument onMouseEnter={(e) => createSpark(e.clientX, e.clientY, '#ec4899')}>
-                <div className="specular-highlight"></div>
-                <div className="card-glow-aura"></div>
-                <h3 className="blog-title">{post.title}</h3>
-                <p className="blog-meta">{post.category} • {post.date} • {post.read}</p>
-                <p className="blog-summary">{post.summary}</p>
+          <div className="cm-blog-grid">
+            {posts.slice(0, 3).map(post => (
+              <Link key={post.slug} to={`/blog/${post.slug}`} className="cm-blog-card">
+                <span className="cm-blog-cat">{post.category}</span>
+                <h3 className="cm-blog-title">{post.title}</h3>
+                <p className="cm-blog-meta">{post.date} · {post.read}</p>
+                <p className="cm-blog-summary">{post.summary}</p>
+                <span className="cm-blog-link">Read more <ArrowRight size={13} /></span>
               </Link>
             ))}
           </div>
-          <div className="blog-actions reveal-content">
-            <Link to="/blog" className="btn magnetic-btn" reloadDocument>View all posts</Link>
+          <div className="cm-blog-footer">
+            <Link to="/blog" className="cm-btn cm-btn-blue">View all posts <ArrowRight size={14} /></Link>
           </div>
         </div>
       </section>
 
-      <section className="testimonial-section">
-        <div className="community-container">
-          <div className="reveal-text">
-            <h2 className="section-title center kinetic-header">What Our Community Says</h2>
+      {/* ── TESTIMONIALS ────────────────────────────── */}
+      <section className="cm-section cm-testi-section">
+        <div className="cm-container">
+          <div className="cm-section-hdr">
+            <p className="cm-section-label">TESTIMONIALS</p>
+            <h2 className="cm-section-title">What Our Community Says</h2>
           </div>
-          <div className="testimonials-grid reveal-content">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card" onMouseEnter={(e) => createSpark(e.clientX, e.clientY, '#60a5fa')}>
-                <div className="specular-highlight"></div>
-                <div className="card-glow-aura"></div>
-                <p className="testimonial-quote">"{testimonial.quote}"</p>
-                <p className="testimonial-author">- {testimonial.author}, {testimonial.company}</p>
+          <div className="cm-testi-grid">
+            {testimonials.map((t, i) => (
+              <div key={i} className="cm-testi-card">
+                {/* <div className="cm-testi-stars">
+                  {Array.from({ length: t.stars }).map((_, j) => (
+                    <Star key={j} size={13} fill="#f59e0b" stroke="none" />
+                  ))}
+                </div> */}
+
+{/* Stars rendering - safe version */}
+<div className="cm-testi-stars">
+  {Array.from({ length: t.stars || 5 }).map((_, j) => (
+    <Star key={j} size={13} fill="#f59e0b" stroke="none" />
+  ))}
+</div>                <p className="cm-testi-quote">"{t.quote}"</p>
+                <div className="cm-testi-author">
+                  <div className="cm-testi-avatar">{t.initials}</div>
+                  <div>
+                    <div className="cm-testi-name">{t.author}</div>
+                    <div className="cm-testi-role">{t.company}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <button 
-        ref={backToTopRef}
-        className="back-to-top" 
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        aria-label="Back to top"
-      >
-        <svg className="scroll-progress-ring" width="56" height="56">
-          <circle cx="28" cy="28" r="28" />
-          <circle ref={progressBarRef} className="progress-bar" cx="28" cy="28" r="28" style={{ strokeDashoffset: 176 } as any} />
-        </svg>
-        <i className="fa-solid fa-arrow-up"></i>
-      </button>
-
-      <section className="social-strip">
-        <div className="community-container">
-          <ul className="social-list">
-            {[
-              { icon: 'github', label: 'GitHub' },
-              { icon: 'youtube', label: 'YouTube' },
-              { icon: 'x-twitter', label: 'X Twitter' },
-              { icon: 'linkedin', label: 'LinkedIn' },
-              { icon: 'instagram', label: 'Instagram' },
-              { icon: 'facebook-f', label: 'Facebook' },
-              { icon: 'spotify', label: 'Spotify' },
-            ].map((s) => (
-              <li key={s.icon}>
-                <Link to={`/social/${s.icon}`} aria-label={s.label} className="magnetic-btn">
-                  <i className={`fa-brands fa-${s.icon}`}></i>
-                </Link>
-              </li>
-            ))}
-          </ul>
+      {/* ── CTA ─────────────────────────────────────── */}
+      <section className="cm-section cm-cta-section">
+        <div className="cm-container">
+          <div className="cm-cta-card">
+            <div>
+              <h2 className="cm-cta-title">Ready to join the community?</h2>
+              <p className="cm-cta-sub">Start for free — no credit card required. Upgrade anytime.</p>
+            </div>
+            <div className="cm-cta-actions">
+              <Link to="/get-started" className="cm-btn cm-btn-cta-white">Get Started Free <ArrowRight size={14} /></Link>
+              <Link to="/contact"     className="cm-btn cm-btn-cta-ghost">Talk to Sales</Link>
+            </div>
+          </div>
         </div>
       </section>
-    </main>
+
+      {/* ── SOCIAL STRIP ────────────────────────────── */}
+      <section className="cm-social-strip">
+        <div className="cm-container cm-social-inner">
+          <p className="cm-social-label">Follow us</p>
+          <div className="cm-social-icons">
+            {[
+              { icon: <Github size={18} />,    label: 'GitHub' },
+              { icon: <Youtube size={18} />,   label: 'YouTube' },
+              { icon: <Twitter size={18} />,   label: 'Twitter' },
+              { icon: <Linkedin size={18} />,  label: 'LinkedIn' },
+              { icon: <Instagram size={18} />, label: 'Instagram' },
+              { icon: <Facebook size={18} />,  label: 'Facebook' },
+            ].map(s => (
+              <a key={s.label} href="#" aria-label={s.label} className="cm-social-btn">{s.icon}</a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Back to top */}
+      {backVisible && (
+        <button
+          className="cm-back-top"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
+        >
+          <ChevronUp size={18} />
+        </button>
+      )}
+    </div>
   );
 };
 
