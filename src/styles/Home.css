@@ -63,7 +63,7 @@
    HERO
 ══════════════════════════════════════════════════ */
 .h-hero {
-  padding: 88px 0 80px;
+  padding: 88px 0 30px;
   background: #fff;
   text-align: center;
   position: relative;
@@ -89,7 +89,8 @@
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 500; color: var(--h-text-muted);
   background: var(--h-bg-light); border: 1px solid var(--h-border);
-  border-radius: 100px; padding: 5px 14px; margin-bottom: 32px;
+  border-radius: 100px; padding: 5px 14px; 
+  /* margin-bottom: 32px; */
   animation: hFadeUp .5s ease both;
 }
 .h-badge-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
@@ -103,20 +104,20 @@
 .h-hero-title-blue { color: var(--h-primary); }
 
 .h-hero-desc {
-  margin-top: 20px; font-size: 17px; color: var(--h-text-muted);
+  font-size: 17px; color: var(--h-text-muted);
   max-width: 520px; line-height: 1.65;
   animation: hFadeUp .5s .2s ease both;
 }
 .h-hero-desc strong { color: var(--h-text-dark); font-weight: 600; }
 
 .h-hero-actions {
-  display: flex; gap: 12px; margin-top: 36px;
+  display: flex; gap: 12px; margin-top: 18px;
   animation: hFadeUp .5s .3s ease both;
 }
 
 .h-hero-stats {
   display: flex; align-items: center; gap: 0;
-  margin-top: 48px; background: var(--h-bg-light);
+  margin-top: 24px; background: var(--h-bg-light);
   border: 1px solid var(--h-border); border-radius: var(--h-r-lg);
   padding: 16px 32px; gap: 32px;
   animation: hFadeUp .5s .4s ease both;
@@ -129,7 +130,9 @@
 /* ══════════════════════════════════════════════════
    APPS / PRODUCTS
 ══════════════════════════════════════════════════ */
-.h-apps { padding: 80px 0; background: #fff; }
+.h-apps { 
+  /* padding: 80px 0; */
+   background: #fff; }
 
 .h-apps-grid {
   display: grid;
@@ -174,7 +177,10 @@
 /* ══════════════════════════════════════════════════
    WHY US
 ══════════════════════════════════════════════════ */
-.h-why { padding: 80px 0; background: var(--h-bg-section); }
+.h-why {
+   padding: 20px 0; 
+   
+  background: var(--h-bg-section); }
 
 .h-why-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
@@ -200,7 +206,9 @@
 /* ══════════════════════════════════════════════════
    PRICING
 ══════════════════════════════════════════════════ */
-.h-pricing { padding: 80px 0; background: #fff; }
+.h-pricing {
+   /* padding: 80px 0; */
+   background: #fff; }
 
 .h-pricing-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -265,7 +273,9 @@
 /* ══════════════════════════════════════════════════
    TESTIMONIALS
 ══════════════════════════════════════════════════ */
-.h-testimonials { padding: 80px 0; background: var(--h-bg-section); }
+.h-testimonials { 
+  /* padding: 80px 0; */
+   background: var(--h-bg-section); }
 
 .h-testi-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
@@ -294,7 +304,9 @@
 /* ══════════════════════════════════════════════════
    STATS
 ══════════════════════════════════════════════════ */
-.h-stats { padding: 80px 0; background: #fff; }
+.h-stats {
+   /* padding: 80px 0; */
+    background: #fff; }
 
 .h-stats-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
@@ -320,7 +332,9 @@
 /* ══════════════════════════════════════════════════
    FAQ
 ══════════════════════════════════════════════════ */
-.h-faq { padding: 80px 0; background: var(--h-bg-section); }
+.h-faq {
+   /* padding: 80px 0;  */
+  background: var(--h-bg-section); }
 
 .h-faq-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;

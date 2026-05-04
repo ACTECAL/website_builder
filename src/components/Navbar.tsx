@@ -3,9 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { AppsMegaMenu } from './AppsMegaMenu';
 import { IndustriesMegaMenu } from './IndustriesMegaMenu';
 import { NexoraLogo } from './NexoraLogo';
+import { useAuth } from '../contexts/AuthContext';
+import { User, LogOut } from 'lucide-react';
 import '../styles/Navbar.css';
 
 const Navbar: React.FC = () => {
+  const { isAuthenticated, user, userAttributes, signOut } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -165,8 +168,25 @@ const Navbar: React.FC = () => {
         {/* Desktop Actions */}
         {!isMobile && (
           <div className="nav-actions-right">
-            <Link to="/login" className="btn-login">Log in</Link>
-            <Link to="/signup" className="btn-nav-cta">Sign up</Link>
+            {isAuthenticated ? (
+              <div className="user-profile-section">
+                <Link to="/profile" className="user-profile-link">
+                  <User size={30} />
+                  {/* <span className="user-email">
+                    {userAttributes?.email || 'Profile'}
+                  </span> */}
+                </Link>
+                <button onClick={signOut} className="btn-login">
+                  {/* <LogOut size={16} /> */}
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link to="/login" className="btn-login">Log in</Link>
+                <Link to="/get-started" className="btn-nav-cta">Sign up</Link>
+              </>
+            )}
           </div>
         )}
 

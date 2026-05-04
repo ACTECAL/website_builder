@@ -2,12 +2,13 @@ import React from 'react';
 import './App.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { BuilderProvider } from './components/builder/BuilderContext';
-import { AuthProvider } from './auth/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import { RequireAuth } from './auth/RequireAuth';
 import SiteLayout from './components/SiteLayout';
 import Home from './pages/Home';
 import Footer from './components/Footer';
 import Security from './pages/Security';
+import Profile from './pages/Profile';
 
 const AccountingPage = React.lazy(() => import('./pages/apps/Accounting').then(m => ({ default: m.AccountingPage })));
 const InvoicingPage = React.lazy(() => import('./pages/apps/Invoicing').then(m => ({ default: m.InvoicingPage })));
@@ -244,6 +245,7 @@ function App() {
           <Route path="/learn-more" element={<LearnMore />} />
           <Route path="/plans/:planId" element={<Plan />} />
           <Route path="/billing" element={<RequireAuth><Billing /></RequireAuth>} />
+          <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact-sales" element={<ContactSales />} />

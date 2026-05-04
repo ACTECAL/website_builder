@@ -113,103 +113,94 @@ const Security: React.FC = () => {
       </section>
 
       {/* ── ARCHITECTURE ─────────────────────────── */}
-      <section className="sec-arch">
-        <div className="sec-container">
-          <div className="sec-section-hdr">
-            <p className="sec-section-label">ARCHITECTURE</p>
-            <h2 className="sec-section-title">How Your Data Stays Isolated</h2>
-            <p className="sec-section-sub">
-              A single secure gateway routes every request to a completely separate, isolated
-              database per customer — no shared infrastructure, no cross-tenant exposure.
-            </p>
-          </div>
+<div className="sec-diagram">
 
-          {/* Diagram */}
-          <div className="sec-diagram">
+  {/* Entry Points */}
+  <div className="sec-diag-entry">
+    {[
+      { icon: <Monitor size={20} />, lbl: 'Browser' },
+      { icon: <Smartphone size={20} />, lbl: 'Mobile' },
+      { icon: <Wifi size={20} />, lbl: 'API' },
+    ].map((e) => (
+      <div key={e.lbl} className="sec-entry-node">
+        <div className="sec-entry-icon">{e.icon}</div>
+        <span className="sec-entry-lbl">{e.lbl}</span>
+      </div>
+    ))}
+  </div>
 
-            {/* Entry points */}
-            <div className="sec-diag-entry">
-              {[
-                { icon: <Monitor size={20} />, lbl: 'Browser' },
-                { icon: <Smartphone size={20} />, lbl: 'Mobile' },
-                { icon: <Wifi size={20} />, lbl: 'API' },
-              ].map((e) => (
-                <div key={e.lbl} className="sec-entry-node">
-                  <div className="sec-entry-icon">{e.icon}</div>
-                  <span className="sec-entry-lbl">{e.lbl}</span>
-                </div>
-              ))}
-            </div>
+  {/* Down Arrow from Entry to Gateway */}
+  <div className="sec-big-arrow">↓</div>
 
-            {/* Arrow down */}
-            <div className="sec-arrow-down">↓</div>
+  {/* Central Gateway */}
+  <div className="sec-gateway">
+    <div className="sec-gateway-icon"><Shield size={24} /></div>
+    <div>
+      <div className="sec-gateway-name">Central Gateway</div>
+      <div className="sec-gateway-url">app.acteal.com</div>
+    </div>
+    <div className="sec-gateway-tags">
+      <span className="sec-gtag">SSL/TLS</span>
+      <span className="sec-gtag">WAF</span>
+      <span className="sec-gtag">Auth Layer</span>
+      <span className="sec-gtag">Rate Limiting</span>
+    </div>
+  </div>
 
-            {/* Central gateway */}
-            <div className="sec-gateway">
-              <div className="sec-gateway-icon"><Shield size={20} /></div>
-              <div>
-                <div className="sec-gateway-name">Central Gateway</div>
-                <div className="sec-gateway-url">app.acteal.com</div>
-              </div>
-              <div className="sec-gateway-tags">
-                <span className="sec-gtag">SSL/TLS</span>
-                <span className="sec-gtag">WAF</span>
-                <span className="sec-gtag">Auth Layer</span>
-                <span className="sec-gtag">Rate Limiting</span>
-              </div>
-            </div>
+  {/* ROUTES TO ISOLATED ENVIRONMENTS - Image jaisa design */}
+  <div className="sec-routes-section">
+    <div className="sec-routes-line"></div>
+    <div className="sec-routes-text">
+      ROUTES TO ISOLATED ENVIRONMENTS
+    </div>
+    <div className="sec-routes-line"></div>
+  </div>
 
-            {/* Routes label */}
-            <div className="sec-routes-label">
-              <span className="sec-routes-line" />
-              ROUTES TO ISOLATED ENVIRONMENTS
-              <span className="sec-routes-line" />
-            </div>
+  {/* Customer Cards Row */}
+  <div className="sec-customers-row">
+    {entCustomers.map((c) => (
+      <div key={c.name} className="sec-customer-card sec-customer-ent">
+        <div className="sec-cust-badge">Enterprise</div>
+        <div className="sec-cust-icon"><Database size={20} /></div>
+        <div className="sec-cust-name">{c.name}</div>
+        <div className="sec-cust-url">{c.url}</div>
+        <div className="sec-cust-url-lbl">{c.label}</div>
+        <ul className="sec-cust-items">
+          {c.items.map((item) => (
+            <li key={item}><CheckCircle2 size={12} /> {item}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
 
-            {/* Customer nodes */}
-            <div className="sec-customers-row">
-              {entCustomers.map((c) => (
-                <div key={c.name} className="sec-customer-card sec-customer-ent">
-                  <div className="sec-cust-badge">Enterprise</div>
-                  <div className="sec-cust-icon"><Database size={20} /></div>
-                  <div className="sec-cust-name">{c.name}</div>
-                  <div className="sec-cust-url">{c.url}</div>
-                  <div className="sec-cust-url-lbl">{c.label}</div>
-                  <ul className="sec-cust-items">
-                    {c.items.map((item) => (
-                      <li key={item}><CheckCircle2 size={12} /> {item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+    <div className="sec-vs">vs</div>
 
-              {/* VS separator */}
-              <div className="sec-vs">vs</div>
+    {/* Free/Shared Card */}
+    <div className="sec-customer-card sec-customer-free">
+      <div className="sec-cust-badge sec-cust-badge-free">Free / Shared</div>
+      <div className="sec-cust-icon sec-cust-icon-free"><Database size={20} /></div>
+      <div className="sec-cust-name">Customers D, E, F…</div>
+      <div className="sec-cust-url">app.acteal.com</div>
+      <div className="sec-cust-url-lbl">Shared</div>
+      <ul className="sec-cust-items sec-cust-items-free">
+        <li><CheckCircle2 size={12} /> Shared DB pool</li>
+        <li><CheckCircle2 size={12} /> Logical separation</li>
+        <li><CheckCircle2 size={12} /> SSL encrypted</li>
+      </ul>
+    </div>
+  </div>
 
-              {/* Free / Shared */}
-              <div className="sec-customer-card sec-customer-free">
-                <div className="sec-cust-badge sec-cust-badge-free">Free / Shared</div>
-                <div className="sec-cust-icon sec-cust-icon-free"><Database size={20} /></div>
-                <div className="sec-cust-name">Customers D, E, F…</div>
-                <div className="sec-cust-url">app.acteal.com</div>
-                <div className="sec-cust-url-lbl">Shared</div>
-                <ul className="sec-cust-items sec-cust-items-free">
-                  <li><CheckCircle2 size={12} /> Shared DB pool</li>
-                  <li><CheckCircle2 size={12} /> Logical separation</li>
-                  <li><CheckCircle2 size={12} /> SSL encrypted</li>
-                </ul>
-              </div>
-            </div>
+  {/* Legend */}
+  <div className="sec-legend">
+    <span className="sec-legend-item">
+      <span className="sec-leg-dot sec-leg-blue" /> Enterprise — Dedicated & Isolated DB
+    </span>
+    <span className="sec-legend-item">
+      <span className="sec-leg-dot sec-leg-grey" /> Free Tier — Secure Shared Environment
+    </span>
+  </div>
 
-            {/* Legend */}
-            <div className="sec-legend">
-              <span className="sec-legend-item"><span className="sec-leg-dot sec-leg-blue" /> Enterprise — Dedicated &amp; Isolated DB</span>
-              <span className="sec-legend-item"><span className="sec-leg-dot sec-leg-grey" /> Free Tier — Secure Shared Environment</span>
-              <span className="sec-legend-item"><span className="sec-leg-dot sec-leg-green" /> Central Gateway (Single URL Entry Point)</span>
-            </div>
-          </div>
-        </div>
-      </section>
+</div>
 
       {/* ── SECURITY FEATURES ────────────────────── */}
       <section className="sec-features">

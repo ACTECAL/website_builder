@@ -1,0 +1,321 @@
+/* ═══════════════════════════════════════════════════
+   PROFILE.CSS  –  Acteal Light Theme
+   All classes prefixed "pf-" to avoid conflicts
+═══════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Reset ─────────────────────────────────────── */
+.pf-page *,
+.pf-gate * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.pf-page,
+.pf-gate {
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #0f172a;
+}
+
+/* ── Page shell ────────────────────────────────── */
+.pf-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 40px 24px;
+}
+
+.pf-container {
+  max-width: 860px;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+/* ═══════════════════════════════════════════════
+   NOT-AUTHENTICATED GATE
+═══════════════════════════════════════════════ */
+.pf-gate {
+  min-height: 100vh;
+  background: #f8fafc;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+
+.pf-gate-card {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 20px; padding: 48px 40px;
+  text-align: center; max-width: 380px; width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,.06);
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+
+.pf-gate-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: #eff6ff; color: #2563eb;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.pf-gate-title { font-size: 22px; font-weight: 800; color: #0f172a; }
+.pf-gate-sub   { font-size: 14px; color: #64748b; }
+
+/* ═══════════════════════════════════════════════
+   SHARED BUTTONS
+═══════════════════════════════════════════════ */
+.pf-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 15px; font-weight: 600; padding: 12px 24px;
+  border-radius: 10px; border: none; cursor: pointer;
+  font-family: inherit; text-decoration: none; transition: all .2s;
+}
+.pf-btn-blue {
+  background: #2563eb; color: #fff;
+  box-shadow: 0 4px 16px rgba(37,99,235,.24);
+}
+.pf-btn-blue:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+.pf-header {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 16px; padding: 24px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  flex-wrap: wrap;
+}
+
+.pf-header-left {
+  display: flex; align-items: center; gap: 16px;
+}
+
+.pf-avatar {
+  width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #2563eb, #8b5cf6);
+  color: #fff; font-size: 20px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: -.01em;
+}
+
+.pf-title    { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+.pf-subtitle { font-size: 14px; color: #64748b; }
+
+/* Sign-out button */
+.pf-signout-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 14px; font-weight: 600;
+  padding: 10px 20px; border-radius: 10px;
+  background: #fef2f2; color: #dc2626;
+  border: 1.5px solid #fecaca; cursor: pointer;
+  font-family: inherit; transition: all .2s; flex-shrink: 0;
+}
+
+
+.user-profile-section{
+  display: flex;
+  align-items: center;
+}
+.pf-signout-btn:hover:not(:disabled) {
+  background: #ef4444; color: #fff; border-color: #ef4444;
+  transform: translateY(-1px); box-shadow: 0 4px 14px rgba(239,68,68,.24);
+}
+.pf-signout-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Spinner */
+.pf-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(220,38,38,.3);
+  border-top-color: #dc2626; border-radius: 50%;
+  animation: pfSpin 1s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════
+   ALERT MESSAGE
+═══════════════════════════════════════════════ */
+.pf-msg {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; margin-bottom: 20px;
+}
+.pf-msg-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.pf-msg-error   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+/* ═══════════════════════════════════════════════
+   GRID
+═══════════════════════════════════════════════ */
+.pf-grid {
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+/* ═══════════════════════════════════════════════
+   CARD
+═══════════════════════════════════════════════ */
+.pf-card {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  transition: box-shadow .2s;
+}
+.pf-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+
+/* Card header */
+.pf-card-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; border-bottom: 1px solid #f1f5f9;
+}
+
+.pf-card-title {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 16px; font-weight: 700; color: #0f172a;
+}
+
+.pf-card-title-icon {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Edit button */
+.pf-edit-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600;
+  padding: 7px 14px; border-radius: 8px;
+  background: #eff6ff; color: #2563eb;
+  border: 1px solid #bfdbfe; cursor: pointer;
+  font-family: inherit; transition: all .18s;
+}
+.pf-edit-btn:hover {
+  background: #2563eb; color: #fff; border-color: #2563eb;
+}
+
+/* Card body */
+.pf-card-body { padding: 24px; }
+.pf-card-body-flush { padding: 8px 12px; }
+
+/* ═══════════════════════════════════════════════
+   INFO GRID
+═══════════════════════════════════════════════ */
+.pf-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.pf-info-item { display: flex; flex-direction: column; gap: 6px; }
+
+.pf-info-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: #94a3b8;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+
+.pf-info-value {
+  font-size: 15px; font-weight: 500; color: #0f172a;
+}
+.pf-mono {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 13px; color: #475569;
+  word-break: break-all;
+}
+
+/* ═══════════════════════════════════════════════
+   BADGES
+═══════════════════════════════════════════════ */
+.pf-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 100px;
+}
+.pf-badge-green { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.pf-badge-red   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.pf-badge-blue  { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.pf-badge-yellow { background: #fefce8; color: #ca8a04; border: 1px solid #fde047; }
+
+/* ═══════════════════════════════════════════════
+   SETTINGS ROWS
+═══════════════════════════════════════════════ */
+.pf-setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 12px; border-radius: 10px;
+  text-decoration: none; color: inherit;
+  transition: all .18s;
+}
+.pf-setting-row:hover {
+  background: #f8fafc;
+  padding-left: 16px;
+}
+.pf-setting-row:hover .pf-setting-arrow { color: #2563eb; }
+
+.pf-setting-left {
+  display: flex; align-items: center; gap: 14px;
+}
+
+.pf-setting-icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .18s;
+}
+.pf-setting-row:hover .pf-setting-icon { transform: scale(1.05); }
+
+.pf-setting-title { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+.pf-setting-desc  { font-size: 13px; color: #64748b; }
+
+.pf-setting-arrow { color: #cbd5e1; transition: color .18s; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes pfSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════
+   MODULES
+═══════════════════════════════════════════════ */
+.pf-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.pf-module-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.pf-module-badge:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  transform: translateY(-1px);
+}
+
+.pf-module-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.pf-module-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .pf-page      { padding: 20px 16px; }
+  .pf-header    { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .pf-info-grid { grid-template-columns: 1fr; }
+  .pf-card-hdr  { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .pf-gate-card { padding: 36px 24px; }
+}
+
+@media (max-width: 400px) {
+  .pf-header-left { flex-direction: column; align-items: flex-start; }
+  .pf-avatar      { width: 48px; height: 48px; font-size: 16px; }
+  .pf-signout-btn { width: 100%; justify-content: center; }
+}

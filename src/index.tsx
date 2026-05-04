@@ -4,7 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './auth/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { Amplify } from 'aws-amplify';
+import awsmobile from './aws-exports';
+
+// Configure AWS Amplify
+Amplify.configure(awsmobile);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
