@@ -5,8 +5,7 @@ import '../styles/Profile.css';
 import {
   User, Mail, Shield, Calendar, LogOut, Edit2,
   CheckCircle2, AlertCircle, Settings, ChevronRight,
-  Bell, Lock, Zap,
-  Database
+  Bell, Lock, Zap
 } from 'lucide-react';
 
 export const Profile: React.FC = () => {
@@ -87,28 +86,6 @@ export const Profile: React.FC = () => {
     ? userAttributes.email.slice(0, 2).toUpperCase()
     : 'ME';
 
-
-    const getModules = (modulesData: any): string[] => {
-  if (!modulesData) return [];
-
-  // Agar already array hai
-  if (Array.isArray(modulesData)) {
-    return modulesData;
-  }
-
-  // Agar string hai (JSON string)
-  if (typeof modulesData === 'string') {
-    try {
-      const parsed = JSON.parse(modulesData);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      console.error('Failed to parse modules:', e);
-      return [];
-    }
-  }
-
-  return [];
-};
   /* not authenticated */
   if (!isAuthenticated) {
     return (
@@ -157,40 +134,6 @@ export const Profile: React.FC = () => {
           </div>
         )}
 
-        {/* Modules Information */}
-     {/* Modules Information */}
-<div className="pf-card">
-  <div className="pf-card-hdr">
-    <h2 className="pf-card-title">
-      <div className="pf-card-title-icon" style={{ background: '#f0fdf4', color: '#16a34a' }}>
-        <Zap size={18} />
-      </div>
-      Modules & Permissions
-    </h2>
-  </div>
-  <div className="pf-card-body">
-    {(() => {
-      const modulesList = getModules(backendUser?.modules);
-      
-      return modulesList.length > 0 ? (
-        <div className="pf-modules-grid">
-          {modulesList.map((module: string, index: number) => (
-            <div key={index} className="pf-module-badge">
-              <span className="pf-module-icon">📦</span>
-              <span className="pf-module-name">
-                {module.replace('erp:', '').replace('_', ' ')}
-              </span>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="pf-info-value">
-          No modules assigned yet
-        </div>
-      );
-    })()}
-  </div>
-</div>
         {/* ── CONTENT GRID ────────────────────────────── */}
         <div className="pf-grid">
 
@@ -203,9 +146,9 @@ export const Profile: React.FC = () => {
                 </div>
                 User Information
               </h2>
-              {/* <button className="pf-edit-btn">
+              <button className="pf-edit-btn">
                 <Edit2 size={14} /> Edit
-              </button> */}
+              </button>
             </div>
             <div className="pf-card-body">
               <div className="pf-info-grid">
@@ -255,68 +198,17 @@ export const Profile: React.FC = () => {
                   </div>
                 </div>
 
-                {/* <div className="pf-info-item">
+                <div className="pf-info-item">
                   <div className="pf-info-label"><Calendar size={14} /> Domain</div>
                   <div className="pf-info-value pf-mono">
-                  "https://  {backendUser?.domain || 'Not available'}
+                    {backendUser?.domain || 'Not available'}
                   </div>
-                </div> */}
+                </div>
 
-<div className="pf-info-item">
-  <div className="pf-info-label">
-    <Calendar size={14} /> Domain
-  </div>
-
-
-  <div className="pf-info-value pf-mono" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-    {backendUser?.domain ? (
-      <>
-        <a
-          href={`https://${backendUser.domain}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: '#2563eb', textDecoration: 'none', flex: 1 }}
-          onMouseOver={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-          onMouseOut={(e) => (e.currentTarget.style.textDecoration = 'none')}
-        >
-          https://{backendUser.domain}
-        </a>
-
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText(`https://${backendUser.domain}`);
-            // You can replace alert with a proper toast notification
-            const btn = document.activeElement as HTMLButtonElement;
-            if (btn) {
-              btn.style.color = '#16a34a';
-              setTimeout(() => btn.style.color = '#64748b', 1500);
-            }
-            alert('✅ Domain copied to clipboard');
-          }}
-          title="Copy to clipboard"
-          style={{
-            background: 'none',
-            border: '1px solid #e2e8f0',
-            borderRadius: '4px',
-            padding: '4px 8px',
-            cursor: 'pointer',
-            fontSize: '13px',
-            color: '#64748b',
-          }}
-        >
-          Copy
-        </button>
-      </>
-    ) : (
-      'Not available'
-    )}
-  </div>
-
-</div>
                 <div className="pf-info-item">
                   <div className="pf-info-label"><Calendar size={14} /> Subscription</div>
                   <div className="pf-info-value">
-                    <span className ="pf-badge pf-badge-blue">
+                    <span className="pf-badge pf-badge-blue">
                       {backendUser?.subscription || 'Basic'}
                     </span>
                   </div>
@@ -328,41 +220,6 @@ export const Profile: React.FC = () => {
                     <span className="pf-badge pf-badge-green">
                       {backendUser?.account_type || 'Demo'}
                     </span>
-                  </div>
-                </div>
-
-                <div className="pf-info-item">
-                  <div className="pf-info-label"><Database size={14} /> Database</div>
-                  <div className="pf-info-value pf-mono">
-                    {backendUser?.db_name || 'Not available'}
-                  </div>
-                </div>
-
-                <div className="pf-info-item">
-                  <div className="pf-info-label"><Shield size={14} /> Contact Name</div>
-                  <div className="pf-info-value">
-                    {backendUser?.contact_name || 'Not available'}
-                  </div>
-                </div>
-
-                <div className="pf-info-item">
-                  <div className="pf-info-label"><Calendar size={14} /> Industry</div>
-                  <div className="pf-info-value">
-                    {backendUser?.industry || 'Not available'}
-                  </div>
-                </div>
-
-                <div className="pf-info-item">
-                  <div className="pf-info-label"><Calendar size={14} /> Created At</div>
-                  <div className="pf-info-value">
-                    {backendUser?.created_at ? formatDate(backendUser.created_at) : 'Not available'}
-                  </div>
-                </div>
-
-                <div className="pf-info-item">
-                  <div className="pf-info-label"><Calendar size={14} /> Code</div>
-                  <div className="pf-info-value pf-mono">
-                    {backendUser?.code || 'Not available'}
                   </div>
                 </div>
 
