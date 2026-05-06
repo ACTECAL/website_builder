@@ -5,7 +5,7 @@ import '../styles/Profile.css';
 import {
   User, Mail, Shield, Calendar, LogOut, Edit2,
   CheckCircle2, AlertCircle, Settings, ChevronRight,
-  Bell, Lock, Zap
+  Bell, Lock, Zap, X, Users
 } from 'lucide-react';
 
 export const Profile: React.FC = () => {
@@ -15,6 +15,12 @@ export const Profile: React.FC = () => {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [backendUser, setBackendUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState<any>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [plans, setPlans] = useState<any[]>([]);
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [isLoadingPlans, setIsLoadingPlans] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -74,12 +80,212 @@ export const Profile: React.FC = () => {
     }
   };
 
+  // Fetch subscription data
+  const fetchSubscriptionData = async () => {
+    if (!backendUser?.id) return;
+    
+    try {
+      const response = await fetch(`http://localhost:4000/api/subscriptions/current/${backendUser.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSubscriptionData(data.data);
+        console.log('Subscription data:', data.data);
+      } else {
+        console.error('Failed to fetch subscription data:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching subscription data:', error);
+    }
+  };
+
   // Fetch backend data when component mounts
   React.useEffect(() => {
     if (isAuthenticated && userAttributes?.email) {
       fetchBackendUserData();
     }
   }, [isAuthenticated, userAttributes?.email]);
+
+  // Fetch subscription plans
+  const fetchPlans = async () => {
+    setIsLoadingPlans(true);
+    try {
+      const response = await fetch('http://localhost:4000/api/subscriptions/plans', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setPlans(data.data);
+        console.log('Available plans:', data.data);
+      } else {
+        console.error('Failed to fetch plans:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching plans:', error);
+    } finally {
+      setIsLoadingPlans(false);
+    }
+  };
+
+  // Handle upgrade button click
+  const handleUpgradeClick = () => {
+    setShowUpgradeModal(true);
+    fetchPlans();
+  };
+
+  // Handle plan selection
+  const handlePlanSelect = (plan: any) => {
+    setSelectedPlan(plan);
+  };
+
+  const handlePayment = async () => {
+  if (!selectedPlan || !backendUser) {
+    setMessage({ type: 'error', text: 'Please select a plan and try again.' });
+    return;
+  }
+
+  setIsProcessingPayment(true);
+  setMessage(null);
+
+  try {
+    const payload = {
+      subscription_id: selectedPlan.id,
+      company_id: backendUser.id || backendUser.company_id,
+      amount: parseFloat(selectedPlan.price),
+      customer_name: backendUser.name || userAttributes?.email?.split('@')[0] || "User",
+      customer_email: backendUser.email || userAttributes?.email,
+      customer_phone: backendUser.phone || "9876543210",
+      product_info: `${selectedPlan.name} - ${selectedPlan.billing_cycle || 'Monthly'} Subscription`
+    };
+
+    const response = await fetch('http://localhost:4000/api/subscriptions/payu/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (!result.success || !result.data?.form_data) {
+      throw new Error(result.error || 'Failed to initiate payment with PayU');
+    }
+
+    const { payment_url, form_data } = result.data;
+
+    console.log("🚀 Sending to PayU:", form_data);
+
+    // === Create & Submit Form to PayU ===
+    const form = document.createElement('form');
+    form.action = payment_url;
+    form.method = 'POST';
+    form.style.display = 'none';
+
+    Object.keys(form_data).forEach(key => {
+      if (form_data[key] !== undefined && form_data[key] !== null) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = String(form_data[key]);
+        form.appendChild(input);
+      }
+    });
+
+    document.body.appendChild(form);
+    
+    // Submit form
+    setTimeout(() => {
+      form.submit();
+    }, 150);
+
+  } catch (error: any) {
+    console.error('Payment initiation error:', error);
+    setMessage({
+      type: 'error',
+      text: error.message || 'Payment gateway failed. Please try again.'
+    });
+  } finally {
+    setIsProcessingPayment(false);
+  }
+};
+  // Initiate PayU payment
+  const initiatePayUPayment = async (plan: any, paymentId: string) => {
+    try {
+      // For now, simulate PayU payment
+      // In production, this would integrate with actual PayU SDK/API
+      console.log('Initiating PayU payment for plan:', plan.name, 'Payment ID:', paymentId);
+      
+      // Simulate payment processing delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Simulate successful payment (90% success rate for demo)
+      const isSuccess = Math.random() > 0.1;
+      
+      if (isSuccess) {
+        return { 
+          success: true, 
+          paymentId: paymentId,
+          transactionId: `TXN_${Date.now()}`,
+          amount: plan.price
+        };
+      } else {
+        return { 
+          success: false, 
+          error: 'Payment failed' 
+        };
+      }
+    } catch (error) {
+      console.error('PayU payment error:', error);
+      return { success: false, error: 'PayU payment failed' };
+    }
+  };
+
+  // Process payment through backend API
+  const processPayment = async (subscriptionId: number, amount: number, providerPaymentId: string) => {
+    try {
+      const response = await fetch('http://localhost:4000/payment/process', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subscription_id: subscriptionId,
+          amount: amount,
+          provider: 'manual',
+          provider_payment_id: providerPaymentId
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Payment processed successfully:', data);
+        return { success: true, data };
+      } else {
+        console.error('Payment processing failed:', response.status, response.statusText);
+        return { success: false, error: 'API call failed' };
+      }
+    } catch (error) {
+      console.error('Payment API error:', error);
+      return { success: false, error: 'Network error' };
+    }
+  };
+
+  // Fetch subscription data when backend user is loaded
+  React.useEffect(() => {
+    if (backendUser?.id) {
+      fetchSubscriptionData();
+    }
+  }, [backendUser?.id]);
 
   /* initials from email */
   const initials = userAttributes?.email
@@ -227,6 +433,91 @@ export const Profile: React.FC = () => {
             </div>
           </div>
 
+          {/* Subscription & Billing */}
+          <div className="pf-card">
+            <div className="pf-card-hdr">
+              <h2 className="pf-card-title">
+                <div className="pf-card-title-icon" style={{ background: '#fef3c7', color: '#f59e0b' }}>
+                  <Zap size={18} />
+                </div>
+                Subscription & Billing
+              </h2>
+            </div>
+            <div className="pf-card-body">
+              {subscriptionData ? (
+                <div className="pf-subscription-content">
+                  <div className="pf-subscription-header">
+                    <div className="pf-subscription-plan">
+                      <span className="pf-plan-label">Plan:</span>
+                      <span className={`pf-plan-name pf-plan-${subscriptionData.status}`}>
+                        {subscriptionData.status === 'trial' ? 'Trial' : 
+                         subscriptionData.status === 'active' ? 'Premium' : 'Basic'}
+                      </span>
+                    </div>
+                    {subscriptionData.status === 'trial' && (
+                      <div className="pf-trial-badge">
+                        ⚠️ Trial Period
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="pf-subscription-details">
+                    <div className="pf-subscription-item">
+                      <div className="pf-subscription-label">Expires:</div>
+                      <div className="pf-subscription-value">
+                        {subscriptionData.access_valid_till ? 
+                          new Date(subscriptionData.access_valid_till).toLocaleDateString('en-US', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                          }) : 'Not available'
+                        }
+                      </div>
+                    </div>
+                    
+                    <div className="pf-subscription-item">
+                      <div className="pf-subscription-label">Days Left:</div>
+                      <div className="pf-subscription-value">
+                        {subscriptionData.access_valid_till ? (
+                          <span className={`pf-days-left ${
+                            Math.ceil((new Date(subscriptionData.access_valid_till).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) <= 3 ? 'pf-days-critical' : 'pf-days-normal'
+                          }`}>
+                            {Math.ceil((new Date(subscriptionData.access_valid_till).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days
+                          </span>
+                        ) : 'Not available'
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pf-subscription-actions">
+                    <button className="pf-upgrade-btn" onClick={handleUpgradeClick}>
+                      <Zap size={16} />
+                      Upgrade Plan
+                    </button>
+                  </div>
+
+                  {subscriptionData.status === 'trial' && (
+                    <div className="pf-trial-features">
+                      <div className="pf-trial-features-title">
+                        <Lock size={14} />
+                        Premium Features Available:
+                      </div>
+                      <ul className="pf-trial-features-list">
+                        <li>🔒 Advanced Analytics Dashboard</li>
+                        <li>🔒 Unlimited User Accounts</li>
+                        <li>🔒 Priority Support</li>
+                        <li>🔒 Custom Integrations</li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="pf-info-value">
+                  Loading subscription information...
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Account Settings */}
           <div className="pf-card">
             <div className="pf-card-hdr">
@@ -305,6 +596,138 @@ export const Profile: React.FC = () => {
           </div>
 
         </div>
+
+        {/* Upgrade Modal */}
+        {/* {showUpgradeModal && (
+          <div className="pf-modal-overlay" onClick={() => setShowUpgradeModal(false)}>
+            <div className="pf-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="pf-modal-header">
+                <h2 className="pf-modal-title">Choose Your Plan</h2>
+                <button className="pf-modal-close" onClick={() => setShowUpgradeModal(false)}>
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="pf-modal-body">
+                {isLoadingPlans ? (
+                  <div className="pf-loading-plans">
+                    <div className="pf-spinner"></div>
+                    <p>Loading available plans...</p>
+                  </div>
+                ) : (
+                  <div className="pf-plans-grid">
+                    {plans.map((plan) => (
+                      <div 
+                        key={plan.id}
+                        className={`pf-plan-card ${selectedPlan?.id === plan.id ? 'pf-plan-selected' : ''}`}
+                        onClick={() => handlePlanSelect(plan)}
+                      >
+                        <div className="pf-plan-header">
+                          <h3 className="pf-plan-name">{plan.name}</h3>
+                          <div className="pf-plan-price">
+                            <span className="pf-price-amount">₹{plan.price}</span>
+                            <span className="pf-price-period">/{plan.billing_cycle}</span>
+                          </div>
+                        </div>
+                        
+                        <p className="pf-plan-description">{plan.description}</p>
+
+                        <button className={`pf-plan-select-btn ${selectedPlan?.id === plan.id ? 'pf-btn-selected' : ''}`}>
+                          {selectedPlan?.id === plan.id ? 'Selected' : 'Select Plan'}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="pf-modal-footer">
+                <button className="pf-cancel-btn" onClick={() => setShowUpgradeModal(false)}>
+                  Cancel
+                </button>
+                <button 
+                  className="pf-pay-btn" 
+                  onClick={handlePayment}
+                  disabled={!selectedPlan || isProcessingPayment}
+                >
+                  {isProcessingPayment ? (
+                    <>
+                      <div className="pf-payment-spinner"></div>
+                      Processing Payment...
+                    </>
+                  ) : (
+                    'Proceed to Payment'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )} */}
+
+        {showUpgradeModal && (
+          <div className="pf-modal-overlay" onClick={() => setShowUpgradeModal(false)}>
+            <div className="pf-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="pf-modal-header">
+                <h2 className="pf-modal-title">Choose Your Plan</h2>
+                <button className="pf-modal-close" onClick={() => setShowUpgradeModal(false)}>
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="pf-modal-body">
+                {isLoadingPlans ? (
+                  <div className="pf-loading-plans">
+                    <div className="pf-spinner"></div>
+                    <p>Loading available plans...</p>
+                  </div>
+                ) : (
+                  <div className="pf-plans-grid">
+                    {plans.map((plan) => (
+                      <div
+                        key={plan.id}
+                        className={`pf-plan-card ${selectedPlan?.id === plan.id ? 'pf-plan-selected' : ''}`}
+                        onClick={() => handlePlanSelect(plan)}
+                      >
+                        <div className="pf-plan-header">
+                          <h3 className="pf-plan-name">{plan.name}</h3>
+                          <div className="pf-plan-price">
+                            <span className="pf-price-amount">₹{plan.price}</span>
+                            <span className="pf-price-period">/{plan.billing_cycle}</span>
+                          </div>
+                        </div>
+                        <p className="pf-plan-description">{plan.description}</p>
+
+                        <button className={`pf-plan-select-btn ${selectedPlan?.id === plan.id ? 'pf-btn-selected' : ''}`}>
+                          {selectedPlan?.id === plan.id ? 'Selected' : 'Select Plan'}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="pf-modal-footer">
+                <button className="pf-cancel-btn" onClick={() => setShowUpgradeModal(false)}>
+                  Cancel
+                </button>
+                <button
+                  className="pf-pay-btn"
+                  onClick={handlePayment}
+                  disabled={!selectedPlan || isProcessingPayment}
+                >
+                  {isProcessingPayment ? (
+                    <>
+                      <div className="pf-payment-spinner"></div>
+                      Redirecting to PayU...
+                    </>
+                  ) : (
+                    'Proceed to PayU Payment'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

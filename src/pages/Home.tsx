@@ -32,6 +32,10 @@ import {
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [productsLoading, setProductsLoading] = useState(true);
+const [plans, setPlans] = useState<any[]>([]);
+const [plansLoading, setPlansLoading] = useState<boolean>(true);
+const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
+
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -48,6 +52,45 @@ const Home: React.FC = () => {
     loadProducts();
   }, []);
 
+useEffect(() => {
+  const loadPlans = async () => {
+    try {
+      setPlansLoading(true);
+
+      const response = await fetch(
+        "http://localhost:4000/api/subscriptions/plans"
+      );
+      const result = await response.json();
+
+      if (result.success) {
+        const formattedPlans = result.data.map((plan: any) => {
+          let parsedFeatures = {};
+
+          try {
+            parsedFeatures = plan.features
+              ? JSON.parse(plan.features)
+              : {};
+          } catch (e) {
+            console.error("Feature parse error:", e);
+          }
+
+          return {
+            ...plan,
+            features: parsedFeatures,
+          };
+        });
+
+        setPlans(formattedPlans);
+      }
+    } catch (error) {
+      console.error("Failed to load plans:", error);
+    } finally {
+      setPlansLoading(false);
+    }
+  };
+
+  loadPlans();
+}, []);
   const getProductIconColor = (productName: string) => {
     const colors: Record<string, string> = {
       'ERP':           '#2563eb',
@@ -158,7 +201,21 @@ const Home: React.FC = () => {
     { q: 'Can I integrate with other tools?', a: 'Yes! We integrate with 100+ popular tools including Slack, Google Workspace, Microsoft 365, QuickBooks, and more. We also offer a robust API for custom integrations.' },
     { q: 'Is there a free trial?', a: 'Yes! We offer a 14-day free trial with full access to all features. No credit card required. You can also start with our free forever plan for small teams.' },
   ];
+const getFeatureList = (plan: any) => {
+  const f = plan.features || {};
 
+  return [
+    f.modules ? `Modules: ${f.modules.join(", ")}` : null,
+    f.support ? `Support: ${f.support}` : null,
+    f.storage ? `Storage: ${f.storage}` : null,
+    plan.max_users === -1
+      ? "Unlimited users"
+      : `Up to ${plan.max_users} users`,
+    plan.max_devices === -1
+      ? "Unlimited devices"
+      : `Up to ${plan.max_devices} devices`,
+  ].filter(Boolean);
+};
   return (
     <div className="home-container">
 
@@ -297,82 +354,80 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── PRICING ────────────────────────────────────────────── */}
-      <section className="h-pricing" id="pricing">
-        <div className="h-container">
-          <div className="h-section-hdr">
-            <p className="h-section-label">PRICING</p>
-            <h2 className="h-section-title">Simple, Transparent Pricing</h2>
-            <p className="h-section-sub">
-              Start free, scale as you grow. Every plan includes a 3-month trial with full access.
-            </p>
-          </div>
+     <section className="h-pricing" id="pricing">
+  <div className="h-container">
+    <div className="h-section-hdr">
+      <p className="h-section-label">PRICING</p>
+      <h2 className="h-section-title">Simple, Transparent Pricing</h2>
+      <p className="h-section-sub">
+        Start free, scale as you grow. Every plan includes a trial.
+      </p>
+    </div>
 
-          <div className="h-pricing-grid">
-            {/* Starter */}
-            <div className="h-price-card h-price-starter">
-              <div className="h-plan-badge h-plan-badge-free">✦ Free Forever</div>
-              <h3 className="h-plan-name">Starter</h3>
-              <p className="h-plan-tag">Perfect for solopreneurs and independent professionals.</p>
+    {plansLoading ? (
+      <div className="h-loading">
+        <div className="h-spinner" />
+        <p>Loading plans…</p>
+      </div>
+    ) : (
+      <div className="h-pricing-grid">
+        {plans.map((plan: any, idx: number) => {
+          const isFree = plan.price === "0.00";
+
+          return (
+            <div
+         key={plan.id}
+  className={`h-price-card ${selectedPlanId === plan.id ? "h-price-selected" : ""}`}
+  onClick={() => setSelectedPlanId(plan.id)}
+              style={{ animationDelay: `${idx * 60}ms` }}
+            >
+              {/* {plan.name === "Standard" && (
+  <div className="h-plan-badge h-plan-badge-pop">
+    ⭐ Most Popular
+  </div>
+)} */}
+              {/* PLAN NAME */}
+              <h3 className="h-plan-name">{plan.name}</h3>
+
+              {/* DESCRIPTION */}
+              <p className="h-plan-tag">{plan.description}</p>
+
+              {/* PRICE */}
               <div className="h-plan-price">
-                <span className="h-price-dollar">$</span>
-                <span className="h-price-amt">0</span>
-                <span className="h-price-per">/ forever</span>
+                <span className="h-price-dollar">₹</span>
+                <span className="h-price-amt"> {Number(plan.price)}</span>
+                <span className="h-price-per">
+                  /{plan.billing_cycle}
+                </span>
               </div>
-              <ul className="h-plan-feats">
-                {['1 user included', 'Access to all apps', 'Standard support', '5 GB storage'].map(f => (
-                  <li key={f} className="h-plan-feat">
-                    <CheckCircle2 size={14} style={{ color: '#22c55e', flexShrink: 0 }} /> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/get-started" className="h-plan-btn h-plan-btn-outline">Get Started Free</Link>
-            </div>
 
-            {/* Professional */}
-            <div className="h-price-card h-price-pro">
-              <div className="h-plan-badge h-plan-badge-pop">⭐ Most Popular</div>
-              <h3 className="h-plan-name h-plan-name-white">Professional</h3>
-              <p className="h-plan-tag h-plan-tag-white">Advanced security, customization, and priority support for growing teams.</p>
-              <div className="h-plan-price">
-                <span className="h-price-dollar h-price-white">$</span>
-                <span className="h-price-amt h-price-white">79</span>
-                <span className="h-price-per h-price-white-soft">/mo</span>
-              </div>
-              <ul className="h-plan-feats">
-                {['Up to 50 users', 'All modules unlocked', 'Priority support', 'Custom domain'].map(f => (
-                  <li key={f} className="h-plan-feat h-plan-feat-white">
-                    <CheckCircle2 size={14} style={{ color: 'rgba(255,255,255,0.8)', flexShrink: 0 }} /> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/get-started" className="h-plan-btn h-plan-btn-white">Start Free Trial</Link>
+              {/* FEATURES */}
+     <ul className="h-plan-feats">
+  {getFeatureList(plan).map((feature, i) => (
+    <li key={i} className="h-plan-feat">
+      <CheckCircle2 size={14} style={{ color: "#22c55e" }} />
+      {feature}
+    </li>
+  ))}
+</ul>
+              {/* BUTTON */}
+              <Link
+                to={`/get-started?planId=${plan.id}&planName=${plan.name}`}
+                className="h-plan-btn"
+              >
+                {isFree ? "Get Started Free" : `Buy ${plan.name}`}
+              </Link>
             </div>
+          );
+        })}
+      </div>
+    )}
 
-            {/* Enterprise */}
-            <div className="h-price-card h-price-starter">
-              <div className="h-plan-badge h-plan-badge-ent">⚡ Enterprise</div>
-              <h3 className="h-plan-name">Enterprise</h3>
-              <p className="h-plan-tag">For large organizations with custom needs.</p>
-              <div className="h-plan-price">
-                <span className="h-price-custom">Custom</span>
-              </div>
-              <ul className="h-plan-feats">
-                {['Unlimited users', 'Dedicated database', 'Advanced compliance', 'White-label', '24/7 support'].map(f => (
-                  <li key={f} className="h-plan-feat">
-                    <CheckCircle2 size={14} style={{ color: '#22c55e', flexShrink: 0 }} /> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/contact" className="h-plan-btn h-plan-btn-outline">Contact Sales</Link>
-            </div>
-          </div>
-
-          <p className="h-pricing-note">
-            🔒 All paid plans include a <strong>3-month free trial</strong> — no credit card required.{' '}
-            <Link to="/pricing" className="h-pricing-link">See full pricing →</Link>
-          </p>
-        </div>
-      </section>
+    <p className="h-pricing-note">
+      🔒 No credit card required for free plan.
+    </p>
+  </div>
+</section>
 
       {/* ── TESTIMONIALS ───────────────────────────────────────── */}
       <section className="h-testimonials">

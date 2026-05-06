@@ -68,7 +68,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Check, X, ChevronDown, ChevronUp,
@@ -185,6 +185,83 @@ const Cell: React.FC<{ val: any; type?: string }> = ({ val, type }) => {
 ───────────────────────────────────────────────── */
 export const Pricing: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [plans, setPlans] = useState<any[]>([]);
+  const [plansLoading, setPlansLoading] = useState(true);
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+  
+  
+//   useEffect(() => {
+//   const fetchPlans = async () => {
+//     try {
+//       const res = await fetch('http://localhost:4000/api/subscriptions/plans', {
+//         method: 'GET',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         }
+//       });// apna endpoint
+//       const data = await res.json();
+
+//       if (data.success) {
+//         setPlans(data.data);
+//       }
+//     } catch (err) {
+//       console.error(err);
+//     } finally {
+//       setPlansLoading(false);
+//     }
+//   };
+
+//   fetchPlans();
+// }, []);
+useEffect(() => {
+  const fetchPlans = async () => {
+    try {
+      const res =await fetch('http://localhost:4000/api/subscriptions/plans', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }); // apna endpoint
+      const data = await res.json();
+
+      const parsedPlans = data.data.map((plan: any) => {
+        let featuresObj = {};
+
+        try {
+          featuresObj = JSON.parse(plan.features);
+        } catch (e) {
+          console.log("Feature parse error", e);
+        }
+
+        return {
+          ...plan,
+          featuresObj,
+        };
+      });
+
+      setPlans(parsedPlans);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setPlansLoading(false);
+    }
+  };
+
+  fetchPlans();
+}, []);
+const getFeatures = (plan: any): string[] => {
+  try {
+    const parsed = JSON.parse(plan.features || "{}");
+
+    const modules = parsed.modules?.join(", ") || "";
+    const support = parsed.support ? `Support: ${parsed.support}` : "";
+    const storage = parsed.storage ? `Storage: ${parsed.storage}` : "";
+
+    return [modules, support, storage].filter(Boolean);
+  } catch {
+    return [];
+  }
+};
 
   return (
     <div className="pr-page">
@@ -211,10 +288,10 @@ export const Pricing: React.FC = () => {
       </section>
 
       {/* ══ PLAN CARDS ══════════════════════════════════════ */}
-      <section className="pr-cards-section">
+      {/* <section className="pr-cards-section">
         <div className="pr-container pr-cards-grid">
 
-          {/* FREE */}
+         
           <div className="pr-card pr-card-free">
             <div className="pr-card-badge pr-badge-free">✦ Free Forever</div>
             <h2 className="pr-card-name">Free</h2>
@@ -244,7 +321,7 @@ export const Pricing: React.FC = () => {
             <p className="pr-no-cc">No credit card required</p>
           </div>
 
-          {/* ENTERPRISE */}
+        
           <div className="pr-card pr-card-ent">
             <div className="pr-card-badge pr-badge-pop">⭐ Most Popular</div>
             <h2 className="pr-card-name pr-card-name-white">Enterprise</h2>
@@ -271,7 +348,48 @@ export const Pricing: React.FC = () => {
           </div>
 
         </div>
-      </section>
+      </section> */}
+    <div className="pr-cards-grid">
+  {plans.map((plan, i) => {
+    const f = plan.featuresObj;
+
+    return (
+      <div
+        key={plan.id}
+        className={`pr-card ${
+          plan.name === "Enterprise" ? "pr-card-ent" : "pr-card-free"
+        }`}
+      >
+        <div className="pr-card-badge">
+          {plan.price === "0.00" ? "✦ Free" : "⭐ Popular"}
+        </div>
+
+        <h2 className="pr-card-name">{plan.name}</h2>
+        <p className="pr-card-desc">{plan.description}</p>
+
+        <div className="pr-card-price">
+          <span className="pr-price-dollar">₹</span>
+          <span className="pr-price-amt"> {Number(plan.price)}</span>
+          <span className="pr-price-per">/mo</span>
+        </div>
+
+        <ul className="pr-card-feats">
+          <li>Modules: {f.modules?.join(", ") || "-"}</li>
+          <li>Support: {f.support || "-"}</li>
+          <li>Storage: {f.storage || "-"}</li>
+          <li>Users: {plan.max_users === -1 ? "Unlimited" : plan.max_users}</li>
+          <li>Devices: {plan.max_devices === -1 ? "Unlimited" : plan.max_devices}</li>
+        </ul>
+
+        <button className={`pr-btn  ${
+          plan.name === "Enterprise" ? "pr-btn-white" : "pr-btn-blue"
+        }`}>
+          {plan.price === "0.00" ? "Get Started" : "Buy Now"}
+        </button>
+      </div>
+    );
+  })}
+</div>
 
       {/* ══ COMPARISON TABLE ════════════════════════════════ */}
       <section className="pr-compare" id="compare">

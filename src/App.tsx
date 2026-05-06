@@ -9,6 +9,8 @@ import Home from './pages/Home';
 import Footer from './components/Footer';
 import Security from './pages/Security';
 import Profile from './pages/Profile';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentFailure from './pages/PaymentFailure';
 
 const AccountingPage = React.lazy(() => import('./pages/apps/Accounting').then(m => ({ default: m.AccountingPage })));
 const InvoicingPage = React.lazy(() => import('./pages/apps/Invoicing').then(m => ({ default: m.InvoicingPage })));
@@ -246,6 +248,8 @@ function App() {
           <Route path="/plans/:planId" element={<Plan />} />
           <Route path="/billing" element={<RequireAuth><Billing /></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment/failure" element={<PaymentFailure />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact-sales" element={<ContactSales />} />

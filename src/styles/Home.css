@@ -238,7 +238,56 @@
 .h-plan-name-white { color: #fff; }
 .h-plan-tag        { font-size: 13.5px; color: var(--h-text-muted); line-height: 1.55; }
 .h-plan-tag-white  { color: rgba(255,255,255,.8); }
+/* Default card */
+.h-price-card {
+  border: 1.5px solid var(--h-border);
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s ease;
+}
 
+/* Hover effect (premium feel) */
+.h-price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  border-color: #c7d2fe;
+}
+
+/* Selected card (BLUE highlight 🔥) */
+.h-price-selected {
+  border: 2px solid var(--h-primary);
+  box-shadow: 0 12px 40px rgba(37, 99, 235, 0.35);
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Optional: glowing effect */
+.h-price-selected::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  /* background: linear-gradient(135deg, #2563eb, #60a5fa); */
+  z-index: -1;
+  filter: blur(12px);
+  opacity: 0.4;
+}
+
+/* Selected text color tweak */
+.h-price-selected .h-plan-name,
+.h-price-selected .h-price-amt {
+  color: var(--h-primary);
+}
+
+/* Button highlight */
+.h-price-selected .h-plan-btn {
+  background: var(--h-primary);
+  color: #fff;
+}
+
+.h-price-selected .h-plan-btn:hover {
+  background: var(--h-primary-dark);
+}
 .h-plan-price { display: flex; align-items: flex-end; gap: 3px; }
 .h-price-dollar { font-size: 22px; font-weight: 700; color: var(--h-text-dark); padding-bottom: 5px; }
 .h-price-amt    { font-size: 52px; font-weight: 900; color: var(--h-text-dark); line-height: 1; }
