@@ -28,6 +28,7 @@ import {
   Star,
   Play,
 } from "lucide-react";
+import { BASE_URL } from "./Profile";
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -58,7 +59,7 @@ useEffect(() => {
       setPlansLoading(true);
 
       const response = await fetch(
-        "http://localhost:4000/api/subscriptions/plans"
+        `${BASE_URL}/api/subscriptions/plans`
       );
       const result = await response.json();
 

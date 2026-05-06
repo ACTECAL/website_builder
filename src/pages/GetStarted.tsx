@@ -17,6 +17,8 @@ export const GetStarted: React.FC = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [productsLoading, setProductsLoading] = useState(true);
+  const [subscriptionPlans, setSubscriptionPlans] = useState<any[]>([]);
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const [formData, setFormData] = useState({
     domain: "",
     companyName: "",
@@ -48,15 +50,39 @@ export const GetStarted: React.FC = () => {
   );
   const [showSuccessState, setShowSuccessState] = useState(false);
 
+  // Fetch subscription plans from API
+  const fetchSubscriptionPlans = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/subscriptions/plans', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSubscriptionPlans(data.data);
+        console.log('Available plans:', data.data);
+      } else {
+        console.error('Failed to fetch plans:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching subscription plans:', error);
+    }
+  };
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [erpResult, setErpResult] = useState<Record<string, boolean>>({});
 
   // API Loading States
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const [currentStep] = useState(1);
-  // Fetch products on component mount
+  
+  // Fetch products and subscription plans on component mount
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -71,6 +97,7 @@ export const GetStarted: React.FC = () => {
     };
 
     loadProducts();
+    fetchSubscriptionPlans();
   }, []);
 
   // Auto-select modules when product is selected from URL
@@ -322,8 +349,9 @@ export const GetStarted: React.FC = () => {
 
     console.log("🚀 Final Payload being sent:", payload);   // ← Ye line zaroori hai debugging ke liye
 
+    // Handle demo account - create normally
     const response = await fetch(
-      "https://api-admindev.actecal.com/admin/erp/create",
+      "http://localhost:4000/admin/erp/create",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -345,6 +373,7 @@ export const GetStarted: React.FC = () => {
     setStatusMessage("Finalizing Configuration...");
 
     const result = await response.json();
+    setErpResult(result.data);
 
     if (!response.ok) {
       let errorMsg = result.error || result.message || "Failed to create ERP";
@@ -358,95 +387,101 @@ export const GetStarted: React.FC = () => {
         setShowProcessingPopup(false);
         setIsSubmitting(false);
         setIsCreatingAccount(false);
-      }, 1500);
+        setProcessingProgress(0);
+      }, 1200);
       return;
     }
 
-    // Success
-    // setProcessingProgress(100);
-    // setStatusMessage("ERP Created Successfully!");
-    // setShowSuccessState(true);
-
-    // const domain = result.data?.domain;
-    // if (domain) {
-    //   setTimeout(() => window.open(`https://${domain}`, "_blank"), 1500);
-    // }
-
-    // setTimeout(() => {
-    //   setStatusMessage(
-    //     `Your ERP is ready! 🎉 Check your email (${formData.contactEmail}) for login details.`
-    //   );
-    // }, 1000);
-
-    // setTimeout(() => {
-    //   setShowProcessingPopup(false);
-    //   setIsSubmitting(false);
-    //   setIsCreatingAccount(false);
-    //   setShowSuccessState(false);
-    //   setFormData({
-
-    //   domain: "",
-    // companyName: "",
-    // industry: "",
-    // contactEmail: "",
-    // contactPhone: "",
-    // projectDescription: "",
-    // selectedApps: [] as string[],
-    // name: "",
-    // accountType: "demo" as "demo" | "paid",
-    // subscription: "basic" as "basic" | "standard" | "premium" | "enterprise",
-    // modules: initialModules,
-    // selectedProduct: selectedProductParam || "",
-    //   })
-    // }, 4500);
-
-
+    // Success - ERP created successfully
     setProcessingProgress(100);
-setStatusMessage("ERP Created Successfully!");
-setShowSuccessState(true);
+    setStatusMessage("ERP Created Successfully!");
+    setShowSuccessState(true);
 
-// 🔥 Open tab immediately
-const domain = result.data?.domain;
-const newTab = window.open("", "_blank");
+    const domain = result.data?.domain;
+    if (domain) {
+      setTimeout(() => window.open(`https://${domain}`, "_blank"), 1500);
+    }
 
-if (domain && newTab) {
-  newTab.location.href = `https://${domain}`;
-}
+    setTimeout(() => {
+      setStatusMessage(
+        `Your ERP is ready! 🎉 Check your email (${formData.contactEmail}) for login details.`
+      );
+    }, 1000);
 
-// ✅ Show success message
-setTimeout(() => {
-  setStatusMessage(
-    `Your ERP is ready! 🎉 Check your email (${formData.contactEmail})`
-  );
-}, 800);
+    setTimeout(() => {
+      setShowProcessingPopup(false);
+      setIsSubmitting(false);
+      setIsCreatingAccount(false);
+      setShowSuccessState(false);
+      setProcessingProgress(0);
+    }, 1500);
 
-// ✅ Keep popup visible for some time
-setTimeout(() => {
-  setShowProcessingPopup(false);
-  setIsSubmitting(false);
-  setIsCreatingAccount(false);
-  setShowSuccessState(false);
-  setProcessingProgress(0);
+    // Handle paid account - initiate payment after ERP creation
+    if (formData.accountType === "paid" && selectedPlan) {
+      try {
+        const paymentPayload = {
+          subscription_id: selectedPlan.id,
+          company_id: erpResult.erpId,
+          amount: parseFloat(selectedPlan.price),
+          customer_name: formData.name.trim() || "User",
+          customer_email: formData.contactEmail?.trim() || "",
+          customer_phone: formData.contactPhone || "9876543210",
+          product_info: `${selectedPlan.name} - ${selectedPlan.billing_cycle || 'Monthly'} Subscription`
+        };
 
-  // reset form
-  setFormData({
-    domain: "",
-    companyName: "",
-    industry: "",
-    contactEmail: "",
-    contactPhone: "",
-    projectDescription: "",
-    selectedApps: [],
-    name: "",
-    accountType: "demo",
-    subscription: "basic",
-    modules: initialModules,
-    selectedProduct: selectedProductParam || "",
-  });
+        const paymentResponse = await fetch('http://localhost:4000/api/subscriptions/payu/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(paymentPayload)
+        });
 
-}, 5000);
+        const paymentResult = await paymentResponse.json();
 
-  } catch (err: any) {
+        if (!paymentResult.success || !paymentResult.data?.form_data) {
+          throw new Error(paymentResult.error || 'Failed to initiate payment with PayU');
+        }
+
+        const { payment_url, form_data } = paymentResult.data;
+
+        console.log("🚀 Sending to PayU:", form_data);
+
+        // === Create & Submit Form to PayU ===
+        const form = document.createElement('form');
+        form.action = payment_url;
+        form.method = 'POST';
+        form.style.display = 'none';
+
+        Object.keys(form_data).forEach(key => {
+          if (form_data[key] !== undefined && form_data[key] !== null) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = String(form_data[key]);
+            form.appendChild(input);
+          }
+        });
+
+        document.body.appendChild(form);
+        
+        // Submit form
+        setTimeout(() => {
+          form.submit();
+        }, 150);
+
+        return;
+      } catch (paymentError) {
+        console.error('Payment error:', paymentError);
+        setApiError('Payment failed. Please try again.');
+        setTimeout(() => setShowProcessingPopup(false), 1000);
+        setIsSubmitting(false);
+        setIsCreatingAccount(false);
+        return;
+      }
+    }
+
+    } catch (err: any) {
     console.error("Create ERP Error:", err);
     setApiError(err.message || "Network error. Please try again.");
     
@@ -815,17 +850,20 @@ setTimeout(() => {
                         title="Choose Subscription Plan"
                         className="auth-input-max field-select with-icon"
                         value={formData.subscription}
-                        onChange={(e) =>
-                          handleInputChange(
-                            "subscription",
-                            e.target.value as any,
-                          )
-                        }
+                        onChange={(e) => {
+                          const selectedValue = e.target.value;
+                          handleInputChange("subscription", selectedValue);
+                          // Store selected plan details for payment
+                          const plan = subscriptionPlans.find(p => p.name.toLowerCase() === selectedValue.toLowerCase());
+                          setSelectedPlan(plan);
+                        }}
                       >
-                        <option value="basic">Basic</option>
-                        <option value="standard">Standard</option>
-                        <option value="premium">Premium</option>
-                        <option value="enterprise">Enterprise</option>
+                        <option value="">Select a plan</option>
+                        {subscriptionPlans.map((plan: any) => (
+                          <option key={plan.id} value={plan.name.toLowerCase()}>
+                            {plan.name} - ₹{plan.price}/{plan.billing_cycle}
+                          </option>
+                        ))}
                       </select>
                       <label htmlFor="subscription" className="auth-label-max">
                         Choose Plan

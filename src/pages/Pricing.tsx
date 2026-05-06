@@ -78,6 +78,7 @@ import {
   Headphones, Star, ArrowRight
 } from 'lucide-react';
 import './Pricing.css';
+import { BASE_URL } from './Profile';
 
 /* ─────────────────────────────────────────────────
    COMPARISON TABLE DATA
@@ -216,7 +217,7 @@ export const Pricing: React.FC = () => {
 useEffect(() => {
   const fetchPlans = async () => {
     try {
-      const res =await fetch('http://localhost:4000/api/subscriptions/plans', {
+      const res =await fetch(`${BASE_URL}/api/subscriptions/plans`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

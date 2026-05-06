@@ -21,68 +21,68 @@ export const PaymentFailure: React.FC = () => {
   };
 
   return (
-    <div className="pf-page">
-      <div className="pf-container">
-        <div className="pf-card">
+    <div className="pff-page">
+      <div className="pff-container">
+        <div className="pff-card">
           {/* Failure Icon */}
-          <div className="pf-failure-icon">
-            <div className="pf-icon-circle">
-              <XCircle size={48} className="pf-x-icon" />
+          <div className="pff-failure-icon">
+            <div className="pff-icon-circle">
+              <XCircle size={48} className="pff-x-icon" />
             </div>
           </div>
 
           {/* Failure Message */}
-          <div className="pf-content">
-            <h1 className="pf-title">Payment Failed</h1>
-            <p className="pf-subtitle">
+          <div className="pff-content">
+            <h1 className="pff-title">Payment Failed</h1>
+            <p className="pff-subtitle">
               We couldn't process your payment. Please try again or contact support.
             </p>
 
             {/* Error Details */}
-            <div className="pf-error-details">
-              <div className="pf-detail-item">
-                <span className="pf-detail-label">Plan</span>
-                <span className="pf-detail-value">{paymentData.planName}</span>
+            <div className="pff-error-details">
+              <div className="pff-detail-item">
+                <span className="pff-detail-label">Plan</span>
+                <span className="pff-detail-value">{paymentData.planName}</span>
               </div>
-              <div className="pf-detail-item">
-                <span className="pf-detail-label">Amount</span>
-                <span className="pf-detail-value pf-amount">{paymentData.amount}</span>
+              <div className="pff-detail-item">
+                <span className="pff-detail-label">Amount</span>
+                <span className="pff-detail-value pff-amount">{paymentData.amount}</span>
               </div>
-              <div className="pf-detail-item">
-                <span className="pf-detail-label">Transaction ID</span>
-                <span className="pf-detail-value pf-mono">{paymentData.transactionId}</span>
+              <div className="pff-detail-item">
+                <span className="pff-detail-label">Transaction ID</span>
+                <span className="pff-detail-value pff-mono">{paymentData.transactionId}</span>
               </div>
-              <div className="pf-detail-item">
-                <span className="pf-detail-label">Error</span>
-                <span className="pf-detail-value pf-error">{paymentData.error}</span>
+              <div className="pff-detail-item">
+                <span className="pff-detail-label">Error</span>
+                <span className="pff-detail-value pff-error">{paymentData.error}</span>
               </div>
-              <div className="pf-detail-item">
-                <span className="pf-detail-label">Date</span>
-                <span className="pf-detail-value">{paymentData.date}</span>
+              <div className="pff-detail-item">
+                <span className="pff-detail-label">Date</span>
+                <span className="pff-detail-value">{paymentData.date}</span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="pf-actions">
+            <div className="pff-actions">
               <button 
-                className="pf-btn-primary"
+                className="pff-btn-primary"
                 onClick={handleRetry}
               >
                 <RefreshCw size={18} />
                 Try Again
               </button>
-              <Link to="/" className="pf-btn-secondary">
+              <Link to="/" className="pff-btn-secondary">
                 <Home size={18} />
                 Go to Dashboard
               </Link>
             </div>
 
             {/* Help Section */}
-            <div className="pf-help-box">
-              <div className="pf-help-icon">
+            <div className="pff-help-box">
+              <div className="pff-help-icon">
                 <AlertTriangle size={16} />
               </div>
-              <div className="pf-help-text">
+              <div className="pff-help-text">
                 <strong>Need Help?</strong> If payment continues to fail, contact our support team at support@actecal.com or call +91-XXXXXXXXXX.
               </div>
             </div>
@@ -90,7 +90,7 @@ export const PaymentFailure: React.FC = () => {
 
           {/* Back Button */}
           <button 
-            className="pf-back-btn"
+            className="pff-back-btn"
             onClick={() => navigate(-1)}
           >
             <ArrowLeft size={16} />

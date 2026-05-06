@@ -7,7 +7,10 @@ import {
   CheckCircle2, AlertCircle, Settings, ChevronRight,
   Bell, Lock, Zap, X, Users
 } from 'lucide-react';
-
+ export const BASE_URL =
+  process.env.REACT_APP_ENV === "local"
+    ? "http://localhost:4000"
+    : "https://api-admindev.actecal.com"
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
   const { user, userAttributes, signOut, isAuthenticated, getJwtToken } = useAuth();
@@ -21,7 +24,7 @@ export const Profile: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const [isLoadingPlans, setIsLoadingPlans] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-
+  
   const handleSignOut = async () => {
     setIsSigningOut(true);
     try {
@@ -55,7 +58,7 @@ export const Profile: React.FC = () => {
         return;
       }
 
-      const response = await fetch('https://api-admindev.actecal.com/admin/auth/me', {
+      const response = await fetch(`${BASE_URL}/admin/auth/me`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +88,7 @@ export const Profile: React.FC = () => {
     if (!backendUser?.id) return;
     
     try {
-      const response = await fetch(`http://localhost:4000/api/subscriptions/current/${backendUser.id}`, {
+      const response = await fetch(`${BASE_URL}/api/subscriptions/current/${backendUser.id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +118,7 @@ export const Profile: React.FC = () => {
   const fetchPlans = async () => {
     setIsLoadingPlans(true);
     try {
-      const response = await fetch('http://localhost:4000/api/subscriptions/plans', {
+      const response = await fetch(`${BASE_URL}/api/subscriptions/plans`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -167,7 +170,7 @@ export const Profile: React.FC = () => {
       product_info: `${selectedPlan.name} - ${selectedPlan.billing_cycle || 'Monthly'} Subscription`
     };
 
-    const response = await fetch('http://localhost:4000/api/subscriptions/payu/create', {
+    const response = await fetch(`${BASE_URL}/api/subscriptions/payu/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -253,7 +256,7 @@ export const Profile: React.FC = () => {
   // Process payment through backend API
   const processPayment = async (subscriptionId: number, amount: number, providerPaymentId: string) => {
     try {
-      const response = await fetch('http://localhost:4000/payment/process', {
+      const response = await fetch(`${BASE_URL}/payment/process`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

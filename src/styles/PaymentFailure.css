@@ -1,7 +1,7 @@
 /* ═════════════════════════════════════════════
    PAYMENT FAILURE PAGE
 ═══════════════════════════════════════════════ */
-.pf-page {
+.pff-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   display: flex;
@@ -11,12 +11,12 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.pf-container {
+.pff-container {
   width: 100%;
   max-width: 500px;
 }
 
-.pf-card {
+.pff-card {
   background: white;
   border-radius: 20px;
   padding: 48px 32px;
@@ -26,11 +26,11 @@
 }
 
 /* Failure Icon */
-.pf-failure-icon {
+.pff-failure-icon {
   margin-bottom: 32px;
 }
 
-.pf-icon-circle {
+.pff-icon-circle {
   width: 80px;
   height: 80px;
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
@@ -40,10 +40,10 @@
   justify-content: center;
   margin: 0 auto;
   box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
-  animation: pfShake 0.5s ease-in-out;
+  animation: pffShake 0.5s ease-in-out;
 }
 
-@keyframes pfShake {
+@keyframes pffShake {
   0%, 100% {
     transform: translateX(0);
   }
@@ -55,16 +55,16 @@
   }
 }
 
-.pf-x-icon {
+.pff-x-icon {
   color: white;
 }
 
 /* Content */
-.pf-content {
+.pff-content {
   margin-bottom: 32px;
 }
 
-.pf-title {
+.pff-title {
   font-size: 32px;
   font-weight: 800;
   color: #1f2937;
@@ -75,7 +75,7 @@
   background-clip: text;
 }
 
-.pf-subtitle {
+.pff-subtitle {
   font-size: 16px;
   color: #6b7280;
   margin: 0 0 32px 0;
@@ -83,7 +83,7 @@
 }
 
 /* Error Details */
-.pf-error-details {
+.pff-error-details {
   background: #fef2f2;
   border: 1px solid #fecaca;
   border-radius: 12px;
@@ -92,7 +92,7 @@
   text-align: left;
 }
 
-.pf-detail-item {
+.pff-detail-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -100,34 +100,34 @@
   border-bottom: 1px solid #f5f5f5;
 }
 
-.pf-detail-item:last-child {
+.pff-detail-item:last-child {
   border-bottom: none;
 }
 
-.pf-detail-label {
+.pff-detail-label {
   font-size: 14px;
   color: #6b7280;
   font-weight: 500;
 }
 
-.pf-detail-value {
+.pff-detail-value {
   font-size: 14px;
   color: #1f2937;
   font-weight: 600;
 }
 
-.pf-amount {
+.pff-amount {
   color: #ef4444;
   font-size: 16px;
   font-weight: 700;
 }
 
-.pf-error {
+.pff-error {
   color: #dc2626;
   font-weight: 600;
 }
 
-.pf-mono {
+.pff-mono {
   font-family: 'Courier New', monospace;
   font-size: 12px;
   background: #f3f4f6;
@@ -136,15 +136,15 @@
 }
 
 /* Action Buttons */
-.pf-actions {
+.pff-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 24px;
 }
 
-.pf-btn-primary,
-.pf-btn-secondary {
+.pff-btn-primary,
+.pff-btn-secondary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,30 +159,30 @@
   border: none;
 }
 
-.pf-btn-primary {
+.pff-btn-primary {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
-.pf-btn-primary:hover {
+.pff-btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
 }
 
-.pf-btn-secondary {
+.pff-btn-secondary {
   background: #f3f4f6;
   color: #4b5563;
   border: 1px solid #d1d5db;
 }
 
-.pf-btn-secondary:hover {
+.pff-btn-secondary:hover {
   background: #e5e7eb;
   transform: translateY(-1px);
 }
 
 /* Help Box */
-.pf-help-box {
+.pff-help-box {
   background: #fef3c7;
   border: 1px solid #fde68a;
   border-radius: 12px;
@@ -193,24 +193,24 @@
   text-align: left;
 }
 
-.pf-help-icon {
+.pff-help-icon {
   color: #f59e0b;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
-.pf-help-text {
+.pff-help-text {
   font-size: 14px;
   color: #92400e;
   line-height: 1.5;
 }
 
-.pf-help-text strong {
+.pff-help-text strong {
   color: #d97706;
 }
 
 /* Back Button */
-.pf-back-btn {
+.pff-back-btn {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -229,7 +229,7 @@
   backdrop-filter: blur(10px);
 }
 
-.pf-back-btn:hover {
+.pff-back-btn:hover {
   background: white;
   color: #374151;
   transform: translateY(-1px);
@@ -239,41 +239,41 @@
    RESPONSIVE
 ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  .pf-page {
+  .pff-page {
     padding: 16px;
   }
   
-  .pf-card {
+  .pff-card {
     padding: 32px 24px;
   }
   
-  .pf-title {
+  .pff-title {
     font-size: 28px;
   }
   
-  .pf-actions {
+  .pff-actions {
     gap: 8px;
   }
   
-  .pf-btn-primary,
-  .pf-btn-secondary {
+  .pff-btn-primary,
+  .pff-btn-secondary {
     padding: 14px 20px;
     font-size: 15px;
   }
   
-  .pf-error-details {
+  .pff-error-details {
     padding: 20px;
   }
   
-  .pf-detail-item {
+  .pff-detail-item {
     padding: 10px 0;
   }
   
-  .pf-detail-value {
+  .pff-detail-value {
     font-size: 13px;
   }
   
-  .pf-mono {
+  .pff-mono {
     font-size: 11px;
   }
 }
