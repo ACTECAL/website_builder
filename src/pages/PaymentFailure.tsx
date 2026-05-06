@@ -7,14 +7,16 @@ export const PaymentFailure: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get payment error details from location state or use defaults
-  const paymentData = location.state || {
-    planName: 'Premium',
-    amount: '₹4,999.00',
-    transactionId: `TXN_${Date.now()}`,
-    error: 'Payment gateway timeout',
-    date: new Date().toLocaleDateString()
-  };
+
+const searchParams = new URLSearchParams(location.search);
+
+const paymentData = {
+  planName: searchParams.get("plan") || "Premium",
+  amount: searchParams.get("amount") || "₹0.00",
+  transactionId: searchParams.get("transaction_id") || `TXN_${Date.now()}`,
+  error: searchParams.get("error") || "Payment failed",
+  date: new Date().toLocaleDateString()
+};
 
   const handleRetry = () => {
     navigate('/profile', { state: { retryPayment: true } });
@@ -40,10 +42,10 @@ export const PaymentFailure: React.FC = () => {
 
             {/* Error Details */}
             <div className="pff-error-details">
-              <div className="pff-detail-item">
+              {/* <div className="pff-detail-item">
                 <span className="pff-detail-label">Plan</span>
                 <span className="pff-detail-value">{paymentData.planName}</span>
-              </div>
+              </div> */}
               <div className="pff-detail-item">
                 <span className="pff-detail-label">Amount</span>
                 <span className="pff-detail-value pff-amount">{paymentData.amount}</span>
@@ -52,14 +54,14 @@ export const PaymentFailure: React.FC = () => {
                 <span className="pff-detail-label">Transaction ID</span>
                 <span className="pff-detail-value pff-mono">{paymentData.transactionId}</span>
               </div>
-              <div className="pff-detail-item">
+              {/* <div className="pff-detail-item">
                 <span className="pff-detail-label">Error</span>
                 <span className="pff-detail-value pff-error">{paymentData.error}</span>
-              </div>
-              <div className="pff-detail-item">
+              </div> */}
+              {/* <div className="pff-detail-item">
                 <span className="pff-detail-label">Date</span>
                 <span className="pff-detail-value">{paymentData.date}</span>
-              </div>
+              </div> */}
             </div>
 
             {/* Action Buttons */}
