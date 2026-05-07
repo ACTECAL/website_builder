@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "../styles/GetStarted.css";
 import { getProducts, Product } from "../data/products";
 import { productsApi } from "../services/productsApi";
+import { BASE_URL } from "./Profile";
 
 // App selection logic refined for Elite++ grid
 
@@ -429,7 +430,7 @@ export const GetStarted: React.FC = () => {
           product_info: `${selectedPlan.name} - ${selectedPlan.billing_cycle || 'Monthly'} Subscription`
         };
 
-        const paymentResponse = await fetch('http://localhost:4000/api/subscriptions/payu/create', {
+        const paymentResponse = await fetch(`${BASE_URL}/api/subscriptions/payu/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
