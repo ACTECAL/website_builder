@@ -35,7 +35,7 @@ export const GetStarted: React.FC = () => {
     selectedProduct: selectedProductParam || "",
   });
 
-  
+  console.log("selectedPlan",selectedPlan)
   // Find selected product from form state (reactive)
   const selectedProduct = products.find(
     (p) => p.name.toLowerCase() === formData.selectedProduct?.toLowerCase(),
@@ -346,6 +346,7 @@ export const GetStarted: React.FC = () => {
       account_type: formData.accountType,
       subscription: formData.subscription,
       modules: formData.modules,
+      subscription_id: selectedPlan.id,
     };
 
     console.log("🚀 Final Payload being sent:", payload);   // ← Ye line zaroori hai debugging ke liye
@@ -419,6 +420,7 @@ export const GetStarted: React.FC = () => {
 
     // Handle paid account - initiate payment after ERP creation
     if (formData.accountType === "paid" && selectedPlan) {
+      console.log(selectedPlan.id)
       try {
         const paymentPayload = {
           subscription_id: selectedPlan.id,
@@ -888,7 +890,7 @@ export const GetStarted: React.FC = () => {
                         </div>
                         <div className="account-card-content">
                           <div className="account-card-title">
-                            14-Day Free Demo
+                            7-Day Free Demo
                           </div>
                           <div className="account-card-desc">
                             Try all features with sample data. No credit card
