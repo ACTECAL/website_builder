@@ -166,15 +166,48 @@ const Upgrades = React.lazy(() => import('./pages/Upgrades').then(m => ({ defaul
 const LearnMore = React.lazy(() => import('./pages/LearnMore').then(m => ({ default: m.LearnMore })));
 const GetStarted = React.lazy(() => import('./pages/GetStarted').then(m => ({ default: m.GetStarted })));
 
-const EliteLoader = () => (
-  <div className="elite-loader-container">
-    <div className="elite-loader-spinner" />
-    <div className="elite-loader-text">
-      Loading Nexora
+// const EliteLoader = () => (
+//   <div className="elite-loader-container">
+//     <div className="elite-loader-spinner" />
+//     <div className="elite-loader-text">
+//       Loading Nexora
+//     </div>
+//   </div>
+// );
+
+
+ export const EliteLoader: React.FC = () => (
+  <div className="el-overlay">
+    <div className="el-box">
+
+      {/* Spinner ring + logo icon */}
+      <div className="el-spinner-wrap">
+        <div className="el-ring" />
+        <div className="el-logo-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M13 2L4 14h8l-1 8 9-12h-8l1-8z"
+              fill="white"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+
+      {/* Label */}
+      <p className="el-label">Loading Acteal</p>
+
+      {/* Progress bar */}
+      <div className="el-track">
+        <div className="el-fill" />
+      </div>
+
     </div>
   </div>
 );
 
+// export default EliteLoader;
 function App() {
   const location = useLocation();
   const hideChrome = location.pathname.startsWith('/get-started') ||

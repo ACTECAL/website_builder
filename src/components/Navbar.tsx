@@ -211,21 +211,65 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu Content */}
       {isMobile && isMobileMenuOpen && (
         <div className="mobile-menu">
-          <div onClick={() => setIsAppsMenuOpen(!isAppsMenuOpen)} className="nav-link-item">
-            Applications
+          {/* Main Navigation */}
+          <div className="mobile-menu-section">
+            <div 
+              onClick={() => {
+                setIsAppsMenuOpen(!isAppsMenuOpen);
+                setIsIndustriesMenuOpen(false);
+              }} 
+              className="nav-link-item"
+            >
+              Applications
+            </div>
+            <div 
+              onClick={() => {
+                setIsIndustriesMenuOpen(!isIndustriesMenuOpen);
+                setIsAppsMenuOpen(false);
+              }} 
+              className="nav-link-item"
+            >
+              Industries
+            </div>
+            <NavLink to="/security" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
+              Security
+            </NavLink>
+            <NavLink to="/community" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
+              Community
+            </NavLink>
+            <NavLink to="/pricing" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
+              Pricing
+            </NavLink>
           </div>
-          <div onClick={() => setIsIndustriesMenuOpen(!isIndustriesMenuOpen)} className="nav-link-item">
-            Industries
-          </div>
-          <NavLink to="/community" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
-            Community
-          </NavLink>
-          <NavLink to="/pricing" className="nav-link-item" onClick={() => setIsMobileMenuOpen(false)}>
-            Pricing
-          </NavLink>
+
+          {/* User Actions */}
           <div className="mobile-actions">
-            <Link to="/login" className="btn-login" onClick={() => setIsMobileMenuOpen(false)}>Log in</Link>
-            <Link to="/signup" className="btn-nav-cta" style={{width: '100%', textAlign: 'center', marginTop: '10px'}} onClick={() => setIsMobileMenuOpen(false)}>Sign up</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/profile" className="btn-login" onClick={() => setIsMobileMenuOpen(false)}>
+                  Profile
+                </Link>
+                <button 
+                  onClick={() => {
+                    signOut();
+                    setIsMobileMenuOpen(false);
+                  }} 
+                  className="btn-nav-cta"
+                  style={{width: '100%', textAlign: 'center'}}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn-login" onClick={() => setIsMobileMenuOpen(false)}>
+                  Log in
+                </Link>
+                <Link to="/get-started" className="btn-nav-cta" style={{width: '100%', textAlign: 'center'}} onClick={() => setIsMobileMenuOpen(false)}>
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

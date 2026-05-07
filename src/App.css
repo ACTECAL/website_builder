@@ -71,47 +71,103 @@
 /* =========================================================================
    EliteLoader Fullscreen Transition
    ========================================================================= */
-.elite-loader-container {
-  height: 100vh;
-  width: 100vw;
+/* ═══════════════════════════════════════════════════
+   ELITELOADER.CSS  –  Acteal Light Theme
+   Prefix: el-
+═══════════════════════════════════════════════════ */
+
+/* Full-screen overlay — white, not dark */
+.el-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* Center box */
+.el-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: #0f172a;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99999;
+  gap: 0;
 }
 
-.elite-loader-spinner {
+/* ── Spinner wrapper ───────────────────────────── */
+.el-spinner-wrap {
+  position: relative;
   width: 64px;
   height: 64px;
+  margin-bottom: 24px;
+}
+
+/* Rotating ring */
+.el-ring {
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.05);
-  border-top-color: #8b5cf6;
-  border-right-color: #38bdf8;
-  animation: appSpin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-  box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+  border: 2.5px solid #e2e8f0;         /* light grey track */
+  border-top-color: #2563eb;           /* Acteal blue */
+  animation: elSpin 0.9s linear infinite;
 }
 
-@keyframes appSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Logo icon in center */
+.el-logo-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: #2563eb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.elite-loader-text {
-  margin-top: 32px;
-  color: #f8fafc;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
+/* ── Label ─────────────────────────────────────── */
+.el-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  animation: appPulse 2s ease-in-out infinite;
+  margin: 0 0 14px;
+  animation: elPulse 2s ease-in-out infinite;
 }
 
-@keyframes appPulse {
-  0%, 100% { opacity: 0.4; transform: scale(0.98); }
-  50% { opacity: 1; transform: scale(1); }
+/* ── Progress bar ──────────────────────────────── */
+.el-track {
+  width: 120px;
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.el-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 100px;
+  animation: elProgress 1.8s ease-in-out infinite;
+}
+
+/* ── Animations ────────────────────────────────── */
+@keyframes elSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes elPulse {
+  0%, 100% { opacity: 0.45; }
+  50%       { opacity: 1; }
+}
+
+@keyframes elProgress {
+  0%   { width: 0%;   margin-left: 0; }
+  50%  { width: 70%;  margin-left: 0; }
+  100% { width: 0%;   margin-left: 100%; }
 }
