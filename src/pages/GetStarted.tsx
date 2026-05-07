@@ -54,7 +54,7 @@ export const GetStarted: React.FC = () => {
   // Fetch subscription plans from API
   const fetchSubscriptionPlans = async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/subscriptions/plans', {
+      const response = await fetch(`${BASE_URL}/api/subscriptions/plans`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -352,7 +352,7 @@ export const GetStarted: React.FC = () => {
 
     // Handle demo account - create normally
     const response = await fetch(
-      "http://localhost:4000/admin/erp/create",
+      `${BASE_URL}/admin/erp/create`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
