@@ -20,6 +20,8 @@ export const GetStarted: React.FC = () => {
   const [productsLoading, setProductsLoading] = useState(true);
   const [subscriptionPlans, setSubscriptionPlans] = useState<any[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [domainSuggestions, setDomainSuggestions] = useState<any>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState({
     domain: "",
     companyName: "",
@@ -70,6 +72,36 @@ export const GetStarted: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching subscription plans:', error);
+    }
+  };
+
+  // Generate domain suggestions from API
+  const generateDomainSuggestions = async (companyName: string) => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/domains/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          company_name: companyName
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Domain suggestions:', data.data);
+        setDomainSuggestions(data.data);
+        return data.data;
+      } else {
+        console.error('Failed to generate domains:', response.status, response.statusText);
+        setDomainSuggestions(null);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error generating domains:', error);
+      setDomainSuggestions(null);
+      return null;
     }
   };
 
@@ -159,7 +191,20 @@ export const GetStarted: React.FC = () => {
 
   const handleInputChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (touched[name]) validateField(name, value);
+    if (touched[name]) validateField(name, formData[name as keyof typeof formData]);
+    
+    // Generate domain suggestions when company name changes (with debounce)
+    if (name === 'companyName' && value.trim().length >= 2) {
+      // Clear previous timeout if exists
+      if ((window as any).domainTimeout) {
+        clearTimeout((window as any).domainTimeout);
+      }
+      
+      // Set new timeout for API call
+      (window as any).domainTimeout = setTimeout(() => {
+        generateDomainSuggestions(value.trim());
+      }, 2000); // 2 second delay
+    }
   };
 
   const handleBlur = (name: string) => {
@@ -341,6 +386,8 @@ export const GetStarted: React.FC = () => {
       name: formData.name.trim(),
       email: formData.contactEmail?.trim() || null,
       company_name: formData.companyName.trim(),
+      domain: formData.domain,
+      subdomain: formData.domain?.split('.')[0] || '', // Extract subdomain from full domain
       industry: selectedProductName,           // ← Direct aur safe
       product: selectedProductName,            // ← Extra safety (agar backend product field maangta hai)
       account_type: formData.accountType,
@@ -800,6 +847,111 @@ export const GetStarted: React.FC = () => {
                       Company Name *
                     </label>
                   </div>
+
+                  {/* Domain Field with Suggestions */}
+                  <div
+                    className="auth-input-group animate-slide-up"
+                    style={{ animationDelay: "0.35s" }}
+                    onMouseMove={handleInputMouseMove}
+                  >
+                    <i className="fa-regular fa-globe auth-input-icon"></i>
+                    <input
+                      id="domain"
+                      className={`auth-input-max with-icon ${touched.domain && !formData.domain ? "error" : ""} ${!isEditMode ? "readonly" : ""}`}
+                      placeholder={isEditMode ? "Enter domain" : "Select domain from suggestions"}
+                      value={formData.domain}
+                      onChange={(e) => {
+                        if (isEditMode) {
+                          handleInputChange("domain", e.target.value);
+                        }
+                      }}
+                      onBlur={() => handleBlur("domain")}
+                      readOnly={!isEditMode}
+                    />
+                    <label htmlFor="domain" className="auth-label-max">
+                      Domain *
+                    </label>
+                  </div>
+
+                  {domainSuggestions && !isEditMode && (
+                    <div className="domain-suggestions animate-slide-up" style={{ animationDelay: "0.4s" }}>
+                      <div className="suggestions-header">
+                        <label className="suggestions-label">Suggested Domains:</label>
+                        <button 
+                          className="edit-company-btn"
+                          onClick={() => setIsEditMode(true)}
+                        >
+                          <i className="fa-regular fa-edit"></i>
+                          Edit Company Name
+                        </button>
+                      </div>
+                      <div className="suggestions-list">
+                        <div 
+                          className="suggestion-item primary"
+                          onClick={() => {
+                            handleInputChange("domain", domainSuggestions.recommended.domain);
+                            setDomainSuggestions(null);
+                          }}
+                        >
+                          <div className="suggestion-domain">{domainSuggestions.recommended.domain}</div>
+                          <div className="suggestion-label">Recommended</div>
+                          <button className="select-btn">
+                            <i className="fa-solid fa-check"></i>
+                            Select
+                          </button>
+                        </div>
+                        {domainSuggestions.suggestions.slice(0, 6).map((suggestion: any, index: number) => (
+                          <div 
+                            key={index}
+                            className="suggestion-item variation"
+                            onClick={() => {
+                              handleInputChange("domain", suggestion.domain);
+                              setDomainSuggestions(null);
+                            }}
+                          >
+                            <div className="suggestion-domain">{suggestion.domain}</div>
+                            <div className="suggestion-label">Option {index + 1}</div>
+                            <button className="select-btn">
+                              <i className="fa-solid fa-check"></i>
+                              Select
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {isEditMode && (
+                    <div className="edit-mode-actions animate-slide-up" style={{ animationDelay: "0.4s" }}>
+                      <div className="edit-mode-info">
+                        <p>Edit your company name to generate new domain suggestions</p>
+                      </div>
+                      <div className="edit-mode-buttons">
+                        <button 
+                          className="cancel-edit-btn"
+                          onClick={() => {
+                            setIsEditMode(false);
+                            setDomainSuggestions(null);
+                          }}
+                        >
+                          <i className="fa-solid fa-times"></i>
+                          Cancel
+                        </button>
+                        <button 
+                          className="generate-new-btn"
+                          onClick={() => {
+                            if (formData.companyName.trim().length >= 2) {
+                              generateDomainSuggestions(formData.companyName.trim());
+                              setIsEditMode(false);
+                            }
+                          }}
+                        >
+                          <i className="fa-solid fa-sync"></i>
+                          Generate New
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="form-row">
                     <div
