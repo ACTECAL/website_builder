@@ -632,11 +632,11 @@ export const GetStarted: React.FC = () => {
             <div className="spinner">
               <i className="fas fa-cog fa-spin fa-3x"></i>
             </div>
-            <h2>Please waitâ€¦</h2>
-            <p className="loading-title">Weâ€™re preparing your workspaceâ€¦</p>
-            <p className="loading-subtitle">
-              This process may take 2â€“3 minutes.
-            </p>
+         <h2>Please wait...</h2>
+<p className="loading-title">We're preparing your workspace...</p>
+<p className="loading-subtitle">
+  This process may take 2-3 minutes.
+</p>
             <div className="progress-bar-small">
               <div className="progress-fill-small"></div>
             </div>
