@@ -11,6 +11,7 @@ import Security from './pages/Security';
 import Profile from './pages/Profile';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentFailure from './pages/PaymentFailure';
+import Logout from './pages/Logout';
 
 const AccountingPage = React.lazy(() => import('./pages/apps/Accounting').then(m => ({ default: m.AccountingPage })));
 const InvoicingPage = React.lazy(() => import('./pages/apps/Invoicing').then(m => ({ default: m.InvoicingPage })));
@@ -376,6 +377,7 @@ function App() {
           <Route path="/customer-references" element={<CustomerReferences />} />
           <Route path="/upgrades" element={<Upgrades />} />
           <Route path="/security" element={<Security />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </React.Suspense>
